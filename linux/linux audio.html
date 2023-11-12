@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+    </head>
+    <body class="dark:bg-black">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto md:px-16 lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2 h-full w-full">
+                <div class="md:col-span-4 lg:col-span-3">
+                    <a href="/">
+                        <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b border-blue-700 dark:border-blue-400">
+                            <p class="text-left text-4xl font-bold">blog.argnmp</p>
+                        </div>
+                    </a>
+                    <div class="flex md:flex-col p-4 bg-blue-700 dark:bg-blue-400 shadow-md text-gray-200 dark:text-gray-900">
+                        <div class="w-full md:object-center basis-1/4">
+                            <img class="w-full max-w-sm mx-auto" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0">
+                            <p class="text-xl md:mt-3">김태현</p>
+                            <p class="text-sm">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid-flow-row md:col-span-8 lg:col-span-9 rounded-lg">
+                    <div>
+                        <div class="py-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-4 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="px-5 py-3 mb-2 border border-blue-700 dark:border-blue-400">
+            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">linux audio</p>
+        </div>
+        <div class="p-5 mb-2 border border-blue-700 dark:border-blue-400">
+            <table class="table-auto border-collapse text-left text-sm text-gray-700 dark:text-gray-200 w-full">
+                <thead class="text-xs border border-blue-700 dark:border-blue-400">
+                </thead>
+                <tbody>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            alias
+                        </th>
+                        <td class="px-4 py-2">undefined</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            author
+                        </th>
+                        <td class="px-4 py-2">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            created at
+                        </th>
+                        <td class="px-4 py-2">2023-07-22</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            tags 
+                        </th>
+                        <td class="px-4 py-2">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body p-5 border border-blue-700 dark:border-blue-400 mb-2">
+        <h2>개요</h2>
+<p>arch linux에서 사운드가 출력되고 입력되는 방식을 설명한다.</p>
+<h2>Advanced Linux Sound Architecture (ALSA)</h2>
+<p>ALSA는 kernel에서 실행되는 sound mixer로, 사운드 카드를 직접 조작한다.</p>
+<p>arch wiki에서는 alsa를 다음과 같이 설명한다.
+<a href="https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture">https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture</a></p>
+<blockquote>
+<p>The Advanced Linux Sound Architecture (ALSA) provides kernel driven sound card drivers.</p>
+</blockquote>
+<p>ALSA는 kernel로 작동되는 사운드 카드 드라이버를 제공한다.</p>
+<blockquote>
+<p>Besides the sound device drivers, ALSA also bundles a user space driven library for application developers. They can then use those ALSA drivers for high level API development. This enables direct (kernel) interaction with sound devices through ALSA libraries</p>
+</blockquote>
+<p>sound device driver만 제공하는 것이 아니라 user space에서 실행 가능한 library를 제공한다. application developers는 이 library를 가지고 high level api를 개발할 수 있다. 또한 이 alsa가 제공하는 library로 sound device에 직접 접근이 가능하다.</p>
+<p>alsa는 arch linux에서 이미 기본 kernel module에 포함되어 있기 때문에 다른 설정이 필요하지 않다.</p>
+<h2>Pulseaudio</h2>
+<p><a href="https://wiki.archlinux.org/title/PulseAudio#Front-ends">https://wiki.archlinux.org/title/PulseAudio#Front-ends</a></p>
+<blockquote>
+<p>PulseAudio is a general purpose sound server intended to run as a middleware between your applications and your hardware devices, either using ALSA or OSS.</p>
+</blockquote>
+<p>PulseAudio는 ALSA 나 OSS를 이용하여 application과 hardware device 사이의 middleware 역할을 하는 sound server이다.</p>
+<p>사운드 카드에 대한 하드웨어적인 접근은 ALSA kernel mode에서 담당하고, pulseaudio는 kernel과 user application 을 연결해주는 middleware의 역할을 한다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+        </div>
+    </body>
+</html>

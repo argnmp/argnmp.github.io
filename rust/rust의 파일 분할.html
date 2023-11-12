@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+    </head>
+    <body class="dark:bg-black">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto md:px-16 lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2 h-full w-full">
+                <div class="md:col-span-4 lg:col-span-3">
+                    <a href="/">
+                        <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b border-blue-700 dark:border-blue-400">
+                            <p class="text-left text-4xl font-bold">blog.argnmp</p>
+                        </div>
+                    </a>
+                    <div class="flex md:flex-col p-4 bg-blue-700 dark:bg-blue-400 shadow-md text-gray-200 dark:text-gray-900">
+                        <div class="w-full md:object-center basis-1/4">
+                            <img class="w-full max-w-sm mx-auto" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0">
+                            <p class="text-xl md:mt-3">김태현</p>
+                            <p class="text-sm">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid-flow-row md:col-span-8 lg:col-span-9 rounded-lg">
+                    <div>
+                        <div class="py-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-4 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="px-5 py-3 mb-2 border border-blue-700 dark:border-blue-400">
+            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">rust의 파일 분할</p>
+        </div>
+        <div class="p-5 mb-2 border border-blue-700 dark:border-blue-400">
+            <table class="table-auto border-collapse text-left text-sm text-gray-700 dark:text-gray-200 w-full">
+                <thead class="text-xs border border-blue-700 dark:border-blue-400">
+                </thead>
+                <tbody>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            alias
+                        </th>
+                        <td class="px-4 py-2">undefined</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            author
+                        </th>
+                        <td class="px-4 py-2">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            created at
+                        </th>
+                        <td class="px-4 py-2">2022-06-08</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            tags 
+                        </th>
+                        <td class="px-4 py-2">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body p-5 border border-blue-700 dark:border-blue-400 mb-2">
+        <h2>binary package</h2>
+<p>rust에서 main.rs을 진입점으로 실행되는 package를 binary package 라고 한다. binary package에서는 src/main.rs 가 존재한다.</p>
+<h2>library package</h2>
+<p>실행하는 package가 아닌, 다른 package에서 사용하기 위한 package를 library package 라고 한다. 보통 다른 패키지에서 이 library package를 use keyword를 사용해 불러온다.</p>
+<p>src/lib.rs를 필두로 mod 키워드를 사용해 작성된다.</p>
+<hr />
+<p>그렇다면 이 binary package와 library package가 같이 존재하는 package는 어떤 구조일까? 다음과 같다.</p>
+<h2>binary + library package</h2>
+<p>이 경우, 프로젝트의 구조는 src 디렉터리 하위에 main.rs와 lib.rs가 공존하는 구조로 되어있다.</p>
+<p>lib.rs에서는 mod 키워드를 통해서 module들을 작성하면 되고, main.rs에서는 binary 프로그램을 작성하면 된다.</p>
+<p>아래의 예시를 보자.</p>
+<p>Cargo.toml은 다음과 같다.</p>
+<pre><code class="language-toml">[package]
+name = &quot;ppp&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2021&quot;
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+</code></pre>
+<p>package 이름은 <strong>ppp</strong>이다.</p>
+<p>lib.rs에 module은 다음과 같이 정의하였다.</p>
+<pre><code class="language-rust">pub mod uppermod{
+    pub fn upperfn(){
+        println!(&quot;print from upper fn&quot;);
+    }
+    pub mod lowermod{
+        pub fn lowerfn(){
+            println!(&quot;print from lower fn&quot;);
+        }
+    }
+}
+</code></pre>
+<p><code>main.rs</code>에서 <code>upperfn</code>과 <code>lowerfn</code>을 사용하는 방법은 다음과 같다.</p>
+<p>main.rs</p>
+<pre><code class="language-rust">use ppp::uppermod::{self, lowermod};
+
+fn main(){
+    uppermod::upperfn(); 
+    lowermod::lowerfn();
+}
+</code></pre>
+<p>use keyword로 module을 불러오면 된다. 단, use keyword로 불러올 때 최상단에 crate가 아닌 <strong>package name</strong>을 써주어야 한다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+        </div>
+    </body>
+</html>

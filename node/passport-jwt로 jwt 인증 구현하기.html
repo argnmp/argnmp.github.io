@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+    </head>
+    <body class="dark:bg-black">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto md:px-16 lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2 h-full w-full">
+                <div class="md:col-span-4 lg:col-span-3">
+                    <a href="/">
+                        <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b border-blue-700 dark:border-blue-400">
+                            <p class="text-left text-4xl font-bold">blog.argnmp</p>
+                        </div>
+                    </a>
+                    <div class="flex md:flex-col p-4 bg-blue-700 dark:bg-blue-400 shadow-md text-gray-200 dark:text-gray-900">
+                        <div class="w-full md:object-center basis-1/4">
+                            <img class="w-full max-w-sm mx-auto" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0">
+                            <p class="text-xl md:mt-3">김태현</p>
+                            <p class="text-sm">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid-flow-row md:col-span-8 lg:col-span-9 rounded-lg">
+                    <div>
+                        <div class="py-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-4 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="px-5 py-3 mb-2 border border-blue-700 dark:border-blue-400">
+            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">passport-jwt로 jwt 인증 구현하기</p>
+        </div>
+        <div class="p-5 mb-2 border border-blue-700 dark:border-blue-400">
+            <table class="table-auto border-collapse text-left text-sm text-gray-700 dark:text-gray-200 w-full">
+                <thead class="text-xs border border-blue-700 dark:border-blue-400">
+                </thead>
+                <tbody>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            alias
+                        </th>
+                        <td class="px-4 py-2">undefined</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            author
+                        </th>
+                        <td class="px-4 py-2">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            created at
+                        </th>
+                        <td class="px-4 py-2">2022-07-25</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            tags 
+                        </th>
+                        <td class="px-4 py-2">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body p-5 border border-blue-700 dark:border-blue-400 mb-2">
+        <h2>개요</h2>
+<p>passport.js는 express.js에서 자주 사용되는 사용자 인증 라이브러리이다. 그 중에서 passport.js를 이용한 인증을 적용시켜 보고자 한다.</p>
+<p>passport.js를 이용한 로그인 까지는 완성이 되었다고 가정한다.</p>
+<h2>로그인 시 jwt token 발급하기</h2>
+<pre><code class="language-javascript">router.post('/signin', wrapAsync(authController.signin));
+</code></pre>
+<pre><code class="language-javascript">const signin = async (req, res, next) =&gt; {
+    try {
+        passport.authenticate('local', (err, user, info) =&gt; {
+            if(err){
+                next({status: 500, message: 'internal server error'});
+                return;
+            }
+            if(!user){
+                next({status: 400, message: info.message});
+                return;
+            }
+            const token = jwt.sign({ id: user.userId }, process.env.JWT_KEY, { expiresIn: '1m' });
+            res.cookie('jwt', token);
+            res.status(200).json({ message: &quot;your token was generated&quot; });
+        })(req,res);        
+    } catch (e) {
+        console.error(e);
+        next({status: 500, message: 'internal server error'});
+    }
+}
+</code></pre>
+<p><code>/signin</code>으로 post 요청이 들어오면 <code>signin</code> 함수를 실행한다. 아이디와 패스워드가 일치했을 시 <code>jwt.sign</code> 으로 토큰을 발급한다. 첫번째 인자는 payload로, 나중에 jwt을 이용해 요청이 들어올 때 검증하기 위한 정보를 추가해 놓는다. 두번째 인자는 secret key 이다. 아무거나 지정해도 되지만 나중에 jwt를 검증할 때 사용해야 하므로 같이 보관하는 편이 좋다. 이 프로젝트에서 dotenv를 사용중이기 때문에 .env 파일에서 불러오는 방식을 사용했다. 세번째는 옵션이다. 대표적으로 <code>expiresIn</code> 옵션은 token의 제한시간을 설정한다.</p>
+<p><code>res.cookie('jwt', token)</code> 으로 cookie에 token을 넣어서 클라이언트에게 응답한다.</p>
+<h2>jwt strategy 생성하기</h2>
+<pre><code class="language-javascript">//jwt strategy
+const cookieExtractor = (req)=&gt;{
+    let token = null;
+    if (req&amp;&amp;req.cookies) token = req.cookies['jwt'];
+    return token;
+};
+const jwtConfig = {
+    jwtFromRequest: cookieExtractor, 
+    secretOrKey: process.env.JWT_KEY
+};
+const jwtVerify = async (payload, done) =&gt; {
+    try {
+        const user = await mockUserCheck(payload.id); 
+        if(!user){
+            done(null, false, {message: &quot;not valid authentication&quot;});
+            return;
+        }
+        done(null, user);
+    } catch (e) {
+        console.error(e);
+        done(e);
+    }
+}
+</code></pre>
+<pre><code class="language-javascript">module.exports = {
+    initialize : () =&gt; {
+        passport.use('local', new LocalStrategy(localConfig, localVerify));
+        passport.use('jwt', new JWTStrategy(jwtConfig, jwtVerify));
+    },
+    authenticate : (req, res, next) =&gt; {
+        return passport.authenticate('jwt', {session: false}, (err, user, info) =&gt; {
+            if(err){
+                next({status: 500, message: 'internal server error'});
+                return;
+            }
+            if(!user){
+                next({status: 401, message: info.message});
+                return;
+            }
+            req.user = user;
+            next();
+        })(req,res,next);
+    }
+}
+</code></pre>
+<p>구조가 약간 복잡해 보일 수 있지만 핵심은 똑같다. 일단 strategy를 생성하는 이유는 요청을 받을 때 이 strategy로 쉽게 검증을 하기 위해서 이다. passport 에 strategy를 등록하는 코드는 바로 <code>passport.use('jwt', new JWTStrategy(jwtConfig, jwtVerify));</code> 이 부분이다. 나중에 <code>passport.authenticate('jwt'....</code> 를 통해서 해당 strategy를 사용할 수 있게 된다.</p>
+<p><code>passport.use('jwt', new JWTStrategy(jwtConfig, jwtVerify))</code> 를 통해서 jwt strategy를 등록할 수 있다. <code>jwtConfig</code>에는 두가지 정보가 무조건 들어가야 한다.</p>
+<p>첫번째는 클라이언트로 부터 받은 jwt token 이다. 앞서서 클라이언트에게 토큰을 발급할 때 쿠키에 저장하도록 했었다. 따라서 다시 클라이언트의 쿠키로 부터 가져와야 한다. 그 코드가 바로 <code>cookieExtractor</code> 함수 이다. jwtConfig.jwtFromRequest에 함수를 등록해주면 첫번째 인자로 req 객체를 넣어준다. 그걸 통해서 token을 리턴하면 된다.</p>
+<p>두번째는 jwt를 발급할 때 사용했던 secretKey이다. 나는 dotenv를 이용해서 secretkey를 가져왔었다. 똑같이 secretkey를 입력해주면 된다.</p>
+<p>다음으로 <code>jwtVerify</code>는 jwt로 인증이 완료되면 실행하는 콜백 함수이다. passport.js의 다른 statrategy를 등록할 때와 같다고 생각하면 된다. jwt로 부터 payload를 뽑아낼 수 있는데, 그 payload를 통해서 <strong>실제 유저</strong>인지를 확인한 뒤 done을 통해서 필요한 user의 정보를 넘겨주면 된다.</p>
+<p>보통은 라우트에서 바로 <code>router.get('/jwttest',passport.authenticate('jwt', {session: false},wrapAsync(authController.jwttest));</code> 를 호출하는데, 조금 커스텀을 해주기 위해서 그 부분을 분리해 놓았다. (두번째 코드) done()를 호출하면 err, user, info 순서대로 done의 인자들이 들어가게 된다. 여기서 user 정보를 req.user에 넣어서 다음 미들웨어를 호출하였다.</p>
+<h2>로그아웃</h2>
+<p>앞선 코드에서 cookie를 통해서 token을 제공했으므로 이 cookie를 비워주면 된다. 하지만 로그아웃 전에 토큰을 따로 보관한다면 로그아웃을 해도 다시 그 토큰을 이용할 수 있기 때문에 이 경우는 접근을 제한 할 수는 없다.</p>
+<p>다른 방법은 서버에서 로그아웃 한 토큰을 남은 시간 후에는 자동으로 삭제되도록 디비에 저장해 놓고, 그 토큰으로의 접근을 방지하는 것이다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+        </div>
+    </body>
+</html>

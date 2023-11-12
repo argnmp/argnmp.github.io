@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+    </head>
+    <body class="dark:bg-black">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto md:px-16 lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2 h-full w-full">
+                <div class="md:col-span-4 lg:col-span-3">
+                    <a href="/">
+                        <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b border-blue-700 dark:border-blue-400">
+                            <p class="text-left text-4xl font-bold">blog.argnmp</p>
+                        </div>
+                    </a>
+                    <div class="flex md:flex-col p-4 bg-blue-700 dark:bg-blue-400 shadow-md text-gray-200 dark:text-gray-900">
+                        <div class="w-full md:object-center basis-1/4">
+                            <img class="w-full max-w-sm mx-auto" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0">
+                            <p class="text-xl md:mt-3">김태현</p>
+                            <p class="text-sm">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid-flow-row md:col-span-8 lg:col-span-9 rounded-lg">
+                    <div>
+                        <div class="py-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-4 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="px-5 py-3 mb-2 border border-blue-700 dark:border-blue-400">
+            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">정적 디스패치와 동적 디스패치</p>
+        </div>
+        <div class="p-5 mb-2 border border-blue-700 dark:border-blue-400">
+            <table class="table-auto border-collapse text-left text-sm text-gray-700 dark:text-gray-200 w-full">
+                <thead class="text-xs border border-blue-700 dark:border-blue-400">
+                </thead>
+                <tbody>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            alias
+                        </th>
+                        <td class="px-4 py-2">undefined</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            author
+                        </th>
+                        <td class="px-4 py-2">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            created at
+                        </th>
+                        <td class="px-4 py-2">2023-01-18</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            tags 
+                        </th>
+                        <td class="px-4 py-2">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body p-5 border border-blue-700 dark:border-blue-400 mb-2">
+        <p>rust에서 정적 디스패치와 동적 디스패치는 추상화와 관련이 있고, rust의 추상화는 trait으로 구현이 된다. 다음의 코드를 보자.</p>
+<pre><code class="language-rust">use std::fmt::Debug;
+
+trait Jar: Debug{}
+
+#[derive(Debug)]
+struct Plastic ();
+impl Jar for Plastic {}
+
+#[derive(Debug)]
+struct Glass ();
+impl Jar for Glass {}
+
+fn test(target: impl Jar) -&gt; impl Jar {
+    target
+}
+</code></pre>
+<p>위의 코드는 정적 디스패치의 예제로 impl trait 을 함수의 인자와 반환에 사용하였다. 이 코드는 다음과 같이 제너릭을 사용한 문법과 같은 의미이다.</p>
+<pre><code class="language-rust">fn test&lt;T&gt;(target: T) -&gt; T where T: Jar {
+    target
+}
+</code></pre>
+<p>이 코드가 정적 디스패치인 이유는 컴파일 시 Jar을 implement하는 다른 struct(Plastic, Glass)로 코드를 변환하여 컴파일 하기 때문이다. 위의 코드는 다음의 두가지로 변환되어 컴파일 된다.</p>
+<pre><code class="language-rust">fn test_Plastic(target: Plastic) -&gt; Plastic {
+    target
+}
+fn test_Glass(target: Glass) -&gt; Glass {
+    target
+}
+</code></pre>
+<p>하지만 이러한 정적 디스패치로는, Jar을 implement 하는 Plastic이나 Glass를 분기하여 리턴할 수 없다.</p>
+<pre><code class="language-rust">fn test(is_plastic: bool, target: impl Jar) -&gt; impl Jar {
+    match is_plastic {
+        true =&gt; Plastic(),
+        false =&gt; Glass(),
+    }
+}
+</code></pre>
+<p>이 코드에서는 일단은 <code>match arms have incompatible types</code> 이라는 오류가 발생한다. 그렇다면 타입을 맞추어주기 위해서 다음과 같이 코드를 작성해보자.</p>
+<pre><code class="language-rust">fn test(is_plastic: bool, target: impl Jar) -&gt; Box&lt;impl Jar&gt; {
+    match is_plastic {
+        true =&gt; Box::new(Plastic()),
+        false =&gt; Box::new(Glass()),
+    }
+}
+</code></pre>
+<p><code>expected struct Plastic, found struct Glass</code> 이라는 오류가 발생한다. 정적 디스패치에 의하면, Jar을 implement하는 struct라 하더라도 결국 하나의 struct만 반환하는 코드가 생성되기 때문이다.</p>
+<p>이를 해결하기 위해서는 동적 디스패치를 사용해야 한다.</p>
+<pre><code class="language-rust">use std::fmt::Debug;
+
+trait Jar: Debug{}
+
+#[derive(Debug)]
+struct Plastic ();
+impl Jar for Plastic {}
+
+#[derive(Debug)]
+struct Glass ();
+impl Jar for Glass {}
+
+fn dummy(is_plastic: bool) -&gt; Box&lt;dyn Jar&gt; {
+    match is_plastic {
+        true =&gt; Box::new(Plastic()),
+        false =&gt; Box::new(Glass()),
+    }
+}
+fn main(){
+    dbg!(dummy(false));  
+}
+</code></pre>
+<p>동적 디스패치를 하기 위해서는 <code>Box&lt;dyn trait&gt;</code>을 사용한다. 컴파일 타임에 정확한 타입을 알수 없고, 런타임 비용이 증가한다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+        </div>
+    </body>
+</html>

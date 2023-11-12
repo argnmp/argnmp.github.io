@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+    </head>
+    <body class="dark:bg-black">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto md:px-16 lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2 h-full w-full">
+                <div class="md:col-span-4 lg:col-span-3">
+                    <a href="/">
+                        <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b border-blue-700 dark:border-blue-400">
+                            <p class="text-left text-4xl font-bold">blog.argnmp</p>
+                        </div>
+                    </a>
+                    <div class="flex md:flex-col p-4 bg-blue-700 dark:bg-blue-400 shadow-md text-gray-200 dark:text-gray-900">
+                        <div class="w-full md:object-center basis-1/4">
+                            <img class="w-full max-w-sm mx-auto" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0">
+                            <p class="text-xl md:mt-3">김태현</p>
+                            <p class="text-sm">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid-flow-row md:col-span-8 lg:col-span-9 rounded-lg">
+                    <div>
+                        <div class="py-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-4 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="px-5 py-3 mb-2 border border-blue-700 dark:border-blue-400">
+            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">Option enum 의 역할</p>
+        </div>
+        <div class="p-5 mb-2 border border-blue-700 dark:border-blue-400">
+            <table class="table-auto border-collapse text-left text-sm text-gray-700 dark:text-gray-200 w-full">
+                <thead class="text-xs border border-blue-700 dark:border-blue-400">
+                </thead>
+                <tbody>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            alias
+                        </th>
+                        <td class="px-4 py-2">undefined</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            author
+                        </th>
+                        <td class="px-4 py-2">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            created at
+                        </th>
+                        <td class="px-4 py-2">2023-06-07</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            tags 
+                        </th>
+                        <td class="px-4 py-2">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body p-5 border border-blue-700 dark:border-blue-400 mb-2">
+        <h2>enum Option</h2>
+<p><code>Option&lt;T&gt;</code> enum 은 standard library에 다음과 같이 정의 되어 있다.</p>
+<pre><code class="language-rust">enum Option&lt;T&gt;{
+    None,
+    Some(T),
+}
+</code></pre>
+<p>rust는 null type이 없다. 대신 Option enum의 variant 인 <code>None</code>을 통해 표현한다.</p>
+<p>그렇다면 null 대신 <code>Option::None</code>을 사용하는 것의 장점은 무엇일까?</p>
+<h2>rust 변수의 특성</h2>
+<p>rust는 기본적으로 <strong>uninitialized</strong>된 변수에 대한 작업을 컴파일 타임에 잡아낸다. 다음의 코드를 보자.</p>
+<pre><code class="language-rust">fn main(){
+    let x: u32 = 1;
+    let y;
+    let sum = x+y;
+}
+</code></pre>
+<p>컴파일을 하면 다음과 같은 오류가 발생한다.</p>
+<pre><code class="language-shell">error[E0282]: type annotations needed
+  --&gt; src\main.rs:15:9
+   |
+15 |     let y;
+   |         ^ consider giving `y` a type
+</code></pre>
+<p>y에 type을 부여하라고 한다.</p>
+<p>그러면 다음과 같이 y에 type을 부여하면 어떻게 될까?</p>
+<pre><code class="language-rust">fn main(){
+    let x: u32 = 1;
+    let y: u32;
+    let sum = x+y;
+}
+</code></pre>
+<p>다음과 같은 오류가 발생한다.</p>
+<pre><code class="language-shell">error[E0381]: use of possibly-uninitialized variable: `y`
+  --&gt; src\main.rs:16:17
+   |
+16 |     let sum = x+y;
+   |                 ^ use of possibly-uninitialized `y`
+</code></pre>
+<p>초기화 되지 않은 변수 y를 사용하였다며 오류가 발생한다.</p>
+<p>이처럼 rust는 이러한 초기화 되지 않은 변수의 사용을 금지한다.</p>
+<p>그렇다면 반대로 <strong>변수를 사용하였다</strong>는 것은 무엇을 의미할까?</p>
+<p>바로 <strong>초기화된 값, 즉 실제로 값이 존재하는</strong>(null이 아닌) 변수를 사용하였음을 의미한다. 따라서 rust에서 변수는 type이 존재해야만 하고, 이러한 type이 있는 변수를 사용하였다는 것은 실제 값이 있는 변수 이기 때문에 null의 가능성을 고려하지 않아도 된다.</p>
+<h2>null값 다루기</h2>
+<p>따라서 rust에서 null값은 전적으로 <code>Option&lt;T&gt;</code>에 의해 관리된다.</p>
+<p><code>Option&lt;T&gt;</code>을 사용한 아래의 코드를 보자.</p>
+<pre><code class="language-rust">fn main(){
+    let x: u32 = 1;
+    let y:Option&lt;u32&gt; = Option::Some(2);
+    let sum = x+y;
+}
+</code></pre>
+<pre><code class="language-rust">fn main(){
+    let x: u32 = 1;
+    let y:Option&lt;u32&gt; = Option::None;
+    let sum = x+y;
+}
+</code></pre>
+<p><strong>null 값이 될 가능성이 있는 변수</strong>를 Option enum으로 표현하는 것이 중요하다.</p>
+<p>위의 두 코드는 다음과 같은 컴파일 에러가 발생한다.</p>
+<pre><code class="language-shell">error[E0277]: cannot add `Option&lt;u32&gt;` to `u32`
+  --&gt; src\main.rs:16:16
+   |
+16 |     let sum = x+y;
+   |                ^ no implementation for `u32 + Option&lt;u32&gt;`
+   |
+   = help: the trait `Add&lt;Option&lt;u32&gt;&gt;` is not implemented for `u32`
+</code></pre>
+<p>x와 y의 type이 다르기 때문에 컴파일 에러가 발생한다.</p>
+<p>또한 Option enum의 Some variation으로 부터 값을 가져오기 위해서는 프로그래머가 특정 코드를 작성하여야 한다.</p>
+<p>이러한 장치가 준비되어 있기 때문에 프로그래머는 null 값을 더 조심히 다룰 수 있게 되고, rust의 철학에 부합하는 <strong>더욱 안전한 프로그래밍</strong>이 가능하다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+        </div>
+    </body>
+</html>

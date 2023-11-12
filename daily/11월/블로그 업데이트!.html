@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+    </head>
+    <body class="dark:bg-black">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto md:px-16 lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2 h-full w-full">
+                <div class="md:col-span-4 lg:col-span-3">
+                    <a href="/">
+                        <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b border-blue-700 dark:border-blue-400">
+                            <p class="text-left text-4xl font-bold">blog.argnmp</p>
+                        </div>
+                    </a>
+                    <div class="flex md:flex-col p-4 bg-blue-700 dark:bg-blue-400 shadow-md text-gray-200 dark:text-gray-900">
+                        <div class="w-full md:object-center basis-1/4">
+                            <img class="w-full max-w-sm mx-auto" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0">
+                            <p class="text-xl md:mt-3">김태현</p>
+                            <p class="text-sm">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid-flow-row md:col-span-8 lg:col-span-9 rounded-lg">
+                    <div>
+                        <div class="py-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-4 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="px-5 py-3 mb-2 border border-blue-700 dark:border-blue-400">
+            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">블로그 업데이트!</p>
+        </div>
+        <div class="p-5 mb-2 border border-blue-700 dark:border-blue-400">
+            <table class="table-auto border-collapse text-left text-sm text-gray-700 dark:text-gray-200 w-full">
+                <thead class="text-xs border border-blue-700 dark:border-blue-400">
+                </thead>
+                <tbody>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            alias
+                        </th>
+                        <td class="px-4 py-2">undefined</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            author
+                        </th>
+                        <td class="px-4 py-2">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            created at
+                        </th>
+                        <td class="px-4 py-2">2023-11-11</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            tags 
+                        </th>
+                        <td class="px-4 py-2">
+                             
+                            <p>blog </p>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body p-5 border border-blue-700 dark:border-blue-400 mb-2">
+        <h2>새로운 블로그</h2>
+<p>오랜만에 블로그를 새롭게 만들었습니다. 그동안 여러개의 블로그를 거쳐왔지만, 이번에는 직관적으로 정보를 전달하고 자원을 효율적으로 사용하는 데 중점을 두어 블로그를 설계하였습니다.</p>
+<h2>첫번째 블로그 2020.3 ~ 2022.2</h2>
+<p>처음 프로그래밍 공부를 시작하며, 사용했던 블로그는  <a href="navydoc.tistory.com">navydoc.tistory.com</a> 입니다. 어쩌다 보니 군대 기간이 겹치게 되면서, 최장 기간 사용해온 블로그가 되었습니다. 가장 인기있는 글은 <a href="https://navydoc.tistory.com/31">https://navydoc.tistory.com/31</a> 리눅스의 사용중인 포트를 종료하는 방법에 대해 작성한 글로, <code>linux 포트 종료하기</code> 라고 구글에 검색하면 최상단에 위치합니다. 그래도 방문자 수가 하루 평군 50명 정도는 되어서, 구글 애드센스에 등록하여 수익을 창출하고 있습니다. 하루에 0.01 달러씩 말이죠..</p>
+<h2>두번째 블로그 2022.5 ~ 2023.6</h2>
+<p>2022년에 전역 후, 새로운 블로그를 제작했습니다. 백엔드는 express.js, 프론트엔드는 react.js 기반의 ssr 기능을 갖춘 블로그입니다. azure 클라우드의 학생 계정에 지원되는 무료 서비스만 골라서 기본 제공되는 credit의 소모 없이 사용했었으나, 어느 순간부터 credit이 다 소진되어 버렸고, 이로 인해 사용료를 내지 않으면 더이상 이용할 수 없는 상태가 되었습니다. 그래서 인스턴스를 종료해놓고 db만 백업을 해놓았습니다.</p>
+<h2>세번째 블로그 2023.11 ~</h2>
+<p>두번째 블로그가 credit 이슈로 인해 더이상 무료로 사용할 수 없게 되자, 저는 무료로 사용할 수 있는 블로그를 만들고자 결심했습니다. 불필요하게 구현되는 기능들은 걷어내고, 정보를 전달하는 것에 주안점을 둔 <strong>직관적이고 명확한</strong> 방식으로 설계를 하였습니다.
+그리하여, github pages를 이용한 정적 페이지 호스팅을 이용하여, CSR과 SSR을 함께 사용하는 현재의 블로그를 제작하였습니다. 사실 이 블로그 자체를 제작했다기 보다는 블로그 생성기를 제작했다고 할 수 있습니다. 로컬에서 정적으로 글을 작성한 뒤, rust로 제작한 프로그램을 통해 이 블로그를 렌더링 합니다. 렌더링한 결과를 git repository에만 업로드하면 배포가 완료됩니다! 블로그 생성기 프로젝트와 관련해서는 추후 포스팅을 하겠습니다.</p>
+<p>한달 여의 기간동안 새롭게 제작한 블로그에는, 컴퓨터 프로그래밍과 관련된 주제의 글들이 올라올 예정입니다.
+감사합니다!</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+        </div>
+    </body>
+</html>

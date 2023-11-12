@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+    </head>
+    <body class="dark:bg-black">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto md:px-16 lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2 h-full w-full">
+                <div class="md:col-span-4 lg:col-span-3">
+                    <a href="/">
+                        <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b border-blue-700 dark:border-blue-400">
+                            <p class="text-left text-4xl font-bold">blog.argnmp</p>
+                        </div>
+                    </a>
+                    <div class="flex md:flex-col p-4 bg-blue-700 dark:bg-blue-400 shadow-md text-gray-200 dark:text-gray-900">
+                        <div class="w-full md:object-center basis-1/4">
+                            <img class="w-full max-w-sm mx-auto" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0">
+                            <p class="text-xl md:mt-3">김태현</p>
+                            <p class="text-sm">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid-flow-row md:col-span-8 lg:col-span-9 rounded-lg">
+                    <div>
+                        <div class="py-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-4 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="px-5 py-3 mb-2 border border-blue-700 dark:border-blue-400">
+            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">tokio runtime의 task</p>
+        </div>
+        <div class="p-5 mb-2 border border-blue-700 dark:border-blue-400">
+            <table class="table-auto border-collapse text-left text-sm text-gray-700 dark:text-gray-200 w-full">
+                <thead class="text-xs border border-blue-700 dark:border-blue-400">
+                </thead>
+                <tbody>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            alias
+                        </th>
+                        <td class="px-4 py-2">undefined</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            author
+                        </th>
+                        <td class="px-4 py-2">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            created at
+                        </th>
+                        <td class="px-4 py-2">2023-01-31</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            tags 
+                        </th>
+                        <td class="px-4 py-2">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body p-5 border border-blue-700 dark:border-blue-400 mb-2">
+        <h2><code>task::spawn</code></h2>
+<p>tokio runtime은 green thread library로, task가 green thread의 단위가 된다. 여러개의 task들은 rust의 OS thread에 multiplex 되어 실행된다. 다음의 코드를 보자.</p>
+<pre><code class="language-rust">use std::{sync::{Arc, Mutex}, thread::sleep, time::Duration};
+
+use tokio::task;
+
+#[tokio::main(worker_threads=2)]
+async fn main(){
+    let a = Arc::new(Mutex::new(0));     
+    let mut handles = vec![];
+    for i in 0..100{
+        let a = a.clone();
+        let handle = task::spawn( async move {
+            if i == 19 {
+                loop {
+                    sleep(Duration::from_secs(100));
+                }
+            }
+            for _ in 0..10 {
+                let mut ptr = a.lock().unwrap();
+                *ptr += 1;
+                println!(&quot;thread {:?}: {}&quot;,std::thread::current().id(), ptr); 
+                std::mem::drop(ptr);
+                sleep(Duration::from_millis(1));
+            }
+        });
+        handles.push(handle);
+    }
+    for handle in handles {
+        handle.await.unwrap();
+    }
+}
+</code></pre>
+<p>이 코드에서는 100개의 task를 tokio 런타임에서 실행하고, 각 task는 a의 값을 1씩 10번 더한다. 100개의 task중 20번째로 생성되는 task는(i==19) <code>loop { sleep(Duration::from_secs(100)); }</code>을 통해서 영원히 blocked 되도록한다. tokio runtime의 worker_thread는 2로 설정해서 2개의 OS thread에 만 multiplex 되도록 한다.</p>
+<p>결과는 다음과 같다.</p>
+<pre><code class="language-shell">thread ThreadId(3): 1
+thread ThreadId(2): 2
+thread ThreadId(3): 3
+thread ThreadId(2): 4
+thread ThreadId(3): 5
+thread ThreadId(2): 6
+thread ThreadId(3): 7
+thread ThreadId(2): 8
+thread ThreadId(3): 9
+thread ThreadId(2): 10
+thread ThreadId(3): 11
+thread ThreadId(2): 12
+thread ThreadId(3): 13
+thread ThreadId(2): 14
+thread ThreadId(3): 15
+thread ThreadId(2): 16
+thread ThreadId(3): 17
+thread ThreadId(2): 18
+...
+thread ThreadId(3): 983
+thread ThreadId(3): 984
+thread ThreadId(3): 985
+thread ThreadId(3): 986
+thread ThreadId(3): 987
+thread ThreadId(3): 988
+thread ThreadId(3): 989
+thread ThreadId(3): 990
+</code></pre>
+<p>ThreadId를 통해서 task가 실행되는 thread의 id를 알 수 있다. tokio runtime의 worker thread를 2로 설정했기 때문에 초기에는 두개의 thread에서만 task가 실행되는 것을 확인할 수 있다.</p>
+<p>그러나 어느 순간 부터 thread id가 3인 thread에서만 task가 실행된다. 왜냐하면 20번째 task에서 <code>thread::sleep</code>을 통해서 thread자체가 blocked 되었기 때문에 worker thread 중 하나가 blocked되어 남은 task는 나머지 하나의 thread에서만 실행이 가능하기 때문이다.</p>
+<p>a는 990에 도달하면 프로그램이 멈춘다. 20번째 task가 a에 총 10번을 더해주어야 하는데, 시작하자마자 blocked 되었기 때문에 990에서 더 이상 증가할 수 없기 때문이다.</p>
+<h2><code>task::spawn_blocking</code></h2>
+<pre><code class="language-rust">use std::{sync::{Arc, Mutex}, thread::{sleep, ThreadId}, time::Duration, collections::HashSet};
+
+use tokio::task;
+
+#[tokio::main(worker_threads=2)]
+async fn main(){
+    let a = Arc::new(Mutex::new(0));     
+    let mut handles = vec![];
+    for i in 0..100{
+        let a = a.clone();
+        let handle = task::spawn_blocking( move ||{
+            if i == 20 {
+                loop {
+                    sleep(Duration::from_secs(100));
+                }
+            }
+            for _ in 0..10 {
+                let mut ptr = a.lock().unwrap();
+                *ptr += 1;
+                println!(&quot;thread {:?}: {}&quot;,std::thread::current().id(), ptr); 
+                std::mem::drop(ptr);
+                sleep(Duration::from_millis(1));
+            }
+        });
+        handles.push(handle);
+    }
+    for handle in handles {
+        handle.await.unwrap();
+    }
+}
+</code></pre>
+<p><code>spawn</code> 대신 <code>spawn_blocking</code>으로 실행하면 100개의 thread가 생성되어 실행되는 것을 확인할 수 있다.  마찬가지로, 990에서 프로그램이 멈춘다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+        </div>
+    </body>
+</html>

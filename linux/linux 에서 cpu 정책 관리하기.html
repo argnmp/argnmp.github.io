@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+    </head>
+    <body class="dark:bg-black">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto md:px-16 lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2 h-full w-full">
+                <div class="md:col-span-4 lg:col-span-3">
+                    <a href="/">
+                        <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b border-blue-700 dark:border-blue-400">
+                            <p class="text-left text-4xl font-bold">blog.argnmp</p>
+                        </div>
+                    </a>
+                    <div class="flex md:flex-col p-4 bg-blue-700 dark:bg-blue-400 shadow-md text-gray-200 dark:text-gray-900">
+                        <div class="w-full md:object-center basis-1/4">
+                            <img class="w-full max-w-sm mx-auto" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0">
+                            <p class="text-xl md:mt-3">김태현</p>
+                            <p class="text-sm">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid-flow-row md:col-span-8 lg:col-span-9 rounded-lg">
+                    <div>
+                        <div class="py-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-4 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="px-5 py-3 mb-2 border border-blue-700 dark:border-blue-400">
+            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">linux 에서 cpu 정책 관리하기</p>
+        </div>
+        <div class="p-5 mb-2 border border-blue-700 dark:border-blue-400">
+            <table class="table-auto border-collapse text-left text-sm text-gray-700 dark:text-gray-200 w-full">
+                <thead class="text-xs border border-blue-700 dark:border-blue-400">
+                </thead>
+                <tbody>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            alias
+                        </th>
+                        <td class="px-4 py-2">undefined</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            author
+                        </th>
+                        <td class="px-4 py-2">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            created at
+                        </th>
+                        <td class="px-4 py-2">2023-07-24</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            tags 
+                        </th>
+                        <td class="px-4 py-2">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body p-5 border border-blue-700 dark:border-blue-400 mb-2">
+        <h2>cpupower</h2>
+<p>cpupower 이라는 프로그램을 통해서 cpu의 max frequency, min frequency 나 governor을 편리하게 조정할 수 있다.</p>
+<pre><code class="language-shell">yay -S cpupower
+</code></pre>
+<h2>현재 내 cpu의 정보 확인하는 법</h2>
+<pre><code class="language-shell">cat /proc/cpuinfo
+</code></pre>
+<p><img src="/linux/Pasted%20image%2020231111233354.png" alt="Pasted image 20231111233354.png" />
+현재 내가 사용중인 노트북의 cpu는 i5-6200u 이다. 이 cpu는 2개의 코어와 4개의 스레드를 가지고 있다. 그래서 cpuinfo를 확인해보면 스레드의 수만큼의 정보를 확인할 수 있다.</p>
+<h2>cpupower frequency-info</h2>
+<p>이 명령어를 통해서 현재 cpu의 pstate, governor, frequency 등을 확인할 수 있다.</p>
+<p>앞서 확인한 코어 수는 4개(스레드 포함)이므로 0-3 까지 지정해서 볼 수 있다. 다음 순서로 명령어를 입력해야 한다. <code>cpupower -c [0|1|2|3|all] frequency-info</code></p>
+<pre><code class="language-shell">cpupower -c all frequency-info
+</code></pre>
+<p><img src="/linux/Pasted%20image%2020231111233412.png" alt="Pasted image 20231111233412.png" />
+driver는 intel_pstate, 가능한 cpu governor은 performance와 powersave, boost state 등등의 정보를 확인할 수 있다.</p>
+<h2>cpu frequency governor 변경하기</h2>
+<p>다음의 명령어는 모든 cpu의 현재 governor 상태를 보여준다</p>
+<pre><code class="language-shell">cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+</code></pre>
+<p><img src="/linux/Pasted%20image%2020231111233431.png" alt="Pasted image 20231111233431.png" />
+현재는 4개의 코어(스레드 포함) 모두 powersave 상태이다.</p>
+<p>앞서 cpupower frequency-info 로 확인했을때 가능한 governor은 <strong>powersave</strong>와 <strong>performance</strong> 였다. 현재는 powersave 상태이기 때문에 performance 상태로 변경할 수 있다.</p>
+<p>cpupower로 powersave governor을 변경하는 방법은 다음과 같다.</p>
+<pre><code class="language-shell">sudo cpupower frequency-set -g performance
+</code></pre>
+<p><img src="/linux/Pasted%20image%2020231111233506.png" alt="Pasted image 20231111233506.png" />
+-c 옵션을 통해 특정 코어를 지정해줄 수도 있다.</p>
+<p>현재 governor 상태를 확인해보면 다음과 같이 변경된 것을 확인할 수 있다.</p>
+<p><img src="/linux/Pasted%20image%2020231111233523.png" alt="Pasted image 20231111233523.png" /></p>
+<h2>부팅시 자동으로 governor을 설정하는 방법</h2>
+<p><a href="https://sleeplessbeastie.eu/2015/11/09/how-to-set-cpu-governor-at-boot/">https://sleeplessbeastie.eu/2015/11/09/how-to-set-cpu-governor-at-boot/</a></p>
+<p><code>/etc/systemd/system/cpupower.service</code> 파일을 생성후 아래의 내용을 입력하고 저장한다. 루트권한이 필요하다.</p>
+<pre><code class="language-shell">[Unit]
+Description=Apply CPU performance
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/cpupower -c all frequency-set -g performance
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>그리고 아래의 명령어를 입력한다.</p>
+<pre><code class="language-shell">sudo systemctl daemon-reload
+</code></pre>
+<p>부팅시 cpupower.service daemon을 실행하도록 설정한다.</p>
+<pre><code class="language-shell">sudo systemctl enable cpupower.service
+</code></pre>
+<h2>리눅스 애니메이션 느린 문제 해결</h2>
+<p>arch linux을 설치하고 gnome을 사용하는데도, 애니메이션에서 렉이 걸리는 문제가 생겼었다. 이런 저런 방법으로 해결하려고 노력을 했었으나 다 소용이 없어서,, 그냥 저전력 cpu여서 그런가 생각했는데, cpu 정책이 powersave로 설정되어 있어서 생긴 문제였다.</p>
+<p>performance로 설정해주니 거의 렉이 걸리지 않는다. 윈도우에서는 충전기를 꼽으면 자동으로 최고성능이 되어서 리눅스도 그렇겠거니 했는데 그게 아니었던 것이다. 속이 시원하다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+        </div>
+    </body>
+</html>

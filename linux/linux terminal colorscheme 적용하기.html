@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+    </head>
+    <body class="dark:bg-black">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto md:px-16 lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2 h-full w-full">
+                <div class="md:col-span-4 lg:col-span-3">
+                    <a href="/">
+                        <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b border-blue-700 dark:border-blue-400">
+                            <p class="text-left text-4xl font-bold">blog.argnmp</p>
+                        </div>
+                    </a>
+                    <div class="flex md:flex-col p-4 bg-blue-700 dark:bg-blue-400 shadow-md text-gray-200 dark:text-gray-900">
+                        <div class="w-full md:object-center basis-1/4">
+                            <img class="w-full max-w-sm mx-auto" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0">
+                            <p class="text-xl md:mt-3">김태현</p>
+                            <p class="text-sm">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="grid-flow-row md:col-span-8 lg:col-span-9 rounded-lg">
+                    <div>
+                        <div class="py-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-4 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="px-5 py-3 mb-2 border border-blue-700 dark:border-blue-400">
+            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">linux terminal colorscheme 적용하기</p>
+        </div>
+        <div class="p-5 mb-2 border border-blue-700 dark:border-blue-400">
+            <table class="table-auto border-collapse text-left text-sm text-gray-700 dark:text-gray-200 w-full">
+                <thead class="text-xs border border-blue-700 dark:border-blue-400">
+                </thead>
+                <tbody>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            alias
+                        </th>
+                        <td class="px-4 py-2">undefined</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            author
+                        </th>
+                        <td class="px-4 py-2">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            created at
+                        </th>
+                        <td class="px-4 py-2">2023-05-14</td>
+                    </tr>
+                    <tr class="text-xs border border-blue-700 dark:border-blue-400">
+                        <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
+                            tags 
+                        </th>
+                        <td class="px-4 py-2">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body p-5 border border-blue-700 dark:border-blue-400 mb-2">
+        <h2>서론</h2>
+<p>보통 나는 gnome desktop과 같은 gui환경에서 terminal을, 그리고 neovim을 사용한다. 그래서 일반적으로는 256가지의 색상이 적용되어, neovim 이 gui환경에서는 vim plugin으로 colorscheme을 설치해도 무리없이 잘 적용이 된다. 그러던 중 arch linux로 갈아타고, gnome desktop manager을 직접 설치하면서 단축키 하나로 다른 tty에서 cui를 사용할 수 있다는 것을 알게 되었다. 그리고 cui를 사용하면 gnome에서 terminal을 사용하는 것 보다 훨씬 빠른 성능을 낼 수 있었다.</p>
+<p>2016년에 구매했던 삼성노트북 5시리즈 노트북을 사용중이고 i5-6200u 저전력 프로세서에 내장그래픽을 사용중이다. windows 10과 arch linux를 듀얼부팅으로 사용 중이다. 한 가지 항상 들었던 의문이, linux에서는 windows 만큼 빠릿빠릿하지 않다는 것이었다. 애니메이션도 그렇고, 특히 gnome의 terminal을 사용했을 때 스크롤을 내리면 끊어지는 듯한 느낌이 들기도 하고, 부드럽지가 않았다. linux가 window보다 훨씬 가볍지만, 최적화가 잘 안되어있는 듯 했다. 그래픽 드라이버를 다른 것 깔아보고 재설치해봐도 그대로 였다. 그래픽 프로세싱에서 window보다 좋지 않았다. 그러던중 이번에 cui환경을 쉽게 사용할 수 있게 되어서 그걸 사용하기로 했고, 아무래도 cui환경이다보니 훨씬 부드럽고 가벼웠지만, 한 가지 문제가 있었다. 색상이 예쁘게 표시되지 않았다.</p>
+<p>보통 적용하는 vim colorscheme은 256색상에 맞추어져 있다. 하지만 linux cui환경에서는 최대 16개의 색상만 표시할 수 있다. gui에서 vim/neovim 의 256색상의 colorscheme은 cui환경에서 그대로 쓸때 재대로 색상이 표시되지 않아서 뒤죽박죽이다.</p>
+<p>한참동안 해결책을 고민했는데, 결국 <a href="https://github.com/chriskempson/base16-vim">https://github.com/chriskempson/base16-vim</a> 이분의 repository에서 해답을 찾을 수 있었다.</p>
+<h2>linux gui/cui환경에서 shell과 vim/neovim colorscheme을 입혀보자!</h2>
+<p>편하게 X windows desktop 환경을 gui 환경이라고 하고, linux cui(tty), desktop 환경이 아닌 일반 명령줄 화면을 cui 환경이라고 하겠다.</p>
+<h3>$TERM 변수 확인</h3>
+<p>일단은 현재 사용중인 terminal 환경을 살펴보아야 한다. gui 환경에서 terminal을 띄우고 아래의 명령어를 입력한다.</p>
+<pre><code class="language-shell">echo $TERM
+</code></pre>
+<p><img src="/linux/Pasted%20image%2020231111233150.png" alt="Pasted image 20231111233150.png" />
+내가 사용하는 gnome desktop 환경에서는 <strong>xterm-256color</strong> 이라고 나온다.</p>
+<p>cui환경에서 위의 명령어를 입력하면 <strong>linux</strong> 이라는 결과값이 나온다. 그렇다. gui환경에서는 $TERM 변수가 <strong>xterm-256color</strong> 으로 설정되고  , cui환경에서는 $TERM 변수가 <strong>linux</strong> 으로 설정되는 것이다. 이를 통해 vim/neovim 설정을 분기한다. gui환경에서는 그대로 256색상을 사용하는 colorscheme을 적용하고 cui환경에서는 16색상의 colorscheme을 적용해야 하기 때문이다.</p>
+<h3>vim/neovim 설정 변경</h3>
+<p>vim/neovim 설정을 열어서 아래의 플러그인을 설치해 준다.</p>
+<blockquote>
+<p><a href="https://github.com/chriskempson/base16-vim">https://github.com/chriskempson/base16-vim</a></p>
+</blockquote>
+<p>16색상 colorscheme이다. 플러그인을 사용한 설치법은 위 repo에 소개 되어있다.</p>
+<p>colorscheme 설치가 완료되었으면 아래의 코드를 vim/neovim 설정에 입력해준다.</p>
+<pre><code class="language-shell">&quot; Load the colorscheme
+let base16colorspace=256
+colorscheme base16-default-dark
+if ($TERM == &quot;xterm-256color&quot;) 
+colorscheme tokyonight
+endif
+</code></pre>
+<p>위의 설정은, 기본적으로 방금 설치한 <strong>base16-default-dark</strong>를 vim/neovim의 colorscheme으로 설정해주고, 만약에 $TERM 환경변수가 gui환경의 <strong>xterm-256color</strong> 일 경우에 다른 256색상의 colorscheme을 적용시킨다. 그렇기 때문에, 위 코드에서 [xterm-256color]와 [tokyonight] 을 자신의 환경에 맞게 설정해주면 된다.</p>
+<p><strong>let base16colorspace=256</strong> 이 부분은, 내 환경에서 line number 부분이 이상한 색깔로 표시되어서 위 repository의 docs를 읽어보다 설정해보았더니 해결되어서 넣어두었다. 필요에 따라 설정하고 해제하면 된다.</p>
+<h3>cui shell 색상 변경</h3>
+<p>여기까지 했으면 일단 gui환경에서는 256색상 colorscheme이 적용될 것이고, cui환경에서는 16색상 colorscheme이 적용될 것이다. 하지만 cui환경의 색상이 repository의 스크린샷과는 다를 것이다. shell의 16가지 색상을 아직 커스텀하지 않았기 때문이다. 아래의 repository를 다운로드 한다.</p>
+<p><a href="https://github.com/chriskempson/base16-shell">https://github.com/chriskempson/base16-shell</a></p>
+<p>위 repository의 docs를 따라하면 된다.</p>
+<pre><code class="language-shell">git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
+</code></pre>
+<p>나는 현재 bash를 사용중이므로 ~/.bashrc 에 설정을 추가한다.</p>
+<pre><code class="language-shell">source ~/.bashrc
+</code></pre>
+<p>로 bash 설정을 다시 가져온다.</p>
+<p>여기까지 했으면 base16 colorscheme 들을 불러올 수 있게 되었다.</p>
+<h3>base16 colorscheme 적용</h3>
+<p>cui환경에서 아래의 명령어를 입력하고 tab을 누른다.</p>
+<pre><code>base16_
+</code></pre>
+<p>그러면 적용할 수 있는 여러가지의 colorscheme 들이 나오는데, 그중에 하나를 실행하면 cui shell에 colorscheme이 적용된다.</p>
+<pre><code class="language-shell">base16_default-dark
+</code></pre>
+<p>or</p>
+<pre><code class="language-shell">base16_3024
+</code></pre>
+<p>이라고 cui환경에서 입력하면 colorscheme이 자동으로 적용이 된다. 굉장히 편리하다!!! 그리고 나서 vim/neovim 으로 파일을 열어보면 정상적으로 색상이 적용되는 것을 볼 수 있다.</p>
+<h3>vim/neovim colorscheme 변경</h3>
+<p>위에서 vim/neovim의 colorscheme 을 <strong>base16-default-dark</strong>로 설정했었다. cui환경의 shell 색상을 여러개로 바꿀수 있는 것과 동일하게
+vim/neovim 에서도 색상을 바꿀 수 있다.</p>
+<p><a href="https://github.com/chriskempson/base16-vim/tree/master/colors">https://github.com/chriskempson/base16-vim/tree/master/colors</a></p>
+<p>여기에는 여러개의 .vim 확장자의 파일이 있는데 이 .vim 확장자를 뗀 파일명을 <strong>colorscheme base16-3024</strong> 처럼 입력하면 적용된다.</p>
+<p>그런데 그냥 vim/neovim 에서 <strong>colorscheme base16-default-dark</strong> 으로 설정해주고, cui환경에서 <strong>base16_3024</strong>와 같은 명령어로 다르게 shell colorscheme을 바꾸어주면 자동으로 vim/neovim colorscheme도 변한다.</p>
+<h2>마무리</h2>
+<p>cui환경에서 색상이 제대로 표시되지 않는 문제 때문에 몇일동안 불편했다. ㅋㅋ 이제 해결되어서 맘놓고 쓸 수 있을 것이다.</p>
+<h2>추가</h2>
+<pre><code class="language-shell">&quot; Load the colorscheme
+let base16colorspace=256
+colorscheme base16-default-dark
+if ($TERM == &quot;xterm-256color&quot;) 
+colorscheme tokyonight
+endif
+</code></pre>
+<p>위에서 <strong>let base16colorspace=256</strong> 이라는 코드를 썼었다. 이 코드를 쓰는 순서가 중요하다. base16-default-dark colorscheme을 적용하기 <strong>전에</strong> 이 코드를 작성해주어야 한다. 이렇게 하지 않으면 cui환경에서 vim/neovim 의 colorscheme이 제대로 적용되지 않는다.</p>
+<p>즉</p>
+<pre><code class="language-shell">&quot; Load the colorscheme
+colorscheme base16-default-dark
+let base16colorspace=256
+if ($TERM == &quot;xterm-256color&quot;) 
+colorscheme tokyonight
+endif
+</code></pre>
+<p>이렇게 코드를 작성하면 colorscheme이 제대로 적용되지 않는다.</p>
+<p>나도 이것저것 해보다가, 갑자기 cui환경에서 neovim의 colorscheme이 제대로 적용되지 않았다. 컴퓨터를 재부팅해보고 여러가지를 해보았지만, 하나도 소용이 없었다. 그러던 중 결국 문제를 발견했다. 이 순서가 매우 중요하다!</p>
+<h2>문제점</h2>
+<p>위에서 vim/neovim에 설정을 입력하던 중 <strong>let base16colorspace=256</strong> 이라는 코드를 입력했었다. 이 코드는 vim/neovim 의 colorscheme을 적용할 때 256 색상을 사용하도록 설정한 것이다. cui환경은 언급한 바와 같이 16색상만 지원한다. 따라서 이 코드를 넣으면 안된다. 하지만 내가 이 코드를 설정에 넣은 이유는, 이 코드가 없으면 현재 라인 색상이 이상하게 표시되기 때문이었다. 애초에 base16-shell 과 base16-vim 코드가 작성될 때 최소 색상 개수 24개로 설정하였기 때문에, 현재 16색상 terminal에서 사용하려니 문제가 발생하는 것이다.</p>
+<p>실제로 vim/nvim 에서 :hi 라는 명령어를 입력하면 현재 syntax의 highlight 색상을 볼 수 있는데, xxx 라고 표시되지 않는 부분은, 현재 지원하지 않는 색상을 쓰고 있기 때문이라 판단할 수 있다.</p>
+<pre><code class="language-shell">cd ~/.config/base16-shell
+./colortest
+</code></pre>
+<p>실제로 앞서 설치했던 base16-shell 폴더에서 colortest 스크립트를 실행해보면 color16 부분이 아예 표시가 되질 않는다. 16번째 색상이 문제인 것이다.</p>
+<p>vim/neovim 에서 아래의 명령어를 입력하면</p>
+<pre><code class="language-shell">:hi Number ctermfg=15
+</code></pre>
+<p>안보이던 숫자들이 보이게 된다. cterm의 16번째 색상이 문제이니 15번째 색상으로 교체하는 것이다. 하지만 <strong>:hi</strong> 명령어를 입력했을 때 ctermfg=16 부분을 ctermfg=15 로 모두 고쳐야 하는데 하나하나 다 할 수가 없다. 따라서 약간의 트윅을 써보려고 한다.</p>
+<h3>해결방법</h3>
+<p>base16-vim 을 플러그인을 통해서 설치했었다. 따라서 일단 이 플러그인 이 설치된 위치로 가야한다. 나는 neovim에 vim-plug를 사용중인데, 플러그인이 설치된 위치는 아래와 같다. 그 위치로 이동한다.</p>
+<pre><code class="language-shell">cd ~/.local/share/nvim/plugged/base16-vim
+</code></pre>
+<p>이 위치로 가면 colors 폴더가 있다. 이 폴더로 들어간다</p>
+<pre><code class="language-shell">cd colors
+</code></pre>
+<p>여기에 여러가지 colorscheme을 초기화하는 vim 설정 파일이 담겨있다. 그중에 아무거나 하나를 골라서 <strong>base16-patch.vim</strong> 이라는 이름으로 복사한다.</p>
+<p>base16-patch.vim 파일을 열어서 다음과 같이 수정한다.</p>
+<pre><code class="language-shell">...중략
+if exists(&quot;base16colorspace&quot;) &amp;&amp; base16colorspace == &quot;256&quot;
+  let s:cterm01        = &quot;18&quot;
+  let g:base16_cterm01 = &quot;18&quot;
+  let s:cterm02        = &quot;19&quot;
+  let g:base16_cterm02 = &quot;19&quot;
+  let s:cterm04        = &quot;20&quot;
+  let g:base16_cterm04 = &quot;20&quot;
+  let s:cterm06        = &quot;21&quot;
+  let g:base16_cterm06 = &quot;21&quot;
+  let s:cterm09        = &quot;15&quot;
+  let g:base16_cterm09 = &quot;15&quot;
+  let s:cterm0F        = &quot;17&quot;
+  let g:base16_cterm0F = &quot;17&quot;
+else
+  let s:cterm01        = &quot;10&quot;
+  let g:base16_cterm01 = &quot;10&quot;
+  let s:cterm02        = &quot;11&quot;
+  let g:base16_cterm02 = &quot;11&quot;
+  let s:cterm04        = &quot;12&quot;
+  let g:base16_cterm04 = &quot;12&quot;
+  let s:cterm06        = &quot;13&quot;
+  let g:base16_cterm06 = &quot;13&quot;
+  let s:cterm09        = &quot;09&quot;
+  let g:base16_cterm09 = &quot;09&quot;
+  let s:cterm0F        = &quot;14&quot;
+  let g:base16_cterm0F = &quot;14&quot;
+endif
+...중략
+</code></pre>
+<p>위의 부분에서 15를 16으로 모두 수정한다.</p>
+<pre><code class="language-shell">...중략
+if exists(&quot;base16colorspace&quot;) &amp;&amp; base16colorspace == &quot;256&quot;
+  let s:cterm01        = &quot;18&quot;
+  let g:base16_cterm01 = &quot;18&quot;
+  let s:cterm02        = &quot;19&quot;
+  let g:base16_cterm02 = &quot;19&quot;
+  let s:cterm04        = &quot;20&quot;
+  let g:base16_cterm04 = &quot;20&quot;
+  let s:cterm06        = &quot;21&quot;
+  let g:base16_cterm06 = &quot;21&quot;
+  let s:cterm09        = &quot;16&quot;
+  let g:base16_cterm09 = &quot;16&quot;
+  let s:cterm0F        = &quot;17&quot;
+  let g:base16_cterm0F = &quot;17&quot;
+else
+  let s:cterm01        = &quot;10&quot;
+  let g:base16_cterm01 = &quot;10&quot;
+  let s:cterm02        = &quot;11&quot;
+  let g:base16_cterm02 = &quot;11&quot;
+  let s:cterm04        = &quot;12&quot;
+  let g:base16_cterm04 = &quot;12&quot;
+  let s:cterm06        = &quot;13&quot;
+  let g:base16_cterm06 = &quot;13&quot;
+  let s:cterm09        = &quot;09&quot;
+  let g:base16_cterm09 = &quot;09&quot;
+  let s:cterm0F        = &quot;14&quot;
+  let g:base16_cterm0F = &quot;14&quot;
+endif
+...중략
+</code></pre>
+<p>그리고 vim/neovim 설정 파일에서 colorscheme을 <strong>base16-patch</strong> 으로 수정해준다.</p>
+<pre><code class="language-shell">&quot; Load the colorscheme
+colorscheme base16-patch
+let base16colorspace=256
+if ($TERM == &quot;xterm-256color&quot;) 
+colorscheme tokyonight
+endif
+</code></pre>
+<p>앞서서 vim/neovim colorscheme에 관계없이 base16-shell의 colorscheme에 따라서 vim/neovim 의 색상도 자동으로 변하기 때문에, 위와 같이 설정해놓아도, base16-shell의 색상이 바뀌면 자동으로 바뀌게 된다.</p>
+<p>여기까지 하고 vim/neovim 을 확인해보면 안보이던 숫자가 보이는 것을 확인할 수 있고, :hi 의 모든 ctermfg가 16에서 15로 바뀌었음을 알 수 있다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+        </div>
+    </body>
+</html>
