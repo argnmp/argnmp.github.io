@@ -1118,6 +1118,130 @@
   filter: invert(50%);
 }
 
+@media (prefers-color-scheme: light) {
+  pre code.hljs{
+    display:block;
+    overflow-x:auto;
+    padding:1em
+  }
+
+  code.hljs{
+    padding:3px 5px
+  }
+
+  .hljs{
+    color:#383a42;
+    background:#fafafa
+  }
+
+  .hljs-comment,.hljs-quote{
+    color:#a0a1a7;
+    font-style:italic
+  }
+
+  .hljs-doctag,.hljs-formula,.hljs-keyword{
+    color:#a626a4
+  }
+
+  .hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{
+    color:#e45649
+  }
+
+  .hljs-literal{
+    color:#0184bb
+  }
+
+  .hljs-addition,.hljs-attribute,.hljs-meta .hljs-string,.hljs-regexp,.hljs-string{
+    color:#50a14f
+  }
+
+  .hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{
+    color:#986801
+  }
+
+  .hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{
+    color:#4078f2
+  }
+
+  .hljs-built_in,.hljs-class .hljs-title,.hljs-title.class_{
+    color:#c18401
+  }
+
+  .hljs-emphasis{
+    font-style:italic
+  }
+
+  .hljs-strong{
+    font-weight:700
+  }
+
+  .hljs-link{
+    text-decoration:underline
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  pre code.hljs{
+    display:block;
+    overflow-x:auto;
+    padding:1em
+  }
+
+  code.hljs{
+    padding:3px 5px
+  }
+
+  .hljs{
+    color:#abb2bf;
+    background:#282c34
+  }
+
+  .hljs-comment,.hljs-quote{
+    color:#5c6370;
+    font-style:italic
+  }
+
+  .hljs-doctag,.hljs-formula,.hljs-keyword{
+    color:#c678dd
+  }
+
+  .hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{
+    color:#e06c75
+  }
+
+  .hljs-literal{
+    color:#56b6c2
+  }
+
+  .hljs-addition,.hljs-attribute,.hljs-meta .hljs-string,.hljs-regexp,.hljs-string{
+    color:#98c379
+  }
+
+  .hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{
+    color:#d19a66
+  }
+
+  .hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{
+    color:#61aeee
+  }
+
+  .hljs-built_in,.hljs-class .hljs-title,.hljs-title.class_{
+    color:#e6c07b
+  }
+
+  .hljs-emphasis{
+    font-style:italic
+  }
+
+  .hljs-strong{
+    font-weight:700
+  }
+
+  .hljs-link{
+    text-decoration:underline
+  }
+}
+
 /*! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com*/
 
 /*
@@ -1872,10 +1996,6 @@ select {
   display: none;
 }
 
-.h-full {
-  height: 100%;
-}
-
 .h-screen {
   height: 100vh;
 }
@@ -1906,6 +2026,10 @@ select {
 
 .border-collapse {
   border-collapse: collapse;
+}
+
+.auto-cols-min {
+  grid-auto-columns: min-content;
 }
 
 .grid-flow-row {
@@ -2034,6 +2158,11 @@ select {
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .text-4xl {
@@ -2307,12 +2436,12 @@ html, body {
 }
 
 @media (min-width: 768px) {
-  .md\:col-span-4 {
-    grid-column: span 4 / span 4;
+  .md\:col-span-3 {
+    grid-column: span 3 / span 3;
   }
 
-  .md\:col-span-8 {
-    grid-column: span 8 / span 8;
+  .md\:col-span-9 {
+    grid-column: span 9 / span 9;
   }
 
   .md\:mx-auto {
@@ -2348,17 +2477,14 @@ html, body {
 }
 
 @media (min-width: 1024px) {
-  .lg\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-
-  .lg\:col-span-9 {
-    grid-column: span 9 / span 9;
-  }
-
   .lg\:px-20 {
     padding-left: 5rem;
     padding-right: 5rem;
+  }
+
+  .lg\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
   }
 }
 
