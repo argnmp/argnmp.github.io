@@ -79,7 +79,7 @@
 <article>
     <section class="w-full">
         <div class="px-5 py-3 mb-2 border border-blue-700 dark:border-blue-400">
-            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">boj 11404 플로이드</p>
+            <p class="text-4xl font-bold text-gray-700 dark:text-gray-200 border-b-2 border-blue-700 dark:border-blue-400 py-1">boj 2151 거울 설치</p>
         </div>
         <div class="p-5 mb-2 border border-blue-700 dark:border-blue-400">
             <table class="table-auto border-collapse text-left text-sm text-gray-700 dark:text-gray-200 w-full">
@@ -102,7 +102,7 @@
                         <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
                             created at
                         </th>
-                        <td class="px-4 py-2">2023-10-20</td>
+                        <td class="px-4 py-2">2023-11-13</td>
                     </tr>
                     <tr class="text-xs border border-blue-700 dark:border-blue-400">
                         <th scope="row" class="px-4 py-2 font-medium whitespace-nowrap dark:text-white">
@@ -122,8 +122,7 @@
     </section>
     <div class="clear-none markdown-body p-5 border border-blue-700 dark:border-blue-400 mb-2">
         <h3>코드</h3>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
+<pre><code class="language-#include">#include &lt;algorithm&gt;
 #include &lt;climits&gt;
 #include &lt;vector&gt;
 #include &lt;queue&gt;
@@ -135,43 +134,64 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int n, m;
-
+int n;
+char board[50][50];
+// t-&gt;r-&gt;b-&gt;l
+// 0-&gt;1-&gt;2-&gt;3
+int dx[4] = {-1,0,1,0};
+int dy[4] = {0,1,0,-1};
+struct pos {
+    int x, y, dir;
+    bool safe(){return 0&lt;=x&amp;&amp;x&lt;n&amp;&amp;0&lt;=y&amp;&amp;y&lt;n;}
+    pos adj(int i){return pos {x+dx[i%4], y+dy[i%4], i%4};}
+    void print(){printf(&quot;[%d,%d | %d]\n&quot;, x, y, dir);}
+};
 void solve(){
-    cin &gt;&gt; n &gt;&gt; m;
-    int u, v, w;
-
-    int cost[101][101];
-    for(int i = 1; i&lt;=n; i++){
-        for(int j = 1; j&lt;=n; j++){
-            if(i==j) cost[i][j] = 0;
-            else cost[i][j] = INT_MAX;
-        }
-    }
-    for(int i = 0; i&lt;m; i++){
-        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
-        cost[u][v] = min(cost[u][v], w);
-    }
-    
-    for(int k = 1; k&lt;=n; k++){
-        for(int i = 1; i&lt;=n; i++){
-            for(int j = 1; j&lt;=n; j++){
-                if(cost[i][k] != INT_MAX &amp;&amp; cost[k][j] != INT_MAX){
-                    cost[i][j] = min(cost[i][j], cost[i][k] + cost[k][j]);
-                }
+    cin &gt;&gt; n;
+    pos from, to;
+    bool flag = true;
+    for(int i = 0; i&lt;n; i++){
+        for(int j = 0; j&lt;n; j++){
+            char ch = cin.get();
+            if(ch=='\r'||ch=='\n'||ch==' ')
+                ch = cin.get();
+            board[i][j] = ch;
+            if(ch=='#'){
+                if(flag) from = pos {i, j};
+                else to = pos {i, j};
+                flag = false;
             }
         }
     }
     
-    for(int i = 1; i&lt;=n; i++){
-        for(int j = 1; j&lt;=n; j++){
-            if(cost[i][j]==INT_MAX)
-                cout &lt;&lt; 0 &lt;&lt; ' ';
-            else
-                cout &lt;&lt; cost[i][j] &lt;&lt; ' ';
+    queue&lt;pair&lt;int, pos&gt;&gt; q;
+    int visited[50][50][4] = {0,};
+    q.push({0, pos{from.x, from.y, 0}});
+    q.push({0, pos{from.x, from.y, 1}});
+    visited[from.x][from.y][0] = 1;
+    visited[from.x][from.y][1] = 1;
+    while(!q.empty()){
+        auto cur = q.front();
+        q.pop();
+        pos cur_pos = cur.second;
+        pos next[2] = {cur_pos.adj(cur_pos.dir+1), cur_pos.adj(cur_pos.dir+3)};
+        for(int i = 0; i&lt;2; i++){
+            pos n = next[i];
+            while(n.safe() &amp;&amp; visited[n.x][n.y][n.dir]==0){
+                visited[n.x][n.y][n.dir] = 1;
+                if(board[n.x][n.y]=='*') break;
+                else if(n.x==to.x &amp;&amp; n.y==to.y){
+                    cout &lt;&lt; cur.first;
+                    return;
+                }
+                else if(board[n.x][n.y]=='!'){
+                    q.push({cur.first+1, n});
+                }
+                n = n.adj(n.dir);
+            }
         }
-        cout &lt;&lt; '\n';
     }
+    
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -182,7 +202,17 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
+<ul>
+<li>문에서 문까지 경로를 찾아야 하는데, 거울을 통해서 가야만 하고, 이 거울을 설치할 수 있는 곳에는 제한이 있다.</li>
+<li>pos struct에 dir 이라는 direction 값을 추가해주었다. 이 dir이라는 값은, 이전위치에서 어느방향으로 왔는지를 의미한다.</li>
+<li>bfs를 이용해서 다른 문까지 거울을 설치하며 갈 수 있는 경로를 알아낸다. 기존 bfs와는 다르게 한칸씩 이동하는 것이 아닌, 거울을 설치할 수 있는 위치까지 한번에 이동하면서 각 칸에서의 방향에 대한 visited 값을 체크해 준다. 왜냐하면 거울을 설치할 수 있는 위치에 도달하기 전까지는 이전 방향과 똑같이 직진할 수 밖에 없기 때문이다.</li>
+<li>거울을 설치할 수 있는 위치에 도달하면 90도로 회전할 수 있기 때문에, 이때 사용한 거울 갯수를 하나 추가하고, 90도 꺾은 방향에 대한 pos를 queue에 넣어준다.</li>
+<li>pos struct를 이용하니 깔끔하게 풀이가 가능했다.</li>
+</ul>
 <h3>느낀점</h3>
+<ul>
+<li>풀이는 잘 떠올렸으나, <strong>거울을 설치할 수 있는 위치</strong> 를 해당 위치에 가면 무조건 90도가 되어야 한다고 잘못 이해하여, 시간이 조금 걸렸다. <strong>거울을 설치할 수 있는 위치</strong>일 뿐, 설치를 안하는 경우에는 그냥 지나칠 수도 있다.</li>
+</ul>
 
     </div>
 </article>
