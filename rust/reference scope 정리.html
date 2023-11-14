@@ -8,7 +8,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
     </head>
-    <body class="dark:bg-black">
+    <body class="dark:bg-gray-800">
         <script type="module">
             import init, {Ground, Index} from '/static/dist/render.js'
             async function run(){
@@ -80,10 +80,10 @@
                      
 <article>
     <section class="w-full">
-        <div class="px-5 mb-2">
+        <div class="mb-2 md:pl-5">
             <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">reference scope 정리</p>
         </div>
-        <div class="px-5 mb-2">
+        <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
                 <tbody>
                     <tr class="">
@@ -116,7 +116,7 @@
             </table>
         </div>
     </section>
-    <div class="clear-none markdown-body p-5 mb-2">
+    <div class="clear-none markdown-body mb-2 md:pl-5">
         <h2>서론</h2>
 <p>rust book을 읽던 중에 reference에 대해서 혼란을 주는 부분이 있어 깔끔하게 정리해보고자 한다.</p>
 <p>일단 <strong>reference</strong>란 다른 언어와 같이 특정 변수에 접근해서 값을 가져올 수도 있고 수정할 수 있도록 해놓은 문법이다.</p>

@@ -8,7 +8,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
     </head>
-    <body class="dark:bg-black">
+    <body class="dark:bg-gray-800">
         <script type="module">
             import init, {Ground, Index} from '/static/dist/render.js'
             async function run(){
@@ -80,10 +80,10 @@
                      
 <article>
     <section class="w-full">
-        <div class="px-5 mb-2">
+        <div class="mb-2 md:pl-5">
             <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">generic 사용법</p>
         </div>
-        <div class="px-5 mb-2">
+        <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
                 <tbody>
                     <tr class="">
@@ -116,7 +116,7 @@
             </table>
         </div>
     </section>
-    <div class="clear-none markdown-body p-5 mb-2">
+    <div class="clear-none markdown-body mb-2 md:pl-5">
         <h2>function</h2>
 <pre><code class="language-rust">fn ret&lt;T&gt;(param: T) -&gt; T{
     param

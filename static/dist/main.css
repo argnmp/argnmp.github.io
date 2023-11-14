@@ -36,7 +36,7 @@
     --color-fg-default: #e6edf3;
     --color-fg-muted: #7d8590;
     --color-fg-subtle: #6e7681;
-    --color-canvas-default: #0d1117;
+    --color-canvas-default: #1f2937;
     --color-canvas-subtle: #161b22;
     --color-border-default: #30363d;
     --color-border-muted: #21262d;
@@ -1999,6 +1999,10 @@ select {
   margin-bottom: 0.5rem;
 }
 
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -2097,10 +2101,6 @@ select {
 
 .border-b-4 {
   border-bottom-width: 4px;
-}
-
-.border-l-4 {
-  border-left-width: 4px;
 }
 
 .border-blue-700 {
@@ -2386,6 +2386,11 @@ html, body {
     background-color: rgb(55 65 81 / var(--tw-bg-opacity));
   }
 
+  .dark\:bg-gray-800 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+  }
+
   .dark\:text-blue-400 {
     --tw-text-opacity: 1;
     color: rgb(96 165 250 / var(--tw-text-opacity));
@@ -2488,6 +2493,10 @@ html, body {
 
   .md\:p-0 {
     padding: 0px;
+  }
+
+  .md\:pl-5 {
+    padding-left: 1.25rem;
   }
 
   .md\:text-center {
