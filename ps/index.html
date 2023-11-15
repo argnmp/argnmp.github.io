@@ -41,14 +41,13 @@
         </script>
 
         <div id="main" class="p-5 md:container md:mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
-
+            <a href="/">
+                <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b-4 border-blue-700 dark:border-blue-400">
+                    <p class="text-left text-3xl lg:text-4xl font-bold">blog.argnmp</p>
+                </div>
+            </a>
             <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
                 <div class="md:col-span-3">
-                    <a href="/">
-                        <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b-4 border-blue-700 dark:border-blue-400">
-                            <p class="text-left text-3xl lg:text-4xl font-bold">blog.argnmp</p>
-                        </div>
-                    </a>
                     <div class="flex md:flex-col p-2 text-gray-900 dark:text-gray-200">
                         <div class="w-full md:object-center basis-1/4">
                             <img class="w-full max-w-sm mx-auto rounded-full ring-2 p-2" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
@@ -79,16 +78,17 @@
                     
 <div class="md:pl-5">
     
-    <a class="anc" href="/ps/boj 6087 레이저 통신.html">
+    <a class="anc" href="/ps/boj 16954 움직이는 미로 탈출.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
-            boj 6087 레이저 통신
+            boj 16954 움직이는 미로 탈출
             </p>
+            
             <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int w, h; char board[101][101]; int dx[4] = {-1, 0, 1, 0}; 
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int wall[8][8][8] = {0,}; int dx[9] = {-1,0,1,0,-1,-1,1,1,0}; 
             </p>
             <p class="text-xs text-right">
-            2023-10-14
+            2023-11-15
             </p>
             <p class="text-xs text-right">
             Taehyeon Kim
@@ -96,33 +96,17 @@
         </div>
     </a>
     
-    <a class="anc" href="/ps/boj 1655 가운데를 말해요.html">
+    <a class="anc" href="/ps/boj 2151 거울 설치.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
-            boj 1655 가운데를 말해요
+            boj 2151 거울 설치
             </p>
+            
             <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n; priority_queue&lt;int&gt; maxq; priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq; 
+            코드 #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n; char board[50][50]; &#x2F;&#x2F; t-&gt;r-&gt;b-&gt;l &#x2F;&#x2F; 0-&gt;1-&gt;2-&gt;3 int dx[4] = {-1,0,1,0}; 
             </p>
             <p class="text-xs text-right">
-            2023-09-22
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
-        </div>
-    </a>
-    
-    <a class="anc" href="/ps/boj 11066 파일 합치기.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            boj 11066 파일 합치기
-            </p>
-            <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int k; int memo[501][501] = {0,}; int sums[501]; vector&lt;int&gt; files; 
-            </p>
-            <p class="text-xs text-right">
-            2023-10-14
+            2023-11-13
             </p>
             <p class="text-xs text-right">
             Taehyeon Kim
@@ -135,6 +119,7 @@
             <p class="text-2xl font-semibold">
             boj 11404 플로이드
             </p>
+            
             <p class="text-xs">
             코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n, m;  void solve(){ cin &gt;&gt; n &gt;&gt; m; int u, v, w; 
             </p>
@@ -147,11 +132,66 @@
         </div>
     </a>
     
+    <a class="anc" href="/ps/boj 2931 가스관.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            boj 2931 가스관
+            </p>
+            
+            <p class="text-xs">
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int r, c; char board[25][25]; int dx[4] = {-1, 0, 1, 0}; 
+            </p>
+            <p class="text-xs text-right">
+            2023-10-20
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
+    <a class="anc" href="/ps/boj 11657 타임머신.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            boj 11657 타임머신
+            </p>
+            
+            <p class="text-xs">
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; struct edge{ int u, v, w; };  int n, m; vector&lt;vector&lt;edge&gt;&gt; graph(501, vector&lt;edge&gt;()); 
+            </p>
+            <p class="text-xs text-right">
+            2023-10-19
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
+    <a class="anc" href="/ps/boj 9370 미확인 도착지.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            boj 9370 미확인 도착지
+            </p>
+            
+            <p class="text-xs">
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; struct edge { int u, v, w; }; struct compare { bool operator()(edge&amp; a, edge &amp;b){ 
+            </p>
+            <p class="text-xs text-right">
+            2023-10-19
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
     <a class="anc" href="/ps/boj 1039 교환.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
             boj 1039 교환
             </p>
+            
             <p class="text-xs">
             코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;string&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; string n; int nn, k, ans = INT_MIN; int memo[1000001][11] = {0,}; 
             </p>
@@ -164,16 +204,107 @@
         </div>
     </a>
     
-    <a class="anc" href="/ps/boj 10830 행렬 제곱.html">
+    <a class="anc" href="/ps/boj 7579 앱.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
-            boj 10830 행렬 제곱
+            boj 7579 앱
             </p>
+            
             <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n; ll b; struct matrix { int r, c; vector&lt;vector&lt;int&gt;&gt; data; 
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n, m; int mem[101]={0,}; int c[101]={0,}; &#x2F;&#x2F; dp[c][i] = 비용이 c이고, i번째 앱까지 비활성화 했을 때, 최대 메모리 확보량 
             </p>
             <p class="text-xs text-right">
-            2023-10-08
+            2023-10-15
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
+    <a class="anc" href="/ps/boj 11049 행렬 곱셈 순서.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            boj 11049 행렬 곱셈 순서
+            </p>
+            
+            <p class="text-xs">
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n; struct matrix { int r, c; }; int dp[501][501] = {0,}; 
+            </p>
+            <p class="text-xs text-right">
+            2023-10-14
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
+    <a class="anc" href="/ps/boj 11066 파일 합치기.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            boj 11066 파일 합치기
+            </p>
+            
+            <p class="text-xs">
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int k; int memo[501][501] = {0,}; int sums[501]; vector&lt;int&gt; files; 
+            </p>
+            <p class="text-xs text-right">
+            2023-10-14
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
+    <a class="anc" href="/ps/boj 6087 레이저 통신.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            boj 6087 레이저 통신
+            </p>
+            
+            <p class="text-xs">
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int w, h; char board[101][101]; int dx[4] = {-1, 0, 1, 0}; 
+            </p>
+            <p class="text-xs text-right">
+            2023-10-14
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
+    <a class="anc" href="/ps/boj 2211 네트워크 복구.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            boj 2211 네트워크 복구
+            </p>
+            
+            <p class="text-xs">
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n, m; struct edge { int u, v, w; void print(){ 
+            </p>
+            <p class="text-xs text-right">
+            2023-10-14
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
+    <a class="anc" href="/ps/boj 1916 최소비용 구하기.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            boj 1916 최소비용 구하기
+            </p>
+            
+            <p class="text-xs">
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n, m, from, to; struct edge { int v; int w; 
+            </p>
+            <p class="text-xs text-right">
+            2023-10-09
             </p>
             <p class="text-xs text-right">
             Taehyeon Kim
@@ -186,6 +317,7 @@
             <p class="text-2xl font-semibold">
             boj 1197 최소 스패닝 트리
             </p>
+            
             <p class="text-xs">
             코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int v, e; struct edge { int v; int w; void print() { 
             </p>
@@ -203,110 +335,9 @@
             <p class="text-2xl font-semibold">
             boj 2749 피보나치 수 3
             </p>
+            
             <p class="text-xs">
             코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; ll n;  struct matrix { int r; int c; vector&lt;vector&lt;ll&gt;&gt; data; 
-            </p>
-            <p class="text-xs text-right">
-            2023-10-09
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
-        </div>
-    </a>
-    
-    <a class="anc" href="/ps/boj 2931 가스관.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            boj 2931 가스관
-            </p>
-            <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int r, c; char board[25][25]; int dx[4] = {-1, 0, 1, 0}; 
-            </p>
-            <p class="text-xs text-right">
-            2023-10-20
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
-        </div>
-    </a>
-    
-    <a class="anc" href="/ps/boj 11049 행렬 곱셈 순서.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            boj 11049 행렬 곱셈 순서
-            </p>
-            <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n; struct matrix { int r, c; }; int dp[501][501] = {0,}; 
-            </p>
-            <p class="text-xs text-right">
-            2023-10-14
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
-        </div>
-    </a>
-    
-    <a class="anc" href="/ps/boj 9370 미확인 도착지.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            boj 9370 미확인 도착지
-            </p>
-            <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; struct edge { int u, v, w; }; struct compare { bool operator()(edge&amp; a, edge &amp;b){ 
-            </p>
-            <p class="text-xs text-right">
-            2023-10-19
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
-        </div>
-    </a>
-    
-    <a class="anc" href="/ps/boj 11657 타임머신.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            boj 11657 타임머신
-            </p>
-            <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; struct edge{ int u, v, w; };  int n, m; vector&lt;vector&lt;edge&gt;&gt; graph(501, vector&lt;edge&gt;()); 
-            </p>
-            <p class="text-xs text-right">
-            2023-10-19
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
-        </div>
-    </a>
-    
-    <a class="anc" href="/ps/boj 2151 거울 설치.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            boj 2151 거울 설치
-            </p>
-            <p class="text-xs">
-            코드 #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n; char board[50][50]; &#x2F;&#x2F; t-&gt;r-&gt;b-&gt;l &#x2F;&#x2F; 0-&gt;1-&gt;2-&gt;3 int dx[4] = {-1,0,1,0}; 
-            </p>
-            <p class="text-xs text-right">
-            2023-11-13
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
-        </div>
-    </a>
-    
-    <a class="anc" href="/ps/boj 1916 최소비용 구하기.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            boj 1916 최소비용 구하기
-            </p>
-            <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n, m, from, to; struct edge { int v; int w; 
             </p>
             <p class="text-xs text-right">
             2023-10-09
@@ -322,8 +353,27 @@
             <p class="text-2xl font-semibold">
             boj 2933 미네랄
             </p>
+            
             <p class="text-xs">
             코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int r, c, n; char board[101][101] = {0,}; int stick[101] = {0,}; 
+            </p>
+            <p class="text-xs text-right">
+            2023-10-08
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
+    <a class="anc" href="/ps/boj 10830 행렬 제곱.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            boj 10830 행렬 제곱
+            </p>
+            
+            <p class="text-xs">
+            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n; ll b; struct matrix { int r, c; vector&lt;vector&lt;int&gt;&gt; data; 
             </p>
             <p class="text-xs text-right">
             2023-10-08
@@ -339,6 +389,7 @@
             <p class="text-2xl font-semibold">
             boj 3273 두 수의 합
             </p>
+            
             <p class="text-xs">
             코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int save[100000] = {0,}; int calc[2000000] = {0,}; int n, x; 
             </p>
@@ -351,33 +402,17 @@
         </div>
     </a>
     
-    <a class="anc" href="/ps/boj 2211 네트워크 복구.html">
+    <a class="anc" href="/ps/boj 1655 가운데를 말해요.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
-            boj 2211 네트워크 복구
+            boj 1655 가운데를 말해요
             </p>
+            
             <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n, m; struct edge { int u, v, w; void print(){ 
+            코드 #include &lt;iostream&gt; #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n; priority_queue&lt;int&gt; maxq; priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq; 
             </p>
             <p class="text-xs text-right">
-            2023-10-14
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
-        </div>
-    </a>
-    
-    <a class="anc" href="/ps/boj 7579 앱.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            boj 7579 앱
-            </p>
-            <p class="text-xs">
-            코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n, m; int mem[101]={0,}; int c[101]={0,}; &#x2F;&#x2F; dp[c][i] = 비용이 c이고, i번째 앱까지 비활성화 했을 때, 최대 메모리 확보량 
-            </p>
-            <p class="text-xs text-right">
-            2023-10-15
+            2023-09-22
             </p>
             <p class="text-xs text-right">
             Taehyeon Kim

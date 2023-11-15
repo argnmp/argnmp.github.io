@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 2749 피보나치 수 3</p>
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 16954 움직이는 미로 탈출</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-10-09</td>
+                        <td class="">2023-11-15</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -134,62 +134,45 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-ll n;
-
-struct matrix {
-    int r; int c;
-    vector&lt;vector&lt;ll&gt;&gt; data;
+int wall[8][8][8] = {0,};
+int dx[9] = {-1,0,1,0,-1,-1,1,1,0};
+int dy[9] = {0,1,0,-1,-1,1,-1,1,0};
+struct pos{
+    int x, y;
+    bool safe(){ return 0&lt;=x&amp;&amp;x&lt;8&amp;&amp;0&lt;=y&amp;&amp;y&lt;8; }
+    pos adj(int i){ return pos { x+dx[i%9], y+dy[i%9] }; }
 };
-matrix init_matrix(int r, int c){
-    matrix m = {r, c};
-    m.data = vector(r, vector&lt;ll&gt;(c, 0));
-    return m;
-}
-matrix operator*(matrix&amp; a, matrix&amp; b){
-    matrix m = init_matrix(a.r, b.c); 
-    for(int i = 0; i&lt;m.r; i++){
-        for(int j = 0; j&lt;m.c; j++){
-            ll s = 0;
-            for(int k = 0; k&lt;a.c; k++){
-                s += (a.data[i][k] * b.data[k][j]) % 1000000;
-            }
-            m.data[i][j] = s % 1000000;
-        }
-    } 
-    return m;
-}
-
 void solve(){
-    cin &gt;&gt; n;
-    matrix K = init_matrix(2,2);
-    K.data[0][0] = 1;
-    K.data[0][1] = 1;
-    K.data[1][0] = 1;
-    K.data[1][1] = 0;
-    matrix remainder = init_matrix(2,2);
-    remainder.data[0][0] = 1; 
-    remainder.data[1][1] = 1; 
-    matrix base = init_matrix(2,1); 
-    base.data[0][0] = 1; 
-    base.data[1][0] = 0; 
-
-    n = n-1;
-    if(n==0) {
-        cout &lt;&lt; 1;
-        return;
-    }
-    while(n != 1){
-        if(n%2==0){
-            K = K*K; 
-        } else {
-            remainder = remainder * K;
-            K = K*K;
+    for(int i = 0; i&lt;8; i++){
+        for(int j = 0; j&lt;8; j++){
+            char ch = cin.get();
+            if(ch=='\r'||ch=='\n'||ch==' ')
+                ch = cin.get();
+            if(ch=='#'){
+                for(int t = 0; i+t&lt;8; t++){
+                    wall[i+t][j][t] = 1; 
+                }
+            }
         }
-        n /= 2;
+    }    
+    queue&lt;pair&lt;int, pos&gt;&gt; q; 
+    q.push({0, pos {7, 0}});
+    while(!q.empty()){
+        int time = q.front().first;
+        pos cur = q.front().second;
+        q.pop();
+        if(time&gt;=7){
+            cout &lt;&lt; 1;
+            return;
+        }
+        for(int i = 0; i&lt;9; i++){
+            pos next = cur.adj(i);
+            if(next.safe() &amp;&amp; (time&lt;7 &amp;&amp; wall[next.x][next.y][time]==0 &amp;&amp; wall[next.x][next.y][time+1]==0)){
+                q.push({time+1, next});
+            }
+        }
     }
-    K = K*remainder;
-    matrix result = K * base;
-    cout &lt;&lt; result.data[0][0];
+    cout &lt;&lt; 0;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -201,17 +184,14 @@ int main(){
 </code></pre>
 <h3>풀이</h3>
 <ul>
-<li>fn =  fn-1 + fn-2 식을 이용해서 행렬의 거듭제곱으로 점화식을 만들어서 <a href="/ps/boj%2010830%20%ED%96%89%EB%A0%AC%20%EC%A0%9C%EA%B3%B1.html">boj 10830 행렬 제곱</a> 이걸 이용해서 n-1 승을 계산한다.</li>
-<li><a href="/">행렬</a> 이러한 struct를 만들어서 계산한다</li>
-<li>n 이 1인 경우에 대해서 제대로 처리를 해주어야 한다. 이것에 대한 처리를 안해서 무한루프가 발생하여 시간초과가 발생했었다.
-<ul>
-<li><code>m.data = vector(r, vector&lt;ll&gt;(c, 0));</code> 이 부분에서 초기화를 할때 vector의 두번째 인자로 <code>vector(c,0)</code>을 넣어주면 <code>vector&lt;int&gt;(c, 0)</code> 이 되어버려서, 컴파일에서 오류가 난다. (<code>vector&lt;vector&lt;ll&gt;&gt; data;</code> ) 이걸로 선언 했기 때문.</li>
-</ul>
-</li>
+<li><code>wall[8][8][8]</code> 을 사용해서 n초의 벽의 위치를 모두 기록해준다.</li>
+<li>제자리에 있는 것 까지 총 1초에 9개의 방향으로 이동이 가능하다. 따라서 bfs를 돌면서 9개의 방향으로 이동을 하는데, +0초의 위치와(이동을 해야 하기 때문) +1초의 위치에(도착하고 나서 벽을 만나면 안되기 때문) <code>wall</code> 의 값을 확인하며 이동을 하면된다.</li>
+<li>7초까지 이동을 할 수 있었다면 (queue에서 pop을 했을 때 7초인 경우), 8초에는 벽이 모두 사라지기 때문에 오른쪽 위로 무조건 이동할 수 있게 된다.</li>
+<li>결국 대략적으로 최대 9^8 가지의 경우의 수만 확인하면 되기 때문에 시간 내 해결이 가능하다.</li>
 </ul>
 <h3>느낀점</h3>
 <ul>
-<li>이전에 풀었던 문제로 기억이 나서 풀 수 있었다.</li>
+<li>제자리에 있는 경우의 수를 제대로 코딩하지 않아서 시간이 약간 소요되었다.</li>
 </ul>
 
     </div>
