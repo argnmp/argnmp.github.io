@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">배열 초기화</p>
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">Deref trait</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2022-05-26</td>
+                        <td class="">2022-06-28</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -116,107 +116,134 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5">
-        <p>0으로 배열을 초기화 하는 방법은 간단하다. 아래와 같이 배열을 생성할때 0으로 초기화해주면 된다.</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-int main(){
-    int arr_1d[10] = {0,};
-    int arr_2d[10][10] = {0,}; //{{0,}} 도 가능하다.
-    return 0;
+        <h2>개요</h2>
+<p><strong>Deref trait</strong>은 주로 dereference operator인 *를 overload 하기 위한 목적으로 사용되고 deref coercion을 위해서도 사용된다.</p>
+<h2>dereference operator overload</h2>
+<p><strong>Deref trait</strong>의 기능 중 하나로, dereference operator을 overload 할 수 있다.</p>
+<p>먼저 dereference operator에 대해 알아보자.</p>
+<h3>dereference operator</h3>
+<p>rust에서는 reference가 가리키고 있는 실제 대상에 접근하기 위해서 <code>*</code> 연산자를 사용한다. 아래와 같은 경우이다.</p>
+<pre><code class="language-rust">fn main(){
+    let val = 1;
+    let val_ref = &amp;val;
+    assert_eq!(val, val_ref);
 }
 </code></pre>
-<p>하지만 문제는 특정 값으로 한번에 초기화 할 경우이다. 예를 들어 배열을 5로 초기화 하고 싶을 때 위의 방법에서 0대신 5를 넣는다고 한번에 초기화 되질 않는다. 그래서 다음과 같은 방법이 있다.</p>
-<h2>1. 반복문으로 배열 초기화</h2>
-<p>가장 많이 사용하는 방법이다. 하지만 타이핑하는데 시간이 조금 걸린다.</p>
-<h3>1차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-int main(){
-    int arr_1d[10];
-    for(int i = 0; i&lt;10; i++)
-        arr_1d[i] = 0;
-    return 0;
+<pre><code class="language-shell">rror[E0277]: can't compare `{integer}` with `&amp;{integer}`
+  --&gt; src/main.rs:17:5
+   |
+17 |     assert_eq!(val, val_ref);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^ no implementation for `{integer} == &amp;{integer}`
+   |
+</code></pre>
+<p>val과 val_ref 의 type이 다르기 때문이다. 따라서 dereference operator을 사용해야 한다.</p>
+<pre><code class="language-rust">fn main(){
+    let val = 1;
+    let val_ref = &amp;val;
+    assert_eq!(val, *val_ref);
 }
 </code></pre>
-<h3>2차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-int main(){
-    int arr_2d[10][10];
-    for(int i = 0; i&lt;10; i++)
-        for(int j = 0; j&lt;10; j++)
-            arr_2d[i][j] = 0;
-    return 0;
-}
-</code></pre>
-<h2>2. std::fill 함수 사용</h2>
-<p>fill 함수를 사용하면 쉽게 초기화 할 수 있다. <a href="https://en.cppreference.com/w/cpp/algorithm/fill">cppreference</a> 에 나와있는 함수의 정의는 다음과 같다.</p>
-<pre><code class="language-cpp">template&lt; class ForwardIt, class T &gt;
-void fill(ForwardIt first, ForwardIt last, const T&amp; value)
-{
-    for (; first != last; ++first) {
-        *first = value;
+<h3>* overload</h3>
+<p>이 dereference operator을 struct에서 overload하여 사용할 수 있게 해주는 trait이 있는데 바로 <strong>Deref trait</strong> 이다.</p>
+<p>예를 들어 다음과 같은 struct가 있다고 하자.</p>
+<pre><code class="language-rust">struct Wrapper&lt;T&gt;(T);
+impl&lt;T&gt; Wrapper&lt;T&gt; {
+    fn new(x: T) -&gt; Wrapper&lt;T&gt; {
+        return Wrapper(x);
     }
 }
 </code></pre>
-<p>first부터 last까지 순회하면서 3번째 인자로 주어진 value를 그 주소값에 집어 넣는다.</p>
-<h3>1차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-int main(){
-    int arr_1d[10];
-    fill(&amp;arr_1d[0], &amp;arr_1d[10],5);
-    return 0;
+<p>이 struct는 값 하나를 저장한다.</p>
+<pre><code class="language-rust">fn main(){
+    let val = 1;
+    let m = Wrapper::new(val);
+    dbg!(*m);
 }
 </code></pre>
-<p>첫번째 인자에는 배열의 시작 주솟값을 넣어주고, 두번째 인자에는 <strong>마지막 주솟값 + 1</strong>을 넣어주어야 한다. 왜냐하면 위의 정의에서 first가 last와 주솟값이 같으면 종료되는 조건을 가지고 있기 때문이다.</p>
-<h3>2차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-int main(){
-    int arr_2d[10][10];
-    fill(&amp;arr_2d[0][0], &amp;arr_2d[9][10], 5);
-    return 0;
+<p>위와 같이 dereference operator을 이용해 struct가 가지고 있는 값에 접근하려고 하면 오류가 발생한다. struct이지 reference가 아니기 때문이다.</p>
+<p>이럴 경우 dereference operator을 overload 해주어야 한다. 그리고 이는 struct가 <strong>Deref trait</strong>을 implement 하는 것으로 가능하다.</p>
+<pre><code class="language-rust">use std::ops::Deref;
+
+struct Wrapper&lt;T&gt;(T);
+impl&lt;T&gt; Wrapper&lt;T&gt; {
+    fn new(x: T) -&gt; Wrapper&lt;T&gt; {
+        return Wrapper(x);
+    }
 }
+impl&lt;T&gt; Deref for Wrapper&lt;T&gt; {
+    type Target = T;
+    fn deref(&amp;self) -&gt; &amp;Self::Target{
+        &amp;self.0
+    }
+}
+fn main(){
+    let val = 1;
+    let m = Wrapper::new(val);
+    dbg!(*m);
+}
+
 </code></pre>
-<p>2차원이지만 결국에는 각을row가 한줄로 쭉 이어져 있는 것과 마찬가지이므로 1차원 배열과 같이 시작 주솟값과 <strong>마지막 주솟값 + 1</strong>을 넣어주어야 한다. [9][10] 인 이유는 마지막 주솟값은 [9][9] 인데 여기서 한 칸을 더 가기 때문이다.</p>
-<h2>3. memset 함수 이용</h2>
-<p>배열을 초기화 할때 memset을 사용하면 for문으로 직접 순회하며 초기화하는 것 보다 속도면에서 장점이 있다. memset 함수를 이용하기 위해서는 cpp에서 cstring, c에서는 string.h 헤더 파일을 포함 해야 한다. 아래는 <a href="https://en.cppreference.com/w/cpp/string/byte/memset">cppreference</a> 의 memset의 정의 이다.</p>
-<pre><code class="language-cpp">void* memset( void* dest, int ch, std::size_t count );
+<p>이 코드에서 <code>*m</code>은 내부적으로 <code>*(m.deref())</code>로 변환되어 컴파일된다.</p>
+<h3>auto deref</h3>
+<pre><code class="language-rust">use std::ops::Deref;
+
+struct Wrapper{
+    owned: i32,
+}
+impl Deref for Wrapper {
+    type Target = i32;
+    fn deref(&amp;self) -&gt; &amp;Self::Target {
+        &amp;self.owned
+    }
+}
+
+fn main() {
+    let target = 5;
+    println!(&quot;{:?}&quot;,target.to_string());
+    
+    let wrap = Wrapper { owned : 10 };
+    println!(&quot;{:?}&quot;,wrap.to_string());
+}
+
 </code></pre>
-<p>cppreference 에서는 첫줄에 아래와 같이 쓰여 있다.</p>
+<p>위 코드의 경우 <code>wrap</code> 은 <code>to_string</code> 이라는 메서드를 가지고 있지 않지만, <code>owned</code>필드의 <code>to_string</code>이 호출된다. 이유를 찾지 못해서 rust 커뮤니티에 질문을 하게 되었고 답변을 받게 되었다.</p>
+<p><code>wrap.to_string()</code> 이 코드에서 wrap은 <code>to_string</code>메서드가 없기 때문에 자동으로 <code>(*wrap).to_string()</code> , <code>(**wrap).to_string()</code> 으로 변환하여 찾게 된다고 한다. 이를 <strong>auto deref</strong>라 한다고 한다.</p>
+<p>결국 <code>(*wrap).to_string()</code> 이 코드는 다시 <code>(*(wrap.deref())).to_string)</code>으로 변환이 되고 결국 <code>owned</code>필드의 <code>to_string</code>을 호출하게 된다.</p>
+<h2>deref coercions</h2>
+<p>deref coercions 의 컴파일 규칙은 다음과 같다.</p>
 <blockquote>
-<p>Converts the value ch to unsigned char and copies it into each of the first count characters of the object pointed to by dest.</p>
+<p>if you have a type U, and it implements Deref&lt;Target=T&gt;, values of &amp;U will automatically coerce to a &amp;T.</p>
 </blockquote>
-<p>memset의 두번째 인자는 int형인데, memset에서 int형을 unsigned char형으로 변환한 뒤 dest에 복사한다고 한다. 즉 4byte -&gt; 1byte 로 변환되어 복사가 된다. 그도 그럴 것이 이 memset함수는 cstring, string.h와 같은 string관련 함수이다. string은 기본적으로 1바이트 char형을 사용하므로, int형 을 복사할 이유가 없는 것이다. 또한 1byte 가 단위이므로 만약 배열이 4바이트 int형이라면 한 index에 1byte unsigned char 이 4번 반복해서 나열된 뒤 들어가게 된다.</p>
-<pre><code class="language-cpp">int arr[4] = {0};
-memset(arr, 1, sizeof(arr));
-</code></pre>
-<p>예를 들어 위와 같이 memset을 호출 했다고 해보자. arr[0] 은 int형 이므로 4byte이다. 그리고 처음에 0으로 초기화 했기 때문에 2진수로 나타내면 <strong>00000000/00000000/00000000/00000000</strong> 이라고 할 수 있다. 이전에 memset은 1byte로 변환하여 복사한다고 하였다. 그러므로 1byte로 1을 나타내면 <strong>00000001</strong> 이고 이를 arr[0] 에 memset으로 넣게 되면 <strong>00000001/00000001/00000001/00000001</strong> 이렇게 4번 반복되어 들어간다. 이를 다시 int형으로 읽으면 아래와 같이 16,843,009 라는 결과가 나온다. 즉 모든 배열의 원소가 16843009로 초기화 됨을 의미한다.</p>
-<p><img src="/api/image/1653547326116_image1.png" alt="" /></p>
-<p>결론적으로 0 또는 -1로 초기화 할 때만 memset을 사용하는 것이 안전하다. 0은 이진수로 <strong>00000000</strong>(1byte, unsigned char) 이고 1은 이진수로 <strong>11111111</strong>(1byte, unsigned char) 이다. 이 둘의 공통점은 모든 숫자가 같다는 것이다. 따라서 4번 반복하여 int형으로 읽어도 값이 변함이 없기 때문에 안전하다.</p>
-<h3>1차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-using namespace std;
-int main(){
-    int arr_1d[10];
-    memset(arr_1d, -1, sizeof(arr_1d));
-    return 0;
+<p>type U가 있고, 만약 그것이 Deref&lt;Target=T&gt; 를 implement 한다면 <code>&amp;U</code>는 자동으로 <code>&amp;T</code>가 된다는 의미이다.</p>
+<p>그리고 deref coercions는 함수의 인자로 넘겨주는 경우 작동한다.</p>
+<p>다음의 코드를 보자.</p>
+<pre><code class="language-rust">use std::ops::Deref;
+
+struct Wrapper&lt;T&gt;(T);
+impl&lt;T&gt; Wrapper&lt;T&gt; {
+    fn new(x: T) -&gt; Wrapper&lt;T&gt; {
+        return Wrapper(x);
+    }
+}
+impl&lt;T&gt; Deref for Wrapper&lt;T&gt; {
+    type Target = T;
+    fn deref(&amp;self) -&gt; &amp;Self::Target{
+        &amp;self.0
+    }
+}
+fn call(x: &amp;i32){
+    println!(&quot;{}&quot;,x);
+}
+fn main(){
+    let val: i32 = 1;
+    let m = Wrapper::new(val);
+    call(&amp;m);
 }
 </code></pre>
-<h3>2차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-using namespace std;
-int main(){
-    int arr_2d[10][10];
-    memset(arr_2d, -1, sizeof(arr_2d));
-    return 0;
-}
-</code></pre>
-<p>iostream에 cstring이 포함되어 있는지는 잘 모르겟지만, 스마트폰 termux gcc 에서는 cstring을 포함하지 않아도 컴파일이 잘 된다.</p>
+<p>일단 Wrapper struct는 Deref trait을 implement 한다.</p>
+<p>main 함수에서, val의 type은 i32이다. 그리고 <code>Wrapper::new(val)</code>을 통해 Target이 i32인 객체 m을 생성한다. 그리고 &amp;m을 넘겨주며 &amp;i32 type을 인자로 받는 call 함수를 호출한다.</p>
+<p>이 상황에서 deref coercion이 작동된다. 위의 컴파일 규칙에 따르면 <code>Deref&lt;Target=T&gt;</code>를 implement 하는 type이라고 했는데, Wrapepr struct는 Deref trait을 implement 하고, 객체 m은 i32  type의 값으로 생성되었으므로 Target은 i32가 된다.</p>
+<p>따라서 deref coercion에 따라 <code>&amp;Wrapper&lt;i32&gt; type</code>은 <code>&amp;i32</code> 로 변환되고, 객체 m 에서는 가지고 있는 값 <code>1</code>에 대한 reference로 변환이 된다.</p>
 
     </div>
 </article>

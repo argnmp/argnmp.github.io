@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">배열 초기화</p>
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">trait bound의 예시</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2022-05-26</td>
+                        <td class="">2022-06-09</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -116,107 +116,212 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5">
-        <p>0으로 배열을 초기화 하는 방법은 간단하다. 아래와 같이 배열을 생성할때 0으로 초기화해주면 된다.</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-int main(){
-    int arr_1d[10] = {0,};
-    int arr_2d[10][10] = {0,}; //{{0,}} 도 가능하다.
-    return 0;
+        <h2>generic을 통한 trait bound</h2>
+<p><a href="https://kimtahen.com/post/generic-%EC%82%AC%EC%9A%A9%EB%B2%95#hidtrait-bound">https://kimtahen.com/post/generic-%EC%82%AC%EC%9A%A9%EB%B2%95#hidtrait-bound</a></p>
+<p>generic을 사용한 trait bound 방법이다.</p>
+<p><strong>trait bound</strong>는 함수에서 특정 trait을 가진 struct를 parameter로 받을 때 사용된다.</p>
+<h2>trait bound의 예시</h2>
+<pre><code class="language-rust">trait Greeting {
+    fn default(&amp;self)-&gt;String{
+        String::from(&quot;hello world&quot;)
+    }
+    fn special(&amp;self)-&gt;String;
 }
-</code></pre>
-<p>하지만 문제는 특정 값으로 한번에 초기화 할 경우이다. 예를 들어 배열을 5로 초기화 하고 싶을 때 위의 방법에서 0대신 5를 넣는다고 한번에 초기화 되질 않는다. 그래서 다음과 같은 방법이 있다.</p>
-<h2>1. 반복문으로 배열 초기화</h2>
-<p>가장 많이 사용하는 방법이다. 하지만 타이핑하는데 시간이 조금 걸린다.</p>
-<h3>1차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-int main(){
-    int arr_1d[10];
-    for(int i = 0; i&lt;10; i++)
-        arr_1d[i] = 0;
-    return 0;
+struct Human {
+    mention: String,
 }
-</code></pre>
-<h3>2차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-int main(){
-    int arr_2d[10][10];
-    for(int i = 0; i&lt;10; i++)
-        for(int j = 0; j&lt;10; j++)
-            arr_2d[i][j] = 0;
-    return 0;
+struct Computer {
+    mention: String,
 }
-</code></pre>
-<h2>2. std::fill 함수 사용</h2>
-<p>fill 함수를 사용하면 쉽게 초기화 할 수 있다. <a href="https://en.cppreference.com/w/cpp/algorithm/fill">cppreference</a> 에 나와있는 함수의 정의는 다음과 같다.</p>
-<pre><code class="language-cpp">template&lt; class ForwardIt, class T &gt;
-void fill(ForwardIt first, ForwardIt last, const T&amp; value)
-{
-    for (; first != last; ++first) {
-        *first = value;
+impl Greeting for Human {
+    fn special(&amp;self)-&gt;String {
+        self.mention.clone()
     }
 }
-</code></pre>
-<p>first부터 last까지 순회하면서 3번째 인자로 주어진 value를 그 주소값에 집어 넣는다.</p>
-<h3>1차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-int main(){
-    int arr_1d[10];
-    fill(&amp;arr_1d[0], &amp;arr_1d[10],5);
-    return 0;
+impl Greeting for Computer {
+    fn special(&amp;self)-&gt;String {
+        self.mention.clone()
+    }
+}
+
+fn greet&lt;T&gt; (target: T) where T: Greeting{
+    println!(&quot;{}&quot;,target.default()); 
+    println!(&quot;{}&quot;,target.special()); 
+}
+
+
+fn main(){
+    let p1 = Human {
+        mention: String::from(&quot;I'm person 1&quot;) 
+    };
+    let p2 = Human {
+        mention: String::from(&quot;I'm person 2&quot;) 
+    };
+    let c1 = Computer {
+        mention: String::from(&quot;I'm computer 1&quot;) 
+    };
+    greet(p1);
+    greet(p2);
+    greet(c1);
 }
 </code></pre>
-<p>첫번째 인자에는 배열의 시작 주솟값을 넣어주고, 두번째 인자에는 <strong>마지막 주솟값 + 1</strong>을 넣어주어야 한다. 왜냐하면 위의 정의에서 first가 last와 주솟값이 같으면 종료되는 조건을 가지고 있기 때문이다.</p>
-<h3>2차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-int main(){
-    int arr_2d[10][10];
-    fill(&amp;arr_2d[0][0], &amp;arr_2d[9][10], 5);
-    return 0;
+<ul>
+<li><code>Human</code>, <code>Computer</code> struct는 <code>Greeting</code> trait을 가진다.</li>
+<li><code>greet</code> function은 <code>Greeting</code> trait을 가지고 있는 struct만을 target parameter로 허용한다.</li>
+</ul>
+<pre><code class="language-shell">hello world
+I'm person 1
+hello world
+I'm person 2
+hello world
+I'm computer 1
+</code></pre>
+<p>위의 코드에 다음의 코드를 추가하고 실행해보면 컴파일 에러가 발생한다.</p>
+<pre><code class="language-rust">...
+struct Water {
+}
+...
+fn main(){
+...
+    let w1 = Water {};
+    greet(w1);
+...
 }
 </code></pre>
-<p>2차원이지만 결국에는 각을row가 한줄로 쭉 이어져 있는 것과 마찬가지이므로 1차원 배열과 같이 시작 주솟값과 <strong>마지막 주솟값 + 1</strong>을 넣어주어야 한다. [9][10] 인 이유는 마지막 주솟값은 [9][9] 인데 여기서 한 칸을 더 가기 때문이다.</p>
-<h2>3. memset 함수 이용</h2>
-<p>배열을 초기화 할때 memset을 사용하면 for문으로 직접 순회하며 초기화하는 것 보다 속도면에서 장점이 있다. memset 함수를 이용하기 위해서는 cpp에서 cstring, c에서는 string.h 헤더 파일을 포함 해야 한다. 아래는 <a href="https://en.cppreference.com/w/cpp/string/byte/memset">cppreference</a> 의 memset의 정의 이다.</p>
-<pre><code class="language-cpp">void* memset( void* dest, int ch, std::size_t count );
+<pre><code class="language-shell">error[E0277]: the trait bound `Water: Greeting` is not satisfied
+  --&gt; src\main.rs:54:11
+   |
+54 |     greet(w1);
+   |     ----- ^^ the trait `Greeting` is not implemented for `Water`
+   |     |
+   |     required by a bound introduced by this call
+   |
 </code></pre>
-<p>cppreference 에서는 첫줄에 아래와 같이 쓰여 있다.</p>
-<blockquote>
-<p>Converts the value ch to unsigned char and copies it into each of the first count characters of the object pointed to by dest.</p>
-</blockquote>
-<p>memset의 두번째 인자는 int형인데, memset에서 int형을 unsigned char형으로 변환한 뒤 dest에 복사한다고 한다. 즉 4byte -&gt; 1byte 로 변환되어 복사가 된다. 그도 그럴 것이 이 memset함수는 cstring, string.h와 같은 string관련 함수이다. string은 기본적으로 1바이트 char형을 사용하므로, int형 을 복사할 이유가 없는 것이다. 또한 1byte 가 단위이므로 만약 배열이 4바이트 int형이라면 한 index에 1byte unsigned char 이 4번 반복해서 나열된 뒤 들어가게 된다.</p>
-<pre><code class="language-cpp">int arr[4] = {0};
-memset(arr, 1, sizeof(arr));
-</code></pre>
-<p>예를 들어 위와 같이 memset을 호출 했다고 해보자. arr[0] 은 int형 이므로 4byte이다. 그리고 처음에 0으로 초기화 했기 때문에 2진수로 나타내면 <strong>00000000/00000000/00000000/00000000</strong> 이라고 할 수 있다. 이전에 memset은 1byte로 변환하여 복사한다고 하였다. 그러므로 1byte로 1을 나타내면 <strong>00000001</strong> 이고 이를 arr[0] 에 memset으로 넣게 되면 <strong>00000001/00000001/00000001/00000001</strong> 이렇게 4번 반복되어 들어간다. 이를 다시 int형으로 읽으면 아래와 같이 16,843,009 라는 결과가 나온다. 즉 모든 배열의 원소가 16843009로 초기화 됨을 의미한다.</p>
-<p><img src="/api/image/1653547326116_image1.png" alt="" /></p>
-<p>결론적으로 0 또는 -1로 초기화 할 때만 memset을 사용하는 것이 안전하다. 0은 이진수로 <strong>00000000</strong>(1byte, unsigned char) 이고 1은 이진수로 <strong>11111111</strong>(1byte, unsigned char) 이다. 이 둘의 공통점은 모든 숫자가 같다는 것이다. 따라서 4번 반복하여 int형으로 읽어도 값이 변함이 없기 때문에 안전하다.</p>
-<h3>1차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-using namespace std;
-int main(){
-    int arr_1d[10];
-    memset(arr_1d, -1, sizeof(arr_1d));
-    return 0;
+<p><code>Water</code> struct는 <code>Greeting</code>을 trait으로 가지고 있지 않기 때문이다.</p>
+<h2>multiple trait bound 예시</h2>
+<pre><code class="language-rust">trait Greeting {
+    fn default(&amp;self)-&gt;String{
+        String::from(&quot;hello world&quot;)
+    }
+    fn special(&amp;self)-&gt;String;
+}
+struct Human {
+    mention: String,
+}
+struct Computer {
+    mention: String,
+}
+impl Greeting for Human {
+    fn special(&amp;self)-&gt;String {
+        self.mention.clone()
+    }
+}
+impl Greeting for Computer {
+    fn special(&amp;self)-&gt;String {
+        self.mention.clone()
+    }
+}
+
+fn greet&lt;T&gt; (target: T) where T: Greeting{
+    println!(&quot;{}&quot;,target.default()); 
+    println!(&quot;{}&quot;,target.special()); 
+}
+
+
+trait Calculate{
+    fn calc(&amp;self, x1: isize, x2: isize)-&gt; isize;
+}
+impl Calculate for Human {
+    fn calc(&amp;self, x1: isize, x2: isize)-&gt; isize {
+        x1 + x2
+    }
+}
+impl Calculate for Computer {
+    fn calc(&amp;self, x1: isize, x2: isize)-&gt; isize {
+        x1 + x2
+    }
+}
+
+
+fn work&lt;T&gt; (target: T) where T: Greeting+Calculate{
+    println!(&quot;{}&quot;,target.special());
+    println!(&quot;{}&quot;,target.calc(1000,2000));
+}
+
+
+fn main(){
+    let p1 = Human {
+        mention: String::from(&quot;I'm person 1&quot;) 
+    };
+    let p2 = Human {
+        mention: String::from(&quot;I'm person 2&quot;) 
+    };
+    let c1 = Computer {
+        mention: String::from(&quot;I'm computer 1&quot;) 
+    };
+
+    work(p1);
+    work(p2);
+    work(c1);
+
 }
 </code></pre>
-<h3>2차원 배열 초기화</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-using namespace std;
-int main(){
-    int arr_2d[10][10];
-    memset(arr_2d, -1, sizeof(arr_2d));
-    return 0;
+<ul>
+<li><code>work</code> function은 <code>Greeting</code> 과 <code>Calculate</code> trait 모두를 가진 struct를 target으로 받는다.</li>
+</ul>
+<p>여기서 중요한 점은 <code>work</code> function에서 <code>Calculate</code> trait만을 가진 struct를 trait으로 받는다고 정의한다면 <code>Greeting</code> trait에서 정의한 함수는 사용할 수 없다는 것이다. target이 Greeting과 Calculate 모두를 trait으로 가지고 있어도 말이다.</p>
+<p>work 함수를 다음과 같이 수정하면 컴파일 하면 에러가 발생한다.</p>
+<pre><code class="language-rust">...
+fn work&lt;T&gt; (target: T) where T: Calculate{
+    println!(&quot;{}&quot;,target.special());
+    println!(&quot;{}&quot;,target.calc(1000,2000));
+}
+...
+</code></pre>
+<pre><code class="language-shell">error[E0599]: no method named `special` found for type parameter `T` in the current scope
+  --&gt; src\main.rs:53:26
+   |
+53 |     println!(&quot;{}&quot;,target.special());
+   |                          ^^^^^^^ method not found in `T`
+   |
+   = help: items from traits can only be used if the type parameter is bounded by the trait
+help: the following trait defines an item `special`, perhaps you need to restrict type parameter `T` with it:
+   |
+52 | fn work&lt;T: Greeting&gt; (target: T) where T: Calculate{
+   |         ~~~~~~~~~~~
+</code></pre>
+<p>다음의 코드를 실행하면 에러가 발생하는 이유도 같다.</p>
+<pre><code class="language-rust">fn test&lt;T&gt; (t: &amp;T) where T:Clone{
+    println!(&quot;{}&quot;,t);
+}
+
+fn main(){
+    let a = String::from(&quot;hello world&quot;);   
+    test(&amp;a);
 }
 </code></pre>
-<p>iostream에 cstring이 포함되어 있는지는 잘 모르겟지만, 스마트폰 termux gcc 에서는 cstring을 포함하지 않아도 컴파일이 잘 된다.</p>
+<pre><code class="language-shell">error[E0277]: `T` doesn't implement `std::fmt::Display`
+  --&gt; src\main.rs:10:19
+   |
+10 |     println!(&quot;{}&quot;,t);
+   |                   ^ `T` cannot be formatted with the default formatter
+   |
+</code></pre>
+<p>test 함수는 <code>Clone</code> trait을 가지는 t를 인수로 받는다. 하지만 Clone만 bound 되고 Display가 bound되지 않았기 때문에 <code>println!</code>을 사용할 수 없다.</p>
+<p>다음과 같이 코드를 바꾸어 주어야 정상적으로 컴파일 된다.</p>
+<pre><code class="language-rust">use std::fmt::Display;
+
+fn test&lt;T&gt; (t: &amp;T) where T:Clone+Display{
+    println!(&quot;{}&quot;,t);
+}
+
+fn main(){
+    let a = String::from(&quot;hello world&quot;);   
+    test(&amp;a);
+}
+</code></pre>
+<pre><code class="language-shell">hello world
+</code></pre>
 
     </div>
 </article>

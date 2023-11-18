@@ -78,140 +78,168 @@
                     
 <div class="md:pl-5">
     
-    <a class="anc" href="/cpp/index.html">
+    <a class="anc" href="/rust/2/generic 사용법.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
-            cpp
+            generic 사용법
             </p>
             
             <p class="text-xs">
-            1 child nodes
-            </p>
-            
-            <p class="text-xs">
-            
+            function fn ret&lt;T&gt;(param: T) -&gt; T{ param } fn ret&lt;T1, T2&gt;(param1: T1, param2: T2) -&gt; (T1,T2){ (param1, param2) } struct struct Point&lt;T&gt; { x:T, y:T, } struct Point&lt;T1, T2&gt; { x:T1, y:T2, } enum enum Result&lt;T, E&gt; { Ok(T), Err(E), } method struct Point&lt;T&gt;{ x: T, y: T, } impl&lt;T&gt; Point&lt;T&gt; { fn getx(&amp;self) -&gt; &amp;T{ 
             </p>
             <p class="text-xs text-right">
-            
+            2022-06-08
             </p>
             <p class="text-xs text-right">
-            
+            Taehyeon Kim
             </p>
         </div>
     </a>
     
-    <a class="anc" href="/node/index.html">
+    <a class="anc" href="/rust/2/rust의 파일 분할.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
-            node
+            rust의 파일 분할
             </p>
             
             <p class="text-xs">
-            4 child nodes
-            </p>
-            
-            <p class="text-xs">
-            
+            binary package rust에서 main.rs을 진입점으로 실행되는 package를 binary package 라고 한다. binary package에서는 src&#x2F;main.rs 가 존재한다. library package 실행하는 package가 아닌, 다른 package에서 사용하기 위한 package를 library package 라고 한다. 보통 다른 패키지에서 이 library package를 use keyword를 사용해 불러온다. 
             </p>
             <p class="text-xs text-right">
-            
+            2022-06-08
             </p>
             <p class="text-xs text-right">
-            
+            Taehyeon Kim
             </p>
         </div>
     </a>
     
-    <a class="anc" href="/linux/index.html">
+    <a class="anc" href="/rust/2/Option enum 의 역할.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
-            linux
+            Option enum 의 역할
             </p>
             
             <p class="text-xs">
-            8 child nodes
-            </p>
-            
-            <p class="text-xs">
-            
+            enum Option Option&lt;T&gt; enum 은 standard library에 다음과 같이 정의 되어 있다. enum Option&lt;T&gt;{ None, Some(T), } rust는 null type이 없다. 대신 Option enum의 variant 인 None 을 통해 표현한다. 그렇다면 null 대신 Option::None 을 사용하는 것의 장점은 무엇일까? 
             </p>
             <p class="text-xs text-right">
-            
+            2023-06-07
             </p>
             <p class="text-xs text-right">
-            
+            Taehyeon Kim
             </p>
         </div>
     </a>
     
-    <a class="anc" href="/rust/1/index.html">
+    <a class="anc" href="/rust/2/data type suffix.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
-            rust
+            data type suffix
             </p>
             
             <p class="text-xs">
-            18 child nodes
-            </p>
-            
-            <p class="text-xs">
-            
+            서론 rust book의 example을 따라하던 중에 3u8 이라는 값을 보았다. u8은 rust의 data type 중에 하나이다. 3u8과 같이 바로 붙여서 쓰는 것은 본적이 없어서 구글링 하던 중 알게 되었다. Suffix rust by example 이라는 공식 예제에 따르면 literal을 다음과 같이 소개하고 있다. 
             </p>
             <p class="text-xs text-right">
-            
+            2022-04-20
             </p>
             <p class="text-xs text-right">
-            
+            Taehyeon Kim
             </p>
         </div>
     </a>
     
-    <a class="anc" href="/daily/index.html">
+    <a class="anc" href="/rust/2/type_of 함수를 사용한 string reference 이해.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
-            daily
+            type_of 함수를 사용한 string reference 이해
             </p>
             
             <p class="text-xs">
-            1 child nodes
-            </p>
-            
-            <p class="text-xs">
-            
+            서론 type_of 함수를 사용해서 string에 대한 reference가 어떻게 다른지 살펴보자. rust에서 type을 판별하는 방법 다음과 같은 함수를 사용하면 된다. use std::any::type_name; fn type_of&lt;T&gt;(_:T) -&gt; &amp;&#x27;static str { type_name::&lt;T&gt;() } 출처 : https:&#x2F;&#x2F;users.rust-lang.org&#x2F;t&#x2F;how-check-type-of-variable&#x2F;33845 
             </p>
             <p class="text-xs text-right">
-            
+            2022-04-13
             </p>
             <p class="text-xs text-right">
-            
+            Taehyeon Kim
             </p>
         </div>
     </a>
     
-    <a class="anc" href="/ps/1/index.html">
+    <a class="anc" href="/rust/2/reference scope 정리.html">
         <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
             <p class="text-2xl font-semibold">
-            ps
+            reference scope 정리
             </p>
             
             <p class="text-xs">
-            19 child nodes
+            서론 rust book을 읽던 중에 reference에 대해서 혼란을 주는 부분이 있어 깔끔하게 정리해보고자 한다. 일단 reference 란 다른 언어와 같이 특정 변수에 접근해서 값을 가져올 수도 있고 수정할 수 있도록 해놓은 문법이다. We call the action of creating a reference borrowing. 
+            </p>
+            <p class="text-xs text-right">
+            2022-04-08
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
+    <a class="anc" href="/rust/2/drop.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            drop
             </p>
             
             <p class="text-xs">
-            
+            fn main(){ let x = 5; drop(x); println!(&quot;{}&quot;,x);  let s = String::from(&quot;helloworld&quot;); drop(s); println!(&quot;{}&quot;,s); } rust에서는 garbage collector 가 없기 때문에, 변수의 scope가 끝나면 자동으로 drop()이 호출되어 더 이상 필요 없게 된 메모리를 해제 한다. 
             </p>
             <p class="text-xs text-right">
-            
+            2022-04-07
             </p>
             <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
+        </div>
+    </a>
+    
+    <a class="anc" href="/rust/2/statements vs expressions.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            statements vs expressions
+            </p>
             
+            <p class="text-xs">
+            https:&#x2F;&#x2F;doc.rust-lang.org&#x2F;book&#x2F;ch03-03-how-functions-work.html The Rust Programming Language 의 Statements and Expressions 부분을 참고하였다. Statements VS Expressions statement와 expression의 차이점 Statements are instructions that perform some action and do not return a value. Expressions evaluate to a resulting value. 
+            </p>
+            <p class="text-xs text-right">
+            2022-04-06
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
             </p>
         </div>
     </a>
     
     <div class="my-3">
         <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 font-semibold">
+            
+                <!-- <a class="anc w-8 h-8" href="/rust/1"> -->
+                
+                <a class="anc inline w-8 h-8 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/rust/1">
+                    <p class="leading-8 text-center cursor-pointer">1</p>
+                </a>
+                
+                <!-- </a> -->
+            
+                <!-- <a class="anc w-8 h-8" href="/rust/2"> -->
+                
+                <a class="anc inline w-8 h-8 bg-blue-700 dark:bg-blue-400 text-gray-200 dark:text-gray-900" href="/rust/2">
+                    <p class="leading-8 text-center cursor-pointer">2</p>
+                </a>
+                
+                <!-- </a> -->
             
         </div>
     </div>
