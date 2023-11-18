@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+                window.hljs.highlightAll();
+                window.hljs.initLineNumbersOnLoad();
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <a href="/">
+                <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b-4 border-blue-700 dark:border-blue-400">
+                    <p class="text-left text-3xl lg:text-4xl font-bold">blog.argnmp</p>
+                </div>
+            </a>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col p-2 text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4 p-2">
+                            <img class="w-full max-w-sm mx-auto rounded-full ring-2 p-2 ring-blue-600 dark:ring-blue-500" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 my-auto">
+                            <p class="text-2xl md:mt-3 md:text-center mb-2 font-bold">argnmp</p>
+                            <p class="text-xs md:text-center">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs md:text-center">argnmp@gmail.com</p>
+                            <p class="text-xs md:text-center"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="py-2">
+                            <form class="flex md:flex-col">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 md:mr-0 md:mb-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer md:w-full" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                </div>
+                <div class="grid-flow-row md:col-span-9 rounded-lg">
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="mb-2 md:pl-5">
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">어제의 용사들</p>
+        </div>
+        <div class="mb-4 md:pl-5">
+            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
+                <tbody>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            alias
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            author
+                        </th>
+                        <td class="">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            created at
+                        </th>
+                        <td class="">2023-11-18</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            tags 
+                        </th>
+                        <td class="">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body mb-2 md:pl-5">
+        <h2>개요</h2>
+<ul>
+<li>2021년 국방공공데이터 활용 경진대회에 참여한 웹서비스</li>
+<li>예비군 훈련에 대한 정보 공유를 목표로 하였습니다. 예비군에 대한 공공데이터를 활용해서 지역별 예비군 훈련장 커뮤니티를 생성하고, 통계자료를 그래프로 보여 줍니다.</li>
+<li>복무 중 부대 내에서 진행한 프로젝트입니다. 스마트폰으로 개인 서버에 ssh 접속을 통해 코딩을 하였습니다.</li>
+</ul>
+<h2>프로젝트 링크</h2>
+<ul>
+<li>웹페이지 : <a href="https://fir-9fb67.web.app/#/">https://fir-9fb67.web.app/#/</a></li>
+<li>깃허브 : <a href="https://github.com/kimtahen?tab=repositories">https://github.com/kimtahen?tab=repositories</a></li>
+</ul>
+<h2>프로젝트 기간</h2>
+<p>2021.5.15 ~ 2021.6.4</p>
+<h2>기술 스택</h2>
+<ul>
+<li><code>javascript</code>, <code>react.js</code>, <code>css</code>, <code>firebase</code></li>
+<li>React.js , <code>core-ui</code> 라는 react template를 이용해 제작하였습니다. <a href="https://coreui.io/">https://coreui.io/</a></li>
+<li>google firebase 의 clould firestore 을 database로 이용했습니다.</li>
+<li>google firebase 의 hosting 으로 배포하였습니다.</li>
+</ul>
+<h2>주요 기능</h2>
+<h3>1. 글 작성, 삭제 및 평점 투표</h3>
+<ul>
+<li>글 작성과 삭제시 비밀번호를 입력하는 방식으로 구현하였습니다.
+<img src="/project/%EC%96%B4%EC%A0%9C%EC%9D%98%20%EC%9A%A9%EC%82%AC%EB%93%A4/Pasted%20image%2020231118155942.png" alt="Pasted image 20231118155942.png" />
+<img src="/project/%EC%96%B4%EC%A0%9C%EC%9D%98%20%EC%9A%A9%EC%82%AC%EB%93%A4/Pasted%20image%2020231118155946.png" alt="Pasted image 20231118155946.png" /></li>
+</ul>
+<h3>2. 카카오맵 api를 이용한 약도 서비스</h3>
+<p><img src="/project/%EC%96%B4%EC%A0%9C%EC%9D%98%20%EC%9A%A9%EC%82%AC%EB%93%A4/Pasted%20image%2020231118155951.png" alt="Pasted image 20231118155951.png" /></p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved.
+            </footer>
+        </div>
+    </body>
+</html>

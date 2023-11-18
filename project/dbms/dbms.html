@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+                window.hljs.highlightAll();
+                window.hljs.initLineNumbersOnLoad();
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <a href="/">
+                <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b-4 border-blue-700 dark:border-blue-400">
+                    <p class="text-left text-3xl lg:text-4xl font-bold">blog.argnmp</p>
+                </div>
+            </a>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col p-2 text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4 p-2">
+                            <img class="w-full max-w-sm mx-auto rounded-full ring-2 p-2 ring-blue-600 dark:ring-blue-500" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 my-auto">
+                            <p class="text-2xl md:mt-3 md:text-center mb-2 font-bold">argnmp</p>
+                            <p class="text-xs md:text-center">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs md:text-center">argnmp@gmail.com</p>
+                            <p class="text-xs md:text-center"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="py-2">
+                            <form class="flex md:flex-col">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 md:mr-0 md:mb-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer md:w-full" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                </div>
+                <div class="grid-flow-row md:col-span-9 rounded-lg">
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="mb-2 md:pl-5">
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">dbms</p>
+        </div>
+        <div class="mb-4 md:pl-5">
+            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
+                <tbody>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            alias
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            author
+                        </th>
+                        <td class="">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            created at
+                        </th>
+                        <td class="">2023-11-18</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            tags 
+                        </th>
+                        <td class="">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body mb-2 md:pl-5">
+        <h2>개요</h2>
+<ul>
+<li>정형수 교수님의 ITE2038 ‘데이터베이스 시스템 및 용용’ 강의에서 진행한, dbms 소프트웨어 제작 프로젝트입니다.</li>
+<li>dbms에서 필수적인 기능들을 layered architecture로 구현하였고, 데이터베이스의 기초적인 이론을 프로젝트에 적용하였습니다.</li>
+<li>한 학기 동안 진행한 프로젝트 입니다.</li>
+</ul>
+<h2>프로젝트 링크</h2>
+<p><a href="https://github.com/kimtahen/ite2038">https://github.com/kimtahen/ite2038</a></p>
+<h2>프로젝트 기간</h2>
+<p>2022.09.23 ~ 2022.12.20</p>
+<h2>기술 스택</h2>
+<ul>
+<li><code>c++</code> <code>make</code></li>
+</ul>
+<h2>구현 사항</h2>
+<p><img src="/project/dbms/screenshot.png" alt="screenshot.png" /></p>
+<ul>
+<li>disk space manager
+<ul>
+<li><a href="https://github.com/kimtahen/ite2038/tree/master/project2#project2--milestone1">ite2038/project2 at master · kimtahen/ite2038</a></li>
+<li>database page 단위로, disk에서 I/O를 하는 disk space manager api를 작성하였습니다.</li>
+</ul>
+</li>
+<li>index manager
+<ul>
+<li><a href="https://github.com/kimtahen/ite2038/tree/master/project2#project2--milestone1">ite2038/project2 at master · kimtahen/ite2038</a></li>
+<li><a href="https://github.com/kimtahen/ite2038/tree/master/project2#project2--milestone1">ite2038/project2 at master · kimtahen/ite2038</a></li>
+<li>앞서 제작한 disk space management layer의 위에, key-value의 insert와 delete가 가능한 on-disk b+ tree index api를 작성하였습니다.</li>
+</ul>
+</li>
+<li>buffer manager
+<ul>
+<li><a href="https://github.com/kimtahen/ite2038/tree/master/project3">ite2038/project3 at master · kimtahen/ite2038</a></li>
+<li>disk I/O의 느린 속도를 향상시키기 위해서, LRU policy를 사용하는 buffer layer api를 작성하여 성능을 큰 폭으로 개선하였습니다.</li>
+</ul>
+</li>
+<li>lock table
+<ul>
+<li><a href="https://github.com/kimtahen/ite2038/tree/master/project4">ite2038/project4 at master · kimtahen/ite2038</a></li>
+<li>transaction layer를 추가하기에 앞서서, lock table을 구현하였습니다. 여러 thread가 record에 동시에 접근할 때, 동기화를 해주는 역할을 합니다.</li>
+</ul>
+</li>
+<li>lock manager, transaction manager
+<ul>
+<li><a href="https://github.com/kimtahen/ite2038/tree/master/project5">ite2038/project5 at master · kimtahen/ite2038</a></li>
+<li>S2PL 기법을 적용한 concurrency control을 추가하여, 여러 thread에서 동시에 transaction을 진행할 수 있도록 lock manager와 transaction manager를 작성하였습니다.</li>
+</ul>
+</li>
+<li>log &amp; recovery
+<ul>
+<li><a href="https://github.com/kimtahen/ite2038/tree/master/project6">ite2038/project6 at master · kimtahen/ite2038</a></li>
+<li>log와 recovery api를 추가하여, dbms가 실행중 강제로 종료되었을 때, 복구가 가능하도록 기능을 추가하였습니다.</li>
+<li>이 기능에 대해서는 완벽히 구현하지 못하였습니다.</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved.
+            </footer>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+                window.hljs.highlightAll();
+                window.hljs.initLineNumbersOnLoad();
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <a href="/">
+                <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b-4 border-blue-700 dark:border-blue-400">
+                    <p class="text-left text-3xl lg:text-4xl font-bold">blog.argnmp</p>
+                </div>
+            </a>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col p-2 text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4 p-2">
+                            <img class="w-full max-w-sm mx-auto rounded-full ring-2 p-2 ring-blue-600 dark:ring-blue-500" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 my-auto">
+                            <p class="text-2xl md:mt-3 md:text-center mb-2 font-bold">argnmp</p>
+                            <p class="text-xs md:text-center">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs md:text-center">argnmp@gmail.com</p>
+                            <p class="text-xs md:text-center"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="py-2">
+                            <form class="flex md:flex-col">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 md:mr-0 md:mb-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer md:w-full" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                </div>
+                <div class="grid-flow-row md:col-span-9 rounded-lg">
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="mb-2 md:pl-5">
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">StyleReserve</p>
+        </div>
+        <div class="mb-4 md:pl-5">
+            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
+                <tbody>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            alias
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            author
+                        </th>
+                        <td class="">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            created at
+                        </th>
+                        <td class="">2023-11-18</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            tags 
+                        </th>
+                        <td class="">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body mb-2 md:pl-5">
+        <h2>개요</h2>
+<p><img src="/project/StyleReserve/screenshott.png" alt="screenshott.png" /></p>
+<ul>
+<li>2022-2학기 소프트웨어공학 과목에서 진행한 앱 개발 프로젝트입니다. document를 작성하며, 체계적인 방식으로 서비스를 제작하였습니다.</li>
+<li>LG styler을 프로젝트의 주제로 선정하여, 소프트웨어적으로 가전제품의 사용성을 개선하는 프로젝트를 진행하였습니다.</li>
+<li>사무실과 같은 환경에서 여러명이 styler를 사용하는 경우 효과적으로 사용할 수 있도록 하는 어플리케이션을 제작하였습니다.
+<ul>
+<li>LG 전자로 부터 같은 과목에서 수행하는 프로젝트들 중 1위를 수상하였습니다.</li>
+</ul>
+</li>
+<li>프로젝트에서, 프로젝트 서비스에 대한 아이디어를 제시하고 frontend와 backend 모두 개발하는 역할을 맡았습니다.
+<ul>
+<li>frontend는 react-native를 사용한 어플리케이션을 제작하였고, backend는 express.js를 이용해서 구축하였습니다.</li>
+</ul>
+</li>
+<li>database는 postgresql을 이용하였습니다.</li>
+<li>orm은 prisma를 사용했습니다.</li>
+<li>배포는 AWS lightsail을 이용하였습니다.</li>
+</ul>
+<h2>프로젝트 링크</h2>
+<p><a href="https://github.com/StyleReserve">https://github.com/StyleReserve</a></p>
+<h2>프로젝트 기간</h2>
+<p>2022.11.04 ~ 2022.12.9</p>
+<h2>기술 스택</h2>
+<ul>
+<li><code>react-native</code> <code>express.js</code> <code>postgresql</code></li>
+</ul>
+<h2>구현 사항</h2>
+<h3>설계</h3>
+<p><img src="/project/StyleReserve/screenshott2.png" alt="screenshott2.png" /></p>
+<h3>1. 스타일러 예약 기능</h3>
+<ul>
+<li>여러 사람이 같은 한정된 스타일러를 공유하는 상황에서, 스타일러 사용을 예약해서 시간과 비용을 절약할 수 있습니다.</li>
+</ul>
+<h3>2. 가상 옷장</h3>
+<ul>
+<li>가족이나 친구와 공유하는 옷을 어플리케이션에 등록해 놓고, 특정 일자에 입어야 할 옷을 미리 예약할 수 있습니다.</li>
+</ul>
+<h3>데모 영상</h3>
+<p><a href="https://www.youtube.com/watch?v=BcrEnAGxoBs">https://www.youtube.com/watch?v=BcrEnAGxoBs</a></p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved.
+            </footer>
+        </div>
+    </body>
+</html>
