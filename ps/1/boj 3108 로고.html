@@ -76,71 +76,161 @@
                 </div>
                 <div class="grid-flow-row md:col-span-9 rounded-lg">
                     
-<div class="md:pl-5">
-    
-    <a class="anc" href="/cpp/배열 초기화.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            배열 초기화
-            </p>
-            
-            <p class="text-xs">
-            0으로 배열을 초기화 하는 방법은 간단하다. 아래와 같이 배열을 생성할때 0으로 초기화해주면 된다. #include &lt;iostream&gt; #include &lt;algorithm&gt; using namespace std; int main(){ int arr_1d[10] = {0,}; int arr_2d[10][10] = {0,}; &#x2F;&#x2F;{{0,}} 도 가능하다. return 0; } 
-            </p>
-            <p class="text-xs text-right">
-            2022-05-26
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
+                     
+<article>
+    <section class="w-full">
+        <div class="mb-2 md:pl-5">
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 3108 로고</p>
         </div>
-    </a>
-    
-    <a class="anc" href="/cpp/범위기반 for.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            범위기반 for
-            </p>
-            
-            <p class="text-xs">
-            https:&#x2F;&#x2F;en.cppreference.com&#x2F;w&#x2F;cpp&#x2F;language&#x2F;range-for   https:&#x2F;&#x2F;learn.microsoft.com&#x2F;ko-kr&#x2F;cpp&#x2F;cpp&#x2F;range-based-for-statement-cpp?view=msvc-170 &#x2F;&#x2F; range-based-for.cpp &#x2F;&#x2F; compile by using: cl &#x2F;EHsc &#x2F;nologo &#x2F;W4 #include &lt;iostream&gt; #include &lt;vector&gt; using namespace std;  int main() { &#x2F;&#x2F; Basic 10-element integer array. 
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
+        <div class="mb-4 md:pl-5">
+            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
+                <tbody>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            alias
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            author
+                        </th>
+                        <td class="">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            created at
+                        </th>
+                        <td class="">2023-11-26</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            tags 
+                        </th>
+                        <td class="">
+                             
+                            <p class="inline">#boj </p>
+                             
+                            <p class="inline">#ps </p>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </a>
-    
-    <a class="anc" href="/cpp/priority_queue.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            priority_queue
-            </p>
-            
-            <p class="text-xs">
-            max priority queue priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxq; priority_queue&lt;int&gt; maxq; 두 개 모두 같은 의미이다. less&lt;int&gt; 를 priority_queue에 push 할 때 push 하는 수가 더 작으면 swap을 한다고 이해하면 된다. min priority queue priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq; 
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-        </div>
-    </a>
-    
-    <div class="my-3">
-        <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 font-semibold">
-            
-        </div>
-    </div>
-    
-</div>
+    </section>
+    <div class="clear-none markdown-body mb-2 md:pl-5">
+        <h3>코드</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+using namespace std;
+using ll = long long;
+struct pos{
+    int x, y;
+    void print(){
+        cout &lt;&lt; x &lt;&lt; ',' &lt;&lt; y &lt;&lt; endl;
+    }
+};
+pos board[1001][1001];
+int crank[1001][1001];
+int n;
+pos find(pos cur){
+    pos parent = board[cur.x][cur.y];
+    if(parent.x==cur.x &amp;&amp; parent.y==cur.y){
+        return cur;
+    } else {
+        pos root = find(parent);
+        board[cur.x][cur.y] = root; 
+        return root;
+    }
+}
+void cunion(pos a, pos b){
+    pos ap = find(a); 
+    pos bp = find(b);
+    if(crank[ap.x][ap.y] &lt; crank[bp.x][bp.y]){
+        swap(ap, bp);
+    }   
+    board[bp.x][bp.y] = ap;
+    if(crank[ap.x][ap.y]==crank[bp.x][bp.y]){
+        crank[ap.x][ap.y] += 1;
+    }
+}
+void solve(){
+    for(int i = 0; i&lt;1001; i++){
+        for(int j = 0; j&lt;1001; j++){
+            board[i][j] = pos {i, j};
+            crank[i][j] = 1;
+        }
+    }
+    pos from, to;
+    vector&lt;pos&gt; check_set;
+    cin &gt;&gt; n; 
+    for(int i = 0; i&lt;n; i++){
+        cin &gt;&gt; from.x &gt;&gt; from.y &gt;&gt; to.x &gt;&gt; to.y; 
+        from.x += 500;
+        from.y += 500;
+        to.x += 500;
+        to.y += 500;
+        for(int i = from.y; i&lt;=to.y; i++){
+            pos cursor1 = {from.x, i};
+            pos cursor2 = {to.x, i};
+            cunion(from, cursor1);
+            cunion(from, cursor2);
+        }
+        for(int i = from.x; i&lt;=to.x; i++){
+            pos cursor1 = {i, from.y};
+            pos cursor2 = {i, to.y};
+            cunion(to, cursor1);
+            cunion(to, cursor2);
+        }
+        check_set.push_back(from);
+    }
+    pos start = find({500,500});
+    set&lt;pair&lt;int, int&gt;&gt; ans; 
+    for(pos s: check_set){
+        pos root = find(s);
+        if(start.x != root.x || start.y != root.y)
+            ans.insert({root.x, root.y}); 
+    } 
+    cout &lt;&lt; ans.size();
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
 
-                    
+</code></pre>
+<h3>풀이</h3>
+<ul>
+<li>문제가 조금 길게 설명되어 있지만, 결국에는 직사각형이 변과 꼭지점으로 연결되 있는 직사각형의 집합이 몇개 인지를 구해야 한다.
+<ul>
+<li>처음에 (0,0) 에서 출발하기 때문에, 이 좌표를 지나는 직사각형은 세지 말아야 한다.</li>
+</ul>
+</li>
+<li>일단은, 각 직사각형이 지나는 모든 좌표가 같은 집합에 들어가야 한다.</li>
+<li>여러 직사각형이 있으면, 공통의 좌표를 지나는 직사각형 들은 같은 집합에 속해있어야 한다.</li>
+<li>집합은 union-find로 해결해야 한다. 위 문제는 같은 좌표를 지나는 직사각형에 속하는 모든 다른 좌표들은 같은 집합에 속해야 하기 때문에, 2차원 좌표를 대상으로 union-find 연산을 해주면 된다.</li>
+</ul>
+<h3>느낀점</h3>
+<ul>
+<li>union-find 자료구조 구현이 잘 기억이 나지 않아서, 구현 방법에 대해 검색을 하여 참고했다.</li>
+<li>푸는과정에서 시간이 조금 걸렸는데, 조건문을 잘못 작성했기 때문이었다.</li>
+</ul>
+
+    </div>
+</article>
+
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">

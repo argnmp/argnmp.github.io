@@ -76,71 +76,78 @@
                 </div>
                 <div class="grid-flow-row md:col-span-9 rounded-lg">
                     
-<div class="md:pl-5">
-    
-    <a class="anc" href="/cpp/배열 초기화.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            배열 초기화
-            </p>
-            
-            <p class="text-xs">
-            0으로 배열을 초기화 하는 방법은 간단하다. 아래와 같이 배열을 생성할때 0으로 초기화해주면 된다. #include &lt;iostream&gt; #include &lt;algorithm&gt; using namespace std; int main(){ int arr_1d[10] = {0,}; int arr_2d[10][10] = {0,}; &#x2F;&#x2F;{{0,}} 도 가능하다. return 0; } 
-            </p>
-            <p class="text-xs text-right">
-            2022-05-26
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
+                     
+<article>
+    <section class="w-full">
+        <div class="mb-2 md:pl-5">
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">priority_queue</p>
         </div>
-    </a>
-    
-    <a class="anc" href="/cpp/범위기반 for.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            범위기반 for
-            </p>
-            
-            <p class="text-xs">
-            https:&#x2F;&#x2F;en.cppreference.com&#x2F;w&#x2F;cpp&#x2F;language&#x2F;range-for   https:&#x2F;&#x2F;learn.microsoft.com&#x2F;ko-kr&#x2F;cpp&#x2F;cpp&#x2F;range-based-for-statement-cpp?view=msvc-170 &#x2F;&#x2F; range-based-for.cpp &#x2F;&#x2F; compile by using: cl &#x2F;EHsc &#x2F;nologo &#x2F;W4 #include &lt;iostream&gt; #include &lt;vector&gt; using namespace std;  int main() { &#x2F;&#x2F; Basic 10-element integer array. 
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
+        <div class="mb-4 md:pl-5">
+            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
+                <tbody>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            alias
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            author
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            created at
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            tags 
+                        </th>
+                        <td class="">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </a>
-    
-    <a class="anc" href="/cpp/priority_queue.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            priority_queue
-            </p>
-            
-            <p class="text-xs">
-            max priority queue priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxq; priority_queue&lt;int&gt; maxq; 두 개 모두 같은 의미이다. less&lt;int&gt; 를 priority_queue에 push 할 때 push 하는 수가 더 작으면 swap을 한다고 이해하면 된다. min priority queue priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq; 
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-        </div>
-    </a>
-    
-    <div class="my-3">
-        <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 font-semibold">
-            
-        </div>
-    </div>
-    
-</div>
+    </section>
+    <div class="clear-none markdown-body mb-2 md:pl-5">
+        <h3>max priority queue</h3>
+<pre><code class="language-cpp">priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxq;
+priority_queue&lt;int&gt; maxq;
+</code></pre>
+<ul>
+<li>두 개 모두 같은 의미이다.</li>
+<li><code>less&lt;int&gt;</code> 를 priority_queue에 push 할 때 push 하는 수가 더 작으면 swap을 한다고 이해하면 된다.</li>
+</ul>
+<h3>min priority queue</h3>
+<pre><code class="language-cpp">priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq;
+</code></pre>
+<ul>
+<li>마찬가지로 <code>greater&lt;int&gt;</code> 를 priority_queue에 push 할 때 push 하는 수가 더 크면 swap을 한다고 이해하면 된다.</li>
+</ul>
+<h3>priority queue with struct</h3>
+<pre><code class="language-c++">struct compare_x {
+  bool operator()(pos&amp; a, pos&amp; b){
+    return a.x &lt; b.x;
+  }
+};
+priority_queue&lt;pos, vector&lt;pos&gt;, compare_x&gt; sorted_pos;
 
-                    
+</code></pre>
+<ul>
+<li>compare_x 와 같은 struct(class)를 하나 만들고, 이 struct에 연산자 오버로딩을 해준다. 그리고 이 struct(class)를 이용해서 priority queue를 정의한다.</li>
+<li><code>bool operator()(pos&amp; a, pos&amp;b)</code> 에서 첫번째 인자는 priority queue에 push하는 원소이고, 두번째 인자는 비교 대상이다.</li>
+<li>위에서 compare_x는 push하는 원소의 x 값이 더 작으면 swap을 한다. 따라서 top 에는 x값이 가장 큰 원소가 위치하게 된다. less와 greater를 이용한 것과 같은 방식이다.</li>
+</ul>
+
+    </div>
+</article>
+
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">

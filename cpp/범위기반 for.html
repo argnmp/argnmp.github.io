@@ -76,71 +76,105 @@
                 </div>
                 <div class="grid-flow-row md:col-span-9 rounded-lg">
                     
-<div class="md:pl-5">
-    
-    <a class="anc" href="/cpp/배열 초기화.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            배열 초기화
-            </p>
-            
-            <p class="text-xs">
-            0으로 배열을 초기화 하는 방법은 간단하다. 아래와 같이 배열을 생성할때 0으로 초기화해주면 된다. #include &lt;iostream&gt; #include &lt;algorithm&gt; using namespace std; int main(){ int arr_1d[10] = {0,}; int arr_2d[10][10] = {0,}; &#x2F;&#x2F;{{0,}} 도 가능하다. return 0; } 
-            </p>
-            <p class="text-xs text-right">
-            2022-05-26
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
+                     
+<article>
+    <section class="w-full">
+        <div class="mb-2 md:pl-5">
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">범위기반 for</p>
         </div>
-    </a>
-    
-    <a class="anc" href="/cpp/범위기반 for.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            범위기반 for
-            </p>
-            
-            <p class="text-xs">
-            https:&#x2F;&#x2F;en.cppreference.com&#x2F;w&#x2F;cpp&#x2F;language&#x2F;range-for   https:&#x2F;&#x2F;learn.microsoft.com&#x2F;ko-kr&#x2F;cpp&#x2F;cpp&#x2F;range-based-for-statement-cpp?view=msvc-170 &#x2F;&#x2F; range-based-for.cpp &#x2F;&#x2F; compile by using: cl &#x2F;EHsc &#x2F;nologo &#x2F;W4 #include &lt;iostream&gt; #include &lt;vector&gt; using namespace std;  int main() { &#x2F;&#x2F; Basic 10-element integer array. 
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
+        <div class="mb-4 md:pl-5">
+            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
+                <tbody>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            alias
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            author
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            created at
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            tags 
+                        </th>
+                        <td class="">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </a>
-    
-    <a class="anc" href="/cpp/priority_queue.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            priority_queue
-            </p>
-            
-            <p class="text-xs">
-            max priority queue priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxq; priority_queue&lt;int&gt; maxq; 두 개 모두 같은 의미이다. less&lt;int&gt; 를 priority_queue에 push 할 때 push 하는 수가 더 작으면 swap을 한다고 이해하면 된다. min priority queue priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq; 
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-        </div>
-    </a>
-    
-    <div class="my-3">
-        <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 font-semibold">
-            
-        </div>
-    </div>
-    
-</div>
+    </section>
+    <div class="clear-none markdown-body mb-2 md:pl-5">
+        <p><a href="https://en.cppreference.com/w/cpp/language/range-for">https://en.cppreference.com/w/cpp/language/range-for</a>
+<a href="https://learn.microsoft.com/ko-kr/cpp/cpp/range-based-for-statement-cpp?view=msvc-170">https://learn.microsoft.com/ko-kr/cpp/cpp/range-based-for-statement-cpp?view=msvc-170</a></p>
+<pre><code class="language-cpp">// range-based-for.cpp
+// compile by using: cl /EHsc /nologo /W4
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
 
-                    
+int main()
+{
+    // Basic 10-element integer array.
+    int x[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+    // Range-based for loop to iterate through the array.
+    for( int y : x ) { // Access by value using a copy declared as a specific type.
+                       // Not preferred.
+        cout &lt;&lt; y &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+
+    // The auto keyword causes type inference to be used. Preferred.
+
+    for( auto y : x ) { // Copy of 'x', almost always undesirable
+        cout &lt;&lt; y &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+
+    for( auto &amp;y : x ) { // Type inference by reference.
+        // Observes and/or modifies in-place. Preferred when modify is needed.
+        cout &lt;&lt; y &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+
+    for( const auto &amp;y : x ) { // Type inference by const reference.
+        // Observes in-place. Preferred when no modify is needed.
+        cout &lt;&lt; y &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+    cout &lt;&lt; &quot;end of integer array test&quot; &lt;&lt; endl;
+    cout &lt;&lt; endl;
+
+    // Create a vector object that contains 10 elements.
+    vector&lt;double&gt; v;
+    for (int i = 0; i &lt; 10; ++i) {
+        v.push_back(i + 0.14159);
+    }
+
+    // Range-based for loop to iterate through the vector, observing in-place.
+    for( const auto &amp;j : v ) {
+        cout &lt;&lt; j &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+    cout &lt;&lt; &quot;end of vector test&quot; &lt;&lt; endl;
+}
+</code></pre>
+
+    </div>
+</article>
+
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">

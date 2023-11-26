@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 1655 가운데를 말해요</p>
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">11월의 마지막 주</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,17 +101,13 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-09-22</td>
+                        <td class="">2023-11-26</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
                             tags 
                         </th>
                         <td class="">
-                             
-                            <p class="inline">#boj </p>
-                             
-                            <p class="inline">#ps </p>
                             
                         </td>
                     </tr>
@@ -120,70 +116,15 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5">
-        <h3>코드</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;climits&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;map&gt;
-#include &lt;unordered_map&gt;
-#include &lt;set&gt;
-#include &lt;unordered_set&gt;
-#include &lt;bitset&gt;
-#include &lt;cstring&gt;
-using namespace std;
-using ll = long long;
-int n;
-priority_queue&lt;int&gt; maxq;
-priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq;
-
-void solve(){
-  cin &gt;&gt; n;   
-  int k, maxqt = INT_MAX, minqt = INT_MAX;
-  for(int i = 0; i&lt;n; i++){
-    cin &gt;&gt; k;
-    if(i%2==0) maxq.push(k);
-    else minq.push(k);
-
-    if(i != 0 &amp;&amp; maxq.top() &gt; minq.top()){
-      maxqt = maxq.top();
-      minqt = minq.top();
-      maxq.pop();
-      minq.pop();
-      maxq.push(minqt);
-      minq.push(maxqt);
-    }
-    if(i==0){
-      cout &lt;&lt; maxq.top() &lt;&lt; &quot;\n&quot;;
-    } else {
-      cout &lt;&lt; min(maxq.top(), minq.top()) &lt;&lt; &quot;\n&quot;;
-    }
-  }
-}
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    solve(); 
-    return 0;
-}
-
-</code></pre>
-<h3>풀이</h3>
-<ul>
-<li>priority queue를 이용해서 반을 나눠서 작은 쪽은 max priority queue로, 큰 쪽은 min priority queue로 가운데 값을 찾아야 한다</li>
-</ul>
-<h3>느낀점</h3>
-<ul>
-<li>아이디어를 도출해 내지 못했다</li>
-<li>priority queue를 사용하는 법을 잊어버렸다.
-<ul>
-<li><a href="/cpp/priority_queue.html">priority_queue</a></li>
-</ul>
-</li>
-<li>시간초과가 나길래 이유를 못찾았는데, endl 대신 '\n' 을 사용하니 해결이 되었다.</li>
-</ul>
+        <h2>인턴을 한달 가량 남겨두며.</h2>
+<p>3학년 2학기를 기업 인턴으로 대체하여, 스타트업에서 5개월 째 근무를 하는 중입니다. 벌써 11월이 되어 종료까지 한달을 남겨두고 있다는 사실이 믿기지 않습니다. 다니면서 너무 긴장을 했던 탓일까요. 지금은 아침에 일어나서 씻고 회사로 출근을 하는 일상이 정말 자연스러워졌습니다.</p>
+<p>그동안의 시간을 돌이켜 보면, 업무 외의 시간을 그렇게 알차게 보내지는 못한 것 같습니다. 물론 업무 시간 동안은 실무를 경험하며 많은 것들을 배웠습니다. 그에 비해 퇴근 후 시간이나 주말은, 보상심리로 인해서 굉장히 자유롭게 보냈습니다. 시간의 밀도가 매우매우매우 낮았습니다. 아직 학생이라는 본분을 잊어버리고, 너무나 헛되이 보낸 것은 아닌가 싶습니다.</p>
+<p>하지만 이제와서 후회해봤자 지나간 시간은 돌아오지 않습니다. 한 달 기간이 남았으니, 지금부터라도 다음 도약을 준비하며 열심히 살아갈 것입니다.</p>
+<h2>유튜브</h2>
+<p>유튜브의 중독성이 매우 심하다는 것을 요즘들어서 더욱 강렬하게 느끼고 있습니다. 별다른 노력없이 얻을 수 있는 보상 중에는 가히 최고봉이라고 할 수 있습니다. 말하자면 <strong>도파민 중독</strong>인 셈이지요. 더욱 역설적인 것은 이러한 <strong>도파민 중독</strong>이라는 말 자체도 유튜브의 여러 동영상과 쇼츠를 시청하며 알게 된 사실이라는 점입니다. 유튜브를 시청하지 않기 위해서, 스마트폰에서 유튜브 어플을 삭제도 했지만 완전히 끊어내는 데는 실패했습니다. 접근성을 줄이니 시청하는 시간이 줄어들곤 했지만 불편함을 감수하면서까지(크롬으로 접속하며) 동영상과 쇼츠를 시청하는 상태에 이르렀습니다.</p>
+<p>결국 한 상태에서 곧바로 다른 상태로 변하는 것은, 특히 그것이 도파민을 제공하는 대상일 경우엔 더더욱 불가능하다는 사실을 깨닫게 되었습니다. 유튜브를 끊어야 겠다고 생각한 순간부터 저의 삶에서 유튜브를 지워버릴 순 없는 것처럼 말이죠. 고민을 하다가, 다른 대상으로 대체를 하며 서서히 줄여가는 방식을 적용해보자는 결론에 이르렀습니다.</p>
+<p>그렇다면 유튜브 시청을 줄이기 위해서는 무엇으로 대체를 해야 할까요? 유튜브 만큼이나 제게 즐거움을 줄 수 있는 대상이 있을까요? 예전부터 사람은 <strong>생산적인</strong> 일을 해야 한다고 생각해왔습니다. 생산적이라는 것의 의미는 말 그대로 생산을 해야 한다, 산출물이 있어야 한다는 의미입니다. 농사는 이와 같은 관점에서 최고의 취미라고 생각합니다. 노력을 통해 농산물을 얻고 이를 나눔으로써 보람까지도 느낄 수 있기 때문입니다. 돌이켜 보면, 머릿속에서 구상하는 프로그램을 작성할 때 스트레스를 받지 않고 유튜브에 벗어나서 집중할 수가 있었습니다. 그때만큼은 유튜브 시청과 프로그램 작성 중 후자를 택할 것입니다. 프로그램 작성은 농사와 비슷하게 산출물이 나오는 행위이고, 농사보다는 한층 더 즉각적인 결과물을 얻을 수 있습니다. 결국 즉각적으로 산출물이 나오는 행위가 유튜브 시청을 대체할 수 있지 않을까 하는 결론에 이르게 되었습니다.</p>
+<p>글을 작성해서 블로그에 올리는 것도 이와 같은 생산적인 행위에 해당합니다. 다만 프로그램 작성보다도 한층 더 즉각적이지요. 그래서 저는 유튜브 시청을, 블로그에 글을 작성하는 행위로 대체하며 조금씩 줄여나갈 생각입니다. 물론 결과론적인 생각이라고 할 수 있습니다. 하지만 한편으로는, 유튜브 시청은 수동적이고 생산적인 행위는 능동적이라는 점에서 효과적일 것이라 기대합니다.</p>
 
     </div>
 </article>

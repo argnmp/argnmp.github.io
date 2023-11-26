@@ -194,7 +194,6 @@ int main(){
 memset(arr, 1, sizeof(arr));
 </code></pre>
 <p>예를 들어 위와 같이 memset을 호출 했다고 해보자. arr[0] 은 int형 이므로 4byte이다. 그리고 처음에 0으로 초기화 했기 때문에 2진수로 나타내면 <strong>00000000/00000000/00000000/00000000</strong> 이라고 할 수 있다. 이전에 memset은 1byte로 변환하여 복사한다고 하였다. 그러므로 1byte로 1을 나타내면 <strong>00000001</strong> 이고 이를 arr[0] 에 memset으로 넣게 되면 <strong>00000001/00000001/00000001/00000001</strong> 이렇게 4번 반복되어 들어간다. 이를 다시 int형으로 읽으면 아래와 같이 16,843,009 라는 결과가 나온다. 즉 모든 배열의 원소가 16843009로 초기화 됨을 의미한다.</p>
-<p><img src="/api/image/1653547326116_image1.png" alt="" /></p>
 <p>결론적으로 0 또는 -1로 초기화 할 때만 memset을 사용하는 것이 안전하다. 0은 이진수로 <strong>00000000</strong>(1byte, unsigned char) 이고 1은 이진수로 <strong>11111111</strong>(1byte, unsigned char) 이다. 이 둘의 공통점은 모든 숫자가 같다는 것이다. 따라서 4번 반복하여 int형으로 읽어도 값이 변함이 없기 때문에 안전하다.</p>
 <h3>1차원 배열 초기화</h3>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
@@ -225,6 +224,11 @@ int main(){
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
                 © 2023. Taehyeon Kim All rights reserved.
+            </footer>
+        </div>
+    </body>
+</html>
+erved.
             </footer>
         </div>
     </body>

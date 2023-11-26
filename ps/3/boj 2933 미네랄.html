@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 1655 가운데를 말해요</p>
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 2933 미네랄</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-09-22</td>
+                        <td class="">2023-10-08</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -121,8 +121,7 @@
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5">
         <h3>코드</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;iostream&gt;
+<pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
 #include &lt;vector&gt;
@@ -135,32 +134,176 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int n;
-priority_queue&lt;int&gt; maxq;
-priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq;
+int r, c, n;
+char board[101][101] = {0,};
+int stick[101] = {0,};
+int dx[4] = { -1, 0, 1, 0};
+int dy[4] = { 0, 1, 0, -1};
+struct pos { 
+    int x; 
+    int y; 
+    bool flag; 
+    void print(){cout &lt;&lt; '[' &lt;&lt; x &lt;&lt; ',' &lt;&lt; y &lt;&lt; ']' &lt;&lt; endl;}
+    bool safe(){
+        return 0&lt;=x&amp;&amp;x&lt;r&amp;&amp;0&lt;=y&amp;&amp;y&lt;c;
+    }
+    pos adj(int i){
+        return pos{x+dx[i%4], y+dy[i%4]};
+    }
+};
+struct compare {
+    bool operator()(pos&amp; a, pos&amp; b){
+        if(a.y == b.y){
+            return a.x &lt; b.x;
+        }
+        return a.y &gt; b.y;
+    }
+};
+
+// true: from left, false: from right
+pos throw_stick(int r, bool direction) {
+    pos cur;
+    cur.x = r;
+    cur.y = 0;
+    cur.flag = true;
+    if(direction){
+        for(int i = 0; i&lt;c; i++){
+            cur.y = i; 
+            if(board[cur.x][cur.y]=='x'){
+                board[cur.x][cur.y] = '.';
+                return cur;
+            }
+        } 
+    } else {
+        for(int i = c-1; i&gt;=0; i--){
+            cur.y = i; 
+            if(board[cur.x][cur.y]=='x'){
+                board[cur.x][cur.y] = '.';
+                return cur;
+            }
+        } 
+    }
+    cur.flag = false; 
+    return cur;
+}
+
+void print_board(){
+    for(int i = 0; i&lt;r; i++){
+        for(int j = 0; j&lt;c; j++){
+            cout &lt;&lt; board[i][j];
+        }
+        cout &lt;&lt; endl;
+    }
+}
+
+void process(int i) {
+
+    pos cur = throw_stick(r-stick[i], i%2==0);
+    if(!cur.flag) return;
+
+    int colored[101][101] = {0,}; // 1: connected to ground , 2: above ground
+    // color minerals connected to ground
+    for(int j=0; j&lt;c; j++){
+        if(board[r-1][j]=='x'){
+            queue&lt;pos&gt; q;
+            q.push(pos{r-1,j});
+            colored[r-1][j] = 1;
+            while(!q.empty()){
+                pos t = q.front();
+                q.pop();
+                for(int i = 0; i&lt;4; i++){
+                    pos next = t.adj(i);
+                    if(next.safe() &amp;&amp; colored[next.x][next.y]==0 &amp;&amp; board[next.x][next.y]=='x'){
+                        colored[next.x][next.y] = 1;
+                        q.push(next);
+                    }
+                }           
+            }
+        }
+    } 
+
+    // cluster start pos, diff to ground
+    vector&lt;pos&gt; above_cluster;
+
+    // color minerals above ground
+    for(int k=0; k&lt;4; k++){
+        pos next = cur.adj(k);
+        if(next.safe() &amp;&amp; board[next.x][next.y] == 'x' &amp;&amp; colored[next.x][next.y] == 0){
+            queue&lt;pos&gt; q;
+            q.push(next);
+            colored[next.x][next.y] = 2;
+            while(!q.empty()){
+                pos t = q.front();
+                q.pop();
+                for(int i = 0; i&lt;4; i++){
+                    pos n = t.adj(i);
+                    if(n.safe() &amp;&amp; colored[n.x][n.y]==0 &amp;&amp; board[n.x][n.y]=='x'){
+                        q.push(n);
+                        colored[n.x][n.y] = 2;
+                    }
+                }           
+            }
+            above_cluster.push_back(next);
+        }
+    }
+    
+    priority_queue&lt;pos, vector&lt;pos&gt;, compare&gt; sorted_pos;
+    for (auto cur: above_cluster){
+        int min_diff = INT_MAX;
+
+        queue&lt;pos&gt; q;
+        q.push(cur);
+        int visited[101][101] = {0,};
+        visited[cur.x][cur.y] = 1;
+        while(!q.empty()){
+            pos t = q.front();
+            q.pop();
+            sorted_pos.push(t);
+
+            // calculate min_diff
+            for(int i=t.x+1; i&lt;r; i++){
+                if(colored[i][t.y]==2) continue;
+                if(board[i][t.y]=='x'){
+                    min_diff = min(min_diff, i-t.x-1);
+                } else if(i==r-1) {
+                    min_diff = min(min_diff, i-t.x); 
+                }
+            }
+            for(int i = 0; i&lt;4; i++){
+                pos n = t.adj(i);
+                if(n.safe() &amp;&amp; colored[n.x][n.y]==2 &amp;&amp; visited[n.x][n.y]==0){
+                    visited[n.x][n.y] = 1;
+                    q.push(n);
+                }
+            }           
+        }
+        while(!sorted_pos.empty()){
+            pos t = sorted_pos.top();
+            sorted_pos.pop();
+            board[t.x + min_diff][t.y] = 'x';
+            board[t.x][t.y] = '.';
+        } 
+    }
+}
 
 void solve(){
-  cin &gt;&gt; n;   
-  int k, maxqt = INT_MAX, minqt = INT_MAX;
-  for(int i = 0; i&lt;n; i++){
-    cin &gt;&gt; k;
-    if(i%2==0) maxq.push(k);
-    else minq.push(k);
+    cin &gt;&gt; r &gt;&gt; c;
+    for(int i = 0; i&lt;r; i++){
+        for(int j = 0; j&lt;c; j++){
+            char ch = cin.get();
+            while(ch == '\n' || ch == ' ' || ch == '\r'){
+                ch = cin.get();
+            }
+            board[i][j] = ch;
+        }
+    }
+    cin &gt;&gt; n;
+    for(int i = 0; i&lt;n; i++){
+        cin &gt;&gt; stick[i];
+        process(i);
+    }
 
-    if(i != 0 &amp;&amp; maxq.top() &gt; minq.top()){
-      maxqt = maxq.top();
-      minqt = minq.top();
-      maxq.pop();
-      minq.pop();
-      maxq.push(minqt);
-      minq.push(maxqt);
-    }
-    if(i==0){
-      cout &lt;&lt; maxq.top() &lt;&lt; &quot;\n&quot;;
-    } else {
-      cout &lt;&lt; min(maxq.top(), minq.top()) &lt;&lt; &quot;\n&quot;;
-    }
-  }
+    print_board();
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -172,17 +315,18 @@ int main(){
 </code></pre>
 <h3>풀이</h3>
 <ul>
-<li>priority queue를 이용해서 반을 나눠서 작은 쪽은 max priority queue로, 큰 쪽은 min priority queue로 가운데 값을 찾아야 한다</li>
+<li>문제를 단순하게 생각해야 한다.</li>
+<li>깊게 고민할 필요없이 탐색은 그냥 bfs를 해버리면 된다.</li>
+<li>막대를 던졌을 때 미네랄 클러스터가 나뉘는데, 이를 바닥에 붙어 있는 클러스터와 바닥과 연결되어 있지 않은 클러스터로 나뉘게 된다.</li>
+<li>bfs를 통해서 이 두가지 클러스터를 구분하고, 바닥과 연결되어 있지 않은 클러스터의 경우, 특정 미네랄 위치에서 아래로 쭉 탐색하며 <em>바닥에 연결되어 있는 클러스터</em> 만을 기준으로 얼마나 떨어지는지 차이를 구한다. 바닥과 연결되어 있지 않은 클러스터를 만난 경우 무시하고 밑으로 계속 탐색한다</li>
+<li>클러스터를 밑으로 내릴 때에는 priority queue를 이용해서, 클러스터의 미네랄의 좌표들을 바닥과 가까운 순으로 정렬되게 해서 밑에 있는 것부터 차례로 옮겨야 한다.</li>
 </ul>
 <h3>느낀점</h3>
 <ul>
-<li>아이디어를 도출해 내지 못했다</li>
-<li>priority queue를 사용하는 법을 잊어버렸다.
-<ul>
-<li><a href="/cpp/priority_queue.html">priority_queue</a></li>
-</ul>
-</li>
-<li>시간초과가 나길래 이유를 못찾았는데, endl 대신 '\n' 을 사용하니 해결이 되었다.</li>
+<li>문제를 풀지 못하고, 해설을 보고 코드를 다시 작성하였다.</li>
+<li>처음에 너무 어렵게 생각해서, 시간이 많이 소요되었다.</li>
+<li>특히 메모리 초과가 떴는데, 이유는 bfs 시 queue에 push할때 visited를 체크하지 않고 pop할때 visited를 체크했기 때문이었다. 주의하자!!</li>
+<li><a href="/">좌표</a></li>
 </ul>
 
     </div>

@@ -76,71 +76,136 @@
                 </div>
                 <div class="grid-flow-row md:col-span-9 rounded-lg">
                     
-<div class="md:pl-5">
-    
-    <a class="anc" href="/cpp/배열 초기화.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            배열 초기화
-            </p>
-            
-            <p class="text-xs">
-            0으로 배열을 초기화 하는 방법은 간단하다. 아래와 같이 배열을 생성할때 0으로 초기화해주면 된다. #include &lt;iostream&gt; #include &lt;algorithm&gt; using namespace std; int main(){ int arr_1d[10] = {0,}; int arr_2d[10][10] = {0,}; &#x2F;&#x2F;{{0,}} 도 가능하다. return 0; } 
-            </p>
-            <p class="text-xs text-right">
-            2022-05-26
-            </p>
-            <p class="text-xs text-right">
-            Taehyeon Kim
-            </p>
+                     
+<article>
+    <section class="w-full">
+        <div class="mb-2 md:pl-5">
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 11657 타임머신</p>
         </div>
-    </a>
-    
-    <a class="anc" href="/cpp/범위기반 for.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            범위기반 for
-            </p>
-            
-            <p class="text-xs">
-            https:&#x2F;&#x2F;en.cppreference.com&#x2F;w&#x2F;cpp&#x2F;language&#x2F;range-for   https:&#x2F;&#x2F;learn.microsoft.com&#x2F;ko-kr&#x2F;cpp&#x2F;cpp&#x2F;range-based-for-statement-cpp?view=msvc-170 &#x2F;&#x2F; range-based-for.cpp &#x2F;&#x2F; compile by using: cl &#x2F;EHsc &#x2F;nologo &#x2F;W4 #include &lt;iostream&gt; #include &lt;vector&gt; using namespace std;  int main() { &#x2F;&#x2F; Basic 10-element integer array. 
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
+        <div class="mb-4 md:pl-5">
+            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
+                <tbody>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            alias
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            author
+                        </th>
+                        <td class="">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            created at
+                        </th>
+                        <td class="">2023-10-19</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            tags 
+                        </th>
+                        <td class="">
+                             
+                            <p class="inline">#boj </p>
+                             
+                            <p class="inline">#ps </p>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </a>
-    
-    <a class="anc" href="/cpp/priority_queue.html">
-        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
-            <p class="text-2xl font-semibold">
-            priority_queue
-            </p>
-            
-            <p class="text-xs">
-            max priority queue priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxq; priority_queue&lt;int&gt; maxq; 두 개 모두 같은 의미이다. less&lt;int&gt; 를 priority_queue에 push 할 때 push 하는 수가 더 작으면 swap을 한다고 이해하면 된다. min priority queue priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq; 
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-            <p class="text-xs text-right">
-            undefined
-            </p>
-        </div>
-    </a>
-    
-    <div class="my-3">
-        <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 font-semibold">
-            
-        </div>
-    </div>
-    
-</div>
+    </section>
+    <div class="clear-none markdown-body mb-2 md:pl-5">
+        <h3>코드</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+using namespace std;
+using ll = long long;
+struct edge{
+    int u, v, w;
+};
 
-                    
+int n, m;
+vector&lt;vector&lt;edge&gt;&gt; graph(501, vector&lt;edge&gt;());
+
+void solve(){
+    cin &gt;&gt; n &gt;&gt; m;    
+    int u, v, w;
+    for(int i = 0; i&lt;m; i++){
+        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+        graph[u].push_back({u, v, w});
+    }
+
+    ll dist[501]; 
+    fill(&amp;dist[0], &amp;dist[501], LONG_LONG_MAX);
+    dist[1] = 0;
+    for(int i = 0; i&lt;n; i++){
+        for(int u = 1; u&lt;=n; u++){
+            if(dist[u]!=LONG_LONG_MAX){
+                for(edge t: graph[u]){
+                    if(dist[u] + t.w &lt; dist[t.v])
+                        dist[t.v] = dist[u] + t.w;
+                }
+            }
+        } 
+    }
+
+    bool is_inf = false;
+    for(int u = 1; u&lt;=n; u++){
+        if(dist[u]!=LONG_LONG_MAX){
+            for(edge t: graph[u]){
+                if(dist[u] + t.w &lt; dist[t.v]){
+                    is_inf = true;
+                    break;
+                }
+            }
+        }
+    }
+    if(is_inf)
+        cout &lt;&lt; -1;
+    else {
+        for(int i = 2; i&lt;=n; i++){
+            if(dist[i]==LONG_LONG_MAX)
+                cout &lt;&lt; -1 &lt;&lt; '\n';
+            else
+                cout &lt;&lt; dist[i] &lt;&lt; '\n';
+        }
+    }
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+
+</code></pre>
+<h3>풀이</h3>
+<ul>
+<li>bellman ford 알고리즘을 사용하면 된다.</li>
+<li></li>
+</ul>
+<h3>느낀점</h3>
+<ul>
+<li>오랜만에 다시 푼 문제로, bellman ford 알고리즘을 찾아보았다.</li>
+</ul>
+
+    </div>
+</article>
+
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">

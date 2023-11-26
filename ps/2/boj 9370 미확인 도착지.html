@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 1655 가운데를 말해요</p>
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 9370 미확인 도착지</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-09-22</td>
+                        <td class="">2023-10-19</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -121,8 +121,7 @@
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5">
         <h3>코드</h3>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;iostream&gt;
+<pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
 #include &lt;vector&gt;
@@ -135,54 +134,100 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int n;
-priority_queue&lt;int&gt; maxq;
-priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq;
+struct edge {
+    int u, v, w;
+};
+struct compare {
+    bool operator()(edge&amp; a, edge &amp;b){
+        return a.w &gt; b.w;
+    }
+};
+int n, m, t;
+int s, g, h;
 
+vector&lt;vector&lt;edge&gt;&gt; graph;
+vector&lt;int&gt; candidates;
+
+void dijkstra(int start, int* done){
+    fill(&amp;done[0], &amp;done[2001], -1);
+    priority_queue&lt;edge, vector&lt;edge&gt;, compare&gt; pq;
+    pq.push({start, start, 0}); 
+    while(!pq.empty()){
+        edge t = pq.top();
+        pq.pop();
+        if(done[t.v]==-1){
+            done[t.v] = t.w;
+        } else {
+            continue;
+        }
+        
+        for(edge n: graph[t.v]){
+            if(done[n.v]==-1){
+                pq.push({n.u, n.v, t.w + n.w});
+            }
+        }
+    }
+}
 void solve(){
-  cin &gt;&gt; n;   
-  int k, maxqt = INT_MAX, minqt = INT_MAX;
-  for(int i = 0; i&lt;n; i++){
-    cin &gt;&gt; k;
-    if(i%2==0) maxq.push(k);
-    else minq.push(k);
+    graph = vector(2001, vector&lt;edge&gt;());
+    candidates.clear();
 
-    if(i != 0 &amp;&amp; maxq.top() &gt; minq.top()){
-      maxqt = maxq.top();
-      minqt = minq.top();
-      maxq.pop();
-      minq.pop();
-      maxq.push(minqt);
-      minq.push(maxqt);
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; t;
+    cin &gt;&gt; s &gt;&gt; g &gt;&gt; h;
+    int a,b,d;
+    for(int i = 0; i&lt;m; i++){
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; d; 
+        graph[a].push_back({a, b, d});
+        graph[b].push_back({b, a, d});
     }
-    if(i==0){
-      cout &lt;&lt; maxq.top() &lt;&lt; &quot;\n&quot;;
-    } else {
-      cout &lt;&lt; min(maxq.top(), minq.top()) &lt;&lt; &quot;\n&quot;;
+    int x;
+    for(int i = 0; i&lt;t; i++){
+        cin &gt;&gt; x;
+        candidates.push_back(x);
     }
-  }
+    int start_s[2001];
+    dijkstra(s, start_s);
+    int start_g[2001];
+    dijkstra(g, start_g);
+    int start_h[2001];
+    dijkstra(h, start_h);
+
+    sort(candidates.begin(), candidates.end());
+    for(int v: candidates){
+        if(start_s[v]==start_s[g]+start_g[h]+start_h[v] || start_s[v]==start_s[h]+start_h[g]+start_g[v]){
+            cout &lt;&lt; v &lt;&lt; ' ';
+        }
+    }
+    cout &lt;&lt; endl;
 }
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-    solve(); 
+    int test;
+    cin &gt;&gt; test;
+    while(test--)
+        solve(); 
     return 0;
 }
-
 </code></pre>
 <h3>풀이</h3>
 <ul>
-<li>priority queue를 이용해서 반을 나눠서 작은 쪽은 max priority queue로, 큰 쪽은 min priority queue로 가운데 값을 찾아야 한다</li>
+<li>dijkstra 는 최단 거리를 구할 수 있고, 최단 거리에 도달하는 경로를 구할 수 있다. 하지만, 이 말이 최단 경로가 하나라는 것은 아니다. 여러개의 최단 경로가 있고 그중에 하나만을 찾을 뿐이다.</li>
+<li>따라서 이 문제를 풀때, dijkstra로 후보군에 도달한뒤 도착한 경로를 확인하는 방법으로는 답을 구할 수 없다. 도달한 경로가 최단경로는 맞지만, 그 최단경로가 또 존재할 수 있기 때문이다. 그렇다고 해서 dijkstra를 돌면서 모든 최단 경로를 다 찾을 수는 없다.</li>
+<li>그렇기 때문에, 이 문제에서는 경로를 찾기 보다는 <strong>최단 거리</strong> 를 통해 판단을 해야한다.</li>
+<li>g와 h 사이의 거리를 지나는 최단 경로여야 한다. 이를 이용해서 <code>시작점 -&gt; g -&gt; h -&gt; 도착지</code> 또는 <code>시작점 -&gt; h -&gt; g -&gt; 도착지</code> 순으로 최단경로가 형성되어야 한다. 결국 이 말은 g - h edge를 지나는 경로가 최단경로가 될 수 있을 지를 묻는 문제이다.</li>
+<li><code>시작점 -&gt; (g 또는 h) -&gt; (h 또는 g) -&gt; 도착지</code> 에서 vertex 마다 최단 경로로 이동하면 g-h edge를 지나는 최단 경로로 이동한 것이라고 할 수 있다. 이 때의 최단 거리를, 시작점에서 도착지까지의 최단 거리와 비교해서 같은 경우, 답에 해당하는 후보군 이라고 판단할 수 있다.</li>
+<li>그래서 여러번의 dijkstra 연산을 통해서 확인을 하면 된다.</li>
 </ul>
 <h3>느낀점</h3>
 <ul>
-<li>아이디어를 도출해 내지 못했다</li>
-<li>priority queue를 사용하는 법을 잊어버렸다.
+<li>dijkstra를 이용해야 한다는 것은 알았으나, 풀이를 생각해내지 못해서 검색후 코딩을 했다.</li>
+<li>푸는 과정에서 dijkstra 코드를 잘못짰다.
 <ul>
-<li><a href="/cpp/priority_queue.html">priority_queue</a></li>
+<li>BFS는 for문에서 다음 위치를 찾는 과정에서 visited 배열을 갱신한다. (이렇게 하지 않으면 시간초과가 발생)</li>
+<li>dijkstra나 mst 는 queue에서 pop 된 순간 done 배열을 갱신한다. (priority queue를 사용하기 때문에 pop이 되어야 대상으로 선택된 것이다.)</li>
 </ul>
 </li>
-<li>시간초과가 나길래 이유를 못찾았는데, endl 대신 '\n' 을 사용하니 해결이 되었다.</li>
 </ul>
 
     </div>
