@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 1956 운동</p>
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 2931 가스관</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-11-20</td>
+                        <td class="">2023-10-20</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -134,33 +134,126 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int vn, en;
-
-void solve(){
-    cin &gt;&gt; vn &gt;&gt; en;
-    int done[401][401];
-    fill(&amp;done[0][0], &amp;done[400][401], INT_MAX);
-    int u, v, w;
-    for(int i = 0; i&lt;en; i++){
-        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w; 
-        done[u][v] = w;
+int r, c;
+char board[25][25];
+int dx[4] = {-1, 0, 1, 0};
+int dy[4] = {0, 1, 0, -1};
+struct pos {
+    int x, y;
+    void print(){
+        printf(&quot;[%d,%d]\n&quot;,x,y);
     }
-    for(int i = 1; i&lt;=vn; i++){
-        for(int j = 1; j&lt;=vn; j++){
-            for(int k = 1; k&lt;=vn; k++){
-                if(done[i][k]!=INT_MAX &amp;&amp; done[k][j]!=INT_MAX &amp;&amp; done[i][j] &gt; done[i][k] + done[k][j]){
-                    done[i][j] = done[i][k] + done[k][j];
+    bool safe(){
+        return 0&lt;=x&amp;&amp;x&lt;r&amp;&amp;0&lt;=y&amp;&amp;y&lt;c;
+    }
+    pos check(char ch){
+        vector&lt;pos&gt; n;
+        switch(ch){
+            case 'M':
+                return pos {-1, -1};
+                break;
+            case 'Z':
+                return pos {-1, -1};
+                break;
+            case '|':
+                n.push_back({x-1, y});
+                n.push_back({x+1, y});
+                break;
+            case '-':
+                n.push_back({x, y-1});
+                n.push_back({x, y+1});
+                break;
+            case '+':
+                n.push_back({x-1, y});
+                n.push_back({x+1, y});
+                n.push_back({x, y-1});
+                n.push_back({x, y+1});
+                break;
+            case '1':
+                n.push_back({x, y+1});
+                n.push_back({x+1, y});
+                break;
+            case '2':
+                n.push_back({x-1, y});
+                n.push_back({x, y+1});
+                break;
+            case '3':
+                n.push_back({x-1, y});
+                n.push_back({x, y-1});
+                break;
+            case '4':
+                n.push_back({x, y-1});
+                n.push_back({x+1, y});
+                break;
+        }
+        for(pos t: n){
+            if(t.safe()){
+                if(board[t.x][t.y]=='.')
+                    return t;
+            }
+        }
+        return pos {-1, -1};
+    }
+    pos next(int i){
+        return pos {x + dx[i%4],y + dy [i%4]}; 
+    }
+};
+char mapper(bitset&lt;4&gt; b){
+    switch(b.to_ulong()){
+        case 5:
+            return '|';
+        case 10:
+            return '-';
+        case 15:
+            return '+';
+        case 6: 
+            return '1';
+        case 3:
+            return '2';
+        case 9:
+            return '3';
+        case 12:
+            return '4';
+    }
+}
+void solve(){
+    cin &gt;&gt; r &gt;&gt; c;
+    for(int i = 0; i&lt;r; i++){
+        for(int j = 0; j&lt;c; j++){
+            char ch = cin.get();
+            while(ch=='\n'||ch==' '||ch=='\r'){
+                ch = cin.get();
+            }
+            board[i][j] = ch;
+        }
+    }
+    bool flag = true;
+    pos target;
+    for(int i = 0; i&lt;r &amp;&amp; flag; i++){
+        for(int j = 0; j&lt;c &amp;&amp; flag; j++){
+            if(board[i][j]!='.'){
+                pos cur = {i, j}; 
+                pos res = cur.check(board[i][j]);
+                if(!(res.x==-1&amp;&amp;res.y==-1)){
+                    target = res;       
+                    target.print();
+                    flag = false;
                 }
             }
         }
     }
-
-    int ans = INT_MAX;
-    for(int i = 1; i&lt;=vn; i++){
-        ans = min(ans, done[i][i]);
+    
+    bitset&lt;4&gt; b;
+    for(int i = 0; i&lt;4; i++){
+        pos n = target.next(i);
+        if(n.safe() &amp;&amp; board[n.x][n.y]!='.'){
+            pos res = n.check(board[n.x][n.y]);
+            if(res.x==target.x &amp;&amp; res.y==target.y)
+                b.set(i);
+        }
     }
-    if(ans == INT_MAX) cout &lt;&lt; -1;
-    else cout &lt;&lt; ans;
+    
+    cout &lt;&lt; target.x + 1 &lt;&lt; ' ' &lt;&lt; target.y + 1 &lt;&lt; ' ' &lt;&lt; mapper(b);
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -172,12 +265,13 @@ int main(){
 </code></pre>
 <h3>풀이</h3>
 <ul>
-<li>시작한 곳에서 출발해서, 다시 시작한 곳으로 돌아오기 까지의 최단 거리를 구하는 문제이다. 모든 vertex에 대해 최단 거리를 구해야 하므로 플로이드-워셜 알고리즘을 사용해야 한다. <a href="/ps/2/boj%2011404%20%ED%94%8C%EB%A1%9C%EC%9D%B4%EB%93%9C.html">boj 11404 플로이드</a></li>
-<li>중요한 점은 vertex k에서 k까지의 거리가 0이 아니라, INF로 설정해주어야 한다. 이후 나중에 모든 시작과 끝이 같은 경로에 대해서만 배열에서 확인을 하면 된다.</li>
+<li>최대 625 칸이기 때문에, 전체 탐색을 진행한다.</li>
+<li>진행하는 과정에서 배관이 나오면, 주변에 필요한 배관들이 모두 연결이 되어 있는지 확인한다. 연결이 안되어 있는 좌표가 있으면 탐색을 중단한다. 왜냐하면 문제에서 배관 블록 하나만 지웠다고 되어 있기 때문이다.</li>
+<li>지운 배관 블록의 좌표를 찾으면, 상하좌우의 배관을 보면서, 필요한 배관의 모양을 판단한다.</li>
 </ul>
 <h3>느낀점</h3>
 <ul>
-<li>같은 변수명을 사용해버려서, 디버깅하는 과정에서 시간이 약간 소요되었다.</li>
+<li>문제 그대로 풀면 된다.</li>
 </ul>
 
     </div>
