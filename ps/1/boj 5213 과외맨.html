@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+                window.hljs.highlightAll();
+                window.hljs.initLineNumbersOnLoad();
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <a href="/">
+                <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b-4 border-blue-700 dark:border-blue-400">
+                    <p class="text-left text-3xl lg:text-4xl font-bold">blog.argnmp</p>
+                </div>
+            </a>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col p-2 text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4 p-2">
+                            <img class="w-full max-w-sm mx-auto rounded-full ring-2 p-2 ring-blue-600 dark:ring-blue-500" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 my-auto">
+                            <p class="text-2xl md:mt-3 md:text-center mb-2 font-bold">argnmp</p>
+                            <p class="text-xs md:text-center">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs md:text-center">argnmp@gmail.com</p>
+                            <p class="text-xs md:text-center"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="py-2">
+                            <form class="flex md:flex-col">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 md:mr-0 md:mb-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-500 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer md:w-full" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                </div>
+                <div class="grid-flow-row md:col-span-9 rounded-lg">
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="mb-2 md:pl-5">
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 5213 과외맨</p>
+        </div>
+        <div class="mb-4 md:pl-5">
+            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
+                <tbody>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            alias
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            author
+                        </th>
+                        <td class="">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            created at
+                        </th>
+                        <td class="">2023-12-03</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            tags 
+                        </th>
+                        <td class="">
+                             
+                            <p class="inline">#boj </p>
+                             
+                            <p class="inline">#ps </p>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body mb-2 md:pl-5">
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/5213">https://www.acmicpc.net/problem/5213</a></p>
+<h3>코드</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+using namespace std;
+using ll = long long;
+int n;
+struct tile { 
+    int l, r;
+    void print(){ cout &lt;&lt; l &lt;&lt; ',' &lt;&lt; r &lt;&lt; '\n'; }
+};
+int edx[6] = {-1, 0, 1, -1, 0, 1};
+int edy[6] = {-1, -1, -1, 0, 1, 0};
+int odx[6] = {-1, 0, 1, -1, 0, 1};
+int ody[6] = {0, -1, 0, 1, 1, 1};
+struct pos {
+    int x, y;
+    int dist;
+    bool safe(){
+        if(x%2==0){
+            return 0&lt;=x &amp;&amp; x&lt;n &amp;&amp; 0&lt;=y &amp;&amp; y&lt;n;
+        }else{
+            return 0&lt;=x &amp;&amp; x&lt;n &amp;&amp; 0&lt;=y &amp;&amp; y&lt;n-1;
+        }
+    }
+    pos adj(int i) {
+        if(x%2==0){
+            return pos {x+edx[i%6], y+edy[i%6]};
+        }
+        else {
+            return pos {x+odx[i%6], y+ody[i%6]};
+        }
+    }
+    void print(){
+        cout &lt;&lt; x &lt;&lt; ' ' &lt;&lt; y &lt;&lt; endl;
+    }
+};
+struct compare {
+    bool operator()(pos&amp; a, pos&amp; b){
+        return a.dist &gt; b.dist;
+    }
+};
+tile board[500][500] = {0,};
+
+void solve(){
+    cin &gt;&gt; n;
+    for(int i = 0; i&lt;n; i++){
+        for(int j = 0; j&lt; n-1 + (i+1)%2; j++){
+            tile t;
+            cin &gt;&gt; t.l &gt;&gt; t.r;
+            board[i][j] = t;
+        }
+    }
+    priority_queue&lt;pos, vector&lt;pos&gt;, compare&gt; pq;
+    pq.push({0, 0, 0});
+    int done[500][500] = {0,};
+    fill(&amp;done[0][0], &amp;done[499][500], INT_MAX);
+    pos prev[500][500];
+    done[0][0] = 0;
+    prev[0][0] = {0, 0, 0};
+    while(!pq.empty()){
+        pos cur = pq.top();
+        pq.pop();
+        for(int i = 0; i&lt;3; i++){
+            pos next = cur.adj(i); 
+            if(next.safe() &amp;&amp; board[next.x][next.y].r == board[cur.x][cur.y].l &amp;&amp; cur.dist + 1 &lt; done[next.x][next.y]){
+                done[next.x][next.y] = cur.dist + 1;
+                prev[next.x][next.y] = cur;
+                next.dist = cur.dist + 1;
+                pq.push(next);
+            }
+        }
+        for(int i = 3; i&lt;6; i++){
+            pos next = cur.adj(i); 
+            if(next.safe() &amp;&amp; board[next.x][next.y].l == board[cur.x][cur.y].r &amp;&amp; cur.dist + 1 &lt; done[next.x][next.y]){
+                done[next.x][next.y] = cur.dist + 1;
+                prev[next.x][next.y] = cur;
+                next.dist = cur.dist + 1;
+                pq.push(next);
+            }
+        }
+
+    }
+    for(int i = n-1; i&gt;=0; i--){
+        for(int j = n-1; j&gt;=0; j--){
+            pos cur = {i, j};
+            if(cur.safe() &amp;&amp; done[i][j]!=INT_MAX){
+                cout &lt;&lt; done[i][j] + 1 &lt;&lt; '\n';
+                vector&lt;int&gt; stack;
+                pos target = cur;
+                while(prev[target.x][target.y].x != target.x || prev[target.x][target.y].y != target.y){
+                    stack.push_back(target.x*n + target.y - target.x/2); 
+                    target = prev[target.x][target.y];
+                }
+                stack.push_back(target.x*n + target.y - target.x/2); 
+                while(!stack.empty()){
+                    cout &lt;&lt; stack.back() + 1 &lt;&lt; ' ';
+                    stack.pop_back();
+                }  
+                return;
+            }
+        }
+    }
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+
+</code></pre>
+<h3>풀이</h3>
+<p><img src="https://upload.acmicpc.net/04f37a7b-2308-4f1c-837a-ad5197c14870/-/preview/" alt="https://upload.acmicpc.net/04f37a7b-2308-4f1c-837a-ad5197c14870/-/preview/" />
+타일이 복잡해 보이지만, 두번째와 네번째의 타일들을 왼쪽으로 모두 민다고 생각을 하고 <code>n x n</code> 사이즈의 board를 구성한다고 생각하면 된다. 이렇게 되면 두번째와 네번째 줄의 가장 오른쪽 타일에 대해서는 방문할 수 없는 곳으로 처리하면 된다.
+<code>(0,0)</code>좌표에서 dijkstra를 돌리면 된다. 탐색을 하는 과정에서 홀수번째 줄과 짝수번째 줄의 타일들이 방문하고 판단해야 하는 조건이 달라진다. 이것에 대해서 적절히 처리를 해주면 된다. 나는 위의 코드에서 <code>edx, edy, odx, ody</code> 배열을 사용하여 이를 처리했다. index 0부터 2까지는 인접한 타일의 오른쪽 수와 현재 탐색중인 타일의 왼쪽 수가 같은지 확인을 하고, index 3부터 6까지는 인접한 타일의 왼쪽 수와 현재 탐색중인 타일의 오른쪽 수가 같은지 확인을 한다.
+이전 좌표를 기록하며 최종 경로를 표시해주면 된다.</p>
+<h3>느낀점</h3>
+<p>기존에 dijkstra 코드를 작성하는 방식이 경로를 나타내는데 적절하지 않아서, 약간 다른 방식으로 코드를 작성하느라 시간이 조금 소요되었다.
+아예 <code>done</code> 배열 자체에다가, 최단 거리를 표현해주는 방식을 사용해야겠다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved.
+            </footer>
+        </div>
+    </body>
+</html>
