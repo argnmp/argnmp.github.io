@@ -76,115 +76,67 @@
                 </div>
                 <div class="grid-flow-row md:col-span-9 rounded-lg">
                     
-                     
-<article>
-    <section class="w-full">
-        <div class="mb-2 md:pl-5">
-            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 11049 행렬 곱셈 순서</p>
+<div class="md:pl-5">
+    
+    <a class="anc" href="/ps/4/boj 1655 가운데를 말해요.html">
+        <div class="mb-2 py-3 px-5 border-blue-700 dark:border-blue-400 bg-gray-100 dark:bg-gray-700 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900">
+            <p class="text-2xl font-semibold">
+            boj 1655 가운데를 말해요
+            </p>
+            
+            <p class="text-xs">
+            코드 #include &lt;iostream&gt; #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; int n; priority_queue&lt;int&gt; maxq; priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq; 
+            </p>
+            <p class="text-xs text-right">
+            2023-09-22
+            </p>
+            <p class="text-xs text-right">
+            Taehyeon Kim
+            </p>
         </div>
-        <div class="mb-4 md:pl-5">
-            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
-                <tbody>
-                    <tr class="">
-                        <th scope="row" class="pr-4">
-                            alias
-                        </th>
-                        <td class="">undefined</td>
-                    </tr>
-                    <tr class="">
-                        <th scope="row" class="pr-4">
-                            author
-                        </th>
-                        <td class="">Taehyeon Kim</td>
-                    </tr>
-                    <tr class="">
-                        <th scope="row" class="pr-4">
-                            created at
-                        </th>
-                        <td class="">2023-10-14</td>
-                    </tr>
-                    <tr class="">
-                        <th scope="row" class="pr-4">
-                            tags 
-                        </th>
-                        <td class="">
-                             
-                            <p class="inline">#boj </p>
-                             
-                            <p class="inline">#ps </p>
-                            
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    </a>
+    
+    <div class="my-3">
+        <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 font-semibold">
+            
+                <!-- <a class="anc w-8 h-8" href="/ps/1"> -->
+                
+                <a class="anc inline w-8 h-8 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/ps/1">
+                    <p class="leading-8 text-center cursor-pointer">1</p>
+                </a>
+                
+                <!-- </a> -->
+            
+                <!-- <a class="anc w-8 h-8" href="/ps/2"> -->
+                
+                <a class="anc inline w-8 h-8 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/ps/2">
+                    <p class="leading-8 text-center cursor-pointer">2</p>
+                </a>
+                
+                <!-- </a> -->
+            
+                <!-- <a class="anc w-8 h-8" href="/ps/3"> -->
+                
+                <a class="anc inline w-8 h-8 hover:bg-blue-700 dark:hover:bg-blue-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/ps/3">
+                    <p class="leading-8 text-center cursor-pointer">3</p>
+                </a>
+                
+                <!-- </a> -->
+            
+                <!-- <a class="anc w-8 h-8" href="/ps/4"> -->
+                
+                <a class="anc inline w-8 h-8 bg-blue-700 dark:bg-blue-400 text-gray-200 dark:text-gray-900" href="/ps/4">
+                    <p class="leading-8 text-center cursor-pointer">4</p>
+                </a>
+                
+                <!-- </a> -->
+            
         </div>
-    </section>
-    <div class="clear-none markdown-body mb-2 md:pl-5">
-        <h3>코드</h3>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;climits&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;map&gt;
-#include &lt;unordered_map&gt;
-#include &lt;set&gt;
-#include &lt;unordered_set&gt;
-#include &lt;bitset&gt;
-#include &lt;cstring&gt;
-using namespace std;
-using ll = long long;
-int n;
-struct matrix {
-    int r, c;
-};
-int dp[501][501] = {0,}; 
-void solve(){
-    cin &gt;&gt; n;
-    vector&lt;matrix&gt; mats;
-    int r, c;
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; r &gt;&gt; c;
-        mats.push_back({r,c});
-    }
-    for(int d = 1; d&lt;n; d++){
-        for(int i = 0; i&lt;n-d; i++){
-            // i ~ i+d
-            dp[i][i+d] = INT_MAX;
-            for(int j = i; j&lt;i+d; j++){
-                dp[i][i+d] = min(dp[i][i+d], dp[i][j] + dp[j+1][i+d] + mats[i].r * mats[j].c * mats[i+d].c);
-            }
-        }
-    }
-    cout &lt;&lt; dp[0][n-1];
-}
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    solve(); 
-    return 0;
-}
-
-</code></pre>
-<h3>풀이</h3>
-<ul>
-<li>dp로 푸는 문제이다. 점화식을 세워서 풀이하면 된다.</li>
-<li>dp 값을 계산하는 순서는 행렬 사이의 거리가 작은거 부터 큰 순으로 계산하면 된다.
-<ul>
-<li>이를 계산할 때 거리를 늘려가면서 순회를 해야 하는데, 이 부분에서 조금 헷갈린다. <a href="/">거리별 순회</a> 이 코드를 이용하면 된다.</li>
-</ul>
-</li>
-<li><a href="/ps/2/boj%2011066%20%ED%8C%8C%EC%9D%BC%20%ED%95%A9%EC%B9%98%EA%B8%B0.html">boj 11066 파일 합치기</a> 과 동일한 문제이다.</li>
-</ul>
-<h3>느낀점</h3>
-<ul>
-<li><a href="/ps/2/boj%2011066%20%ED%8C%8C%EC%9D%BC%20%ED%95%A9%EC%B9%98%EA%B8%B0.html">boj 11066 파일 합치기</a> 을 풀고 푸니, 그렇게 어렵게 느껴지지 않았다.</li>
-<li>또한 알고리즘 시간에 이미 접해보았던 것 같다.</li>
-</ul>
-
     </div>
-</article>
+    
+</div>
 
+                    
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
