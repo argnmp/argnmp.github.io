@@ -122,12 +122,14 @@
 <p>정적 블로그를 생성하여 배포하기 위해서는 로컬에서 모든 렌더링 작업을 수행해야합니다. 마크다운으로 작성한 파일들을 빠르고 안정적으로 렌더링 하기 위해서, rust와 python을 사용하였습니다.</p>
 <h2>프로젝트 기간</h2>
 <p>2023.10.23 ~ 2023.11.17</p>
+<h2>프로젝트 링크</h2>
+<p><a href="https://argnmp.github.io">https://argnmp.github.io</a></p>
 <h2>기술 스택</h2>
 <p><code>rust</code> <code>wasm</code> <code>python</code> <code>tailwind css</code></p>
 <h2>구현 사항</h2>
 <h3>마크다운 파싱 및 렌더링</h3>
 <p>먼저 <a href="https://obsidian.md/">obsidian</a>이라는 마크다운 편집기로 생성된 로컬의 마크다운 및 바이너리 파일과 디렉터리를 파싱합니다. 마크다운 파일 내에 작성된 property 들을 가져옵니다.
-<img src="/" alt="Pasted image 20231203232011.png" />
+<img src="/project/%EA%B0%9C%EC%9D%B8%20%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80%203.0/Pasted%20image%2020231203232011.png" alt="Pasted image 20231203232011.png" />
 이 리소스들은 하위 디렉터리와 파일들로 구성되어 있으며, 하나의 루트 디렉터리로 부터 트리 구조를 형성합니다.
 리소스의 집합은 여러개의 루트 디렉터리로 구성될 수 있으며, 파싱을 하는 과정에서 이 디렉토리들을 하나의 루트 디렉터리를 가진 트리 구조로 재편성합니다.
 또한 결과물이 업로드 될 base url을 기준으로 상대 경로를 생성합니다.</p>
