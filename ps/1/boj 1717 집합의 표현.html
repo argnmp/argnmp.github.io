@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">docuvault</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1717 집합의 표현</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,13 +101,17 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-11-18</td>
+                        <td class="">2023-12-09</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
                             tags 
                         </th>
                         <td class="">
+                             
+                            <p class="inline">#boj </p>
+                             
+                            <p class="inline">#ps </p>
                             
                         </td>
                     </tr>
@@ -116,78 +120,79 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
-        <h2>개요</h2>
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/1717">https://www.acmicpc.net/problem/1717</a></p>
+<h3>코드</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+using namespace std;
+using ll = long long;
+int n, m;
+int board[1000001] = {0,};
+int height[1000001] = {0,};
+
+int find(int a){
+    if(board[a]==a)
+        return a;
+    board[a] = find(board[a]);
+    return board[a];
+}
+void cunion(int a, int b){
+    int p1 = find(a);
+    int p2 = find(b);
+    if(height[p1] &lt; height[p2])
+        swap(p1, p2);
+    board[p2] = p1;
+    if(height[p1]==height[p2])
+        height[p1] += 1; 
+}
+void solve(){
+    for(int i = 0; i&lt;=1000000; i++){
+        board[i] = i;
+        height[i] = 1;
+    }
+    cin &gt;&gt; n &gt;&gt; m;
+    int cmd, a, b;
+    for(int i = 0; i&lt;m; i++){
+        cin &gt;&gt; cmd &gt;&gt; a &gt;&gt; b; 
+        if(cmd==0){
+            cunion(a, b);
+        }else {
+            if(find(a)==find(b)){
+                cout &lt;&lt; &quot;YES&quot; &lt;&lt; '\n';
+            }else {
+                cout &lt;&lt; &quot;NO&quot; &lt;&lt; '\n';
+            }
+        }
+    } 
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+</code></pre>
+<h3>풀이</h3>
+<p>union-find를 이용해서 풀어주면 되는 문제이다.</p>
+<p>다음의 두가지로 최적화가 가능하다.</p>
 <ul>
-<li>jwt를 기반으로, 백엔드를 대상으로 하는 문서 관리 서비스입니다. 백엔드에서 사용할 수 있는 미들웨어 서비스를 제공합니다.</li>
-<li>사용자는 docuvault 서비스에 로그인 하여, 문서 작성, 삭제 및 수정, 문서 그룹화, 파일 업로드를 할 수 있습니다.</li>
-<li>사용자의 여러 개의 서버에서는 jwt를 이용한 api call을 통해, docuvault 서비스에 접근하여 문서의 리스트와 같은 metadata를 받을 수 있고, 특정 문서에 대해 열람 가능한 token을 발급 받을 수 있습니다.
-<ul>
-<li>발급 받은 token은 클라이언트에서 제공되어서, 클라이언트에서 docuvault 서비스로 요청을 보내 문서를 열람할 수 있습니다.</li>
+<li>find를 하는 과정에서, parent를 재설정 해주는 방법을 적용할 수 있다.</li>
+<li>union을 하는 과정에서 height를 비교해주는 방법을 적용할 수 있다.</li>
 </ul>
-</li>
-<li>docuvault 서비스에서는 문서 열람 token을 발급할 시, 문서 열람 가능 횟수나 시간 등을 지정해줄 수 있습니다.</li>
-<li>이 방식을 통해서 백엔드를 구축할 시, 문서 작성과 관련된 서비스를 구축하지 않는 대신 docuvault 서비스를 미들웨어로 사용이 가능합니다. 또한, 정적 페이지 서비스를 제공하는데 유용합니다.</li>
-</ul>
-<h2>프로젝트 기간</h2>
-<p>2023.01.27 ~ 2023.03.11</p>
-<h2>기술 스택</h2>
-<ul>
-<li><code>rust</code> <code>axum</code> <code>sea-orm</code> <code>postgresql</code> <code>redis</code> <code>react.js</code> <code>docker</code> <code>docker-compose</code></li>
-</ul>
-<h2>구현 사항</h2>
-<h3>설계</h3>
-<p><img src="/project/docuvault/st.png" alt="st.png" /></p>
-<ul>
-<li>docuvault의 server는 모두 rust의 tokio runtime과 axum을 통해 작성하였습니다. docker compose를 이용해서 여러 종류의 server가 구성됩니다. server 간의 통신은 grpc를 이용합니다.</li>
-<li>application server는 문서 관리와 관련된 api 요청을 처리합니다. 문서 관리를 위한 웹페이지는 react.js 로 작성되었습니다.
-<ul>
-<li>문서 작성, 삭제, 수정이 가능합니다.</li>
-<li>파일 업로드가 가능합니다.</li>
-<li>문서에 tag를 추가하여 tag를 필터링 하여 metadata를 요청할 수 있습니다.</li>
-<li>문서에 sequence를 추가하여 연결된 문서에 대한 metadata를 요청할 수 있습니다.</li>
-<li>문서에 scope를 지정하여, 사용자가 여러 대의 server에서 docuvault 서비스를 사용할 때 문서가 visible 한 서버를 지정해줄 수 있습니다.
-<img src="/project/docuvault/Pasted%20image%2020231118165219.png" alt="Pasted image 20231118165219.png" />
-<img src="/project/docuvault/Pasted%20image%2020231118165227.png" alt="Pasted image 20231118165227.png" />
-<img src="/project/docuvault/Pasted%20image%2020231118165233.png" alt="Pasted image 20231118165233.png" />
-<img src="/project/docuvault/Pasted%20image%2020231118165241.png" alt="Pasted image 20231118165241.png" />
-<img src="/project/docuvault/Pasted%20image%2020231118165246.png" alt="Pasted image 20231118165246.png" />
-<img src="/project/docuvault/Pasted%20image%2020231118165303.png" alt="Pasted image 20231118165303.png" />
-<img src="/project/docuvault/Pasted%20image%2020231118165308.png" alt="Pasted image 20231118165308.png" />
-<img src="/project/docuvault/Pasted%20image%2020231118165317.png" alt="Pasted image 20231118165317.png" /></li>
-</ul>
-</li>
-<li>파일에 관한 요청은 application server에서 proxy server로 보내지고, proxy server 에서는 구성된 file server에 적절하게 요청을 분산시킵니다. 각 file server에서는 비동기로 파일에 관련한 작업을 수행합니다.</li>
-<li>문서 변환에 관한 요청은 convert server로 보내지고, convert server에서는 pandoc 프로그램을 이용하여 비동기로 변환 작업을 진행합니다. 문서 변환이 완료되면 file server에 저장을 요청합니다.</li>
-<li>redis에서는 문서를 caching 하거나, 이미지와 같이 file size가 작은 경우 caching을 하는 용도로 사용됩니다. 또한 jwt로 구현한 인증 과정에서 blacklist와 refresh token을 관리하는 데 사용됩니다.</li>
-</ul>
-<h3>사용 예시</h3>
-<ul>
-<li>user1은 3개의 server(s1, s2, s3)에서 docuvault 서비스를 미들웨어로 사용합니다.</li>
-<li>user1은 docuvault에 접속하여
-<ul>
-<li>문서 A를 작성하고 tag를 algorithm으로 설정한 뒤, scope를 s1, s2로 설정합니다.</li>
-<li>그리고 문서 B를 작성하고 tag를 algorithm으로 설정한 뒤, scope를 s2로 설정합니다.</li>
-</ul>
-</li>
-<li>user1의 server, s1, s2, s3에서는 모두 docuvault 서비스에 user1으로 로그인하여, tag를 algorithm으로 설정하고 document list를 요청합니다.
-<ul>
-<li>server s1에서는 <code>[A]</code>를 list로 받습니다.</li>
-<li>server s2에서는 <code>[A, B]</code>를 list로 받습니다.</li>
-<li>server s3에서는 <code>[ ]</code>, 아무것도 없는 list를 받습니다.</li>
-</ul>
-</li>
-<li>user1의 server s2에 접속한 client1은 document metadata로 <code>[A, B]</code>를 받습니다. 그리고 client는 s2에 B 문서를 요청합니다.
-<ul>
-<li>server s2에서는 docuvault 서비스에 B 문서에 대한 문서 열람 token을 요청합니다. 그리고 docuvault 서비스에서 응답한 token을 가지고 client1에 응답합니다.</li>
-<li>client1에서는 token을 가지고 docuvault 서비스에 요청하여 문서 data를 받습니다.</li>
-</ul>
-</li>
-</ul>
-<h3>추가 구현</h3>
-<ul>
-<li>user가 문서를 선택하면, 그 문서를 바탕으로 임시의 정적 페이지를 생성해주는 기능을 추가할 것입니다.</li>
-<li>현재는 user server에서 jwt로 docuvault 서비스에 로그인해서 사용하는 방식입니다. jwt로 직접 로그인 하는 방법이 아닌, docuvault dashboard에서 api key를 생성하고 이 api key를 이용해서 docuvault 서비스를 사용하는 방식으로 변경할 예정입니다.</li>
-</ul>
+<p>첫번째 방법을 적용하면 height가 줄어들게 된다. 위의 코드에서는 적용되지 않았지만, height를 초기화 해주는 코드를 추가해줄 수 있을 것이다.
+사실 find를 하는 과정에서 parent를 재설정 해준다면 height가 항상 1또는 2가 되기 때문에 height를 기록해주는 방법을 사용하지 않아도 될 것 같다.</p>
+<h3>느낀점</h3>
+<p>union-find와 관련해서 접해보았던 문제이다.</p>
 
     </div>
 </article>
