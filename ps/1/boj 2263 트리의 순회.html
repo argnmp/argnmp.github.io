@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 1956 운동</p>
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 2263 트리의 순회</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-11-20</td>
+                        <td class="">2023-12-09</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -120,7 +120,9 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5">
-        <h3>코드</h3>
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/2263">https://www.acmicpc.net/problem/2263</a></p>
+<h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -134,33 +136,43 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int vn, en;
+int n;
+int in_order[100001] = {0,};
+int v_to_io_idx[100001] = {0,};
+int post_order[100001] = {0,};
+vector&lt;int&gt; pre_order;
+struct range{
+    int from, to;
+    bool safe(){ return from &lt;= to; }
+};
 
+void calc(range po, range io){
+    if(!po.safe()){
+        return;
+    } 
+    int target = post_order[po.to];
+    pre_order.push_back(target);
+    range left_io = {io.from, v_to_io_idx[target]-1};
+    range right_io = {v_to_io_idx[target]+1, io.to};
+    range left_po = {po.from, po.from + left_io.to - left_io.from};
+    range right_po = {left_po.to + 1, left_po.to + 1 + right_io.to - right_io.from};
+
+    calc(left_po, left_io);    
+    calc(right_po, right_io);
+}
 void solve(){
-    cin &gt;&gt; vn &gt;&gt; en;
-    int done[401][401];
-    fill(&amp;done[0][0], &amp;done[400][401], INT_MAX);
-    int u, v, w;
-    for(int i = 0; i&lt;en; i++){
-        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w; 
-        done[u][v] = w;
+    cin &gt;&gt; n;
+    for(int i = 0; i&lt;n; i++){
+        cin &gt;&gt; in_order[i];
+        v_to_io_idx[in_order[i]] = i;
+    } 
+    for(int i = 0; i&lt;n; i++){
+        cin &gt;&gt; post_order[i];
+    } 
+    calc({0, n-1}, {0, n-1});
+    for(int i: pre_order){
+        cout &lt;&lt; i &lt;&lt; ' ';
     }
-    for(int i = 1; i&lt;=vn; i++){
-        for(int j = 1; j&lt;=vn; j++){
-            for(int k = 1; k&lt;=vn; k++){
-                if(done[i][k]!=INT_MAX &amp;&amp; done[k][j]!=INT_MAX &amp;&amp; done[i][j] &gt; done[i][k] + done[k][j]){
-                    done[i][j] = done[i][k] + done[k][j];
-                }
-            }
-        }
-    }
-
-    int ans = INT_MAX;
-    for(int i = 1; i&lt;=vn; i++){
-        ans = min(ans, done[i][i]);
-    }
-    if(ans == INT_MAX) cout &lt;&lt; -1;
-    else cout &lt;&lt; ans;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -171,14 +183,58 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
+<p>먼저 트리의 세가지 순회 방식에 대하여 알아야 한다. 이 방식들은 현재 방문하는 vertex를 언제 출력(방문)하는 지에 따라 나뉜다.</p>
 <ul>
-<li>시작한 곳에서 출발해서, 다시 시작한 곳으로 돌아오기 까지의 최단 거리를 구하는 문제이다. 모든 vertex에 대해 최단 거리를 구해야 하므로 플로이드-워셜 알고리즘을 사용해야 한다. <a href="/ps/3/boj%2011404%20%ED%94%8C%EB%A1%9C%EC%9D%B4%EB%93%9C.html">boj 11404 플로이드</a></li>
-<li>중요한 점은 vertex k에서 k까지의 거리가 0이 아니라, INF로 설정해주어야 한다. 이후 나중에 모든 시작과 끝이 같은 경로에 대해서만 배열에서 확인을 하면 된다.</li>
+<li>pre-order
+<ul>
+<li>vertex 출력 -&gt; left subtree 방문 -&gt; right subtree 방문</li>
 </ul>
+</li>
+<li>in-order
+<ul>
+<li>left subtree 방문 -&gt; vertex 출력 -&gt; right subtree 방문</li>
+</ul>
+</li>
+<li>post-order
+<ul>
+<li>left subtree 방문 -&gt; right subtree 방문 -&gt; vertex 출력</li>
+</ul>
+</li>
+</ul>
+<p>주의해야 할 사항은, 방문의 순서는 항상 왼쪽 부터라는 것이다.</p>
+<p>문제에서는 in-order과 post-order가 주어지고, 이를 통해 pre-order를 출력해야한다. 다음과 같은 이진트리가 있다고 하자.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Binary_tree_v2.svg/440px-Binary_tree_v2.svg.png" alt="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Binary_tree_v2.svg/440px-Binary_tree_v2.svg.png" />
+출처: <a href="https://en.wikipedia.org/wiki/Binary_tree">https://en.wikipedia.org/wiki/Binary_tree</a></p>
+<p>이 이진트리의 in-order과 post-order은 다음과 같다.</p>
+<ul>
+<li>in-order: <code>2 7 5 6 11 1 9 5 9</code></li>
+<li>post-order: <code>2 5 11 6 7 5 9 9 1</code></li>
+</ul>
+<p>여기에서 규칙성을 찾을 수 있다.</p>
+<p>먼저 post-order에서 가장 뒷 부분의 숫자는 현재 subtree에서의 root vertex가 된다.
+<code>2 5 11 6 7 5 9 9 | 1</code> 에서는 1이 된다.</p>
+<p>그리고 in-order에서 1을 기준으로 나누면 왼쪽은 left subtree, 오른쪽은 right subtree가 된다.
+<code>2 7 5 6 11 | 1 | 9 5 9</code> 에서는 이렇게 나눌 수 있다. root vertex를 기준으로 left subtree의 vertex 개수는 5개, right subtree의 vertex 개수는 3개이다.</p>
+<p>다시 post-order로 돌아와서, <code>2 5 11 6 7 5 9 9 | 1</code> 여기에서 뒤의 1을 제외한 나머지 부분의 숫자들은 left subtree의 vertex들 -&gt; right subtree의 vertex들 순서로 배열이 된다. 따라서 in-order에서 각 subtree의 vertex 개수를 파악했기 때문에 다음과 같이 post-order에서의 left subtree와 right subtree를 알아낼 수 있다. <code>2 5 11 6 7 | 5 9 9 | 1</code></p>
+<p>가장먼저 확인한 1은 pre-order에서 가장 먼저 출력해야 하는 숫자이다. 그래서 <code>ans</code> vector에 push를 해준다. 그리고 이 과정을 통하여 left subtree와 right subtree 각각의 <code>in-order</code>, <code>post-order</code>를 파악할 수 있었다.</p>
+<ul>
+<li>left subtree
+<ul>
+<li>in-order: <code>2 7 5 6 11</code></li>
+<li>post-order: <code>2 5 11 6 7</code></li>
+</ul>
+</li>
+<li>right subtree
+<ul>
+<li>in-order: <code>9 5 9</code></li>
+<li>post-order: <code>5 9 9</code></li>
+</ul>
+</li>
+</ul>
+<p>트리의 순회에서는 항상 left subtree부터 방문을 해야하므로, left subtree -&gt; right subtree 순으로 재귀적으로 위의 과정을 수행해주면 된다.</p>
 <h3>느낀점</h3>
-<ul>
-<li>같은 변수명을 사용해버려서, 디버깅하는 과정에서 시간이 약간 소요되었다.</li>
-</ul>
+<p>이전에 풀어봤던 문제이다. 직접 펜으로 써보니 방법이 생각이 났다.
+재귀 호출에서 return을 하는 시점은 위의 코드와 같이, left idx &gt; right idx 가 되며 invalid 되는 시점으로 설정하는 것이 가장 좋은 듯 하다.</p>
 
     </div>
 </article>

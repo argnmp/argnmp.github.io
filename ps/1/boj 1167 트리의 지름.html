@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 1956 운동</p>
+            <p class="text-5xl font-bold text-gray-700 dark:text-gray-200 py-1">boj 1167 트리의 지름</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-11-20</td>
+                        <td class="">2023-12-09</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -120,7 +120,9 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5">
-        <h3>코드</h3>
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/1167">https://www.acmicpc.net/problem/1167</a></p>
+<h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -134,33 +136,49 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int vn, en;
-
-void solve(){
-    cin &gt;&gt; vn &gt;&gt; en;
-    int done[401][401];
-    fill(&amp;done[0][0], &amp;done[400][401], INT_MAX);
+int n;
+struct edge{
     int u, v, w;
-    for(int i = 0; i&lt;en; i++){
-        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w; 
-        done[u][v] = w;
-    }
-    for(int i = 1; i&lt;=vn; i++){
-        for(int j = 1; j&lt;=vn; j++){
-            for(int k = 1; k&lt;=vn; k++){
-                if(done[i][k]!=INT_MAX &amp;&amp; done[k][j]!=INT_MAX &amp;&amp; done[i][j] &gt; done[i][k] + done[k][j]){
-                    done[i][j] = done[i][k] + done[k][j];
-                }
+};
+vector&lt;edge&gt; graph[100001];
+
+struct ret{
+    int v, dist;
+};
+int visited[100001] = {0,};
+ret dfs(int v){
+    visited[v] = 1;   
+    ret return_value = {v, 0};
+    for(edge next: graph[v]){
+        if(visited[next.v] == 0){
+            ret res = dfs(next.v);
+            if(res.dist + next.w &gt;= return_value.dist){
+                return_value = {res.v, res.dist + next.w};
             }
         }
     }
-
-    int ans = INT_MAX;
-    for(int i = 1; i&lt;=vn; i++){
-        ans = min(ans, done[i][i]);
+    return return_value;
+}
+void solve(){
+    cin &gt;&gt; n;
+    int u, v, w;
+    for(int i = 1; i&lt;=n; i++){
+        cin &gt;&gt; u; 
+        while(1){
+            cin &gt;&gt; v;
+            if(v!=-1){
+                cin &gt;&gt; w;
+                graph[u].push_back({u,v,w});
+            } 
+            else {
+                break;
+            }
+        }
     }
-    if(ans == INT_MAX) cout &lt;&lt; -1;
-    else cout &lt;&lt; ans;
+    ret end = dfs(1);
+    memset(visited, 0, sizeof(visited));
+    ret ans = dfs(end.v);
+    cout &lt;&lt; ans.dist &lt;&lt; '\n';
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -171,14 +189,24 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
-<ul>
-<li>시작한 곳에서 출발해서, 다시 시작한 곳으로 돌아오기 까지의 최단 거리를 구하는 문제이다. 모든 vertex에 대해 최단 거리를 구해야 하므로 플로이드-워셜 알고리즘을 사용해야 한다. <a href="/ps/3/boj%2011404%20%ED%94%8C%EB%A1%9C%EC%9D%B4%EB%93%9C.html">boj 11404 플로이드</a></li>
-<li>중요한 점은 vertex k에서 k까지의 거리가 0이 아니라, INF로 설정해주어야 한다. 이후 나중에 모든 시작과 끝이 같은 경로에 대해서만 배열에서 확인을 하면 된다.</li>
-</ul>
+<p>vertex 하나(x)를 무작위로 골라서 그곳으로 부터 가장 먼 vertex(y)를 찾는다. 그리고 y에서 가장 먼 vertex 까지의 거리가 트리의 지름이 된다.</p>
+<p>이 알고리즘에 대한 증명은 아래의 사이트에 있다.
+<a href="https://blog.myungwoo.kr/112">https://blog.myungwoo.kr/112</a></p>
+<p>위 사이트의 설명의 3번째 경우의 수에 대해 조금 덧붙여 보겠다.
+사이트의 설명과 같이 <code>d(u,v)</code> 를 vertex u와 vertex v 사이의 거리로 정의한다.</p>
+<h4>하나의 vertex를 공유하는 경우</h4>
+<p><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F266BE84557FC33FB2C" alt="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F266BE84557FC33FB2C" />
+x에서 가장 먼 vertex가 y이므로, <code>d(t,y) &gt;= max(d(t,u), d(t,v))</code> 이다. <code>d(t,u)</code>보다 <code>d(t,v)</code>가 더 길다고 해보자. <code>d(t,y)</code>와 <code>d(t,v)</code> 가 같지 않다면, <code>d(t,y)</code>가 더 커야 하는데, 이렇게 될 경우 <code>d(u,v)</code>가 트리의 지름이 될 수 없다. 따라서, <code>d(t,y)</code>와 <code>d(t,v)</code>가 같지 않는 한 모순된다.
+만약 같다면, y에서 가장 먼 vertex를 구했을 때 v에서 구한 것 과 마찬가지로 u가 나오기 때문에 트리의 지름을 구할 수 있다.</p>
+<h3>vertex를 공유하지 않는 경우</h3>
+<p><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2534234057FC34B622" alt="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2534234057FC34B622" /></p>
+<p>위쪽의 점을 <code>t1</code>, 아래쪽의 점을 <code>t2</code>라고 해보자.
+x에서 가장 먼 vertex가 y이므로, <code>d(t1, y) &gt;= d(t1,t2) + max(d(t2, u), d(t2, v))</code> 이다. <code>d(t2,u)</code>보다 <code>d(t2, v)</code>가 더 길다고 해보자. <code>d(t1, y)</code>와 <code>d(t1, t2) + d(t2, v)</code>가 같지 않다면, <code>d(t1, y)</code>가 더 커야 하는데, 이 경우, <code>d(u,v)</code>가 트리의 지름이 될 수 없다. 따라서 모순이 된다.</p>
+<p><code>d(t1, y)</code>와 <code>d(t1,t2) + d(t2, v)</code>가 만약 같다면, y에서 가장 먼 vertex를 구했을 때의 길이가 <code>d(u,v)</code> 보다 길어지기 때문에 모순이 된다.</p>
+<p>결론적으로 위의 사이트에서 소개된 알고리즘의 방식으로 트리의 지름을 구할 수 있다.</p>
 <h3>느낀점</h3>
-<ul>
-<li>같은 변수명을 사용해버려서, 디버깅하는 과정에서 시간이 약간 소요되었다.</li>
-</ul>
+<p>예전에 풀었었던 문제이고, 다시 풀어보았으나 해결하지 못했다.
+dp로도 푸는 방식이 있는 것 같아서, 이 방식으로 다시 풀어보자.</p>
 
     </div>
 </article>
