@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+                window.hljs.highlightAll();
+                window.hljs.initLineNumbersOnLoad();
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <a href="/">
+                <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b-4 border-blue-700 dark:border-blue-400">
+                    <p class="text-left text-3xl lg:text-4xl font-bold">blog.argnmp</p>
+                </div>
+            </a>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col p-2 text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4 p-2">
+                            <img class="w-full max-w-sm mx-auto rounded-full ring-blue-600 dark:ring-blue-500" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 my-auto">
+                            <p class="text-2xl md:mt-3 md:text-center mb-2 font-bold">argnmp</p>
+                            <p class="text-xs md:text-center">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs md:text-center">argnmp@gmail.com</p>
+                            <p class="text-xs md:text-center"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="py-2">
+                            <form class="flex md:flex-col">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 md:mr-0 md:mb-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer md:w-full" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                </div>
+                <div class="grid-flow-row md:col-span-9 rounded-lg">
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="mb-2 md:pl-5">
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 16933 벽 부수고 이동하기 3</p>
+        </div>
+        <div class="mb-4 md:pl-5">
+            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
+                <tbody>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            alias
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            author
+                        </th>
+                        <td class="">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            created at
+                        </th>
+                        <td class="">2023-12-16</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            tags 
+                        </th>
+                        <td class="">
+                             
+                            <p class="inline">#boj </p>
+                             
+                            <p class="inline">#ps </p>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
+        <h3>문제</h3>
+<p><a href="">https://www.acmicpc.net/problem/16933</a></p>
+<h3>코드</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+using namespace std;
+using ll = long long;
+int n, m, k;
+char board[1000][1000] = {0,};
+int dx[4] = {0,-1,1,0};
+int dy[4] = {-1,0,0,1};
+struct pos{
+    int x, y;
+    bool safe(){ return 0&lt;=x&amp;&amp;x&lt;n&amp;&amp;0&lt;=y&amp;&amp;y&lt;m; }
+    pos adj(int i){ return {x+dx[i%4], y+dy[i%4]}; } 
+    void print(){
+        printf(&quot;[%d, %d]\n&quot;, x, y);
+    }
+};
+struct box{
+    pos p;
+    int cost;
+    int able;
+};
+int done[1000][1000][11] = {0,}; // 0 for day, 1 for night
+void solve(){
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    for(int i = 0; i&lt;n; i++){
+        for(int j = 0; j&lt;m; j++){
+            char ch = cin.get();
+            while(ch=='\n' || ch=='\r' || ch==' '){
+                ch = cin.get();
+            }
+            board[i][j] = ch;
+        }
+    } 
+    
+    queue&lt;box&gt; q;
+    q.push({{0,0}, 0, k});
+    done[0][0][k] = 1; 
+
+    while(!q.empty()){
+        box cur = q.front(); 
+        q.pop();
+        if(cur.p.x == n-1 &amp;&amp; cur.p.y == m-1){
+            cout &lt;&lt; cur.cost+1;
+            return;
+        }
+        for(int i = 0; i&lt;4; i++){
+            pos next = cur.p.adj(i);
+            if(next.safe()){
+                if(board[next.x][next.y]=='0' &amp;&amp; done[next.x][next.y][cur.able] == 0){
+                    done[next.x][next.y][cur.able] = 1;
+                    q.push({next, cur.cost+1, cur.able});
+                }
+                else if(board[next.x][next.y]=='1' &amp;&amp; cur.able &gt; 0 &amp;&amp; done[next.x][next.y][cur.able-1]==0){
+                    if(cur.cost % 2 == 0){
+                        done[next.x][next.y][cur.able-1] = 1;
+                        q.push({next, cur.cost+1, cur.able-1});
+                    }
+                    else {
+                        q.push({cur.p, cur.cost+1, cur.able});
+                    }
+                }
+            }
+        }
+    } 
+    cout &lt;&lt; -1;
+    return;
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+
+</code></pre>
+<h3>풀이</h3>
+<p><code>[0,0] -&gt; [n-1, m-1]</code> 의 좌표로 이동을 하는 문제이고, 거리가 모두 같기 때문에 bfs로 최단거리를 구할 수 있다.</p>
+<p>벽은 낮에만 부술 수 있고, 좌표를 이동할 때마다 낮과 밤이 바뀐다. 따라서 bfs에서 현재까지의 거리를 cost라고 할 때, cost가 짝수면 낮(시작할 때 낮이므로), 홀수면 밤으로 처리해주면 된다.</p>
+<p>bfs에서는 재방문을 방지하기 위해서, 방문한 좌표에 대한 데이터를 저장해놓는다. 여기에서는 추가로 <strong>벽을 부술 수 있는 개수</strong> 를 저장해주어야 한다. 같은 좌표에 재방문을 하더라도, 벽을 부술 수 있는 개수에 따라 이후의 방문 가능한 상태가 변하기 때문이다.</p>
+<p>또한 bfs에서 탐색을 하는 과정에서, 벽이 있고 현재 상태가 밤이라면 (cost가 홀수이면), 현재 좌표를 다시 queue에 넣어준다.</p>
+<p><strong>벽을 부술 수 있는 개수</strong> 외에도 <strong>낮과 밤</strong>의 상태를 추가로 저장할 수는 있지만, 굳이 저장할 필요가 없다.
+다음과 같은 상황을 가정해보자.</p>
+<ul>
+<li><code>[a,b]</code>위치에 4개를 추가로 부술 수 있는 상태에서 <strong>밤</strong>에 방문을 했다고 해보자. visited 배열에 의하여 <code>[a,b]</code> 좌표에는 4개를 추가로 부술 수 있는 상태에서 <strong>낮</strong>에 다시 방문을 할 수 없다. 낮에 다시 방문을 할 필요가 없다. 왜냐하면 <strong>밤</strong>에 방문을 했을 때 벽이 있어서 이동을 할 수 없는 경우 queue에 현재 좌표를 다시 넣는다. 따라서 자동으로 낮에 방문을 한 것과 같게 된다.</li>
+<li><code>[a,b]</code> 위치에 4개를 추가로 부술 수 있는 상태에서 <strong>낮</strong>에 방문을 했다고 해보자. visited 배열에 의하여 <code>[a,b]</code> 좌표에는 4개를 추가로 부술 수 있는 상태에서 <strong>밤</strong>에 다시 방문을 할 수 없다. 밤에 다시 방문을 할 필요가 없다. <strong>낮</strong>에는 벽도 부술 수 있기 때문에 <strong>밤</strong>보다 좋고, 먼저 <strong>낮</strong>에 방문했다는 것은 그다음 <strong>밤</strong>에 방문하는 것보다 더 최단 경로여서 구태여 <strong>밤</strong>에 다시 방문할 필요가 없다.</li>
+</ul>
+<h3>느낀점</h3>
+<p>풀어본 것 같은 느낌이 드는 문제이다.
+중복되는 경우의 수를 제거하거나 재방문을 해야하는 경우의 수를 중심으로 생각해보아야 한다. 또한 문제의 특성을 파악하여, 위의 문제의 경우 bfs는 먼저 방문하는 것이 최단거리이므로 현재까지의 최단거리를 따로 저장할 필요가 없다. 그렇기에 <strong>부술 수 있는 개수</strong>에 대해서만 고민하면 된다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved.
+            </footer>
+        </div>
+    </body>
+</html>

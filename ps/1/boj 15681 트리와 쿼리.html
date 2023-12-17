@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1976 여행 가자</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 15681 트리와 쿼리</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-12-09</td>
+                        <td class="">2023-12-16</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -121,7 +121,7 @@
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
         <h3>문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1976">https://www.acmicpc.net/problem/1976</a></p>
+<p><a href="https://www.acmicpc.net/problem/15681">https://www.acmicpc.net/problem/15681</a></p>
 <h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -136,44 +136,33 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int n, m;
-int uf[201] = {0,};
-int uffind(int v){
-    if(uf[v]==v)
-        return v;
-    uf[v] = uffind(uf[v]);
-    return uf[v];
-}
-void ufunion(int a, int b){
-    int pa = uffind(a); 
-    int pb = uffind(b);
-    uf[pb] = pa;
+int n, r, q;
+vector&lt;vector&lt;int&gt;&gt; graph(100001, vector&lt;int&gt;());
+int sub_node[100001] = {0,};
+int calc(int node, int parent){
+    int count = 0;
+    for(int next: graph[node]){
+        if(next == parent)
+            continue;
+        count += calc(next, node) + 1;
+    }
+    sub_node[node] = count + 1;
+    return count;
 }
 void solve(){
-    cin &gt;&gt; n &gt;&gt; m;
-    for(int i = 1; i&lt;=n; i++){
-        uf[i] = i;
-    }
-    int is_connected;
-    for(int i = 1; i&lt;=n; i++){
-        for(int j = 1; j&lt;=n; j++){
-            cin &gt;&gt; is_connected;
-            if(is_connected==1){
-                ufunion(i, j);
-            }
-        }
-    }
+    memset(sub_node, -1, sizeof(sub_node));
+    cin &gt;&gt; n &gt;&gt; r &gt;&gt; q;
     int u, v;
-    cin &gt;&gt; u;
-    for(int i = 0; i&lt;m-1; i++){
-        cin &gt;&gt; v; 
-        if(uffind(u)!=uffind(v)){
-            cout &lt;&lt; &quot;NO&quot;;
-            return;
-        }
+    for(int i = 0; i&lt;n-1; i++){
+        cin &gt;&gt; u &gt;&gt; v;
+        graph[u].push_back(v);    
+        graph[v].push_back(u);
     }
-    cout &lt;&lt; &quot;YES&quot;;
-    return;
+    calc(r, r);
+    while(q--){
+        cin &gt;&gt; u;
+        cout &lt;&lt; sub_node[u] &lt;&lt; '\n';
+    }
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -184,11 +173,9 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
-<p>도시 간에 양방향으로 이동할 수 있고 도시들이 연결되어 있는지 여부만 확인하면 되기 때문에, union-find를 사용해서 도시들이 같은 집합에 속해있는지를 확인해주면 된다
-<a href="/ps/1/boj%201717%20%EC%A7%91%ED%95%A9%EC%9D%98%20%ED%91%9C%ED%98%84.html">boj 1717 집합의 표현</a></p>
+<p>dfs를 돌면서 각 vertex를 루트로 하는 서브 트리의 vertex의 개수를 저장해주면 된다. 트리는 항상 부모 노드가 하나이기 때문에, 위의 코드처럼 탐색 시 <code>parent</code> 를 넘겨주어 재방문하지 않도록 할 수 있다.</p>
 <h3>느낀점</h3>
-<p>union-find를 알고 있어서 풀 수 있었다.
-처음에 <code>uf</code>배열을 초기화하는데, n을 먼저 입력받지 않고 초기화를 했다. 이렇게 하지 않도록 주의를 해야겠다.</p>
+<p>트리 구조는 부모와 자식 형태로 보았을 때, 부모 노드가 하나이다.</p>
 
     </div>
 </article>

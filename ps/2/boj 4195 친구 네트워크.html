@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11049 행렬 곱셈 순서</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 4195 친구 네트워크</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-10-14</td>
+                        <td class="">2023-12-10</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -120,7 +120,9 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
-        <h3>코드</h3>
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/4195">https://www.acmicpc.net/problem/4195</a></p>
+<h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -134,53 +136,73 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int n;
-struct matrix {
-    int r, c;
-};
-int dp[501][501] = {0,}; 
+int uf[200001] = {0,};
+int uf_size[200001] = {0,};
+int uf_find(int v){
+    if(uf[v]==v){
+        return v;
+    }
+    uf[v] = uf_find(uf[v]);
+    return uf[v];
+}
+
+// return current size
+int uf_union(int a, int b){
+    int ra = uf_find(a);
+    int rb = uf_find(b); 
+    if(ra != rb){
+        uf[rb] = ra;
+        uf_size[ra] += uf_size[rb];
+    }
+    return uf_size[ra];
+}
 void solve(){
-    cin &gt;&gt; n;
-    vector&lt;matrix&gt; mats;
-    int r, c;
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; r &gt;&gt; c;
-        mats.push_back({r,c});
+    for(int i = 0; i&lt;=200000; i++){
+        uf[i] = i;
+        uf_size[i] = 1;
     }
-    for(int d = 1; d&lt;n; d++){
-        for(int i = 0; i&lt;n-d; i++){
-            // i ~ i+d
-            dp[i][i+d] = INT_MAX;
-            for(int j = i; j&lt;i+d; j++){
-                dp[i][i+d] = min(dp[i][i+d], dp[i][j] + dp[j+1][i+d] + mats[i].r * mats[j].c * mats[i+d].c);
-            }
+    int idx_cursor = 0;
+    unordered_map&lt;string, int&gt; idx_map; 
+    int f;
+    cin &gt;&gt; f; 
+    string a, b;
+    for(int i = 0; i&lt;f; i++){
+        cin &gt;&gt; a &gt;&gt; b;
+        int a_idx, b_idx;
+        if(idx_map.find(a)==idx_map.end()){
+            idx_map.insert({a, idx_cursor});
+            idx_cursor += 1;
         }
-    }
-    cout &lt;&lt; dp[0][n-1];
+        a_idx = idx_map[a];
+        if(idx_map.find(b)==idx_map.end()){
+            idx_map.insert({b, idx_cursor});
+            idx_cursor += 1;
+        }
+        b_idx = idx_map[b];
+
+        int size = uf_union(a_idx, b_idx);
+        cout &lt;&lt; size &lt;&lt; '\n';
+    }    
 }
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-    solve(); 
+    int test;
+    cin &gt;&gt; test;
+    while(test--){
+        solve(); 
+    }
     return 0;
 }
 
 </code></pre>
 <h3>풀이</h3>
-<ul>
-<li>dp로 푸는 문제이다. 점화식을 세워서 풀이하면 된다.</li>
-<li>dp 값을 계산하는 순서는 행렬 사이의 거리가 작은거 부터 큰 순으로 계산하면 된다.
-<ul>
-<li>이를 계산할 때 거리를 늘려가면서 순회를 해야 하는데, 이 부분에서 조금 헷갈린다. <a href="/">거리별 순회</a> 이 코드를 이용하면 된다.</li>
-</ul>
-</li>
-<li><a href="/ps/4/boj%2011066%20%ED%8C%8C%EC%9D%BC%20%ED%95%A9%EC%B9%98%EA%B8%B0.html">boj 11066 파일 합치기</a> 과 동일한 문제이다.</li>
-</ul>
+<p>union-find를 활용하는 문제이다. <a href="/ps/2/boj%201717%20%EC%A7%91%ED%95%A9%EC%9D%98%20%ED%91%9C%ED%98%84.html">boj 1717 집합의 표현</a>
+root node에서 계속 하위 네트워크에 속한 node의 개수를 기록해주어야 한다. 이러한 기록은 따로 배열을 만들어서, union 시 서로 다른 집합에 속해있는 경우에만 union 대상의 집합에 속한 노드의 개수를 더해주면 된다.
+그리고 친구 관계가 최대 100000이므로, node의 개수는 최대 200000까지 될 수 있다.
+또한, <code>unordered_map</code>을 사용해서 이름과 <code>uf</code>배열에서의 index를 매핑해주면 된다.</p>
 <h3>느낀점</h3>
-<ul>
-<li><a href="/ps/4/boj%2011066%20%ED%8C%8C%EC%9D%BC%20%ED%95%A9%EC%B9%98%EA%B8%B0.html">boj 11066 파일 합치기</a> 을 풀고 푸니, 그렇게 어렵게 느껴지지 않았다.</li>
-<li>또한 알고리즘 시간에 이미 접해보았던 것 같다.</li>
-</ul>
+<p>union-find를 알고 있어서 풀 수 있었다.</p>
 
     </div>
 </article>

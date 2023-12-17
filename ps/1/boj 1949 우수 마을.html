@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1956 운동</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1949 우수 마을</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-11-20</td>
+                        <td class="">2023-12-17</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -120,7 +120,9 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
-        <h3>코드</h3>
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/1949">https://www.acmicpc.net/problem/1949</a></p>
+<h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -134,33 +136,67 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int vn, en;
+int n;
+int weight[10001] = {0,};
+vector&lt;vector&lt;int&gt;&gt; graph;
+
+/*
+ * 0 for not selecting root node of subtree
+ * 1 for selecting root node of subtree
+ */
+int dp[10001][2] = {0,};
+
+void calc(int node, int parent){
+    bool is_child_exist = false;
+    bool is_selected_sub_exist = false;
+    bool max_sub1_case = INT_MIN;
+    bool used_sub0_value;
+    for(int next: graph[node]){
+        if(next == parent)
+            continue;
+        calc(next, node);
+
+        // not selecting the root node of current subtree dp[node][0]
+        dp[node][0] += max(dp[next][0], dp[next][1]);
+        if(dp[next][0] &lt;= dp[next][1]){
+            // if selected case and not selected case are same, assume that selected case is used for calculation
+            is_selected_sub_exist = true; 
+        }
+        is_child_exist = true;
+        if(max_sub1_case &lt; dp[next][1]){
+            max_sub1_case = dp[next][1];
+            used_sub0_value = dp[next][0];
+        }
+
+        // selecting the root node of current subtree dp[node][1]
+        dp[node][1] += dp[next][0];
+    } 
+    dp[node][1] += weight[node];
+    if(is_child_exist &amp;&amp; !is_selected_sub_exist){
+        // all subtree root node is not selected case
+        // force to select one of subtrees' root nodes
+        dp[node][0] -= used_sub0_value;
+        dp[node][0] += max_sub1_case;
+    }
+}
 
 void solve(){
-    cin &gt;&gt; vn &gt;&gt; en;
-    int done[401][401];
-    fill(&amp;done[0][0], &amp;done[400][401], INT_MAX);
-    int u, v, w;
-    for(int i = 0; i&lt;en; i++){
-        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w; 
-        done[u][v] = w;
+    graph = vector(10001, vector&lt;int&gt;());
+    cin &gt;&gt; n;
+    for(int i = 1; i&lt;=n; i++){
+        cin &gt;&gt; weight[i]; 
     }
-    for(int i = 1; i&lt;=vn; i++){
-        for(int j = 1; j&lt;=vn; j++){
-            for(int k = 1; k&lt;=vn; k++){
-                if(done[i][k]!=INT_MAX &amp;&amp; done[k][j]!=INT_MAX &amp;&amp; done[i][j] &gt; done[i][k] + done[k][j]){
-                    done[i][j] = done[i][k] + done[k][j];
-                }
-            }
-        }
+    int u, v;
+    for(int i = 0; i&lt;n-1; i++){
+        cin &gt;&gt; u &gt;&gt; v; 
+        graph[u].push_back(v);
+        graph[v].push_back(u);
     }
-
-    int ans = INT_MAX;
-    for(int i = 1; i&lt;=vn; i++){
-        ans = min(ans, done[i][i]);
-    }
-    if(ans == INT_MAX) cout &lt;&lt; -1;
-    else cout &lt;&lt; ans;
+    calc(1, 1);    
+    cout &lt;&lt; max(dp[1][0], dp[1][1]) &lt;&lt; '\n';
+    /* for(int i = 1; i&lt;=n; i++){
+        cout &lt;&lt; dp[i][0] &lt;&lt; ' ' &lt;&lt; dp[i][1] &lt;&lt; '\n';
+    } */
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -171,13 +207,18 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
+<p><a href="/ps/1/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 이 문제와 같은 풀이 방식을 사용하면된다. 이 문제에서 작성한 코드와 원리는 같지만, dp 배열을 채워나간다고 생각하며 조금 다르게 코드를 작성하였다.</p>
+<p>이 문제에서는 세번째 조건을 생각해보아야 한다. 우수 마을로 선정되지 못한 마을은 적어도 하나의 우수 마을과는 인접해 있어야 한다고 한다. 이를 처리해주기 위해서 다음과 같이 로직을 추가해주었다.</p>
 <ul>
-<li>시작한 곳에서 출발해서, 다시 시작한 곳으로 돌아오기 까지의 최단 거리를 구하는 문제이다. 모든 vertex에 대해 최단 거리를 구해야 하므로 플로이드-워셜 알고리즘을 사용해야 한다. <a href="/ps/3/boj%2011404%20%ED%94%8C%EB%A1%9C%EC%9D%B4%EB%93%9C.html">boj 11404 플로이드</a></li>
-<li>중요한 점은 vertex k에서 k까지의 거리가 0이 아니라, INF로 설정해주어야 한다. 이후 나중에 모든 시작과 끝이 같은 경로에 대해서만 배열에서 확인을 하면 된다.</li>
+<li>인접한 <strong>모든</strong> 서브트리에서 해당 서브 트리의 루트 노드를 고르지 않는 경우의 수가 그렇지 않은 경우의 수보다 주민 수의 총합이 더 큰 경우에, 이 서브트리 들 중 루트 노드를 고르는 경우의 수가 가장 큰 서브트리에 대해서만 반대로 적용을 해준다.</li>
 </ul>
+<p>하지만 이 로직은 필요가 없는 로직이다. 왜냐하면 위 로직이 필요한 이유는, 현재 서브트리의 루트 노드를 고르지 않았을 때 인접한 모든 서브 트리의 루트 노드를 고르지 않을 경우의 수를 대비하였기 때문이다. 하지만 이러한 경우의 수는 존재하지 않는데, 왜냐하면 인접한 모든 서브 트리의 루트 노드를 고르지 않는다면 현재 서브트리의 루트 노드를 고를 수 있기 때문이다.</p>
 <h3>느낀점</h3>
+<p>문제의 의미를 잘 생각해보면서, 필요 없는 로직에 대해 고민하고 있는 것은 아닌지 확인하자!</p>
 <ul>
-<li>같은 변수명을 사용해버려서, 디버깅하는 과정에서 시간이 약간 소요되었다.</li>
+<li><a href="/ps/1/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a></li>
+<li><a href="/ps/1/boj%202533%20%EC%82%AC%ED%9A%8C%EB%A7%9D%20%EC%84%9C%EB%B9%84%EC%8A%A4(SNS).html">boj 2533 사회망 서비스(SNS)</a>
+이 문제들과 같은 풀이를 사용한다. 다만 여기에서는 dp배열에 집중하여 코드를 작성했으므로, 이렇게 풀도록 노력해야한다.</li>
 </ul>
 
     </div>

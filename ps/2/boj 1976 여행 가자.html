@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 4195 친구 네트워크</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1976 여행 가자</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-12-10</td>
+                        <td class="">2023-12-09</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -121,7 +121,7 @@
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
         <h3>문제</h3>
-<p><a href="https://www.acmicpc.net/problem/4195">https://www.acmicpc.net/problem/4195</a></p>
+<p><a href="https://www.acmicpc.net/problem/1976">https://www.acmicpc.net/problem/1976</a></p>
 <h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -136,73 +136,59 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int uf[200001] = {0,};
-int uf_size[200001] = {0,};
-int uf_find(int v){
-    if(uf[v]==v){
+int n, m;
+int uf[201] = {0,};
+int uffind(int v){
+    if(uf[v]==v)
         return v;
-    }
-    uf[v] = uf_find(uf[v]);
+    uf[v] = uffind(uf[v]);
     return uf[v];
 }
-
-// return current size
-int uf_union(int a, int b){
-    int ra = uf_find(a);
-    int rb = uf_find(b); 
-    if(ra != rb){
-        uf[rb] = ra;
-        uf_size[ra] += uf_size[rb];
-    }
-    return uf_size[ra];
+void ufunion(int a, int b){
+    int pa = uffind(a); 
+    int pb = uffind(b);
+    uf[pb] = pa;
 }
 void solve(){
-    for(int i = 0; i&lt;=200000; i++){
+    cin &gt;&gt; n &gt;&gt; m;
+    for(int i = 1; i&lt;=n; i++){
         uf[i] = i;
-        uf_size[i] = 1;
     }
-    int idx_cursor = 0;
-    unordered_map&lt;string, int&gt; idx_map; 
-    int f;
-    cin &gt;&gt; f; 
-    string a, b;
-    for(int i = 0; i&lt;f; i++){
-        cin &gt;&gt; a &gt;&gt; b;
-        int a_idx, b_idx;
-        if(idx_map.find(a)==idx_map.end()){
-            idx_map.insert({a, idx_cursor});
-            idx_cursor += 1;
+    int is_connected;
+    for(int i = 1; i&lt;=n; i++){
+        for(int j = 1; j&lt;=n; j++){
+            cin &gt;&gt; is_connected;
+            if(is_connected==1){
+                ufunion(i, j);
+            }
         }
-        a_idx = idx_map[a];
-        if(idx_map.find(b)==idx_map.end()){
-            idx_map.insert({b, idx_cursor});
-            idx_cursor += 1;
+    }
+    int u, v;
+    cin &gt;&gt; u;
+    for(int i = 0; i&lt;m-1; i++){
+        cin &gt;&gt; v; 
+        if(uffind(u)!=uffind(v)){
+            cout &lt;&lt; &quot;NO&quot;;
+            return;
         }
-        b_idx = idx_map[b];
-
-        int size = uf_union(a_idx, b_idx);
-        cout &lt;&lt; size &lt;&lt; '\n';
-    }    
+    }
+    cout &lt;&lt; &quot;YES&quot;;
+    return;
 }
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-    int test;
-    cin &gt;&gt; test;
-    while(test--){
-        solve(); 
-    }
+    solve(); 
     return 0;
 }
 
 </code></pre>
 <h3>풀이</h3>
-<p>union-find를 활용하는 문제이다. <a href="/ps/1/boj%201717%20%EC%A7%91%ED%95%A9%EC%9D%98%20%ED%91%9C%ED%98%84.html">boj 1717 집합의 표현</a>
-root node에서 계속 하위 네트워크에 속한 node의 개수를 기록해주어야 한다. 이러한 기록은 따로 배열을 만들어서, union 시 서로 다른 집합에 속해있는 경우에만 union 대상의 집합에 속한 노드의 개수를 더해주면 된다.
-그리고 친구 관계가 최대 100000이므로, node의 개수는 최대 200000까지 될 수 있다.
-또한, <code>unordered_map</code>을 사용해서 이름과 <code>uf</code>배열에서의 index를 매핑해주면 된다.</p>
+<p>도시 간에 양방향으로 이동할 수 있고 도시들이 연결되어 있는지 여부만 확인하면 되기 때문에, union-find를 사용해서 도시들이 같은 집합에 속해있는지를 확인해주면 된다
+<a href="/ps/2/boj%201717%20%EC%A7%91%ED%95%A9%EC%9D%98%20%ED%91%9C%ED%98%84.html">boj 1717 집합의 표현</a></p>
 <h3>느낀점</h3>
-<p>union-find를 알고 있어서 풀 수 있었다.</p>
+<p>union-find를 알고 있어서 풀 수 있었다.
+처음에 <code>uf</code>배열을 초기화하는데, n을 먼저 입력받지 않고 초기화를 했다. 이렇게 하지 않도록 주의를 해야겠다.</p>
 
     </div>
 </article>
