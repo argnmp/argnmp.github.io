@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2749 피보나치 수 3</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 17387 선분 교차 2</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-10-09</td>
+                        <td class="">2023-12-18</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -120,7 +120,9 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
-        <h3>코드</h3>
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/17387">https://www.acmicpc.net/problem/17387</a></p>
+<h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -134,62 +136,41 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-ll n;
-
-struct matrix {
-    int r; int c;
-    vector&lt;vector&lt;ll&gt;&gt; data;
+struct coord{
+    double x, y;
 };
-matrix init_matrix(int r, int c){
-    matrix m = {r, c};
-    m.data = vector(r, vector&lt;ll&gt;(c, 0));
-    return m;
+/*
+ * u = (p2.x-p1.x, p2.y-p1.y, 0)
+ * v = (p3.x-p1.x, p3.y-p1.y, 0)
+ * u x v = (0, 0, (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x))
+ */
+double ccw(coord p1, coord p2, coord p3){
+    return (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x);
 }
-matrix operator*(matrix&amp; a, matrix&amp; b){
-    matrix m = init_matrix(a.r, b.c); 
-    for(int i = 0; i&lt;m.r; i++){
-        for(int j = 0; j&lt;m.c; j++){
-            ll s = 0;
-            for(int k = 0; k&lt;a.c; k++){
-                s += (a.data[i][k] * b.data[k][j]) % 1000000;
-            }
-            m.data[i][j] = s % 1000000;
-        }
-    } 
-    return m;
+bool isIn_rect(coord la, coord lb, coord p){
+    double max_x = max(la.x, lb.x);
+    double min_x = min(la.x, lb.x);
+    double max_y = max(la.y, lb.y);
+    double min_y = min(la.y, lb.y);
+    return (min_x &lt;= p.x &amp;&amp; p.x &lt;= max_x &amp;&amp; min_y &lt;= p.y &amp;&amp; p.y &lt;= max_y);
 }
-
 void solve(){
-    cin &gt;&gt; n;
-    matrix K = init_matrix(2,2);
-    K.data[0][0] = 1;
-    K.data[0][1] = 1;
-    K.data[1][0] = 1;
-    K.data[1][1] = 0;
-    matrix remainder = init_matrix(2,2);
-    remainder.data[0][0] = 1; 
-    remainder.data[1][1] = 1; 
-    matrix base = init_matrix(2,1); 
-    base.data[0][0] = 1; 
-    base.data[1][0] = 0; 
+    coord p1, p2, p3, p4;
+    cin &gt;&gt; p1.x &gt;&gt; p1.y &gt;&gt; p2.x &gt;&gt; p2.y;
+    cin &gt;&gt; p3.x &gt;&gt; p3.y &gt;&gt; p4.x &gt;&gt; p4.y;
+    double value[4] = {0,}; 
+    double check_l1_p3 = ccw(p1, p2, p3);
+    double check_l1_p4 = ccw(p1, p2, p4);
+    double check_l2_p1 = ccw(p3, p4, p1);
+    double check_l2_p2 = ccw(p3, p4, p2);
 
-    n = n-1;
-    if(n==0) {
+    if((check_l1_p3==0 &amp;&amp; isIn_rect(p1, p2, p3)) || (check_l1_p4==0 &amp;&amp; isIn_rect(p1, p2, p4)) || (check_l2_p1==0 &amp;&amp; isIn_rect(p3, p4, p1)) || (check_l2_p2==0 &amp;&amp; isIn_rect(p3, p4, p2))){
         cout &lt;&lt; 1;
-        return;
+    } else if(check_l1_p3*check_l1_p4 &lt; 0 &amp;&amp; check_l2_p1*check_l2_p2 &lt; 0){
+        cout &lt;&lt; 1;
+    } else {
+        cout &lt;&lt; 0;
     }
-    while(n != 1){
-        if(n%2==0){
-            K = K*K; 
-        } else {
-            remainder = remainder * K;
-            K = K*K;
-        }
-        n /= 2;
-    }
-    K = K*remainder;
-    matrix result = K * base;
-    cout &lt;&lt; result.data[0][0];
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -200,19 +181,22 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
+<p><a href="/ps/1/boj%2017386%20%EC%84%A0%EB%B6%84%20%EA%B5%90%EC%B0%A8%201.html">boj 17386 선분 교차 1</a> 과는 달리, 점들이 겹칠 수도 있다. 따라서 이로 인해 발생하는 경우의 수를 고려해주어야 한다.</p>
+<p>마찬가지로 벡터의 외적을 이용해서 교차하는지의 여부를 판단해줄 수 있다.</p>
+<p>문제에서 한 선분의 끝 점이 다른 선분이나 끝 점 위에 있는 것도 교차하는 것이라고 하였다. 그래서 먼저 이러한 경우의 수를 먼저 확인해 준다.</p>
 <ul>
-<li>fn =  fn-1 + fn-2 식을 이용해서 행렬의 거듭제곱으로 점화식을 만들어서 <a href="/ps/5/boj%2010830%20%ED%96%89%EB%A0%AC%20%EC%A0%9C%EA%B3%B1.html">boj 10830 행렬 제곱</a> 이걸 이용해서 n-1 승을 계산한다.</li>
-<li><a href="/">행렬</a> 이러한 struct를 만들어서 계산한다</li>
-<li>n 이 1인 경우에 대해서 제대로 처리를 해주어야 한다. 이것에 대한 처리를 안해서 무한루프가 발생하여 시간초과가 발생했었다.
+<li>a. 한 선분과 다른 점 하나를 가지고 외적해 보았을 때, 일직선 상(외적의 크기가 0)에 위치하고 선분의 양 끝점 사이에 다른 점 하나가 위치한다면 이는 교차하는 경우의 수이다.</li>
+</ul>
+<p>선분이 두개 이기 때문에 총 4가지 조합이 나온다. 4가지 조합 각각에 대해서 하나라도 위의 조건을 만족하면 교차하는 경우의 수가 된다.
+모두 만족하지 않으면, 선분과 일직선상에 있는 동시에 겹치지 않는 점들 또는 일직선 상에 있지 않은 점들로 구성된다.</p>
+<p>다음으로는 한 선분을 기준으로 다른 점 두개가 각각 왼쪽과 오른쪽에 위치하는지 확인해준다.</p>
 <ul>
-<li><code>m.data = vector(r, vector&lt;ll&gt;(c, 0));</code> 이 부분에서 초기화를 할때 vector의 두번째 인자로 <code>vector(c,0)</code>을 넣어주면 <code>vector&lt;int&gt;(c, 0)</code> 이 되어버려서, 컴파일에서 오류가 난다. (<code>vector&lt;vector&lt;ll&gt;&gt; data;</code> ) 이걸로 선언 했기 때문.</li>
+<li>b. 한 선분에 대해 다른 점 두 개를 각각 외적한 결과 값을 곱했을 때, 양수가 나오면 이는 교차하는 경우의 수이다.</li>
 </ul>
-</li>
-</ul>
+<p>이 두가지 조건을 제외한 나머지는 모두 교차하는 경우의 수가 아니라고 판별할 수 있다.</p>
 <h3>느낀점</h3>
-<ul>
-<li>이전에 풀었던 문제로 기억이 나서 풀 수 있었다.</li>
-</ul>
+<p>이전에 풀어보았던 문제이다.
+코드를 작성하는 과정에서 테스트 케이스에서 맞지 않는 부분이 나올 때마다 조건을 수정했다. 한번에 경우의 수를 파악하고 코드를 작성하는 것이 중요할 것 같다.</p>
 
     </div>
 </article>

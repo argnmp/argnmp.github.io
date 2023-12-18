@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1956 운동</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2166 다각형의 면적</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-11-20</td>
+                        <td class="">2023-12-18</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -120,8 +120,11 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
-        <h3>코드</h3>
-<pre><code class="language-c++">#include &lt;iostream&gt;
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/2166">https://www.acmicpc.net/problem/2166</a></p>
+<h3>코드</h3>
+<pre><code class="language-c++">#include &lt;cmath&gt;
+#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
 #include &lt;vector&gt;
@@ -134,33 +137,31 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int vn, en;
-
+int n;
+struct coord {
+    double x, y;
+};
+/*
+ * u = (p2.x-p1.x, p2.y-p1.y, 0)
+ * v = (p3.x-p1.x, p3.y-p1.y, 0)
+ * u x v = (0, 0, )
+ */
+double ccw(coord p1, coord p2, coord p3){
+    return (p2.x-p1.x)*(p3.y-p1.y) - (p2.y-p1.y)*(p3.x-p1.x);
+}
 void solve(){
-    cin &gt;&gt; vn &gt;&gt; en;
-    int done[401][401];
-    fill(&amp;done[0][0], &amp;done[400][401], INT_MAX);
-    int u, v, w;
-    for(int i = 0; i&lt;en; i++){
-        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w; 
-        done[u][v] = w;
+    cin &gt;&gt; n; 
+    coord c;
+    cin &gt;&gt; c.x &gt;&gt; c.y;
+    coord a, b;
+    cin &gt;&gt; a.x &gt;&gt; a.y;
+    double ans = 0;
+    for(int i = 0; i&lt;n-2; i++){
+        cin &gt;&gt; b.x &gt;&gt; b.y;
+        ans += ccw(c, a, b)/2; 
+        swap(a, b);
     }
-    for(int i = 1; i&lt;=vn; i++){
-        for(int j = 1; j&lt;=vn; j++){
-            for(int k = 1; k&lt;=vn; k++){
-                if(done[i][k]!=INT_MAX &amp;&amp; done[k][j]!=INT_MAX &amp;&amp; done[i][j] &gt; done[i][k] + done[k][j]){
-                    done[i][j] = done[i][k] + done[k][j];
-                }
-            }
-        }
-    }
-
-    int ans = INT_MAX;
-    for(int i = 1; i&lt;=vn; i++){
-        ans = min(ans, done[i][i]);
-    }
-    if(ans == INT_MAX) cout &lt;&lt; -1;
-    else cout &lt;&lt; ans;
+    printf(&quot;%.1lf&quot;, abs(round(ans*10)/10));
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -171,14 +172,14 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
-<ul>
-<li>시작한 곳에서 출발해서, 다시 시작한 곳으로 돌아오기 까지의 최단 거리를 구하는 문제이다. 모든 vertex에 대해 최단 거리를 구해야 하므로 플로이드-워셜 알고리즘을 사용해야 한다. <a href="/ps/5/boj%2011404%20%ED%94%8C%EB%A1%9C%EC%9D%B4%EB%93%9C.html">boj 11404 플로이드</a></li>
-<li>중요한 점은 vertex k에서 k까지의 거리가 0이 아니라, INF로 설정해주어야 한다. 이후 나중에 모든 시작과 끝이 같은 경로에 대해서만 배열에서 확인을 하면 된다.</li>
-</ul>
+<p><a href="/ps/1/boj%2011758%20CCW.html">boj 11758 CCW</a> 에서 벡터의 외적을 사용한 것 처럼, 이 문제에서도 벡터의 외적을 사용하면 된다.</p>
+<p>평면의 두 벡터를 외적한 결과물은, 이 벡터들이 이루는 평행사변형의 넓이와 같다. 이 넓이를 2로 나누면, 벡터의 시작점과 끝점들이 이루는 삼각형의 넓이를 구할 수 있다.</p>
+<p><a href="https://ip99202.github.io/posts/%EB%B0%B1%EC%A4%80-2166-%EB%8B%A4%EA%B0%81%ED%98%95%EC%9D%98-%EB%A9%B4%EC%A0%81/">https://ip99202.github.io/posts/%EB%B0%B1%EC%A4%80-2166-%EB%8B%A4%EA%B0%81%ED%98%95%EC%9D%98-%EB%A9%B4%EC%A0%81/</a>
+이 링크에 있는 볼록다각형과 오목다각형을 각각 A, B라 하겠다.</p>
+<p>그림 A와 B모두, a -&gt; b -&gt; c -&gt; d -&gt; e -&gt; f 순서대로 점이 주어진다. 그렇기 때문에, (a, b, c), (a, c, d), (a, d, e), (a, e, f) 순서대로 외적을 하면 삼각형의 넓이를 얻을 수 있다.</p>
+<p>그림 A의 경우 위의 순서대로 외적을 하면, 결과 값이 모두 음수가 나온다.(시계방향이므로) 하지만 그림 B의 경우 위의 순서대로 외적을 하면, (a, b, c)는 양수, (a, c, d)는 음수가 나온다. 필요한 것은 삼각형(a, c, d)에서 삼각형(a, b, c)를 뺀 넓이 이므로, 순서대로 모두 외적한 결과 값을 더하고 마지막 최종 결과값에 절댓값을 만들어주어야 한다.</p>
 <h3>느낀점</h3>
-<ul>
-<li>같은 변수명을 사용해버려서, 디버깅하는 과정에서 시간이 약간 소요되었다.</li>
-</ul>
+<p>이전에 풀어본 문제이다. 마지막에 절댓값을 만들어주어야 한다는 것을 생각하지 못하였다.</p>
 
     </div>
 </article>

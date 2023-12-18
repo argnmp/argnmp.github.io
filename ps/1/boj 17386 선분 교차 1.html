@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1956 운동</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 17386 선분 교차 1</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-11-20</td>
+                        <td class="">2023-12-18</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -120,7 +120,9 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
-        <h3>코드</h3>
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/17386">https://www.acmicpc.net/problem/17386</a></p>
+<h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -134,33 +136,26 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int vn, en;
-
+struct coord{
+    double x, y;
+};
+/*
+ * u = (p2.x-p1.x, p2.y-p1.y, 0)
+ * v = (p3.x-p1.x, p3.y-p1.y, 0)
+ * u x v = (0, 0, (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x))
+ */
+double ccw(coord p1, coord p2, coord p3){
+    return (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x);
+}
 void solve(){
-    cin &gt;&gt; vn &gt;&gt; en;
-    int done[401][401];
-    fill(&amp;done[0][0], &amp;done[400][401], INT_MAX);
-    int u, v, w;
-    for(int i = 0; i&lt;en; i++){
-        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w; 
-        done[u][v] = w;
-    }
-    for(int i = 1; i&lt;=vn; i++){
-        for(int j = 1; j&lt;=vn; j++){
-            for(int k = 1; k&lt;=vn; k++){
-                if(done[i][k]!=INT_MAX &amp;&amp; done[k][j]!=INT_MAX &amp;&amp; done[i][j] &gt; done[i][k] + done[k][j]){
-                    done[i][j] = done[i][k] + done[k][j];
-                }
-            }
-        }
-    }
+    coord p1, p2, p3, p4;
+    cin &gt;&gt; p1.x &gt;&gt; p1.y &gt;&gt; p2.x &gt;&gt; p2.y;
+    cin &gt;&gt; p3.x &gt;&gt; p3.y &gt;&gt; p4.x &gt;&gt; p4.y;
+    if(ccw(p1, p2, p3)*ccw(p1, p2, p4) &lt; 0 &amp;&amp; ccw(p3, p4, p1)*ccw(p3, p4, p2) &lt; 0)
+        cout &lt;&lt; 1;
+    else
+        cout &lt;&lt; 0;
 
-    int ans = INT_MAX;
-    for(int i = 1; i&lt;=vn; i++){
-        ans = min(ans, done[i][i]);
-    }
-    if(ans == INT_MAX) cout &lt;&lt; -1;
-    else cout &lt;&lt; ans;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -171,14 +166,10 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
-<ul>
-<li>시작한 곳에서 출발해서, 다시 시작한 곳으로 돌아오기 까지의 최단 거리를 구하는 문제이다. 모든 vertex에 대해 최단 거리를 구해야 하므로 플로이드-워셜 알고리즘을 사용해야 한다. <a href="/ps/5/boj%2011404%20%ED%94%8C%EB%A1%9C%EC%9D%B4%EB%93%9C.html">boj 11404 플로이드</a></li>
-<li>중요한 점은 vertex k에서 k까지의 거리가 0이 아니라, INF로 설정해주어야 한다. 이후 나중에 모든 시작과 끝이 같은 경로에 대해서만 배열에서 확인을 하면 된다.</li>
-</ul>
+<p>문제의 제약 조건으로, <em>세점이 겹치지 않는다</em> 라고 하였다.</p>
+<p><a href="/ps/1/boj%2012781%20PIZZA%20ALVOLOC.html">boj 12781 PIZZA ALVOLOC</a> 이 문제와 마찬가지로, 한 선분을 중심으로 다른 점들이 각각 왼쪽과 오른쪽에 들어가는지 벡터의 외적을 통해서 확인해주면 된다. 이 문제와 같은 문제이다.</p>
 <h3>느낀점</h3>
-<ul>
-<li>같은 변수명을 사용해버려서, 디버깅하는 과정에서 시간이 약간 소요되었다.</li>
-</ul>
+<p>예전에 풀어본 적이 있어서 풀 수 있었다.</p>
 
     </div>
 </article>
