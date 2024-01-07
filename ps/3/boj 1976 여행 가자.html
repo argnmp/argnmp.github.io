@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2749 피보나치 수 3</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1976 여행 가자</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-10-09</td>
+                        <td class="">2023-12-09</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -120,7 +120,9 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
-        <h3>코드</h3>
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/1976">https://www.acmicpc.net/problem/1976</a></p>
+<h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -134,62 +136,44 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-ll n;
-
-struct matrix {
-    int r; int c;
-    vector&lt;vector&lt;ll&gt;&gt; data;
-};
-matrix init_matrix(int r, int c){
-    matrix m = {r, c};
-    m.data = vector(r, vector&lt;ll&gt;(c, 0));
-    return m;
+int n, m;
+int uf[201] = {0,};
+int uffind(int v){
+    if(uf[v]==v)
+        return v;
+    uf[v] = uffind(uf[v]);
+    return uf[v];
 }
-matrix operator*(matrix&amp; a, matrix&amp; b){
-    matrix m = init_matrix(a.r, b.c); 
-    for(int i = 0; i&lt;m.r; i++){
-        for(int j = 0; j&lt;m.c; j++){
-            ll s = 0;
-            for(int k = 0; k&lt;a.c; k++){
-                s += (a.data[i][k] * b.data[k][j]) % 1000000;
-            }
-            m.data[i][j] = s % 1000000;
-        }
-    } 
-    return m;
+void ufunion(int a, int b){
+    int pa = uffind(a); 
+    int pb = uffind(b);
+    uf[pb] = pa;
 }
-
 void solve(){
-    cin &gt;&gt; n;
-    matrix K = init_matrix(2,2);
-    K.data[0][0] = 1;
-    K.data[0][1] = 1;
-    K.data[1][0] = 1;
-    K.data[1][1] = 0;
-    matrix remainder = init_matrix(2,2);
-    remainder.data[0][0] = 1; 
-    remainder.data[1][1] = 1; 
-    matrix base = init_matrix(2,1); 
-    base.data[0][0] = 1; 
-    base.data[1][0] = 0; 
-
-    n = n-1;
-    if(n==0) {
-        cout &lt;&lt; 1;
-        return;
+    cin &gt;&gt; n &gt;&gt; m;
+    for(int i = 1; i&lt;=n; i++){
+        uf[i] = i;
     }
-    while(n != 1){
-        if(n%2==0){
-            K = K*K; 
-        } else {
-            remainder = remainder * K;
-            K = K*K;
+    int is_connected;
+    for(int i = 1; i&lt;=n; i++){
+        for(int j = 1; j&lt;=n; j++){
+            cin &gt;&gt; is_connected;
+            if(is_connected==1){
+                ufunion(i, j);
+            }
         }
-        n /= 2;
     }
-    K = K*remainder;
-    matrix result = K * base;
-    cout &lt;&lt; result.data[0][0];
+    int u, v;
+    cin &gt;&gt; u;
+    for(int i = 0; i&lt;m-1; i++){
+        cin &gt;&gt; v; 
+        if(uffind(u)!=uffind(v)){
+            cout &lt;&lt; &quot;NO&quot;;
+            return;
+        }
+    }
+    cout &lt;&lt; &quot;YES&quot;;
+    return;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -200,19 +184,11 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
-<ul>
-<li>fn =  fn-1 + fn-2 식을 이용해서 행렬의 거듭제곱으로 점화식을 만들어서 <a href="/ps/6/boj%2010830%20%ED%96%89%EB%A0%AC%20%EC%A0%9C%EA%B3%B1.html">boj 10830 행렬 제곱</a> 이걸 이용해서 n-1 승을 계산한다.</li>
-<li><a href="/">행렬</a> 이러한 struct를 만들어서 계산한다</li>
-<li>n 이 1인 경우에 대해서 제대로 처리를 해주어야 한다. 이것에 대한 처리를 안해서 무한루프가 발생하여 시간초과가 발생했었다.
-<ul>
-<li><code>m.data = vector(r, vector&lt;ll&gt;(c, 0));</code> 이 부분에서 초기화를 할때 vector의 두번째 인자로 <code>vector(c,0)</code>을 넣어주면 <code>vector&lt;int&gt;(c, 0)</code> 이 되어버려서, 컴파일에서 오류가 난다. (<code>vector&lt;vector&lt;ll&gt;&gt; data;</code> ) 이걸로 선언 했기 때문.</li>
-</ul>
-</li>
-</ul>
+<p>도시 간에 양방향으로 이동할 수 있고 도시들이 연결되어 있는지 여부만 확인하면 되기 때문에, union-find를 사용해서 도시들이 같은 집합에 속해있는지를 확인해주면 된다
+<a href="/ps/3/boj%201717%20%EC%A7%91%ED%95%A9%EC%9D%98%20%ED%91%9C%ED%98%84.html">boj 1717 집합의 표현</a></p>
 <h3>느낀점</h3>
-<ul>
-<li>이전에 풀었던 문제로 기억이 나서 풀 수 있었다.</li>
-</ul>
+<p>union-find를 알고 있어서 풀 수 있었다.
+처음에 <code>uf</code>배열을 초기화하는데, n을 먼저 입력받지 않고 초기화를 했다. 이렇게 하지 않도록 주의를 해야겠다.</p>
 
     </div>
 </article>

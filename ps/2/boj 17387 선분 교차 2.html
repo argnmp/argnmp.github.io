@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/dist/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <script type="module">
+            import init, {Ground, Index} from '/static/dist/render.js'
+            async function run(){
+                await init();
+                let g = Ground.new();
+                await g.add(window.location.pathname);
+                await g.load(window.location.pathname);
+                document.querySelector("html").addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    var anchor = e.target.closest('a');
+                    if(anchor !== null) {
+                        try {
+                            await g.load(anchor.href);
+                        } catch(e) {
+                            window.location.href = anchor.href;
+                        }
+                    }
+                }, false);
+                let n = Index.new();
+                await n.load("/static/searchindex");
+                window.n = n;
+                window.search = async function(e) {
+                    let text = document.getElementById(`search_input`).value;
+                    await n.search(text); 
+                }
+                window.hljs.highlightAll();
+                window.hljs.initLineNumbersOnLoad();
+            }
+            run();
+        </script>
+
+        <div id="main" class="p-5 md:container md:mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <a href="/">
+                <div class="flex flex-col mb-2 text-blue-700 hover:text-gray-900 dark:text-blue-400 dark:hover:text-gray-200 transition-all duration-500 ease-in-out border-b-4 border-blue-700 dark:border-blue-400">
+                    <p class="text-left text-3xl lg:text-4xl font-bold">blog.argnmp</p>
+                </div>
+            </a>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col p-2 text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4 p-2">
+                            <img class="w-full max-w-sm mx-auto rounded-full ring-blue-600 dark:ring-blue-500" src="https://avatars.githubusercontent.com/u/145034257?v=4" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 my-auto">
+                            <p class="text-2xl md:mt-3 md:text-center mb-2 font-bold">argnmp</p>
+                            <p class="text-xs md:text-center">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                            <p class="text-xs md:text-center">argnmp@gmail.com</p>
+                            <p class="text-xs md:text-center"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="py-2">
+                            <form class="flex md:flex-col">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 md:mr-0 md:mb-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-blue-600 dark:focus:ring-blue-300 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-blue-700 hover:bg-white hover:text-blue-700 border border-blue-700 dark:border-blue-400 text-gray-200 dark:bg-blue-400 dark:text-gray-900 hover:dark:bg-gray-500 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer md:w-full" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                </div>
+                <div class="grid-flow-row md:col-span-9 rounded-lg">
+                    
+                     
+<article>
+    <section class="w-full">
+        <div class="mb-2 md:pl-5">
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 17387 선분 교차 2</p>
+        </div>
+        <div class="mb-4 md:pl-5">
+            <table class="text-left text-sm text-gray-700 dark:text-gray-200">
+                <tbody>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            alias
+                        </th>
+                        <td class="">undefined</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            author
+                        </th>
+                        <td class="">Taehyeon Kim</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            created at
+                        </th>
+                        <td class="">2023-12-18</td>
+                    </tr>
+                    <tr class="">
+                        <th scope="row" class="pr-4">
+                            tags 
+                        </th>
+                        <td class="">
+                             
+                            <p class="inline">#boj </p>
+                             
+                            <p class="inline">#ps </p>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/17387">https://www.acmicpc.net/problem/17387</a></p>
+<h3>코드</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+using namespace std;
+using ll = long long;
+struct coord{
+    double x, y;
+};
+/*
+ * u = (p2.x-p1.x, p2.y-p1.y, 0)
+ * v = (p3.x-p1.x, p3.y-p1.y, 0)
+ * u x v = (0, 0, (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x))
+ */
+double ccw(coord p1, coord p2, coord p3){
+    return (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x);
+}
+bool isIn_rect(coord la, coord lb, coord p){
+    double max_x = max(la.x, lb.x);
+    double min_x = min(la.x, lb.x);
+    double max_y = max(la.y, lb.y);
+    double min_y = min(la.y, lb.y);
+    return (min_x &lt;= p.x &amp;&amp; p.x &lt;= max_x &amp;&amp; min_y &lt;= p.y &amp;&amp; p.y &lt;= max_y);
+}
+void solve(){
+    coord p1, p2, p3, p4;
+    cin &gt;&gt; p1.x &gt;&gt; p1.y &gt;&gt; p2.x &gt;&gt; p2.y;
+    cin &gt;&gt; p3.x &gt;&gt; p3.y &gt;&gt; p4.x &gt;&gt; p4.y;
+    double value[4] = {0,}; 
+    double check_l1_p3 = ccw(p1, p2, p3);
+    double check_l1_p4 = ccw(p1, p2, p4);
+    double check_l2_p1 = ccw(p3, p4, p1);
+    double check_l2_p2 = ccw(p3, p4, p2);
+
+    if((check_l1_p3==0 &amp;&amp; isIn_rect(p1, p2, p3)) || (check_l1_p4==0 &amp;&amp; isIn_rect(p1, p2, p4)) || (check_l2_p1==0 &amp;&amp; isIn_rect(p3, p4, p1)) || (check_l2_p2==0 &amp;&amp; isIn_rect(p3, p4, p2))){
+        cout &lt;&lt; 1;
+    } else if(check_l1_p3*check_l1_p4 &lt; 0 &amp;&amp; check_l2_p1*check_l2_p2 &lt; 0){
+        cout &lt;&lt; 1;
+    } else {
+        cout &lt;&lt; 0;
+    }
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+
+</code></pre>
+<h3>풀이</h3>
+<p><a href="/ps/2/boj%2017386%20%EC%84%A0%EB%B6%84%20%EA%B5%90%EC%B0%A8%201.html">boj 17386 선분 교차 1</a> 과는 달리, 점들이 겹칠 수도 있다. 따라서 이로 인해 발생하는 경우의 수를 고려해주어야 한다.</p>
+<p>마찬가지로 벡터의 외적을 이용해서 교차하는지의 여부를 판단해줄 수 있다.</p>
+<p>문제에서 한 선분의 끝 점이 다른 선분이나 끝 점 위에 있는 것도 교차하는 것이라고 하였다. 그래서 먼저 이러한 경우의 수를 먼저 확인해 준다.</p>
+<ul>
+<li>a. 한 선분과 다른 점 하나를 가지고 외적해 보았을 때, 일직선 상(외적의 크기가 0)에 위치하고 선분의 양 끝점 사이에 다른 점 하나가 위치한다면 이는 교차하는 경우의 수이다.</li>
+</ul>
+<p>선분이 두개 이기 때문에 총 4가지 조합이 나온다. 4가지 조합 각각에 대해서 하나라도 위의 조건을 만족하면 교차하는 경우의 수가 된다.
+모두 만족하지 않으면, 선분과 일직선상에 있는 동시에 겹치지 않는 점들 또는 일직선 상에 있지 않은 점들로 구성된다.</p>
+<p>다음으로는 한 선분을 기준으로 다른 점 두개가 각각 왼쪽과 오른쪽에 위치하는지 확인해준다.</p>
+<ul>
+<li>b. 한 선분에 대해 다른 점 두 개를 각각 외적한 결과 값을 곱했을 때, 양수가 나오면 이는 교차하는 경우의 수이다.</li>
+</ul>
+<p>이 두가지 조건을 제외한 나머지는 모두 교차하는 경우의 수가 아니라고 판별할 수 있다.</p>
+<h3>느낀점</h3>
+<p>이전에 풀어보았던 문제이다.
+코드를 작성하는 과정에서 테스트 케이스에서 맞지 않는 부분이 나올 때마다 조건을 수정했다. 한번에 경우의 수를 파악하고 코드를 작성하는 것이 중요할 것 같다.</p>
+
+    </div>
+</article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved.
+            </footer>
+        </div>
+    </body>
+</html>

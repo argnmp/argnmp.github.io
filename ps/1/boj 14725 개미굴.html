@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1956 운동</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 14725 개미굴</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-11-20</td>
+                        <td class="">2024-01-05</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -120,7 +120,9 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
-        <h3>코드</h3>
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/14725">https://www.acmicpc.net/problem/14725</a></p>
+<h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -132,35 +134,75 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
+#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int vn, en;
+int n;
+struct pair_hash{
+    inline size_t operator()(const pair&lt;int, string&gt;&amp; p) const{
+        return hash&lt;int&gt;()(p.first) ^ hash&lt;string&gt;()(p.second);
+    }
+};
+unordered_map&lt;int, string&gt; key_map;
+int g_idx = 1;
+
+vector&lt;vector&lt;int&gt;&gt; graph(15001, vector&lt;int&gt;());
+
+struct box{
+    int next;
+    string key;
+
+    bool operator&lt;(const box&amp; a) const
+    {
+        return key &lt; a.key;
+    }
+};
+
+void in_order(int node, int level){
+    for(int i = 0; i&lt;level*2; i++){
+        cout &lt;&lt; '-';
+    } 
+    if(level != -1){
+        cout &lt;&lt; key_map[node] &lt;&lt; '\n';
+    }
+    vector&lt;box&gt; search;
+    for(int next: graph[node]){
+        search.push_back({next, key_map[next]});
+    }
+    sort(search.begin(), search.end());
+    for(box n: search){
+        in_order(n.next, level + 1);
+    }
+    return;
+}
 
 void solve(){
-    cin &gt;&gt; vn &gt;&gt; en;
-    int done[401][401];
-    fill(&amp;done[0][0], &amp;done[400][401], INT_MAX);
-    int u, v, w;
-    for(int i = 0; i&lt;en; i++){
-        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w; 
-        done[u][v] = w;
-    }
-    for(int i = 1; i&lt;=vn; i++){
-        for(int j = 1; j&lt;=vn; j++){
-            for(int k = 1; k&lt;=vn; k++){
-                if(done[i][k]!=INT_MAX &amp;&amp; done[k][j]!=INT_MAX &amp;&amp; done[i][j] &gt; done[i][k] + done[k][j]){
-                    done[i][j] = done[i][k] + done[k][j];
+    cin &gt;&gt; n;
+    int t;
+    for(int i = 0; i&lt;n; i++){
+        cin &gt;&gt; t;
+        string s;
+        int prev = 0;
+        for(int j = 0; j&lt;t; j++){
+            cin &gt;&gt; s;
+            int s_idx;
+            bool is_exist = false;
+            for(int next: graph[prev]){
+                if(s == key_map[next]){
+                    s_idx = next;
+                    is_exist = true;
+                    break;
                 }
             }
+            if(!is_exist){
+                s_idx = g_idx++;
+                key_map.insert({s_idx, s});
+                graph[prev].push_back(s_idx);
+            }
+            prev = s_idx;
         }
     }
-
-    int ans = INT_MAX;
-    for(int i = 1; i&lt;=vn; i++){
-        ans = min(ans, done[i][i]);
-    }
-    if(ans == INT_MAX) cout &lt;&lt; -1;
-    else cout &lt;&lt; ans;
+    in_order(0, -1);
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -171,14 +213,12 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
-<ul>
-<li>시작한 곳에서 출발해서, 다시 시작한 곳으로 돌아오기 까지의 최단 거리를 구하는 문제이다. 모든 vertex에 대해 최단 거리를 구해야 하므로 플로이드-워셜 알고리즘을 사용해야 한다. <a href="/ps/5/boj%2011404%20%ED%94%8C%EB%A1%9C%EC%9D%B4%EB%93%9C.html">boj 11404 플로이드</a></li>
-<li>중요한 점은 vertex k에서 k까지의 거리가 0이 아니라, INF로 설정해주어야 한다. 이후 나중에 모든 시작과 끝이 같은 경로에 대해서만 배열에서 확인을 하면 된다.</li>
-</ul>
+<p>트리 그래프를 만들어주어야 한다.</p>
+<p>로봇 개미가 이동한 경로를 입력받는 과정에서, 이전 방과 현재 입력 받은 방을 edge로 이어준다. 이 과정에서 만약 이미 이어져 있다면 새로 연결하지 않는다. 이미 이어져 있지 않은 경우는 unique하기 때문에 key(이름)에 graph의 vertex를 새롭게 할당해준다.</p>
+<p>이렇게 트리 그래프를 만들면 방의 이름은 같지만 다른 vertex에 해당하는 경우가 생길 수 도 있다. 그래서 방의 이름을 index로 사용하지 않고, 별도의 int 형 index를 사용한다. 나중에 역으로 index를 통해 key값을 출력해야 하므로 <code>unordered_map</code>을 사용해서 저장해둔다.</p>
+<p>이후 출력은 트리의 in order과 같기 때문에, 이 순서대로 출력해주면 된다.</p>
 <h3>느낀점</h3>
-<ul>
-<li>같은 변수명을 사용해버려서, 디버깅하는 과정에서 시간이 약간 소요되었다.</li>
-</ul>
+<p>처음에 같은 방 이름에 대한 처리를 제대로 하지 않아서, 푸는데 시간이 약간 걸렸다.</p>
 
     </div>
 </article>

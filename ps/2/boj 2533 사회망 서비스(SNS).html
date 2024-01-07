@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2162 선분 그룹</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2533 사회망 서비스(SNS)</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-12-18</td>
+                        <td class="">2023-12-17</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -121,7 +121,7 @@
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
         <h3>문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2162">https://www.acmicpc.net/problem/2162</a></p>
+<p><a href="https://www.acmicpc.net/problem/2533">https://www.acmicpc.net/problem/2533</a></p>
 <h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -136,81 +136,55 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-struct coord {
-    double x, y;
-};
 int n;
-double ccw(coord p1, coord p2, coord p3){
-    return (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x);
-}
-struct line {
-    coord p1, p2;
-};
-line ln[3000] = {0,};
+vector&lt;vector&lt;int&gt;&gt; graph(1000001, vector&lt;int&gt;());
 
-int uf[3000] = {0,};
-int uf_size[3000] = {0,};
-int _find(int n){
-    if(uf[n]==n)
-        return n;
-    return uf[n] = _find(uf[n]);
-}
-void _union(int a, int b){
-    int r_a = _find(a);
-    int r_b = _find(b);
-    if(r_a != r_b){
-        uf[r_b] = r_a;
-        uf_size[r_a] += uf_size[r_b];
-    }
-}
+/*
+ * type==1 : must select current node
+ * type==-1 : compare whether select or not current node
+ */
 
-bool rect_check(line l, coord p){
-    double max_x = max(l.p1.x, l.p2.x);
-    double min_x = min(l.p1.x, l.p2.x);
-    double max_y = max(l.p1.y, l.p2.y);
-    double min_y = min(l.p1.y, l.p2.y);
-    return min_x &lt;= p.x &amp;&amp; p.x &lt;= max_x &amp;&amp; min_y &lt;= p.y &amp;&amp; p.y &lt;= max_y;
-}
-bool cross_check(line l1, line l2){
-    if((ccw(l1.p1, l1.p2, l2.p1)==0 &amp;&amp; rect_check(l1, l2.p1)) || (ccw(l1.p1, l1.p2, l2.p2)==0 &amp;&amp; rect_check(l1, l2.p2)) || (ccw(l2.p1, l2.p2, l1.p1)==0 &amp;&amp; rect_check(l2, l1.p1)) || (ccw(l2.p1, l2.p2, l1.p2)==0 &amp;&amp; rect_check(l2, l1.p2))){
-        return true;
-    } else if(ccw(l1.p1, l1.p2, l2.p1)*ccw(l1.p1, l1.p2, l2.p2) &lt; 0 &amp;&amp; ccw(l2.p1, l2.p2, l1.p1)*ccw(l2.p1, l2.p2, l1.p2) &lt; 0){
-        return true;
-    } else {
-        return false;
-    }
-}
+/*
+ * dp[node][0] : lowest value of subtree not selecting the node
+ * dp[node][1] : lowest value of subtree selecting the node
+ */
 
-void solve(){
-    for(int i = 0; i&lt;3000; i++){
-        uf[i] = i;
-        uf_size[i] = 1;
+int dp[1000001][2] = {0,};
+int calc(int node, int parent, int type){
+    if(dp[node][0]==-1){
+        int count = 0; 
+        for(int next: graph[node]){
+            if(next == parent)
+                continue;
+            count += calc(next, node, 1); 
+        } 
+        dp[node][0] = count;
     }
-    cin &gt;&gt; n;
-    for(int i = 0; i&lt;n ;i++){
-        cin &gt;&gt; ln[i].p1.x &gt;&gt; ln[i].p1.y &gt;&gt; ln[i].p2.x &gt;&gt; ln[i].p2.y;
-    }
-
-    set&lt;int&gt; groups;
-    for(int i = 0; i&lt;n; i++){
-        for(int j = i+1; j&lt;n; j++){
-            if(cross_check(ln[i], ln[j])){
-                _union(i, j);
-            } 
+    if(dp[node][1]==-1){
+        int count = 0;
+        for(int next: graph[node]){
+            if(next == parent)
+                continue;
+            count += calc(next, node, -1);
         }
+        dp[node][1] = count + 1;
     }
-
-    for(int i = 0; i&lt;n; i++){
-        groups.insert(_find(i));
+    if(type==1){
+        return dp[node][1];
+    } else {
+        return min(dp[node][0], dp[node][1]);
     }
-    cout &lt;&lt; groups.size() &lt;&lt; '\n';
-    
-    int max_size = -1;
-    for(int r: groups){
-        max_size = max(max_size, uf_size[r]);
+}
+void solve(){
+    memset(dp, -1, sizeof(dp));
+    cin &gt;&gt; n;
+    int u, v;
+    for(int i = 0; i&lt;n-1; i++){
+        cin &gt;&gt; u &gt;&gt; v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
     }
-    cout &lt;&lt; max_size &lt;&lt; '\n';
-    
+    cout &lt;&lt; calc(1, 1, -1);
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -221,15 +195,11 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
-<p><a href="/ps/1/boj%2017387%20%EC%84%A0%EB%B6%84%20%EA%B5%90%EC%B0%A8%202.html">boj 17387 선분 교차 2</a> 에서 이어지는 문제이다.</p>
-<p>이 문제에서는, 교차하는 선분들을 같은 집합으로 넣어주어야 한다.</p>
-<p>먼저 교차하는 선분을 판단하기 위해 벡터의 외적을 이용해야 하는데, 위의 링크에서 사용한 조건을 사용하면 된다. 이를 통해서 <code>O(1)</code> 의 시간에 교차 여부를 판단할 수 있다.</p>
-<p>그리고 모든 선분의 조합을 확인하면서, 만약 교차하는 경우 같은 집합에 넣어주어야 한다. 이는 union-find를 이용하였다.</p>
-<p>선분의 최대 개수는 3000개 이다. 모든 선분의 조합을 확인하는 데 에는 <code>O(n^2)</code>의 시간이 필요하기 때문에 대략 9000000 번의 연산이 필요하고 이는, 문제에서 제시된 2초 안에 해결이 가능하다. 따라서 모든 선분의 조합에 대해서 교차여부를 판단해주고, 교차한다면 union 연산을 해주면 된다.</p>
-<p>union 시에는 집합에 속한 선분의 개수를 함께 기록해준다.</p>
+<p><a href="/ps/2/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 과 같은 풀이이다. 여기에서는 얼리어답터이거나 아닌 경우의 수 두가지로 나누어서 생각해보면 된다.</p>
+<p>dfs를 돌 때에는, <a href="/ps/2/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 과는 반대이다. 여기에서는 무조건 현재 노드를 골라야 하거나, 고를지 말지 선택하는, 이 두가지 경우를 고려하여 탐색을 해야 한다.</p>
 <h3>느낀점</h3>
-<p><a href="/ps/1/boj%2017387%20%EC%84%A0%EB%B6%84%20%EA%B5%90%EC%B0%A8%202.html">boj 17387 선분 교차 2</a> 를 풀고 이 문제를 푼 것이어서, 어렵지 않게 해결할 수 있었다.</p>
-<p>처음에는 union-find 대신 그냥 set을 이용할까 고민했지만, 집합이 합쳐지는 경우의 수 등의 고려할 사항이 매우 많아져서, union-find를 사용하였다. 대부분의 경우에는 union-find를 사용하는 것이 좋아보인다.</p>
+<p><a href="/ps/2/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 을 풀고 이 문제를 풀어서 그런가 빠르게 풀 수 있었다.</p>
+<p>트리에서는 n개의 vertex가 있을 때, 무조건 n-1개의 edge가 존재하여야 한다. 트리에서 루트 노드를 제외한 모든 노드는 parent가 있다. 따라서 어떤 vertex를 루트 노드로 선택을 하더라도, 그 vertex를 제외한 나머지 노드는 무조건 parent가 한 개씩 있으므로 n-1개가 된다.k</p>
 
     </div>
 </article>

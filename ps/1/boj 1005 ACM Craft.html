@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11049 행렬 곱셈 순서</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1005 ACM Craft</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-10-14</td>
+                        <td class="">2024-01-06</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -120,7 +120,10 @@
         </div>
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
-        <h3>코드</h3>
+        <h3>문제</h3>
+<p><a href="https://www.acmicpc.net/problem/1005">https://www.acmicpc.net/problem/1005</a></p>
+<h3>코드</h3>
+<h4>첫번째 풀이</h4>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -132,55 +135,131 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
+#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n;
-struct matrix {
-    int r, c;
-};
-int dp[501][501] = {0,}; 
-void solve(){
-    cin &gt;&gt; n;
-    vector&lt;matrix&gt; mats;
-    int r, c;
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; r &gt;&gt; c;
-        mats.push_back({r,c});
+int n, k, b;
+int cost[1001] = {0,};
+vector&lt;vector&lt;int&gt;&gt; graph(1001, vector&lt;int&gt;());
+int dp[1001] = {0,};
+int calc(int node){
+    if(dp[node]!=-1)
+        return dp[node];
+    int max_cost = 0;
+    for(int depend: graph[node]){
+        max_cost = max(max_cost, calc(depend));
     }
-    for(int d = 1; d&lt;n; d++){
-        for(int i = 0; i&lt;n-d; i++){
-            // i ~ i+d
-            dp[i][i+d] = INT_MAX;
-            for(int j = i; j&lt;i+d; j++){
-                dp[i][i+d] = min(dp[i][i+d], dp[i][j] + dp[j+1][i+d] + mats[i].r * mats[j].c * mats[i+d].c);
-            }
-        }
-    }
-    cout &lt;&lt; dp[0][n-1];
+    dp[node] = max_cost + cost[node];
+    return max_cost + cost[node];
 }
+void solve(){
+    memset(cost, 0, sizeof(cost));
+    memset(dp, -1, sizeof(dp));
+    graph = vector(1001, vector&lt;int&gt;());
+    cin &gt;&gt; n &gt;&gt; k;
+    for(int i = 1; i&lt;=n; i++){
+        cin &gt;&gt; cost[i];
+    }
+    int u, v;
+    for(int i = 0; i&lt;k; i++){
+        cin &gt;&gt; u &gt;&gt; v; 
+        graph[v].push_back(u);
+    }
+    cin &gt;&gt; b;
+    cout &lt;&lt; calc(b) &lt;&lt; '\n'; 
+}
+
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-    solve(); 
+    int t;
+    cin &gt;&gt; t;
+    while(t--)
+        solve(); 
     return 0;
 }
 
 </code></pre>
+<h4>두번째 풀이</h4>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+using namespace std;
+using ll = long long;
+int n, k, b;
+int cost[1001] = {0,};
+vector&lt;vector&lt;int&gt;&gt; graph;
+int in[1001] = {0,};
+int max_cost[1001] = {0,};
+void solve(){
+    memset(cost, 0, sizeof(cost));
+    graph = vector(1001, vector&lt;int&gt;());
+    memset(in, 0, sizeof(in));
+    memset(max_cost, 0, sizeof(max_cost));
+    cin &gt;&gt; n &gt;&gt; k;
+    for(int i = 1; i&lt;=n; i++){
+        cin &gt;&gt; cost[i];
+    }
+    int u, v;
+    for(int i = 0; i&lt;k; i++){
+        cin &gt;&gt; u &gt;&gt; v;
+        graph[u].push_back(v);
+        in[v] += 1;
+    }
+    queue&lt;int&gt; q; 
+    for(int i = 1; i&lt;=n; i++){
+        if(in[i]==0)
+            q.push(i); 
+    }
+    while(!q.empty()){
+        int cur = q.front();
+        q.pop();
+        for(int next: graph[cur]){
+            max_cost[next] = max(max_cost[next], max_cost[cur] + cost[cur]);
+            in[next] -= 1;
+            if(in[next]==0){
+                q.push(next);
+            }
+        }
+    }
+    cin &gt;&gt; b;
+    cout &lt;&lt; max_cost[b] + cost[b] &lt;&lt; '\n';
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int t;
+    cin &gt;&gt; t;
+    while(t--)
+        solve(); 
+    return 0;
+}
+</code></pre>
 <h3>풀이</h3>
-<ul>
-<li>dp로 푸는 문제이다. 점화식을 세워서 풀이하면 된다.</li>
-<li>dp 값을 계산하는 순서는 행렬 사이의 거리가 작은거 부터 큰 순으로 계산하면 된다.
-<ul>
-<li>이를 계산할 때 거리를 늘려가면서 순회를 해야 하는데, 이 부분에서 조금 헷갈린다. <a href="/">거리별 순회</a> 이 코드를 이용하면 된다.</li>
-</ul>
-</li>
-<li><a href="/ps/5/boj%2011066%20%ED%8C%8C%EC%9D%BC%20%ED%95%A9%EC%B9%98%EA%B8%B0.html">boj 11066 파일 합치기</a> 과 동일한 문제이다.</li>
-</ul>
+<p>나는 이 문제를 풀 때, topological sort를 반대로 적용했다.</p>
+<p><img src="https://www.acmicpc.net/upload/201003/star.JPG" alt="https://www.acmicpc.net/upload/201003/star.JPG" />
+출처: <a href="https://www.acmicpc.net/problem/1005">https://www.acmicpc.net/problem/1005</a>, 백준 온라인 저지</p>
+<p>위의 화살표를 반대로 하여 그래프의 edge를 추가했다. 그리고 건설해야 하는 건물의 번호에서 부터 재귀적으로 함수를 호출한다.</p>
+<p>건설해야 하는 건물의 번호가 4일 때 이 건물을 건설하는데 걸리는 시간은, 의존성이 있는 건물(2와 3)들 중 가장 큰 시간에 자신의 건설시간을 더한 값이다.</p>
+<p>이러한 연산을 의존성이 있는 건물들에 대해 재귀적으로 호출하여 계산한다.</p>
+<p>위의 그림에서 1의 경우는 의존성이 없기 때문에 건설시간은 10초가 될 것이다.</p>
+<p>재귀적으로 호출만 한다면 공통 경로가 존재하기 때문에 시간초과가 발생한다. 따라서, 한번 계산이 완료된 건물에 대해서는 건설 시간을 저장해두었다가 다시 사용하는 방식을 사용한다.</p>
+<p>이렇게 푼 방식이 <strong>첫번째 풀이</strong>이다.</p>
+<p>이와 달리 복잡하게 재귀를 생각하지 않아도, topological sort를 사용해서 바로 풀 수가 있다. <a href="/ps/1/boj%202252%20%EC%A4%84%20%EC%84%B8%EC%9A%B0%EA%B8%B0.html">boj 2252 줄 세우기</a></p>
+<p>topological sort를 하기 위한 그래프를 먼저 생성한다. 이후 <code>in</code> edge의 개수가 0인 vertex가 queue에서 pop이 되며 탐색을 하는데, pop될 때마다 연결된 vertex의 <code>in</code> edge를 업데이트 해주고, 추가로 <strong>현재 까지의 건물 건설 비용</strong>을 갱신하며 저장해주면 된다.</p>
+<p>이러한 갱신이 가능한 이유는 <code>in</code> edge의 개수가 0이 되는 순간, 해당 건물의 건설 시간이 <strong>고정</strong>되기 때문이다.</p>
+<p>이렇게 푼 방식이 <strong>두번째 풀이</strong>이다.</p>
 <h3>느낀점</h3>
-<ul>
-<li><a href="/ps/5/boj%2011066%20%ED%8C%8C%EC%9D%BC%20%ED%95%A9%EC%B9%98%EA%B8%B0.html">boj 11066 파일 합치기</a> 을 풀고 푸니, 그렇게 어렵게 느껴지지 않았다.</li>
-<li>또한 알고리즘 시간에 이미 접해보았던 것 같다.</li>
-</ul>
+<p>예전에 풀었던 문제라 익숙했지만, <strong>두번째 풀이</strong>가 떠오르지 않아서 <strong>첫번째 풀이</strong> 대로 풀었다. 두번째 풀이 처럼 알고리즘 자체를 이용하는 방식이 더 좋을 것 같다.</p>
 
     </div>
 </article>

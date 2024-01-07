@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 17386 선분 교차 1</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 3584 가장 가까운 공통 조상</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-12-18</td>
+                        <td class="">2024-01-07</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -121,7 +121,7 @@
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
         <h3>문제</h3>
-<p><a href="https://www.acmicpc.net/problem/17386">https://www.acmicpc.net/problem/17386</a></p>
+<p><a href="https://www.acmicpc.net/problem/3584">https://www.acmicpc.net/problem/3584</a></p>
 <h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -134,42 +134,52 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
+#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-struct coord{
-    double x, y;
-};
-/*
- * u = (p2.x-p1.x, p2.y-p1.y, 0)
- * v = (p3.x-p1.x, p3.y-p1.y, 0)
- * u x v = (0, 0, (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x))
- */
-double ccw(coord p1, coord p2, coord p3){
-    return (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x);
-}
+int parent[10001] = {0,};
+int n;
 void solve(){
-    coord p1, p2, p3, p4;
-    cin &gt;&gt; p1.x &gt;&gt; p1.y &gt;&gt; p2.x &gt;&gt; p2.y;
-    cin &gt;&gt; p3.x &gt;&gt; p3.y &gt;&gt; p4.x &gt;&gt; p4.y;
-    if(ccw(p1, p2, p3)*ccw(p1, p2, p4) &lt; 0 &amp;&amp; ccw(p3, p4, p1)*ccw(p3, p4, p2) &lt; 0)
-        cout &lt;&lt; 1;
-    else
-        cout &lt;&lt; 0;
-
+    memset(parent, 0, sizeof(parent));
+    cin &gt;&gt; n;
+    int u, v;
+    for(int i = 1; i&lt;n; i++){
+        cin &gt;&gt; u &gt;&gt; v;
+        parent[v] = u;    
+    }
+    int a, b;
+    cin &gt;&gt; a &gt;&gt; b;
+    unordered_set&lt;int&gt; par;
+    int cur = a;
+    while(cur!=0){
+        par.insert(cur);
+        cur = parent[cur];
+    }
+    cur = b;
+    while(cur!=0){
+        if(par.find(cur)!=par.end()){
+            cout &lt;&lt; cur &lt;&lt; '\n';
+            return;
+        }
+        cur = parent[cur];
+    }
 }
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-    solve(); 
+    int t;
+    cin &gt;&gt; t;
+    while(t--)
+        solve(); 
     return 0;
 }
 
 </code></pre>
 <h3>풀이</h3>
-<p>문제의 제약 조건으로, <em>세점이 겹치지 않는다</em> 라고 하였다.</p>
-<p><a href="/ps/1/boj%2012781%20PIZZA%20ALVOLOC.html">boj 12781 PIZZA ALVOLOC</a> 이 문제와 마찬가지로, 한 선분을 중심으로 다른 점들이 각각 왼쪽과 오른쪽에 들어가는지 벡터의 외적을 통해서 확인해주면 된다. 이 문제와 같은 문제이다.</p>
+<p>트리에서 두 vertex의 가장 가까운 공통 조상을 찾는 문제이다. 트리에서 edge의 개수는 <code>n-1</code>개 이다. (여기서 n은 전체 vertex의 개수)</p>
+<p>한 vertex의 부모 vertex를 모두 <code>unordered_set</code> 에 저장해둔 뒤, 다른 vertex에서 부모 vertex들을 찾아 올라가며 <code>set</code>에 있는지 확인하면 된다.</p>
 <h3>느낀점</h3>
-<p>예전에 풀어본 적이 있어서 풀 수 있었다.</p>
+<p>트리 문제를 이전에 풀어보아서 어렵지 않게 풀 수 있었다.</p>
 
     </div>
 </article>

@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1949 우수 마을</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 17386 선분 교차 1</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-12-17</td>
+                        <td class="">2023-12-18</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -121,7 +121,7 @@
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
         <h3>문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1949">https://www.acmicpc.net/problem/1949</a></p>
+<p><a href="https://www.acmicpc.net/problem/17386">https://www.acmicpc.net/problem/17386</a></p>
 <h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -136,67 +136,26 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int n;
-int weight[10001] = {0,};
-vector&lt;vector&lt;int&gt;&gt; graph;
-
+struct coord{
+    double x, y;
+};
 /*
- * 0 for not selecting root node of subtree
- * 1 for selecting root node of subtree
+ * u = (p2.x-p1.x, p2.y-p1.y, 0)
+ * v = (p3.x-p1.x, p3.y-p1.y, 0)
+ * u x v = (0, 0, (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x))
  */
-int dp[10001][2] = {0,};
-
-void calc(int node, int parent){
-    bool is_child_exist = false;
-    bool is_selected_sub_exist = false;
-    bool max_sub1_case = INT_MIN;
-    bool used_sub0_value;
-    for(int next: graph[node]){
-        if(next == parent)
-            continue;
-        calc(next, node);
-
-        // not selecting the root node of current subtree dp[node][0]
-        dp[node][0] += max(dp[next][0], dp[next][1]);
-        if(dp[next][0] &lt;= dp[next][1]){
-            // if selected case and not selected case are same, assume that selected case is used for calculation
-            is_selected_sub_exist = true; 
-        }
-        is_child_exist = true;
-        if(max_sub1_case &lt; dp[next][1]){
-            max_sub1_case = dp[next][1];
-            used_sub0_value = dp[next][0];
-        }
-
-        // selecting the root node of current subtree dp[node][1]
-        dp[node][1] += dp[next][0];
-    } 
-    dp[node][1] += weight[node];
-    if(is_child_exist &amp;&amp; !is_selected_sub_exist){
-        // all subtree root node is not selected case
-        // force to select one of subtrees' root nodes
-        dp[node][0] -= used_sub0_value;
-        dp[node][0] += max_sub1_case;
-    }
+double ccw(coord p1, coord p2, coord p3){
+    return (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x);
 }
-
 void solve(){
-    graph = vector(10001, vector&lt;int&gt;());
-    cin &gt;&gt; n;
-    for(int i = 1; i&lt;=n; i++){
-        cin &gt;&gt; weight[i]; 
-    }
-    int u, v;
-    for(int i = 0; i&lt;n-1; i++){
-        cin &gt;&gt; u &gt;&gt; v; 
-        graph[u].push_back(v);
-        graph[v].push_back(u);
-    }
-    calc(1, 1);    
-    cout &lt;&lt; max(dp[1][0], dp[1][1]) &lt;&lt; '\n';
-    /* for(int i = 1; i&lt;=n; i++){
-        cout &lt;&lt; dp[i][0] &lt;&lt; ' ' &lt;&lt; dp[i][1] &lt;&lt; '\n';
-    } */
+    coord p1, p2, p3, p4;
+    cin &gt;&gt; p1.x &gt;&gt; p1.y &gt;&gt; p2.x &gt;&gt; p2.y;
+    cin &gt;&gt; p3.x &gt;&gt; p3.y &gt;&gt; p4.x &gt;&gt; p4.y;
+    if(ccw(p1, p2, p3)*ccw(p1, p2, p4) &lt; 0 &amp;&amp; ccw(p3, p4, p1)*ccw(p3, p4, p2) &lt; 0)
+        cout &lt;&lt; 1;
+    else
+        cout &lt;&lt; 0;
+
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -207,19 +166,10 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
-<p><a href="/ps/1/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 이 문제와 같은 풀이 방식을 사용하면된다. 이 문제에서 작성한 코드와 원리는 같지만, dp 배열을 채워나간다고 생각하며 조금 다르게 코드를 작성하였다.</p>
-<p>이 문제에서는 세번째 조건을 생각해보아야 한다. 우수 마을로 선정되지 못한 마을은 적어도 하나의 우수 마을과는 인접해 있어야 한다고 한다. 이를 처리해주기 위해서 다음과 같이 로직을 추가해주었다.</p>
-<ul>
-<li>인접한 <strong>모든</strong> 서브트리에서 해당 서브 트리의 루트 노드를 고르지 않는 경우의 수가 그렇지 않은 경우의 수보다 주민 수의 총합이 더 큰 경우에, 이 서브트리 들 중 루트 노드를 고르는 경우의 수가 가장 큰 서브트리에 대해서만 반대로 적용을 해준다.</li>
-</ul>
-<p>하지만 이 로직은 필요가 없는 로직이다. 왜냐하면 위 로직이 필요한 이유는, 현재 서브트리의 루트 노드를 고르지 않았을 때 인접한 모든 서브 트리의 루트 노드를 고르지 않을 경우의 수를 대비하였기 때문이다. 하지만 이러한 경우의 수는 존재하지 않는데, 왜냐하면 인접한 모든 서브 트리의 루트 노드를 고르지 않는다면 현재 서브트리의 루트 노드를 고를 수 있기 때문이다.</p>
+<p>문제의 제약 조건으로, <em>세점이 겹치지 않는다</em> 라고 하였다.</p>
+<p><a href="/ps/2/boj%2012781%20PIZZA%20ALVOLOC.html">boj 12781 PIZZA ALVOLOC</a> 이 문제와 마찬가지로, 한 선분을 중심으로 다른 점들이 각각 왼쪽과 오른쪽에 들어가는지 벡터의 외적을 통해서 확인해주면 된다. 이 문제와 같은 문제이다.</p>
 <h3>느낀점</h3>
-<p>문제의 의미를 잘 생각해보면서, 필요 없는 로직에 대해 고민하고 있는 것은 아닌지 확인하자!</p>
-<ul>
-<li><a href="/ps/1/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a></li>
-<li><a href="/ps/1/boj%202533%20%EC%82%AC%ED%9A%8C%EB%A7%9D%20%EC%84%9C%EB%B9%84%EC%8A%A4(SNS).html">boj 2533 사회망 서비스(SNS)</a>
-이 문제들과 같은 풀이를 사용한다. 다만 여기에서는 dp배열에 집중하여 코드를 작성했으므로, 이렇게 풀도록 노력해야한다.</li>
-</ul>
+<p>예전에 풀어본 적이 있어서 풀 수 있었다.</p>
 
     </div>
 </article>

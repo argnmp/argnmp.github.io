@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2533 사회망 서비스(SNS)</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 14442 벽 부수고 이동하기 2</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-12-17</td>
+                        <td class="">2024-01-07</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -121,8 +121,9 @@
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
         <h3>문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2533">https://www.acmicpc.net/problem/2533</a></p>
+<p><a href="https://www.acmicpc.net/problem/14442">https://www.acmicpc.net/problem/14442</a></p>
 <h3>코드</h3>
+<h4>기본 풀이</h4>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -134,57 +135,146 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
+#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n;
-vector&lt;vector&lt;int&gt;&gt; graph(1000001, vector&lt;int&gt;());
-
-/*
- * type==1 : must select current node
- * type==-1 : compare whether select or not current node
- */
-
-/*
- * dp[node][0] : lowest value of subtree not selecting the node
- * dp[node][1] : lowest value of subtree selecting the node
- */
-
-int dp[1000001][2] = {0,};
-int calc(int node, int parent, int type){
-    if(dp[node][0]==-1){
-        int count = 0; 
-        for(int next: graph[node]){
-            if(next == parent)
-                continue;
-            count += calc(next, node, 1); 
-        } 
-        dp[node][0] = count;
+int n, m, k;
+char board[1000][1000] = {0,};
+int dx[4] = {0,-1,1,0};
+int dy[4] = {-1,0,0,1};
+struct pos {
+    int x, y;
+    bool safe(){ return 0&lt;=x&amp;&amp;x&lt;n&amp;&amp;0&lt;=y&amp;&amp;y&lt;m; }
+    pos adj(int i){
+        return {x+dx[i%4], y+dy[i%4]};
     }
-    if(dp[node][1]==-1){
-        int count = 0;
-        for(int next: graph[node]){
-            if(next == parent)
-                continue;
-            count += calc(next, node, -1);
-        }
-        dp[node][1] = count + 1;
+    void print(){
+        cout &lt;&lt; x &lt;&lt; ',' &lt;&lt; y &lt;&lt; '\n';
     }
-    if(type==1){
-        return dp[node][1];
-    } else {
-        return min(dp[node][0], dp[node][1]);
-    }
-}
+};
+struct box {
+    pos p;
+    int dist;
+    int wall;
+};
+int visited[1000][1000][11] = {0,};
 void solve(){
-    memset(dp, -1, sizeof(dp));
-    cin &gt;&gt; n;
-    int u, v;
-    for(int i = 0; i&lt;n-1; i++){
-        cin &gt;&gt; u &gt;&gt; v;
-        graph[u].push_back(v);
-        graph[v].push_back(u);
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    for(int i=0; i&lt;n; i++){
+        for(int j = 0; j&lt;m; j++){
+            char ch = cin.get();
+            while(ch=='\n' || ch=='\r' || ch==' '){
+                ch = cin.get();
+            }
+            board[i][j] = ch;
+        }
     }
-    cout &lt;&lt; calc(1, 1, -1);
+    queue&lt;box&gt; q; 
+    q.push({{0,0}, 0, k});
+    visited[0][0][k] = 1;
+    while(!q.empty()){
+        box cur = q.front();
+        q.pop();
+        if(cur.p.x==n-1 &amp;&amp; cur.p.y==m-1){
+            cout &lt;&lt; cur.dist + 1;
+            return;
+        }
+        for(int i = 0; i&lt;4; i++){
+            pos next = cur.p.adj(i);
+            if(next.safe()){
+                if(board[next.x][next.y]=='0' &amp;&amp; visited[next.x][next.y][cur.wall]==0){
+                    visited[next.x][next.y][cur.wall] = 1;
+                    q.push({next, cur.dist + 1, cur.wall});
+                } else if(board[next.x][next.y]=='1' &amp;&amp; cur.wall &gt; 0 &amp;&amp; visited[next.x][next.y][cur.wall-1]==0){
+                    visited[next.x][next.y][cur.wall-1] = 1;
+                    q.push({next, cur.dist + 1, cur.wall-1});
+                }
+                
+            }
+        }
+    }
+    cout &lt;&lt; -1;
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+
+</code></pre>
+<h4>최적화된 풀이</h4>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+using namespace std;
+using ll = long long;
+int n, m, k;
+char board[1000][1000] = {0,};
+int dx[4] = {0,-1,1,0};
+int dy[4] = {-1,0,0,1};
+struct pos {
+    int x, y;
+    bool safe(){ return 0&lt;=x&amp;&amp;x&lt;n&amp;&amp;0&lt;=y&amp;&amp;y&lt;m; }
+    pos adj(int i){
+        return {x+dx[i%4], y+dy[i%4]};
+    }
+    void print(){
+        cout &lt;&lt; x &lt;&lt; ',' &lt;&lt; y &lt;&lt; '\n';
+    }
+};
+struct box {
+    pos p;
+    int dist;
+    int wall;
+};
+int visited_wall_max[1000][1000] = {0,};
+void solve(){
+    memset(visited_wall_max, -1, sizeof(visited_wall_max));
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    for(int i=0; i&lt;n; i++){
+        for(int j = 0; j&lt;m; j++){
+            char ch = cin.get();
+            while(ch=='\n' || ch=='\r' || ch==' '){
+                ch = cin.get();
+            }
+            board[i][j] = ch;
+        }
+    }
+    queue&lt;box&gt; q; 
+    q.push({{0,0}, 0, k});
+    visited_wall_max[0][0] = k;
+    while(!q.empty()){
+        box cur = q.front();
+        q.pop();
+        if(cur.p.x==n-1 &amp;&amp; cur.p.y==m-1){
+            cout &lt;&lt; cur.dist + 1;
+            return;
+        }
+        for(int i = 0; i&lt;4; i++){
+            pos next = cur.p.adj(i);
+            if(next.safe()){
+                if(board[next.x][next.y]=='0' &amp;&amp; visited_wall_max[next.x][next.y] &lt; cur.wall){
+                    visited_wall_max[next.x][next.y] = cur.wall;
+                    q.push({next, cur.dist + 1, cur.wall});
+                } else if(board[next.x][next.y]=='1' &amp;&amp; cur.wall &gt; 0 &amp;&amp; visited_wall_max[next.x][next.y] &lt; cur.wall-1){
+                    visited_wall_max[next.x][next.y] = cur.wall-1;
+                    q.push({next, cur.dist + 1, cur.wall-1});
+                }
+                
+            }
+        }
+    }
+    cout &lt;&lt; -1;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -195,11 +285,14 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
-<p><a href="/ps/1/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 과 같은 풀이이다. 여기에서는 얼리어답터이거나 아닌 경우의 수 두가지로 나누어서 생각해보면 된다.</p>
-<p>dfs를 돌 때에는, <a href="/ps/1/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 과는 반대이다. 여기에서는 무조건 현재 노드를 골라야 하거나, 고를지 말지 선택하는, 이 두가지 경우를 고려하여 탐색을 해야 한다.</p>
+<p>bfs를 사용해서 <code>[0,0]</code>에서 <code>[n-1, m-1]</code>에 도달해야 하는 문제이다. vertex 간의 거리가 같기 때문에 bfs로 탐색할때 먼저 방문하는 경우가 최단거리가 된다.</p>
+<p>이 문제에서는 방문한 vertex를 다시 방문할 수 있다. 단 해당 vertex에 방문 했을 시 <code>부술 수 있는 벽의 개수</code>를 기록해서, 이 벽의 개수로 방문하지 않았던 경우만 다시 방문할 수 있다.</p>
+<p>따라서 visited 배열을, <code>visited[x좌표][y좌표][부술 수 있는 벽의개수]</code>로 설정해서 탐색하면 된다.</p>
+<p>이 풀이가 <strong>기본 풀이</strong>에 해당된다.</p>
+<p>탐색 시간을 조금 더 최적화 할 수 있다. <code>부술 수 있는 벽의 개수</code>를 10으로 특정 vertex를 방문했을 때, <code>부술 수 있는 벽의 개수</code>를 3으로 특정 vertex를 다시 방문할 필요가 없다. 왜냐하면 10으로 방문했을 때가 더 좋기 때문이다.</p>
+<p>이 풀이는 <strong>최적화된 풀이</strong>에 해당된다. <code>visited_wall_max</code> 배열을 이용해서, 같은 vertex에 방문 시 부술 수 있는 벽의 개수가 이전에 방문했을 때보다 더 많은 경우에만 방문하도록 한다.</p>
 <h3>느낀점</h3>
-<p><a href="/ps/1/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 을 풀고 이 문제를 풀어서 그런가 빠르게 풀 수 있었다.</p>
-<p>트리에서는 n개의 vertex가 있을 때, 무조건 n-1개의 edge가 존재하여야 한다. 트리에서 루트 노드를 제외한 모든 노드는 parent가 있다. 따라서 어떤 vertex를 루트 노드로 선택을 하더라도, 그 vertex를 제외한 나머지 노드는 무조건 parent가 한 개씩 있으므로 n-1개가 된다.k</p>
+<p>이전에 풀었던 문제여서 익숙했다. 최적화 하는 방법을 생각해보았다.</p>
 
     </div>
 </article>

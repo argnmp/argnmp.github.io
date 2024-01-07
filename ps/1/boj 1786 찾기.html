@@ -80,7 +80,7 @@
 <article>
     <section class="w-full">
         <div class="mb-2 md:pl-5">
-            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1976 여행 가자</p>
+            <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1786 찾기</p>
         </div>
         <div class="mb-4 md:pl-5">
             <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -101,7 +101,7 @@
                         <th scope="row" class="pr-4">
                             created at
                         </th>
-                        <td class="">2023-12-09</td>
+                        <td class="">2024-01-04</td>
                     </tr>
                     <tr class="">
                         <th scope="row" class="pr-4">
@@ -121,7 +121,7 @@
     </section>
     <div class="clear-none markdown-body mb-2 md:pl-5 leading-7 font-post">
         <h3>문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1976">https://www.acmicpc.net/problem/1976</a></p>
+<p><a href="https://www.acmicpc.net/problem/1786">https://www.acmicpc.net/problem/1786</a></p>
 <h3>코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -134,46 +134,51 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
+#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n, m;
-int uf[201] = {0,};
-int uffind(int v){
-    if(uf[v]==v)
-        return v;
-    uf[v] = uffind(uf[v]);
-    return uf[v];
-}
-void ufunion(int a, int b){
-    int pa = uffind(a); 
-    int pb = uffind(b);
-    uf[pb] = pa;
-}
-void solve(){
-    cin &gt;&gt; n &gt;&gt; m;
-    for(int i = 1; i&lt;=n; i++){
-        uf[i] = i;
+
+vector&lt;int&gt; kmp_pi(string p){
+    int j = 0, m = p.size();
+    vector&lt;int&gt; pi(m, 0); 
+    for(int i = 1; i&lt;m; i++){
+        while(j&gt;0 &amp;&amp; p[i]!=p[j])
+            j = pi[j-1];
+        if(p[i]==p[j]){
+            pi[i] = ++j;
+        }
     }
-    int is_connected;
-    for(int i = 1; i&lt;=n; i++){
-        for(int j = 1; j&lt;=n; j++){
-            cin &gt;&gt; is_connected;
-            if(is_connected==1){
-                ufunion(i, j);
+    return pi;
+}
+
+vector&lt;int&gt; kmp(string s, string p){
+    vector&lt;int&gt; ans;
+    vector&lt;int&gt; pi = kmp_pi(p);
+    int j = 0, n = s.size(), m = p.size(); 
+    for(int i = 0; i&lt;n; i++){
+        while(j&gt;0 &amp;&amp; s[i]!=p[j])
+            j = pi[j-1];
+        if(s[i]==p[j]){
+            if(j==m-1){
+                ans.push_back(i-m+1);
+                j=pi[j];
+            } else {
+                j++;
             }
         }
     }
-    int u, v;
-    cin &gt;&gt; u;
-    for(int i = 0; i&lt;m-1; i++){
-        cin &gt;&gt; v; 
-        if(uffind(u)!=uffind(v)){
-            cout &lt;&lt; &quot;NO&quot;;
-            return;
-        }
-    }
-    cout &lt;&lt; &quot;YES&quot;;
-    return;
+    return ans;
+}
+
+void solve(){
+    string t, p;
+    getline(cin, t);
+    getline(cin, p);
+    vector&lt;int&gt; res = kmp(t, p);
+    cout &lt;&lt; res.size() &lt;&lt; '\n';
+    for(int idx: res){
+        cout &lt;&lt; idx + 1 &lt;&lt; ' ';
+    } 
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -184,11 +189,9 @@ int main(){
 
 </code></pre>
 <h3>풀이</h3>
-<p>도시 간에 양방향으로 이동할 수 있고 도시들이 연결되어 있는지 여부만 확인하면 되기 때문에, union-find를 사용해서 도시들이 같은 집합에 속해있는지를 확인해주면 된다
-<a href="/ps/2/boj%201717%20%EC%A7%91%ED%95%A9%EC%9D%98%20%ED%91%9C%ED%98%84.html">boj 1717 집합의 표현</a></p>
+<p>kmp 알고리즘을 사용하면 된다.</p>
 <h3>느낀점</h3>
-<p>union-find를 알고 있어서 풀 수 있었다.
-처음에 <code>uf</code>배열을 초기화하는데, n을 먼저 입력받지 않고 초기화를 했다. 이렇게 하지 않도록 주의를 해야겠다.</p>
+<p>kmp 알고리즘을 잘 몰라서 인터넷을 참고했다.</p>
 
     </div>
 </article>
