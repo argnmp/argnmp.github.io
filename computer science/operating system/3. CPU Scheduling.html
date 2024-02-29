@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 1766 문제집</title>
+        <title>3. CPU Scheduling</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1766 문제집</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">3. CPU Scheduling</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-01-07</td>
+                                            <td class="">2024-02-29</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -105,9 +105,7 @@
                                             </th>
                                             <td class="">
                                                 
-                                                <p class="inline">#boj </p>
-                                                
-                                                <p class="inline">#ps </p>
+                                                <p class="inline">#blog </p>
                                                 
                                             </td>
                                         </tr>
@@ -116,63 +114,29 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
-                            <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1766">https://www.acmicpc.net/problem/1766</a></p>
-<h3 id="코드">코드</h3>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;climits&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;map&gt;
-#include &lt;unordered_map&gt;
-#include &lt;set&gt;
-#include &lt;unordered_set&gt;
-#include &lt;bitset&gt;
-#include &lt;cstring&gt;
-#include &lt;cmath&gt;
-using namespace std;
-using ll = long long;
-int n, m;
-vector&lt;vector&lt;int&gt;&gt; graph(32001, vector&lt;int&gt;());
-int in[32001] = {0,};
-void solve(){
-    cin &gt;&gt; n &gt;&gt; m;
-    int u, v;
-    for(int i = 0; i&lt;m; i++){
-        cin &gt;&gt; u &gt;&gt; v;
-        graph[u].push_back(v);
-        in[v] += 1;
-    }  
-    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; pq;
-    for(int i = 1; i&lt;=n; i++){
-        if(in[i]==0)
-            pq.push(i);
-    }
-    while(!pq.empty()){
-        int cur = pq.top();
-        pq.pop();
-        cout &lt;&lt; cur &lt;&lt; ' ';
-        for(int next: graph[cur]){
-            in[next] -= 1; 
-            if(in[next]==0)
-                pq.push(next);
-        }
-    }
-}
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    solve(); 
-    return 0;
-}
-
-</code></pre>
-<h3 id="풀이">풀이</h3>
-<p>topological sort를 사용하는 문제이다. <a href="/ps/14/boj%202252%20%EC%A4%84%20%EC%84%B8%EC%9A%B0%EA%B8%B0.html">boj 2252 줄 세우기</a></p>
-<p>queue에 들어있는 여러개의 0개의 <code>in</code> edge를 가진 vertex 중에서 가장 작은 수의 vertex를 골라야 하기 때문에 priority queue를 사용하여야 한다.</p>
-<h3 id="느낀점">느낀점</h3>
-<p>이전에 풀어봤던 문제이다.</p>
+                            <h2 id="cpu burst">cpu burst</h2>
+<p>모든 program은 cpu burst와 io burst가 반복해서 동작한다.</p>
+<ul>
+<li>alternating sequence</li>
+</ul>
+<p>io-bound job은 many short cpu burst, cpu-bound job은 few long cpu burst</p>
+<p>이러한 job들은 hyperexponential distribution을 따른다.</p>
+<ul>
+<li>즉, io-bound와 cpu-bound의 중간인 job은 많이 없다는 의미.</li>
+</ul>
+<p>구분하는 이유는 io-bound job에 cpu를 우선적으로 주기 위해서.</p>
+<ul>
+<li>e.g. 문서 프로그램은 io-bound job으로 키보드로 입력을 하면 처리해서 화면에 떠야 한다. interaction이 중요하기 때문에 io 끝나면 cpu 줘서 바로 처리해야 한다. cpu 사용시간이 긴 것도 아니므로 바로 줘도 된다.</li>
+</ul>
+<h2 id="process scheduling queue">process scheduling queue</h2>
+<p>blocked queue: io가 발생하여 event를 기다리는 queue</p>
+<p>blocked suspend queue: blocked queue의 상태에서 user가 suspend 시킨 경우</p>
+<ul>
+<li>user가 suspend 풀 때까지 ready가 되면 안되므로
+ready suspend queue: blocked suspend queue의 상태에서 io event를 받은 경우</li>
+<li>user가 suspend 풀 때까지 ready가 되면 안되므로</li>
+</ul>
+<p>blocked suspend queue와 ready suspend queue는 mid-term scheduler가</p>
 
                         </div>
                     </article>

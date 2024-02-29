@@ -126,8 +126,28 @@ async function run() {
     let g = Ground.new();
     await g.add(window.location.pathname);
     await g.load(window.location.pathname, false);
-    /*
-    document.querySelector("html").addEventListener(
+    
+    const ancs = document.getElementsByClassName('anc');
+    for(const anc of ancs){
+        anc.addEventListener("click",
+            async function (e) {
+                e.preventDefault();
+                var anchor = e.target.closest("a");
+                if (anchor !== null) {
+                    try {
+                        const nextHref = anchor.getAttribute("href");
+                        await g.load(nextHref, true);
+                        history.pushState(null, null, nextHref);
+                        await load_external_modules();
+                    } catch (e) {
+                        window.location.href = anchor.href;
+                    }
+                }
+            },
+            false
+        )
+    }
+    /* document.querySelector("html").addEventListener(
         "click",
         async function (e) {
             e.preventDefault();
@@ -144,7 +164,9 @@ async function run() {
             }
         },
         false
-    );
+    ); */
+    
+    
     window.onpopstate = async (e) => {
         e.preventDefault();
         try {
@@ -154,7 +176,7 @@ async function run() {
             window.location.href = location.pathname;
         }
     }
-    */
+   
 
     load_toc_module();
     load_darkmode_module();

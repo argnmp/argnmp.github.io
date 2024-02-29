@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 1766 문제집</title>
+        <title>boj 5557 1학년</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1766 문제집</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 5557 1학년</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-01-07</td>
+                                            <td class="">2024-02-29</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1766">https://www.acmicpc.net/problem/1766</a></p>
-<h3 id="코드">코드</h3>
+<p><a href="https://www.acmicpc.net/problem/5557">https://www.acmicpc.net/problem/5557</a></p>
+<h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -133,32 +133,39 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n, m;
-vector&lt;vector&lt;int&gt;&gt; graph(32001, vector&lt;int&gt;());
-int in[32001] = {0,};
+int n;
+ll seq[101] = {0,};
+ll dp[21][101] = {0,};
+ll ans = 0;
+bool check(int t){
+    return 0&lt;=t&amp;&amp;t&lt;=20;
+}
 void solve(){
-    cin &gt;&gt; n &gt;&gt; m;
-    int u, v;
-    for(int i = 0; i&lt;m; i++){
-        cin &gt;&gt; u &gt;&gt; v;
-        graph[u].push_back(v);
-        in[v] += 1;
-    }  
-    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; pq;
-    for(int i = 1; i&lt;=n; i++){
-        if(in[i]==0)
-            pq.push(i);
+    cin &gt;&gt; n;
+    for(int i = 0; i&lt;n; i++){
+        cin &gt;&gt; seq[i];
     }
-    while(!pq.empty()){
-        int cur = pq.top();
-        pq.pop();
-        cout &lt;&lt; cur &lt;&lt; ' ';
-        for(int next: graph[cur]){
-            in[next] -= 1; 
-            if(in[next]==0)
-                pq.push(next);
+
+    if(check(seq[0])){
+        dp[seq[0]][0] = 1;
+    }
+    if(check(-seq[0])){
+        dp[-seq[0]][0] = 1;
+    }
+    for(int i = 1; i&lt;n-1; i++){
+        for(int j = 0; j&lt;=20; j++){
+            int target = j + seq[i];
+            if(check(target)){
+                dp[target][i] += dp[j][i-1];
+            }
+            target = j - seq[i];
+            if(check(target)){
+                dp[target][i] += dp[j][i-1];
+            }
         }
     }
+    cout &lt;&lt; dp[seq[n-1]][n-2];
+    
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -166,13 +173,11 @@ int main(){
     solve(); 
     return 0;
 }
-
 </code></pre>
-<h3 id="풀이">풀이</h3>
-<p>topological sort를 사용하는 문제이다. <a href="/ps/14/boj%202252%20%EC%A4%84%20%EC%84%B8%EC%9A%B0%EA%B8%B0.html">boj 2252 줄 세우기</a></p>
-<p>queue에 들어있는 여러개의 0개의 <code>in</code> edge를 가진 vertex 중에서 가장 작은 수의 vertex를 골라야 하기 때문에 priority queue를 사용하여야 한다.</p>
+<p><code>dp[k][i]</code>를 i번째 수까지 사용해서 k를 만들 수 있는 경우의 수로 정의해주었다.</p>
+<p><a href="/ps/8/boj%201562%20%EA%B3%84%EB%8B%A8%20%EC%88%98.html">boj 1562 계단 수</a> 와 비슷한 문제같다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>이전에 풀어봤던 문제이다.</p>
+<p>생각해내는데 시간이 약간 소요되었다. 모든 경우를 찾는 과정에서 시간 초과가 발생할 것 같으면 dp문제라고 생각을 하자.</p>
 
                         </div>
                     </article>
