@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 5582 공통 부분 문자열</title>
+        <title>boj 9251 LCS</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 5582 공통 부분 문자열</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 9251 LCS</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-23</td>
+                                            <td class="">2024-02-09</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/5582">https://www.acmicpc.net/problem/5582</a></p>
+<p><a href="https://www.acmicpc.net/problem/9251">https://www.acmicpc.net/problem/9251</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,20 +133,23 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-string x, y;
-int dp[4001][4001] = {0,};
-int ans = -1;
+int dp[1001][1001] = {0,};
 void solve(){
-    cin &gt;&gt; x &gt;&gt; y;
-    for(int i = 1; i&lt;=x.size(); i++){
-        for(int j = 1; j&lt;=y.size(); j++){
-            if(x[i-1]==y[j-1]){
+    string s1, s2;
+    cin &gt;&gt; s1 &gt;&gt; s2;
+    int n = s1.size(), m = s2.size();
+    for(int i = 1; i&lt;=n; i++){
+        for(int j = 1; j&lt;=m; j++){
+            if(s1[i-1]==s2[j-1]){
                 dp[i][j] = dp[i-1][j-1]+1;
             }
-            ans = max(ans, dp[i][j]);
+            else {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+            
         }
     }
-    cout &lt;&lt; ans;
+    cout &lt;&lt; dp[n][m];
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -155,10 +158,11 @@ int main(){
     return 0;
 }
 </code></pre>
-<p><code>dp[i][j]</code>를 공통 부분 문자열의 길이로 설정한다.</p>
-<p>두 문자열을 <code>s1, s2</code>라 할 때, <code>s1[i]==s2[j]</code>인 경우 <code>dp[i][j] = dp[i-1][j-1]+1</code>이 된다.</p>
+<p>LCS문제이다.</p>
+<p><a href="/ps/17/boj%209252%20LCS%202.html">boj 9252 LCS 2</a> 와 같은 풀이이다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>단순하게 생각하자. <a href="/ps/6/boj%209251%20LCS.html">boj 9251 LCS</a>와 비슷하지만 조금 다르다.</p>
+<p><a href="/ps/17/boj%209252%20LCS%202.html">boj 9252 LCS 2</a> 를 풀어본적이 있어서 풀 수 있었다.</p>
+<p>string의 index를 제대로 설정 안해주어서 디버깅을 하였다. 주의하자.</p>
 
                         </div>
                     </article>

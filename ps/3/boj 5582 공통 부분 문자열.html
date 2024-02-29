@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 1976 여행 가자</title>
+        <title>boj 5582 공통 부분 문자열</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1976 여행 가자</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 5582 공통 부분 문자열</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2023-12-09</td>
+                                            <td class="">2024-02-23</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1976">https://www.acmicpc.net/problem/1976</a></p>
-<h3 id="코드">코드</h3>
+<p><a href="https://www.acmicpc.net/problem/5582">https://www.acmicpc.net/problem/5582</a></p>
+<h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -130,46 +130,23 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
+#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n, m;
-int uf[201] = {0,};
-int uffind(int v){
-    if(uf[v]==v)
-        return v;
-    uf[v] = uffind(uf[v]);
-    return uf[v];
-}
-void ufunion(int a, int b){
-    int pa = uffind(a); 
-    int pb = uffind(b);
-    uf[pb] = pa;
-}
+string x, y;
+int dp[4001][4001] = {0,};
+int ans = -1;
 void solve(){
-    cin &gt;&gt; n &gt;&gt; m;
-    for(int i = 1; i&lt;=n; i++){
-        uf[i] = i;
-    }
-    int is_connected;
-    for(int i = 1; i&lt;=n; i++){
-        for(int j = 1; j&lt;=n; j++){
-            cin &gt;&gt; is_connected;
-            if(is_connected==1){
-                ufunion(i, j);
+    cin &gt;&gt; x &gt;&gt; y;
+    for(int i = 1; i&lt;=x.size(); i++){
+        for(int j = 1; j&lt;=y.size(); j++){
+            if(x[i-1]==y[j-1]){
+                dp[i][j] = dp[i-1][j-1]+1;
             }
+            ans = max(ans, dp[i][j]);
         }
     }
-    int u, v;
-    cin &gt;&gt; u;
-    for(int i = 0; i&lt;m-1; i++){
-        cin &gt;&gt; v; 
-        if(uffind(u)!=uffind(v)){
-            cout &lt;&lt; &quot;NO&quot;;
-            return;
-        }
-    }
-    cout &lt;&lt; &quot;YES&quot;;
-    return;
+    cout &lt;&lt; ans;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -177,14 +154,11 @@ int main(){
     solve(); 
     return 0;
 }
-
 </code></pre>
-<h3 id="풀이">풀이</h3>
-<p>도시 간에 양방향으로 이동할 수 있고 도시들이 연결되어 있는지 여부만 확인하면 되기 때문에, union-find를 사용해서 도시들이 같은 집합에 속해있는지를 확인해주면 된다
-<a href="/ps/15/boj%201717%20%EC%A7%91%ED%95%A9%EC%9D%98%20%ED%91%9C%ED%98%84.html">boj 1717 집합의 표현</a></p>
+<p><code>dp[i][j]</code>를 공통 부분 문자열의 길이로 설정한다.</p>
+<p>두 문자열을 <code>s1, s2</code>라 할 때, <code>s1[i]==s2[j]</code>인 경우 <code>dp[i][j] = dp[i-1][j-1]+1</code>이 된다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>union-find를 알고 있어서 풀 수 있었다.
-처음에 <code>uf</code>배열을 초기화하는데, n을 먼저 입력받지 않고 초기화를 했다. 이렇게 하지 않도록 주의를 해야겠다.</p>
+<p>단순하게 생각하자. <a href="/ps/7/boj%209251%20LCS.html">boj 9251 LCS</a>와 비슷하지만 조금 다르다.</p>
 
                         </div>
                     </article>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 9251 LCS</title>
+        <title>boj 1937 욕심쟁이 판다</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 9251 LCS</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1937 욕심쟁이 판다</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-09</td>
+                                            <td class="">2024-02-29</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/9251">https://www.acmicpc.net/problem/9251</a></p>
+<p><a href="https://www.acmicpc.net/problem/1937">https://www.acmicpc.net/problem/1937</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,23 +133,69 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int dp[1001][1001] = {0,};
-void solve(){
-    string s1, s2;
-    cin &gt;&gt; s1 &gt;&gt; s2;
-    int n = s1.size(), m = s2.size();
-    for(int i = 1; i&lt;=n; i++){
-        for(int j = 1; j&lt;=m; j++){
-            if(s1[i-1]==s2[j-1]){
-                dp[i][j] = dp[i-1][j-1]+1;
+int n;
+int board[500][500];
+int done[500][500] = {0,};
+int dx[4] = {0,0,-1,1};
+int dy[4] = {-1,1,0,0};
+struct pos{
+    int x, y;
+    pos adj(int i){ return {x+dx[i%4], y+dy[i%4]}; }  
+    bool safe(){ return 0&lt;=x&amp;&amp;x&lt;n&amp;&amp;0&lt;=y&amp;&amp;y&lt;n; }
+};
+struct box{
+    pos p;
+    int v;
+    bool operator&lt;(const box&amp; t) const {
+        return v &lt; t.v;
+    }
+};
+int ans = 0;
+int cnt = 0;
+int calc(pos t, int depth){
+    cnt += 1;
+    done[t.x][t.y] = depth;
+    int maxv = depth;
+    for(int i = 0; i&lt;4; i++){
+        pos next = t.adj(i);
+        if(next.safe() &amp;&amp; board[t.x][t.y] &lt; board[next.x][next.y]){
+            if(done[next.x][next.y]==0){
+                maxv = max(maxv, calc(next, depth+1));
             }
             else {
-                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                maxv = max(maxv, done[next.x][next.y] + depth); 
             }
-            
         }
     }
-    cout &lt;&lt; dp[n][m];
+    done[t.x][t.y] = maxv - depth + 1;
+    /* for(int i = 0; i&lt;n; i++){
+        for(int j = 0; j&lt;n; j++){
+            cout &lt;&lt; done[i][j] &lt;&lt; ' ';
+        }
+        cout &lt;&lt; '\n';
+    }    
+    cout &lt;&lt; '\n'; */
+    return maxv;
+}
+void solve(){
+    cin &gt;&gt; n;
+    for(int i = 0; i&lt;n; i++){
+        for(int j = 0; j&lt;n; j++){
+            cin &gt;&gt; board[i][j];
+        }
+    }
+    for(int i = 0; i&lt;n; i++){
+        for(int j = 0; j&lt;n; j++){
+            if(done[i][j]==0){
+                // printf(&quot;start: %d, %d\n&quot;, i, j);
+                ans = max(ans, calc({i, j}, 1));
+            }
+        }
+    }
+    // calc({1, 0}, 1);
+    
+    cout &lt;&lt; cnt &lt;&lt; '\n';
+    cout &lt;&lt; ans;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -158,11 +204,37 @@ int main(){
     return 0;
 }
 </code></pre>
-<p>LCS문제이다.</p>
-<p><a href="/ps/16/boj%209252%20LCS%202.html">boj 9252 LCS 2</a> 와 같은 풀이이다.</p>
+<p>dfs로 각 좌표에서 갈 수 있는 경로를 탐색해준다. 하지만 그냥 탐색하면 시간초과가 발생한다.</p>
+<p>따라서, dfs로 끝까지 방문해서 앞으로 돌아오면서 최대 갈 수 있는 거리를 저장해둔다. 만약 다음 번의 dfs 탐색에서 값이 저장되어 있는 좌표를 만났을 때 최대 갈 수 있는 거리가 저장되어 있으므로, 그 값을 바로 이용하면 된다.</p>
+<p>아래는 문제에서 주어진 예시이다.</p>
+<pre><code>4
+14 9 12 10
+1 11 5 4
+7 15 2 13
+6 3 16 8
+</code></pre>
+<p>1에서 dfs 탐색을 시작했다고 해보자. 14, 11, 7로 갈 수 있다.</p>
+<p>14에서 더이상 갈 수 없으므로 <code>done</code>배열에 앞으로 돌아오면서 1씩 더해준다. 그러면 아래와 같이 된다.</p>
+<pre><code>1 0 0 0
+2 0 0 0
+0 0 0 0
+0 0 0 0
+</code></pre>
+<p>다음으로 11로 가면 15까지 갈 수 있다. 1로 돌아왔을 때에는 최댓값을 갱신해준다. 그러면 아래와 같이 된다.</p>
+<pre><code>2 0 0 0
+3 2 0 0
+0 1 0 0
+0 0 0 0
+</code></pre>
+<p>다음으로 7로 가면 15까지 갈 수 있다. 15는 이미 방문했고, 최대 갈 수 있는 거리가 1이기 때문에 이 값을 이용해서 7에서는 최대 갈 수 있는 거리가 2가 된다.(현재 좌표에서 15로 이동해서 갈 수 있는 최대 거리) 그러면 아래와 같이 된다.</p>
+<pre><code>2 0 0 0
+3 2 0 0
+2 1 0 0
+0 0 0 0
+</code></pre>
+<p>이걸 반복해서 최댓값을 구하면 된다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p><a href="/ps/16/boj%209252%20LCS%202.html">boj 9252 LCS 2</a> 를 풀어본적이 있어서 풀 수 있었다.</p>
-<p>string의 index를 제대로 설정 안해주어서 디버깅을 하였다. 주의하자.</p>
+<p>처음에는 depth를 저장해두고, depth를 갱신할 수 있는 경우에만  dfs로 탐색하도록 작성했는데 시간 초과가 발생했다. 갔던 경로를 다시 방문하기 때문이었다. 위의 dp방식을 사용하니 시간초과가 해결되었다.</p>
 
                         </div>
                     </article>

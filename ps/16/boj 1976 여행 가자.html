@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 2533 사회망 서비스(SNS)</title>
+        <title>boj 1976 여행 가자</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2533 사회망 서비스(SNS)</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1976 여행 가자</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2023-12-17</td>
+                                            <td class="">2023-12-09</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2533">https://www.acmicpc.net/problem/2533</a></p>
+<p><a href="https://www.acmicpc.net/problem/1976">https://www.acmicpc.net/problem/1976</a></p>
 <h3 id="코드">코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -132,55 +132,44 @@
 #include &lt;cstring&gt;
 using namespace std;
 using ll = long long;
-int n;
-vector&lt;vector&lt;int&gt;&gt; graph(1000001, vector&lt;int&gt;());
-
-/*
- * type==1 : must select current node
- * type==-1 : compare whether select or not current node
- */
-
-/*
- * dp[node][0] : lowest value of subtree not selecting the node
- * dp[node][1] : lowest value of subtree selecting the node
- */
-
-int dp[1000001][2] = {0,};
-int calc(int node, int parent, int type){
-    if(dp[node][0]==-1){
-        int count = 0; 
-        for(int next: graph[node]){
-            if(next == parent)
-                continue;
-            count += calc(next, node, 1); 
-        } 
-        dp[node][0] = count;
-    }
-    if(dp[node][1]==-1){
-        int count = 0;
-        for(int next: graph[node]){
-            if(next == parent)
-                continue;
-            count += calc(next, node, -1);
-        }
-        dp[node][1] = count + 1;
-    }
-    if(type==1){
-        return dp[node][1];
-    } else {
-        return min(dp[node][0], dp[node][1]);
-    }
+int n, m;
+int uf[201] = {0,};
+int uffind(int v){
+    if(uf[v]==v)
+        return v;
+    uf[v] = uffind(uf[v]);
+    return uf[v];
+}
+void ufunion(int a, int b){
+    int pa = uffind(a); 
+    int pb = uffind(b);
+    uf[pb] = pa;
 }
 void solve(){
-    memset(dp, -1, sizeof(dp));
-    cin &gt;&gt; n;
-    int u, v;
-    for(int i = 0; i&lt;n-1; i++){
-        cin &gt;&gt; u &gt;&gt; v;
-        graph[u].push_back(v);
-        graph[v].push_back(u);
+    cin &gt;&gt; n &gt;&gt; m;
+    for(int i = 1; i&lt;=n; i++){
+        uf[i] = i;
     }
-    cout &lt;&lt; calc(1, 1, -1);
+    int is_connected;
+    for(int i = 1; i&lt;=n; i++){
+        for(int j = 1; j&lt;=n; j++){
+            cin &gt;&gt; is_connected;
+            if(is_connected==1){
+                ufunion(i, j);
+            }
+        }
+    }
+    int u, v;
+    cin &gt;&gt; u;
+    for(int i = 0; i&lt;m-1; i++){
+        cin &gt;&gt; v; 
+        if(uffind(u)!=uffind(v)){
+            cout &lt;&lt; &quot;NO&quot;;
+            return;
+        }
+    }
+    cout &lt;&lt; &quot;YES&quot;;
+    return;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -191,11 +180,11 @@ int main(){
 
 </code></pre>
 <h3 id="풀이">풀이</h3>
-<p><a href="/ps/14/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 과 같은 풀이이다. 여기에서는 얼리어답터이거나 아닌 경우의 수 두가지로 나누어서 생각해보면 된다.</p>
-<p>dfs를 돌 때에는, <a href="/ps/14/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 과는 반대이다. 여기에서는 무조건 현재 노드를 골라야 하거나, 고를지 말지 선택하는, 이 두가지 경우를 고려하여 탐색을 해야 한다.</p>
+<p>도시 간에 양방향으로 이동할 수 있고 도시들이 연결되어 있는지 여부만 확인하면 되기 때문에, union-find를 사용해서 도시들이 같은 집합에 속해있는지를 확인해주면 된다
+<a href="/ps/16/boj%201717%20%EC%A7%91%ED%95%A9%EC%9D%98%20%ED%91%9C%ED%98%84.html">boj 1717 집합의 표현</a></p>
 <h3 id="느낀점">느낀점</h3>
-<p><a href="/ps/14/boj%202213%20%ED%8A%B8%EB%A6%AC%EC%9D%98%20%EB%8F%85%EB%A6%BD%EC%A7%91%ED%95%A9.html">boj 2213 트리의 독립집합</a> 을 풀고 이 문제를 풀어서 그런가 빠르게 풀 수 있었다.</p>
-<p>트리에서는 n개의 vertex가 있을 때, 무조건 n-1개의 edge가 존재하여야 한다. 트리에서 루트 노드를 제외한 모든 노드는 parent가 있다. 따라서 어떤 vertex를 루트 노드로 선택을 하더라도, 그 vertex를 제외한 나머지 노드는 무조건 parent가 한 개씩 있으므로 n-1개가 된다.k</p>
+<p>union-find를 알고 있어서 풀 수 있었다.
+처음에 <code>uf</code>배열을 초기화하는데, n을 먼저 입력받지 않고 초기화를 했다. 이렇게 하지 않도록 주의를 해야겠다.</p>
 
                         </div>
                     </article>
