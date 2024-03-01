@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 5557 1학년</title>
+        <title>boj 17386 선분 교차 1</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 5557 1학년</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 17386 선분 교차 1</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-29</td>
+                                            <td class="">2023-12-18</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/5557">https://www.acmicpc.net/problem/5557</a></p>
-<h3 id="풀이">풀이</h3>
+<p><a href="https://www.acmicpc.net/problem/17386">https://www.acmicpc.net/problem/17386</a></p>
+<h3 id="코드">코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -130,42 +130,28 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
-#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n;
-ll seq[101] = {0,};
-ll dp[21][101] = {0,};
-ll ans = 0;
-bool check(int t){
-    return 0&lt;=t&amp;&amp;t&lt;=20;
+struct coord{
+    double x, y;
+};
+/*
+ * u = (p2.x-p1.x, p2.y-p1.y, 0)
+ * v = (p3.x-p1.x, p3.y-p1.y, 0)
+ * u x v = (0, 0, (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x))
+ */
+double ccw(coord p1, coord p2, coord p3){
+    return (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x);
 }
 void solve(){
-    cin &gt;&gt; n;
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; seq[i];
-    }
+    coord p1, p2, p3, p4;
+    cin &gt;&gt; p1.x &gt;&gt; p1.y &gt;&gt; p2.x &gt;&gt; p2.y;
+    cin &gt;&gt; p3.x &gt;&gt; p3.y &gt;&gt; p4.x &gt;&gt; p4.y;
+    if(ccw(p1, p2, p3)*ccw(p1, p2, p4) &lt; 0 &amp;&amp; ccw(p3, p4, p1)*ccw(p3, p4, p2) &lt; 0)
+        cout &lt;&lt; 1;
+    else
+        cout &lt;&lt; 0;
 
-    if(check(seq[0])){
-        dp[seq[0]][0] = 1;
-    }
-    if(check(-seq[0])){
-        dp[-seq[0]][0] = 1;
-    }
-    for(int i = 1; i&lt;n-1; i++){
-        for(int j = 0; j&lt;=20; j++){
-            int target = j + seq[i];
-            if(check(target)){
-                dp[target][i] += dp[j][i-1];
-            }
-            target = j - seq[i];
-            if(check(target)){
-                dp[target][i] += dp[j][i-1];
-            }
-        }
-    }
-    cout &lt;&lt; dp[seq[n-1]][n-2];
-    
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -173,11 +159,13 @@ int main(){
     solve(); 
     return 0;
 }
+
 </code></pre>
-<p><code>dp[k][i]</code>를 i번째 수까지 사용해서 k를 만들 수 있는 경우의 수로 정의해주었다.</p>
-<p><a href="/ps/9/boj%201562%20%EA%B3%84%EB%8B%A8%20%EC%88%98.html">boj 1562 계단 수</a> 와 비슷한 문제같다.</p>
+<h3 id="풀이">풀이</h3>
+<p>문제의 제약 조건으로, <em>세점이 겹치지 않는다</em> 라고 하였다.</p>
+<p><a href="/ps/15/boj%2012781%20PIZZA%20ALVOLOC.html">boj 12781 PIZZA ALVOLOC</a> 이 문제와 마찬가지로, 한 선분을 중심으로 다른 점들이 각각 왼쪽과 오른쪽에 들어가는지 벡터의 외적을 통해서 확인해주면 된다. 이 문제와 같은 문제이다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>생각해내는데 시간이 약간 소요되었다. 모든 경우를 찾는 과정에서 시간 초과가 발생할 것 같으면 dp문제라고 생각을 하자.</p>
+<p>예전에 풀어본 적이 있어서 풀 수 있었다.</p>
 
                         </div>
                     </article>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 5557 1학년</title>
+        <title>boj 1806 부분합</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 5557 1학년</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1806 부분합</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-29</td>
+                                            <td class="">2024-03-01</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/5557">https://www.acmicpc.net/problem/5557</a></p>
+<p><a href="https://www.acmicpc.net/problem/1806">https://www.acmicpc.net/problem/1806</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,38 +133,40 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n;
-ll seq[101] = {0,};
-ll dp[21][101] = {0,};
-ll ans = 0;
-bool check(int t){
-    return 0&lt;=t&amp;&amp;t&lt;=20;
-}
+int n, s;
+ll seq[100001] = {0,};
+ll acc[100001] = {0,};
 void solve(){
-    cin &gt;&gt; n;
-    for(int i = 0; i&lt;n; i++){
+    cin &gt;&gt; n &gt;&gt; s;
+    for(int i = 1; i&lt;=n; i++){
         cin &gt;&gt; seq[i];
     }
-
-    if(check(seq[0])){
-        dp[seq[0]][0] = 1;
+    for(int i = 1; i&lt;=n; i++){
+        acc[i] = acc[i-1] + seq[i];
     }
-    if(check(-seq[0])){
-        dp[-seq[0]][0] = 1;
-    }
-    for(int i = 1; i&lt;n-1; i++){
-        for(int j = 0; j&lt;=20; j++){
-            int target = j + seq[i];
-            if(check(target)){
-                dp[target][i] += dp[j][i-1];
-            }
-            target = j - seq[i];
-            if(check(target)){
-                dp[target][i] += dp[j][i-1];
-            }
+    int l = 1, r = 1;
+    int ans = INT_MAX;
+    while(l&lt;=n&amp;&amp;r&lt;=n){
+        if(acc[r]-acc[l-1] &lt; s) 
+            r+=1;
+        else{
+            ans = min(ans, r - (l-1));
+            l += 1;
         }
     }
-    cout &lt;&lt; dp[seq[n-1]][n-2];
+    if(ans == INT_MAX)
+        cout &lt;&lt; 0;
+    else
+        cout &lt;&lt; ans;
+    
+    /* for(int i = 0; i&lt;=n; i++){
+        printf(&quot;%2d &quot;, seq[i]);
+    }
+    cout &lt;&lt; endl;
+    for(int i = 0; i&lt;=n; i++){
+        printf(&quot;%2d &quot;, acc[i]);
+    } */
+    
     
 }
 int main(){
@@ -174,10 +176,9 @@ int main(){
     return 0;
 }
 </code></pre>
-<p><code>dp[k][i]</code>를 i번째 수까지 사용해서 k를 만들 수 있는 경우의 수로 정의해주었다.</p>
-<p><a href="/ps/9/boj%201562%20%EA%B3%84%EB%8B%A8%20%EC%88%98.html">boj 1562 계단 수</a> 와 비슷한 문제같다.</p>
+<p>prefix sum을 먼저 구해 놓는다.</p>
+<p>첫번째 수에 <code>l</code>포인터와 <code>r</code>포인터를 위치 시켜놓는다. 만약 현재까지의 수가 <code>S</code>보다 작으면 <code>r</code>포인터를 증가시키고, <code>S</code>보다 크다면 최소 길이를 업데이트 해주고 <code>l</code>포인터를 증가시킨다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>생각해내는데 시간이 약간 소요되었다. 모든 경우를 찾는 과정에서 시간 초과가 발생할 것 같으면 dp문제라고 생각을 하자.</p>
 
                         </div>
                     </article>

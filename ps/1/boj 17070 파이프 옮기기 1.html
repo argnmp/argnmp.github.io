@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 2206 벽 부수고 이동하기</title>
+        <title>boj 17070 파이프 옮기기 1</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2206 벽 부수고 이동하기</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 17070 파이프 옮기기 1</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-17</td>
+                                            <td class="">2024-03-01</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,9 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2206">https://www.acmicpc.net/problem/2206</a></p>
+<p><a href="https://www.acmicpc.net/problem/17070">https://www.acmicpc.net/problem/17070</a></p>
 <h3 id="풀이">풀이</h3>
+<h4 id="첫번째 풀이: dfs">첫번째 풀이: dfs</h4>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -133,51 +134,66 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n, m;
-char board[1000][1000] = {0,};
-int dx[4] = {0,-1,1,0};
-int dy[4] = {-1,0,0,1};
+int n;
+int board[16][16] = {0,};
+
+// 0: right, 1: down, 2: diagonal
+int dx[3] = {0,1,1};
+int dy[3] = {1,0,1};
 struct pos{
     int x, y;
-    int wall;
-    pos adj(int i){ return { x+dx[i%4] ,y+dy[i%4] }; }
-    bool safe(){ return 0&lt;=x&amp;&amp;x&lt;n&amp;&amp;0&lt;=y&amp;&amp;y&lt;m; }
+    pos adj(int i){ return {x+dx[i%4], y+dy[i%4]}; } 
+    bool safe(){ return 0&lt;=x&amp;&amp;x&lt;n&amp;&amp;0&lt;=y&amp;&amp;y&lt;n; }
+    bool avail(int dir){
+        if(dir==1 || dir==2)
+            return board[x][y]==0;
+        else
+            return board[x-1][y]==0 &amp;&amp; board[x][y-1]==0 &amp;&amp; board[x][y]==0;
+    }
 };
-int done[1000][1000][2] = {0,};
-
+struct box{
+    pos p;
+    // 1: horizontal, 2: vertical, 3: diagonal
+    int dir;
+};
+int ans = 0;
+void calc(box cur){
+    // cout &lt;&lt; cur.p.x &lt;&lt; ' ' &lt;&lt; cur.p.y &lt;&lt; endl;
+    if(cur.p.x==n-1&amp;&amp;cur.p.y==n-1){
+        ans += 1;
+        return;
+    }
+    if(cur.dir==1){
+        pos next = cur.p.adj(0);
+        if(next.safe()&amp;&amp;next.avail(1))
+            calc({next, 1});
+        next = cur.p.adj(2);
+        if(next.safe()&amp;&amp;next.avail(3))
+            calc({next, 3});
+    }
+    else if(cur.dir==2){
+        pos next = cur.p.adj(1);
+        if(next.safe()&amp;&amp;next.avail(2))
+            calc({next, 2});
+        next = cur.p.adj(2);
+        if(next.safe()&amp;&amp;next.avail(3))
+            calc({next, 3});
+    }
+    else if(cur.dir==3){
+        for(int i = 0; i&lt;3; i++){
+            pos next = cur.p.adj(i);
+            if(next.safe()&amp;&amp;next.avail(i+1))
+                calc({next, i+1});
+        }
+    }
+}
 void solve(){
-    cin &gt;&gt; n &gt;&gt; m;
-    for(int i = 0; i&lt;n; i++){
-        for(int j = 0; j&lt;m; j++){
-            board[i][j] = cin.get();
-            while(board[i][j]=='\n' || board[i][j]=='\r' || board[i][j]==' ')
-                board[i][j] = cin.get();
-        }
-    }
-    queue&lt;pos&gt; q;
-    q.push({0, 0, 0}); 
-    done[0][0][0] = 1;
-    while(!q.empty()){
-        pos cur = q.front();
-        q.pop();
-        if(cur.x==n-1 &amp;&amp; cur.y==m-1){
-            cout &lt;&lt; done[cur.x][cur.y][cur.wall];
-            return;
-        }
-        for(int i = 0; i&lt;4; i++){
-            pos next = cur.adj(i);
-            if(next.safe()){
-                if(board[next.x][next.y]=='0' &amp;&amp; done[next.x][next.y][cur.wall]==0){
-                    done[next.x][next.y][cur.wall] = done[cur.x][cur.y][cur.wall] + 1;
-                    q.push({next.x, next.y, cur.wall});
-                } else if(board[next.x][next.y]=='1' &amp;&amp; cur.wall == 0 &amp;&amp; done[next.x][next.y][cur.wall+1]==0){
-                    done[next.x][next.y][cur.wall+1] = done[cur.x][cur.y][cur.wall] + 1;
-                    q.push({next.x, next.y, cur.wall+1}); 
-                }
-            }
-        } 
-    }
-    cout &lt;&lt; &quot;-1&quot;;
+    cin &gt;&gt; n;
+    for(int i = 0; i&lt;n; i++)
+        for(int j = 0; j&lt;n; j++)
+            cin &gt;&gt; board[i][j];
+    calc({{0, 1}, 1});
+    cout &lt;&lt; ans; 
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -186,10 +202,69 @@ int main(){
     return 0;
 }
 </code></pre>
-<p>좌표에서는 bfs가 최단거리이다. 따라서 bfs를 통해 순회를 해주면서, 벽을 부수고 방문하였는지 여부를 기록하여, 같은 위치에서 벽을 부수고 이동하였을 때와 벽을 부수지 않고 이동하였을 때 재방문이 가능하도록 해준다.</p>
-<p>bfs의 queue에는 다음에 방문해야 할 좌표와 함께 현재까지 부순 벽의 개수를 넣는다.</p>
+<p>파이프 끝을 기준으로 해서 방문할 수 있는 경우의 수를 dfs로 방문해주면 된다.</p>
+<h4 id="두번째 풀이: dp">두번째 풀이: dp</h4>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+using namespace std;
+using ll = long long;
+int n;
+int board[16][16] = {0,};
+
+// 0: horizontal, 1: vertical, 2: diagonal
+int dp[16][16][3] = {0,};
+void solve(){
+    cin &gt;&gt; n;
+    for(int i = 0; i&lt;n; i++)
+        for(int j = 0; j&lt;n; j++)
+            cin &gt;&gt; board[i][j];
+
+    for(int i = 1; i&lt;n; i++){
+        if(board[0][i]!=0)
+            break;
+        dp[0][i][0] = 1;
+    }
+    
+    for(int i = 1; i&lt;n; i++){
+        for(int j = 1; j&lt;n; j++){
+            if(board[i][j]==0){
+                dp[i][j][0] += dp[i][j-1][0] + dp[i][j-1][2];
+                dp[i][j][1] += dp[i-1][j][1] + dp[i-1][j][2];
+                if(board[i-1][j]==0 &amp;&amp; board[i][j-1]==0)
+                    dp[i][j][2] += dp[i-1][j-1][0] + dp[i-1][j-1][1] + dp[i-1][j-1][2];
+            }
+        }
+    }
+
+    cout &lt;&lt; dp[n-1][n-1][0] + dp[n-1][n-1][1] + dp[n-1][n-1][2];
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+</code></pre>
+<p>k의 값을 아래와 같이 정의할 때</p>
+<ul>
+<li>0: 가로로 연결한 파이프</li>
+<li>1: 세로로 연결한 파이프</li>
+<li>2: 대각선으로 연결한 파이프</li>
+</ul>
+<p><code>dp[i][j][k]</code> 를  좌표 <code>[i,j]</code>에서 k 방식으로 파이프의 우측 끝을 연결했을 때  경우의 수로 정의한다.</p>
+<p>위에서 부터 아래로 dp 배열을 채워넣을 수 있다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>이전에 비슷한 문제 <a href="/ps/13/boj%2014442%20%EB%B2%BD%20%EB%B6%80%EC%88%98%EA%B3%A0%20%EC%9D%B4%EB%8F%99%ED%95%98%EA%B8%B0%202.html">boj 14442 벽 부수고 이동하기 2</a> 를 풀어보았다.</p>
+<p>dfs로 풀었지만, 다른 방식으로도 생각해보자.</p>
 
                         </div>
                     </article>

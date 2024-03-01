@@ -71,6 +71,11 @@ async function load_toc_module(){
     // create toc elements
     const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
     const toc = document.getElementById('toc');
+    // reset toc
+    while (toc.firstChild) {
+        toc.removeChild(toc.lastChild);
+    }
+
     const root = document.createElement('ul');
     const stk = [{layer: 0, elem: root}]; 
     const get_layer = (heading) => {
@@ -128,6 +133,7 @@ async function load_cache_module(){
                         await g.load(nextHref, true);
                         await g.add_included_anc(nextHref);
                         set_events();
+                        await load_toc_module();
                         await load_external_modules();
                     } catch (e) {
                         console.log(e);
@@ -155,7 +161,8 @@ async function load_cache_module(){
             await g.load(decodeURI(window.location.pathname), true);
             // await g.add_included_anc(decodeURI(window.location.pathname));
             await set_events();
-            load_external_modules();
+            await load_toc_module();
+            await load_external_modules();
         } catch (e) {
             console.log(e);
             window.location.href = window.location.pathname;
