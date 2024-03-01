@@ -115,6 +115,54 @@ async function load_toc_module(){
     toc.appendChild(root);
 
 }
+async function load_cache_module(){
+    const set_events = async () => {
+        const ancs = document.getElementsByClassName('anc');
+        for(const anc of ancs){
+            anc.addEventListener("click",
+                async function (e) {
+                    e.preventDefault();
+                    try {
+                        const nextHref = anc.getAttribute("href");
+                        history.pushState(null, null, nextHref);
+                        await g.load(nextHref, true);
+                        await g.add_included_anc(nextHref);
+                        set_events();
+                        await load_external_modules();
+                    } catch (e) {
+                        console.log(e);
+                        //window.location.href = anc.href;
+                    }
+                },
+                false
+            )
+        }
+
+    }
+    // load caching module
+    let g = Ground.new();
+    window.g = g;
+    // await g.add(window.location.pathname);
+    await g.add(decodeURI(window.location.pathname));
+    await g.load(decodeURI(window.location.pathname));
+    await g.add_included_anc(decodeURI(window.location.pathname));
+
+    await set_events();
+    
+    window.onpopstate = async (e) => {
+        e.preventDefault();
+        try {
+            await g.load(decodeURI(window.location.pathname), true);
+            // await g.add_included_anc(decodeURI(window.location.pathname));
+            await set_events();
+            load_external_modules();
+        } catch (e) {
+            console.log(e);
+            window.location.href = window.location.pathname;
+        }
+    }
+}
+
 
 async function run() {
     await init();
@@ -122,61 +170,8 @@ async function run() {
     // load external module
     await load_external_modules();
 
-    // load caching module
-    let g = Ground.new();
-    await g.add(window.location.pathname);
-    await g.load(window.location.pathname, false);
-    
-    const ancs = document.getElementsByClassName('anc');
-    for(const anc of ancs){
-        anc.addEventListener("click",
-            async function (e) {
-                e.preventDefault();
-                var anchor = e.target.closest("a");
-                if (anchor !== null) {
-                    try {
-                        const nextHref = anchor.getAttribute("href");
-                        await g.load(nextHref, true);
-                        history.pushState(null, null, nextHref);
-                        await load_external_modules();
-                    } catch (e) {
-                        window.location.href = anchor.href;
-                    }
-                }
-            },
-            false
-        )
-    }
-    /* document.querySelector("html").addEventListener(
-        "click",
-        async function (e) {
-            e.preventDefault();
-            var anchor = e.target.closest("a");
-            if (anchor !== null) {
-                try {
-                    const nextHref = anchor.getAttribute("href");
-                    await g.load(nextHref, true);
-                    history.pushState(null, null, nextHref);
-                    await load_external_modules();
-                } catch (e) {
-                    window.location.href = anchor.href;
-                }
-            }
-        },
-        false
-    ); */
-    
-    
-    window.onpopstate = async (e) => {
-        e.preventDefault();
-        try {
-            await g.load(location.pathname, true);
-            load_external_modules();
-        } catch (e) {
-            window.location.href = location.pathname;
-        }
-    }
-   
+    // load caching moddule
+    await load_cache_module();
 
     load_toc_module();
     load_darkmode_module();
