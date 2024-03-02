@@ -91,19 +91,21 @@
                                             <th scope="row" class="pr-4">
                                                 author
                                             </th>
-                                            <td class="">undefined</td>
+                                            <td class="">Taehyeon Kim</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">undefined</td>
+                                            <td class="">2024-03-02</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 tags
                                             </th>
                                             <td class="">
+                                                
+                                                <p class="inline">#blog </p>
                                                 
                                             </td>
                                         </tr>
@@ -112,7 +114,8 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
-                            <p><a href="https://en.cppreference.com/w/cpp/language/range-for">https://en.cppreference.com/w/cpp/language/range-for</a>
+                            <h3 id="reference">reference</h3>
+<p><a href="https://en.cppreference.com/w/cpp/language/range-for">https://en.cppreference.com/w/cpp/language/range-for</a>
 <a href="https://learn.microsoft.com/ko-kr/cpp/cpp/range-based-for-statement-cpp?view=msvc-170">https://learn.microsoft.com/ko-kr/cpp/cpp/range-based-for-statement-cpp?view=msvc-170</a></p>
 <pre><code class="language-cpp">// range-based-for.cpp
 // compile by using: cl /EHsc /nologo /W4
@@ -167,6 +170,56 @@ int main()
     cout &lt;&lt; &quot;end of vector test&quot; &lt;&lt; endl;
 }
 </code></pre>
+<h3 id="참조 순회">참조 순회</h3>
+<pre><code class="language-cpp">int main(){
+    map&lt;string, vector&lt;int&gt;&gt; m;
+    m.insert({&quot;kim&quot;, {1}});
+    m.insert({&quot;lee&quot;, {1}});
+    
+    for(int i = 2; i&lt;=10; i++){
+        for(auto&amp; t: m){
+            t.second.push_back(i);
+        }
+    }
+
+    for(const auto&amp; t: m){
+        cout &lt;&lt; t.first &lt;&lt; &quot;-&gt; &quot;; 
+        for(const auto&amp; k: t.second)
+            cout &lt;&lt; k &lt;&lt; ' ';
+        cout &lt;&lt; '\n';
+    }
+    
+    return 0;
+}
+</code></pre>
+<p><code>auto&amp;</code>를 사용하면 참조를 통해서 순회 대상의 값을 변경할 수 있다.</p>
+<p><code>const auto&amp;</code>를 사용하는 경우, 값을 변경하는 경우 컴파일 에러가 발생한다.</p>
+<p>위의 코드에서</p>
+<pre><code class="language-cpp">    for(int i = 2; i&lt;=10; i++){
+        for(auto&amp; t: m){
+            t.second.push_back(i);
+        }
+    }
+</code></pre>
+<p>이 부분을 아래와 같이 변경하면</p>
+<pre><code class="language-cpp">    for(int i = 2; i&lt;=10; i++){
+        for(pair&lt;string, vector&lt;int&gt;&gt;&amp; t: m){
+            t.second.push_back(i);
+        }
+    }
+</code></pre>
+<p>이와 같은 컴파일 에러가 발생한다.
+<code>error: non-const lvalue reference to type 'pair&lt;basic_string&lt;...&gt;, [...]&gt;' cannot bind to a value of unrelated type 'pair&lt;const basic_string&lt;...&gt;, [...]&gt;'</code></p>
+<p><code>pair&lt;string, vector&lt;int&gt;&gt;&amp;</code>가 아닌, <code>pair&lt;const string, vector&lt;int&gt;&gt;&amp;</code>으로 해주어야 한다. <code>map</code>자료구조에서 key값이 바뀌면 안되기 때문이다.</p>
+<p>실제로 <code>auto&amp;</code>를 사용했을 때, key값을 나타내는 <code>first</code>에 접근하여 다음과 같이 수정하려하면 컴파일 에러가 발생한다.</p>
+<pre><code class="language-cpp">    for(int i = 2; i&lt;=10; i++){
+        for(auto&amp; t: m){
+            t.first += &quot;k&quot;;
+            t.second.push_back(i);
+        }
+    }
+</code></pre>
+<p><code>t.first</code>가 <code>const string</code>이기 때문이다.</p>
 
                         </div>
                     </article>
