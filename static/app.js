@@ -134,6 +134,7 @@ async function load_cache_module(){
                         await g.add_included_anc(nextHref);
                         set_events();
                         await load_toc_module();
+                        await load_searching_module();
                         await load_external_modules();
                     } catch (e) {
                         console.log(e);
@@ -162,6 +163,7 @@ async function load_cache_module(){
             // await g.add_included_anc(decodeURI(window.location.pathname));
             await set_events();
             await load_toc_module();
+            await load_searching_module();
             await load_external_modules();
         } catch (e) {
             console.log(e);
