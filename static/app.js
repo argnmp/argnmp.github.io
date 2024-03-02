@@ -138,7 +138,7 @@ async function load_cache_module(){
                         await load_external_modules();
                     } catch (e) {
                         console.log(e);
-                        //window.location.href = anc.href;
+                        window.location.href = anc.href;
                     }
                 },
                 false
