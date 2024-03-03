@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 9251 LCS</title>
+        <title>boj 14289 본대 산책 3</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 9251 LCS</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 14289 본대 산책 3</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-09</td>
+                                            <td class="">2024-01-24</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/9251">https://www.acmicpc.net/problem/9251</a></p>
+<p><a href="https://www.acmicpc.net/problem/14289">https://www.acmicpc.net/problem/14289</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,23 +133,60 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int dp[1001][1001] = {0,};
-void solve(){
-    string s1, s2;
-    cin &gt;&gt; s1 &gt;&gt; s2;
-    int n = s1.size(), m = s2.size();
-    for(int i = 1; i&lt;=n; i++){
-        for(int j = 1; j&lt;=m; j++){
-            if(s1[i-1]==s2[j-1]){
-                dp[i][j] = dp[i-1][j-1]+1;
-            }
-            else {
-                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
-            }
-            
-        }
+int n, m, d;
+int mod = 1000000007;
+struct matrix{
+    int r, c;
+    vector&lt;vector&lt;ll&gt;&gt; data;
+    matrix(int r, int c): r(r), c(c){
+        data = vector(r, vector(c, (ll)0)); 
     }
-    cout &lt;&lt; dp[n][m];
+    matrix operator*(matrix&amp; t){
+        matrix mat(r, t.c);
+        for(int i = 0; i&lt;mat.r; i++){
+            for(int j = 0; j&lt;mat.c; j++){
+                ll acc = 0;
+                for(int k = 0; k&lt;c; k++){
+                    acc = (acc + (data[i][k]*t.data[k][j]) % mod) % mod;
+                }
+                mat.data[i][j] = acc;
+            }
+        }
+        return mat;
+    }
+    void print(){
+        for(int i = 0; i&lt;r; i++){
+            for(int j = 0; j&lt;c; j++){
+                printf(&quot;%lld &quot;, data[i][j]);
+            }
+            cout &lt;&lt; '\n';
+        }
+    } 
+};
+void solve(){
+    cin &gt;&gt; n &gt;&gt; m;
+    matrix base(n, n);
+    matrix remainder(n, n);
+    int u, v;
+    for(int i = 0; i&lt;m; i++){
+        cin &gt;&gt; u &gt;&gt; v; 
+        u-=1;
+        v-=1;
+        base.data[u][v] = 1;
+        base.data[v][u] = 1;
+    }
+    for(int i = 0; i&lt;n; i++){
+        remainder.data[i][i] = 1;
+    }
+    cin &gt;&gt; d; 
+    while(d&gt;0){
+        if(d%2==1)
+            remainder = remainder * base;
+        
+        base = base * base;
+        d /= 2;
+    }
+    cout &lt;&lt; remainder.data[0][0];
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -158,11 +195,9 @@ int main(){
     return 0;
 }
 </code></pre>
-<p>LCS문제이다.</p>
-<p><a href="/ps/17/boj%209252%20LCS%202.html">boj 9252 LCS 2</a> 와 같은 풀이이다.</p>
+<p><a href="/ps/12/boj%2012850%20%EB%B3%B8%EB%8C%80%20%EC%82%B0%EC%B1%852.html">boj 12850 본대 산책2</a> 과 같은 문제이다. 다른 점은 그래프가 주어진다는 것인데, 거듭제곱의 대상이 되는 행렬을 주어지는 그래프로 구성하면 된다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p><a href="/ps/17/boj%209252%20LCS%202.html">boj 9252 LCS 2</a> 를 풀어본적이 있어서 풀 수 있었다.</p>
-<p>string의 index를 제대로 설정 안해주어서 디버깅을 하였다. 주의하자.</p>
+<p><a href="/ps/12/boj%2012850%20%EB%B3%B8%EB%8C%80%20%EC%82%B0%EC%B1%852.html">boj 12850 본대 산책2</a> 를 풀어보아서, 마찬가지로 풀 수 있었다.</p>
 
                         </div>
                     </article>

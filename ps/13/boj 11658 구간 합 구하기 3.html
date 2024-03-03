@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 11437 LCA</title>
+        <title>boj 11658 구간 합 구하기 3</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11437 LCA</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11658 구간 합 구하기 3</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-01-08</td>
+                                            <td class="">2024-01-19</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/11437">https://www.acmicpc.net/problem/11437</a></p>
-<h3 id="코드">코드</h3>
+<p><a href="https://www.acmicpc.net/problem/11658">https://www.acmicpc.net/problem/11658</a></p>
+<h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -134,62 +134,50 @@
 using namespace std;
 using ll = long long;
 int n, m;
-vector&lt;vector&lt;int&gt;&gt; graph(50001, vector&lt;int&gt;());
-int dep[50001] = {0,};
-int par[50001][20] = {0,}; // until 2^19
-int done[50001] = {0,};
-void pre_lca(int node, int depth){
-    dep[node] = depth; 
-    done[node] = 1;
-    for(int next: graph[node]){
-        if(done[next]==1)
-            continue;
-        par[next][0] = node; 
-        pre_lca(next, depth + 1);
-    }
+ll value[1030][1030] = {0,};
+ll fwt[1030][1030] = {0,};
+struct pos{
+    int x, y;
+};
+ll fwt_calc(pos t){
+    ll acc = 0;
+    for(int i = t.x; i&gt;0; i -= (i &amp; -i)){
+        for(int j = t.y; j&gt;0; j -= (j &amp; -j)){
+            acc += fwt[i][j];
+        }
+    } 
+    return acc;
 }
-void fill_lca(){
-    for(int i = 1; i&lt;=19; i++){
-        for(int j = 1; j&lt;=n; j++){
-            par[j][i] = par[par[j][i-1]][i-1];
+void fwt_update(pos t, ll diff){
+    for(int i = t.x; i&lt;=n; i += (i &amp; -i)){
+        for(int j = t.y; j&lt;=n; j += (j &amp; -j)){
+            fwt[i][j] += diff;
         }
-    }
-}
-int lca(int a, int b){
-    if(dep[a] &gt; dep[b]){
-        swap(a, b);
-    }
-    for(int i = 19; i&gt;=0; i--){
-        if(dep[b]-dep[a] &gt;= (1&lt;&lt;i)){
-            b = par[b][i];
-        }
-    }
-    if(a==b){
-        return a;
-    }
-    for(int i = 19; i&gt;=0; i--){
-        if(par[a][i]!=par[b][i]){
-            a = par[a][i];
-            b = par[b][i];
-        }
-    }
-    return par[a][0];
+    } 
 }
 void solve(){
-    cin &gt;&gt; n;
-    int u, v;
-    for(int i = 0; i&lt;n-1; i++){
-        cin &gt;&gt; u &gt;&gt; v;
-        graph[u].push_back(v); 
-        graph[v].push_back(u); 
-    }
-    pre_lca(1, 0);
-    fill_lca();
-    cin &gt;&gt; m; 
-    int a, b;
+    cin &gt;&gt; n &gt;&gt; m; 
+    ll t;
+    for(int i = 1; i&lt;=n; i++){
+        for(int j = 1; j&lt;=n; j++){
+            cin &gt;&gt; t;   
+            value[i][j] = t;
+            fwt_update({i, j}, t);
+        }
+    } 
+    ll w, c;
+    pos a, b;
     for(int i = 0; i&lt;m; i++){
-        cin &gt;&gt; a &gt;&gt; b;
-        cout &lt;&lt; lca(a,b) &lt;&lt; '\n';
+        cin &gt;&gt; w;
+        if(w==0){
+            cin &gt;&gt; a.x &gt;&gt; a.y &gt;&gt; c;
+            fwt_update(a, c - value[a.x][a.y]);
+            value[a.x][a.y] = c;
+        }
+        else {
+            cin &gt;&gt; a.x &gt;&gt; a.y &gt;&gt; b.x &gt;&gt; b.y;
+            cout &lt;&lt; fwt_calc(b) - fwt_calc({a.x-1, b.y}) - fwt_calc({b.x, a.y-1}) + fwt_calc({a.x-1, a.y-1}) &lt;&lt; '\n';
+        }
     }
 }
 int main(){
@@ -200,11 +188,27 @@ int main(){
 }
 
 </code></pre>
-<h3 id="풀이">풀이</h3>
-<p>lca 알고리즘을 이용한 풀이이다.</p>
-<p><a href="/ps/13/boj%2011438%20LCA%202.html">boj 11438 LCA 2</a></p>
+<p>처음 풀 때에는 <a href="/ps/13/boj%202042%20%EA%B5%AC%EA%B0%84%20%ED%95%A9%20%EA%B5%AC%ED%95%98%EA%B8%B0.html">boj 2042 구간 합 구하기</a> 에서 segment tree를 사용한 방법을 사용하였다. 계산해야 하는 구간은 2차원 배열 위의 값이기 때문에, 가운데 값을 기준으로 4개의 구간으로 나누어진다. 그래서 binary tree 대신 quad tree를 이용했다.</p>
+<p>또한 더이상 4개의 구간으로 나누어지지 않는 경우는(행 또는 열의 개수가 1인 경우), 주어지는 2차원 배열이 정사각형 이기 때문에 아래와 같은 3가지 경우만 존재한다는 점을 이용했다.</p>
+<pre><code class="language-shell">#case1
+⬜️
+⬜️
+
+#case2
+⬜️ ⬜️
+
+#case3
+⬜️
+</code></pre>
+<p>즉, <code>⬜️ ⬜️ ⬜️ ⬜️</code> 와 같이 구간이 나누어지는 경우는 없다.</p>
+<p>이를 코드로 작성하여, 제출하였지만 boj에서는 66%에서 시간초과가 발생했다.</p>
+<p>이후 검색을 해보니 2차원 fenwick tree를 이용해야 한다.</p>
+<p><a href="https://www.acmicpc.net/blog/view/21">https://www.acmicpc.net/blog/view/21</a>에 fenwick tree의 자세한 설명을 확인할 수 있다.</p>
+<p>segment tree에서는 구간의 합을 구하기 위해서, 부모 노드에 해당하는 구간의 반을 기준으로, 찾으려는 구간이 속해 있는 여부를 확인하여 왼쪽 자식 노드 또는 오른쪽 자식 노드로 이동한다. 즉, 구간의 반의 반에 해당하는 index를 사용하여, tree의 다음 index를 찾아나가는 것이다.</p>
+<p>반면, fenwick tree에서는 구간의 합( <code>i~j</code>)을 구하기 위해서, <code>j~1</code> - <code>(i-1)~1</code> 을 계산하는 방식을 사용한다. <code>k~1</code>을 계산하기 위해서는, fenwick tree에서도 마찬가지로 구간의 합에 대한 정보가 담긴 그 다음 노드를 찾아야 한다. 방식은 segment tree와 달리 비트 연산을 사용한다.</p>
+<p>이 문제에서는 2차원 fenwick tree를 사용해서 계산한다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>LCA 2 문제를 먼저 풀어서 풀 수 있었다.</p>
+<p>fenwick tree이 많은 다른 문제에서 segment tree보다 효율적이라고 한다. 앞서 segment tree로 푼 다른 문제들도 fenwick tree로 다시 풀어봐야 겠다.</p>
 
                         </div>
                     </article>

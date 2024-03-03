@@ -2,7 +2,7 @@ import init, { Ground, Index } from "/static/render.js";
 
 // external module should be re-called every page switch
 async function load_external_modules(){
-
+    console.log("highlight");
     // load highlight module    
     window.hljs.highlightAll();
     window.hljs.initLineNumbersOnLoad();
@@ -152,7 +152,9 @@ async function load_cache_module(){
     // await g.add(window.location.pathname);
     await g.add(decodeURI(window.location.pathname));
     await g.load(decodeURI(window.location.pathname));
+    // because the main id element is re loaded, loading modules regarding to child elements of main should occur next.
     await g.add_included_anc(decodeURI(window.location.pathname));
+    await load_external_modules();
 
     await set_events();
     
@@ -175,9 +177,6 @@ async function load_cache_module(){
 
 async function run() {
     await init();
-
-    // load external module
-    await load_external_modules();
 
     // load caching moddule
     await load_cache_module();

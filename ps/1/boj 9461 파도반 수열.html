@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 12850 본대 산책2</title>
+        <title>boj 9461 파도반 수열</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 12850 본대 산책2</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 9461 파도반 수열</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-01-24</td>
+                                            <td class="">2024-03-03</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/12850">https://www.acmicpc.net/problem/12850</a></p>
+<p><a href="https://www.acmicpc.net/problem/9461">https://www.acmicpc.net/problem/9461</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,68 +133,23 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int mod = 1000000007;
-int d;
-struct matrix{
-    int r, c;
-    vector&lt;vector&lt;ll&gt;&gt; data;
-    matrix(int r, int c): r(r), c(c){
-        data = vector(r, vector(c, (ll)0)); 
-    }
-    matrix(int r, int c, ll vec[][8]): r(r), c(c){
-        data = vector(r, vector(c, (ll)0)); 
-        for(int i = 0; i&lt;r; i++){
-            for(int j = 0; j&lt;c; j++){
-                data[i][j] =  vec[i][j];  
-            }
-        }
-    }
-    matrix operator*(matrix&amp; t){
-        matrix mat(r, t.c);
-        for(int i = 0; i&lt;mat.r; i++){
-            for(int j = 0; j&lt;mat.c; j++){
-                ll acc = 0;
-                for(int k = 0; k&lt;c; k++){
-                    acc = (acc + (data[i][k] * t.data[k][j])%mod)%mod;
-                }
-                mat.data[i][j] = acc;
-            }
-        }
-        return mat;
-    }
-};
+int t;
+ll dp[101] = {0,};
 void solve(){
-    cin &gt;&gt; d;
-    ll base[8][8] = {
-        {0, 1, 1, 0, 0, 0, 0, 0},
-        {1, 0, 1, 1, 0, 0, 0, 0},
-        {1, 1, 0, 1, 1, 0, 0, 0},
-        {0, 1, 1, 0, 1, 1, 0, 0},
-        {0, 0, 1, 1, 0, 1, 1, 0},
-        {0, 0, 0, 1, 1, 0, 0, 1},
-        {0, 0, 0, 0, 1, 0, 0, 1},
-        {0, 0, 0, 0, 0, 1, 1, 0},
-    };
-    ll ident[8][8] = {
-        {1, 0, 0, 0, 0, 0, 0, 0},
-        {0, 1, 0, 0, 0, 0, 0, 0},
-        {0, 0, 1, 0, 0, 0, 0, 0},
-        {0, 0, 0, 1, 0, 0, 0, 0},
-        {0, 0, 0, 0, 1, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 0, 0},
-        {0, 0, 0, 0, 0, 0, 1, 0},
-        {0, 0, 0, 0, 0, 0, 0, 1},
-    };
-    matrix m(8, 8, base);
-    matrix remainder(8, 8, ident);
+    cin &gt;&gt; t; 
+    dp[1] = 1; 
+    dp[2] = 1; 
+    dp[3] = 1; 
+    dp[4] = 2; 
 
-    while(d&gt;0){
-        if(d%2==1)
-            remainder = m * remainder;
-        m = m*m;
-        d/=2;
+    for(int i = 5; i&lt;=100; i++){
+        dp[i] = dp[i-1] + dp[i-5];
     }
-    cout &lt;&lt; remainder.data[0][0];
+    int n;
+    while(t--){
+        cin &gt;&gt; n;
+        cout &lt;&lt; dp[n] &lt;&lt; '\n';
+    } 
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -203,30 +158,9 @@ int main(){
     return 0;
 }
 </code></pre>
-<p><a href="/ps/11/boj%2012849%20%EB%B3%B8%EB%8C%80%20%EC%82%B0%EC%B1%85.html">boj 12849 본대 산책</a>과 같은 문제이지만, D가 최대 10억까지로 늘어났다. 따라서 원래는 DP를 이용해서, <code>1~D</code>의 총 D번의 연산을 했었는데, 최대 10억이 되므로 제한시간을 초과한다. 따라서 기존 방식을 사용할 수 없고, 행렬을 이용해야 한다.</p>
-<p>주어진 그래프의 각 노드를 우상단에서 좌하단 순서대로 <code>K0 ~ k7</code>라고 설정하면(시작노드는 K0) 아래와 같은 점화식을 세울 수 있다.</p>
-<pre><code>{             {                             {
-{K0(i)}       {0, 1, 1, 0, 0, 0, 0, 0}      {K0(i-1)}
-{K1(i)}       {1, 0, 1, 1, 0, 0, 0, 0}      {K1(i-1)}
-{K2(i)}       {1, 1, 0, 1, 1, 0, 0, 0}      {K2(i-1)}
-{K3(i)}       {0, 1, 1, 0, 1, 1, 0, 0}      {K3(i-1)}
-{K4(i)}   =   {0, 0, 1, 1, 0, 1, 1, 0}   *  {K4(i-1)}
-{K5(i)}       {0, 0, 0, 1, 1, 0, 0, 1}      {K5(i-1)}
-{K6(i)}       {0, 0, 0, 0, 1, 0, 0, 1}      {K6(i-1)}
-{K7(i)}       {0, 0, 0, 0, 0, 1, 1, 0}      {K7(i-1)}
-      }                              }              }
-</code></pre>
-<p>따라서 위 점화식의 <code>8x8</code>행렬의 거듭제곱으로 D를 계산할 수 있다. 단순히 행렬을 계속 곱하기만 한다면, 이 풀이는 <a href="/ps/11/boj%2012849%20%EB%B3%B8%EB%8C%80%20%EC%82%B0%EC%B1%85.html">boj 12849 본대 산책</a> 이 문제의 풀이와 다를 바 없다. 거듭제곱은 O(lgN)의 연산으로 계산이 가능하기 때문에 이를 이용해야 한다.</p>
-<pre><code class="language-c++">    while(d&gt;0){
-        if(d%2==1)
-            remainder = m * remainder;
-        m = m*m;
-        d/=2;
-    }
-</code></pre>
-<p>7을 이진수로 나타내면 <code>111</code> 이고, 이를 다시 십진수로 바꿀 때 <code>2^2*1 + 2^1*1 + 2^0*1</code> 로 계산한다는 것을 위 코드에서 이용한다.</p>
+<p><code>dp[i]</code>를 i번째 변의 길이라고 했을 때, <code>dp[i] = dp[i-1] + dp[i-5]</code>가 된다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>이전에 풀어봤던 문제이다. 다만 행렬의 곱을 계산하는 부분을 잘못 적어서 디버깅하는 과정에서 시간이 걸렸다.</p>
+<p>dp 문제인 것을 알고 풀었다.</p>
 
                         </div>
                     </article>

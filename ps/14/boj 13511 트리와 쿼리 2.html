@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 5582 공통 부분 문자열</title>
+        <title>boj 13511 트리와 쿼리 2</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 5582 공통 부분 문자열</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 13511 트리와 쿼리 2</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-23</td>
+                                            <td class="">2024-01-09</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/5582">https://www.acmicpc.net/problem/5582</a></p>
-<h3 id="풀이">풀이</h3>
+<p><a href="https://www.acmicpc.net/problem/13511">https://www.acmicpc.net/problem/13511</a></p>
+<h3 id="코드">코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -133,20 +133,145 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-string x, y;
-int dp[4001][4001] = {0,};
-int ans = -1;
-void solve(){
-    cin &gt;&gt; x &gt;&gt; y;
-    for(int i = 1; i&lt;=x.size(); i++){
-        for(int j = 1; j&lt;=y.size(); j++){
-            if(x[i-1]==y[j-1]){
-                dp[i][j] = dp[i-1][j-1]+1;
-            }
-            ans = max(ans, dp[i][j]);
+int n, m;
+struct edge {
+    int v, w; 
+};
+vector&lt;vector&lt;edge&gt;&gt; graph(100001, vector&lt;edge&gt;());
+struct box {
+    ll node, cost;
+};
+box par[100001][20] = {0,};
+int dep[100001] = {0,};
+int visited[100001] = {0,};
+
+void pre_lca(int node, int depth){
+    visited[node] = 1; 
+    dep[node] = depth;
+    for(edge next: graph[node]){
+        if(visited[next.v]==1)
+            continue;
+        par[next.v][0] = {node, next.w};
+        pre_lca(next.v, depth + 1);
+    }    
+}
+void fill_lca(){
+    for(int i=1; i&lt;=19; i++){
+        for(int j=1; j&lt;=n; j++){
+            box target = par[par[j][i-1].node][i-1];
+            ll node = target.node;
+            ll cost = par[j][i-1].cost + target.cost;
+            par[j][i] = {node, cost};
         }
     }
-    cout &lt;&lt; ans;
+}
+ll route_cost(int a, int b){
+    if(dep[a] &gt; dep[b])
+        swap(a,b);
+
+    ll total_cost = 0;
+    for(int i = 19; i&gt;=0; i--){
+        if(dep[b]-dep[a] &gt;= (1&lt;&lt;i)){
+            total_cost += par[b][i].cost;
+            b = par[b][i].node;
+        }
+    }
+    if(a==b)
+        return total_cost;
+    
+    for(int i = 19; i&gt;=0; i--){
+        if(par[a][i].node!=par[b][i].node){
+            total_cost += par[a][i].cost;
+            total_cost += par[b][i].cost;
+            a = par[a][i].node;
+            b = par[b][i].node;
+        }
+    }
+    return total_cost + par[a][0].cost + par[b][0].cost;
+}
+int search_k_node(int from, int k){
+    for(int i = 19; i&gt;=0; i--){
+        if(k &gt;= (1&lt;&lt;i)){
+            from = par[from][i].node;
+            k-=(1&lt;&lt;i);
+        }
+    }
+    return from;
+}
+int node_k(int a, int b, int k){
+    int org_a = a;
+    int org_b = b;
+    bool is_swapped = false;
+    if(dep[a] &gt; dep[b]){
+        is_swapped = true;
+        swap(a, b);
+    }
+    int a_depth = 0;
+    int b_depth = 0;
+    for(int i = 19; i&gt;=0; i--){
+        if(dep[b]-dep[a] &gt;= (1&lt;&lt;i)){
+            b_depth += (1&lt;&lt;i);
+            b = par[b][i].node;
+        }
+    }
+
+    if(a==b){
+        if(is_swapped)
+            return search_k_node(org_a, k);
+        else
+            return search_k_node(org_b, b_depth - k);
+    }
+    
+    for(int i = 19; i&gt;=0; i--){
+        if(par[a][i].node!=par[b][i].node){
+            a = par[a][i].node;
+            a_depth += (1&lt;&lt;i);
+            b = par[b][i].node;
+            b_depth += (1&lt;&lt;i);
+        }
+    }
+    a = par[a][0].node;
+    a_depth += 1;
+    b = par[b][0].node;
+    b_depth += 1;
+
+    if(is_swapped){
+        if(k &gt; b_depth)
+            return search_k_node(org_b, a_depth-(k-b_depth));
+        else
+            return search_k_node(org_a, k);
+    }
+    else {
+        if(k &gt; a_depth)
+            return search_k_node(org_b, b_depth-(k-a_depth));
+        else
+            return search_k_node(org_a, k);
+    }
+}
+void solve(){
+    cin &gt;&gt; n;
+    int u, v, w; 
+    for(int i = 0; i&lt;n-1; i++){
+        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+        graph[u].push_back({v, w});
+        graph[v].push_back({u, w});
+    }
+    pre_lca(1, 0);
+    fill_lca();
+    cin &gt;&gt; m;
+    int com;
+
+    for(int i = 0; i&lt;m; i++){
+        cin &gt;&gt; com;
+        if(com==1){
+            cin &gt;&gt; u &gt;&gt; v; 
+            cout &lt;&lt; route_cost(u, v) &lt;&lt; '\n';
+        } 
+        else{
+            cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+            cout &lt;&lt; node_k(u, v, w-1) &lt;&lt; '\n';
+        }
+    }
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -154,11 +279,34 @@ int main(){
     solve(); 
     return 0;
 }
+
 </code></pre>
-<p><code>dp[i][j]</code>를 공통 부분 문자열의 길이로 설정한다.</p>
-<p>두 문자열을 <code>s1, s2</code>라 할 때, <code>s1[i]==s2[j]</code>인 경우 <code>dp[i][j] = dp[i-1][j-1]+1</code>이 된다.</p>
+<h3 id="풀이">풀이</h3>
+<p>문제에서 <strong>n개의 정점으로 이루어진 트리(무방향 사이클이 없는 연결 그래프)</strong> 이 주어진다. 이 그래프에서 다음의 두가지 쿼리를 수행할 수 있어야 한다</p>
+<ul>
+<li><code>1 u v</code>: u에서 v로 가는 경로의 비용을 출력한다.</li>
+<li><code>2 u v k</code>: u에서 v로 가는 경로에 존재하는 정점 중에서 k번째 정점을 출력한다. k는 u에서 v로 가는 경로에 포함된 정점의 수보다 작거나 같다.</li>
+</ul>
+<p>트리에서의 한 vertex에서 다른 vertex까지의 경로는, 같은 vertex를 다시 방문하지 않는 경우 최단 경로가 된다. 따라서 문제에서 주어진 경로를 이 최단 경로로 유추할 수 있다.</p>
+<p>두 vertex의 최단 경로는 가장 가까운 공통 조상을 무조건 거치게 된다. 따라서 <a href="/">lca</a> 알고리즘을 활용하여야 한다. 그리고 루트 노드는 트리 구조이기 때문에 어떤 노드로 설정하든 상관없다.</p>
+<p>먼저 첫번째 쿼리는 LCA 알고리즘의 DP 배열을 설정하는 과정에서 cost에 대한 추가 정보를 저장하는 방식으로 해결이 가능하다.</p>
+<p>LCA 알고리즘은 <code>lgN</code>의 시간복잡도를 위해서, DP를 활용하여 특정 vertex의 <code>2^k</code> 에 해당하는 부모 노드 정보를 미리 저장해둔다. 이와 같은 방식으로 특정 vertex의 <code>2^k</code>에 해당하는 부모 노드까지의 cost 정보를 미리 저장해둔다.</p>
+<p>이후 LCA 알고리즘을 통해 공통 부모 노드를 찾아가며, 그 과정에서 점프하게 되는, 즉<code>2^k</code>에 해당하는 부모 노드까지의 cost를 계속 더해주며 구할 수 있다.</p>
+<p>이 방식은 위 코드의 <code>route_cost</code> 함수에 구현되어있다.</p>
+<p>그리고 두번째 쿼리는 LCA 알고리즘의 depth 정보를 사용하여 해결할 수 있다.</p>
+<pre><code class="language-shell">       1
+      / \
+	 2   3
+    / \   \
+   4   5   6
+</code></pre>
+<p>위의 트리에서 노드 4 부터 노드 6까지의 경로에서 4번째 노드, 즉 <code>2 4 6 4</code> 로 쿼리가 주어졌다고 해보자.</p>
+<p>먼저 공통 부모 노드로 부터 각 노드까지의 depth를 구한다. 공통 부모 노드 1 부터 노드 4까지의 depth는 2이고, 공통 부모 노드 1 부터 노드 6까지의 depth는 2가 된다.</p>
+<p>4 -&gt; 6 방향에서 4번째 노드 이므로, 노드 6으로 부터 <code>2(공통 부모 노드에서 노드 6까지의 depth) - (4(k) - (2(공통 부모에서 노드 4까지의 depth) + 1))</code> 번째 부모 노드가 쿼리의 결과 값이 된다.</p>
+<p>이러한 방식으로 각 노드의 depth 정보를 활용하여 쿼리의 값을 계산할 수 있다.</p>
+<p>이 방식은 위 코드의 <code>node_k</code> 함수에 구현되어 있다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>단순하게 생각하자. <a href="/ps/7/boj%209251%20LCS.html">boj 9251 LCS</a>와 비슷하지만 조금 다르다.</p>
+<p><a href="/">lca</a> 알고리즘 관련 문제 <a href="/ps/14/boj%2011437%20LCA.html">boj 11437 LCA</a> <a href="/ps/14/boj%2011438%20LCA%202.html">boj 11438 LCA 2</a> 를 먼저 풀고나니, 이 문제를 해결할 수 있었다.</p>
 
                         </div>
                     </article>
