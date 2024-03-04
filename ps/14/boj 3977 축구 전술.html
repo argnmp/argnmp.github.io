@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 11049 행렬 곱셈 순서</title>
+        <title>boj 3977 축구 전술</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11049 행렬 곱셈 순서</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 3977 축구 전술</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2023-10-14</td>
+                                            <td class="">2024-01-13</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -116,7 +116,9 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
-                            <h3 id="코드">코드</h3>
+                            <h3 id="문제">문제</h3>
+<p><a href="https://www.acmicpc.net/problem/3977">https://www.acmicpc.net/problem/3977</a></p>
+<h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -128,55 +130,113 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
+#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n;
-struct matrix {
-    int r, c;
-};
-int dp[501][501] = {0,}; 
-void solve(){
-    cin &gt;&gt; n;
-    vector&lt;matrix&gt; mats;
-    int r, c;
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; r &gt;&gt; c;
-        mats.push_back({r,c});
+int n, m;
+int g_id = 1, id[100001] = {0,}, done[100001] = {0,};
+vector&lt;int&gt; stk;
+int g_cid = 1, cid[100001] = {0,}, cid_in[100001] = {0,};
+vector&lt;vector&lt;int&gt;&gt; cid_group;
+
+vector&lt;vector&lt;int&gt;&gt; graph(100001, vector&lt;int&gt;());
+
+void reset(){
+    g_id = 1;
+    g_cid = 1;
+    memset(id, 0, sizeof(id));
+    memset(done, 0, sizeof(done));
+    memset(cid, 0, sizeof(cid));
+    memset(cid_in, 0, sizeof(cid_in));
+    cid_group = vector(0, vector&lt;int&gt;());
+    cid_group.push_back(vector&lt;int&gt;());
+    graph = vector(100001, vector&lt;int&gt;());
+}
+int scc(int node){
+    id[node] = g_id;
+    g_id += 1;
+    int parent = id[node];
+    stk.push_back(node); 
+    for(int next: graph[node]){
+        if(id[next]==0)
+            parent = min(parent, scc(next));
+        else if(done[next]==0)
+            parent = min(parent, id[next]);
     }
-    for(int d = 1; d&lt;n; d++){
-        for(int i = 0; i&lt;n-d; i++){
-            // i ~ i+d
-            dp[i][i+d] = INT_MAX;
-            for(int j = i; j&lt;i+d; j++){
-                dp[i][i+d] = min(dp[i][i+d], dp[i][j] + dp[j+1][i+d] + mats[i].r * mats[j].c * mats[i+d].c);
+    if(parent == id[node]){
+        vector&lt;int&gt; tmp;
+        while(1){
+            int cur = stk.back();
+            stk.pop_back();
+            cid[cur] = g_cid;
+            done[cur] = 1;
+            tmp.push_back(cur);
+            if(cur == node)
+                break;
+        }
+        cid_group.push_back(tmp);
+        g_cid += 1;
+    }
+    return parent;
+}
+void solve(){
+    cin &gt;&gt; n &gt;&gt; m;
+    int u, v;
+    for(int i = 0; i&lt;m; i++){
+        cin &gt;&gt; u &gt;&gt; v; 
+        graph[u].push_back(v);
+    }
+    for(int i = 0; i&lt;n; i++){
+        if(done[i]==0)
+            scc(i);
+    }
+    
+    for(int i = 0; i&lt;n; i++){
+        for(int next: graph[i]){
+            if(cid[i] != cid[next]){
+                cid_in[cid[next]] += 1;
             }
         }
     }
-    cout &lt;&lt; dp[0][n-1];
+    
+    vector&lt;int&gt; ans;
+    int count = 0;
+    for(int i = 1; i&lt;g_cid; i++){
+        if(cid_in[i]==0){
+            count += 1;
+            for(int elem: cid_group[i]){
+                ans.push_back(elem);
+            }
+        }
+    }
+    sort(ans.begin(), ans.end());
+    if(count!=1)
+        cout &lt;&lt; &quot;Confused\n&quot;;
+    else{
+        for(int s: ans)
+            cout &lt;&lt; s &lt;&lt; '\n';
+    }
+    cout &lt;&lt; &quot;\n&quot;;
+   
 }
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-    solve(); 
+    int t;
+    cin &gt;&gt; t;
+    while(t--){
+        reset();
+        solve(); 
+    } 
     return 0;
 }
-
 </code></pre>
-<h3 id="풀이">풀이</h3>
-<ul>
-<li>dp로 푸는 문제이다. 점화식을 세워서 풀이하면 된다.</li>
-<li>dp 값을 계산하는 순서는 행렬 사이의 거리가 작은거 부터 큰 순으로 계산하면 된다.
-<ul>
-<li>이를 계산할 때 거리를 늘려가면서 순회를 해야 하는데, 이 부분에서 조금 헷갈린다. <a href="/">거리별 순회</a> 이 코드를 이용하면 된다.</li>
-</ul>
-</li>
-<li><a href="/ps/19/boj%2011066%20%ED%8C%8C%EC%9D%BC%20%ED%95%A9%EC%B9%98%EA%B8%B0.html">boj 11066 파일 합치기</a> 과 동일한 문제이다.</li>
-</ul>
+<p><a href="/ps/14/boj%204196%20%EB%8F%84%EB%AF%B8%EB%85%B8.html">boj 4196 도미노</a> 와 같은 문제이다.</p>
+<p>일단 각 정점이 포함된 가장 큰 사이클을 구해야 한다. 왜냐하면 사이클 내의 정점들은 서로에게 무조건 도달이 가능하기 때문에 이를 하나의 큰 정점으로 볼 수 있기 때문이다.</p>
+<p>가장 큰 사이클은 <a href="/">scc</a> 알고리즘을 통해서 구할 수 있다.</p>
+<p>이 사이클들을 하나의 새로운 정점으로 생각하고, topological sort를 수행한다. 각 사이클의 in degree를 구한뒤, 0인 사이클의 개수를 확인한다. 2개 이상이라면 둘 중에 어떤 사이클에서 시작하더라도 다른 사이클에 도달 할 수가 없기 때문에 이는 <code>Confused</code> 에 해당한다. 1개인 경우 in degree가 0인 사이클 내의 모든 정점에서는 사이클 내의 다른 정점들에 도달이 가능하기 때문에, 사이클 내의 모든 정점을 출력해주면 된다.</p>
 <h3 id="느낀점">느낀점</h3>
-<ul>
-<li><a href="/ps/19/boj%2011066%20%ED%8C%8C%EC%9D%BC%20%ED%95%A9%EC%B9%98%EA%B8%B0.html">boj 11066 파일 합치기</a> 을 풀고 푸니, 그렇게 어렵게 느껴지지 않았다.</li>
-<li>또한 알고리즘 시간에 이미 접해보았던 것 같다.</li>
-</ul>
+<p><a href="/ps/14/boj%204196%20%EB%8F%84%EB%AF%B8%EB%85%B8.html">boj 4196 도미노</a> 를 풀어서 이 문제도 같은 방법으로 풀 수 있었다.</p>
 
                         </div>
                     </article>

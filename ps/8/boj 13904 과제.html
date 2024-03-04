@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 2352 반도체 설계</title>
+        <title>boj 13904 과제</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2352 반도체 설계</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 13904 과제</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-28</td>
+                                            <td class="">2024-02-13</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,9 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2352">https://www.acmicpc.net/problem/2352</a></p>
+<p><a href="https://www.acmicpc.net/problem/13904">https://www.acmicpc.net/problem/13904</a></p>
 <h3 id="풀이">풀이</h3>
-<h4 id="첫번째 풀이">첫번째 풀이</h4>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -135,49 +134,35 @@
 using namespace std;
 using ll = long long;
 int n;
-int match[40001];
-int segt[(1&lt;&lt;17)] = {0,};
-void segt_init(int node, int l, int r){
-}
-void segt_update(int node, int l, int r, int t, int v){
-    int mid = (l+r)/2; 
-    if(l==r){
-        segt[node] = v; 
-        return;
+int board[1001] = {0,};
+struct box{
+    int d, w;
+    bool operator&lt;(const box&amp; t) const {
+        return w &gt; t.w;
     }
-    if(t&lt;=mid)
-        segt_update(node*2, l, mid, t, v); 
-    else
-        segt_update(node*2+1, mid+1, r, t, v);
-
-    segt[node] = max(segt[node*2], segt[node*2+1]);
-}
-int segt_calc(int node, int l, int r, int s, int e){
-    if(l==s &amp;&amp; r==e){
-        return segt[node];
-    }
-    int mid = (l+r)/2; 
-    if(e&lt;=mid){
-        return segt_calc(node*2, l, mid, s, e);       
-    }
-    else if(s&gt;=mid+1){
-        return segt_calc(node*2+1, mid+1, r, s, e);
-    }
-    else {
-        return max(segt_calc(node*2, l, mid+1, s, mid+1), segt_calc(node*2+1, mid+1, r, mid+1, e));
-    }
-    
-}
+};
 void solve(){
     cin &gt;&gt; n;
-    for(int i = 1; i&lt;=n; i++){
-        cin &gt;&gt; match[i];
+    vector&lt;box&gt; tasks;
+    int d, w;
+    for(int i = 0; i&lt;n; i++){
+        cin &gt;&gt; d &gt;&gt; w; 
+        tasks.push_back({d, w});
     }
-    for(int i = 1; i&lt;=n; i++){
-        int maxv = segt_calc(1, 1, n, 1, match[i]); 
-        segt_update(1, 1, n, match[i], maxv+1);
+    sort(tasks.begin(), tasks.end());
+    for(box&amp; t: tasks){
+        for(int i = t.d; i&gt;=1; i--){
+            if(board[i]==0){
+                board[i] = t.w;
+                break;
+            }
+        } 
     }
-    cout &lt;&lt; segt_calc(1, 1, n, 1, n);
+    int ans = 0; 
+    for(int i = 1; i&lt;=1000; i++){
+        ans += board[i];
+    }
+    cout &lt;&lt; ans;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -186,19 +171,12 @@ int main(){
     return 0;
 }
 </code></pre>
-<p>문제에서 주어진 예시는 아래와 같다</p>
-<pre><code>6
-4 2 6 3 1 5
-</code></pre>
-<p>주어진 연결 가능 상태가 <code>seq[i]</code>에 저장되어 있다고 해보자.</p>
-<p>왼쪽 반도체의 <code>i</code>번째 포트는 오른쪽 반도체의 <code>seq[i]</code>포트에 연결할 수 있고, 연결 가능한 최대 개수는 오른쪽 반도체의 <code>1~seq[i]-1</code>범위의 포트의 연결 가능한 최대 개수들 중 최댓값에 1을 더한 것 이라고 할 수 있다.</p>
-<p>최대 40000개의 포트가 있을 수 있으므로, segment tree를 이용해서 빠르게 최댓값을 찾아줄 수 있도록 하였다.</p>
-<h4 id="두번째 풀이">두번째 풀이</h4>
-<p>왼쪽 반도체의 포트 번호가 증가하는 순서대로 오른쪽 반도체의 포트가 정렬되어 있을 때, 가장 긴 증가하는 부분 수열을 찾으면 된다.</p>
-<p>최대 40000개의 포트가 있으므로, <a href="/ps/11/boj%2014003%20%EA%B0%80%EC%9E%A5%20%EA%B8%B4%20%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94%20%EB%B6%80%EB%B6%84%20%EC%88%98%EC%97%B4%205.html">boj 14003 가장 긴 증가하는 부분 수열 5</a> 방식을 사용하면 된다.</p>
+<p>그리디 문제이다.</p>
+<p><code>int board[k]</code> 를 k일에서 수행하는 과제로 정의한다.</p>
+<p>과제의 점수가 큰 순서대로 과제를 정렬한뒤, 과제 마감일인 d부터 1까지 <code>board[i]</code>가 비어있으면 해당 일에 과제의 점수를 넣는다.</p>
+<p>마지막으로 1일 부터 1000일 까지의 점수들을 모두 더해주면 된다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p><a href="/ps/9/boj%202565%20%EC%A0%84%EA%B9%83%EC%A4%84.html">boj 2565 전깃줄</a>과 같은 문제이나, 범위가 늘어났다. 이전에 풀었던 문제지만 기억하지 못하고 증가하는 부분수열로 풀지 않고 segment tree로 풀었다.</p>
-<p>또한 이 문제는 이분 매칭과 관련이 없다는 사실을 기억하자.</p>
+<p>그리디 문제에 해당하는 것을 알고 풀었다. 예전에 풀었던 <a href="/ps/17/boj%2010775%20%EA%B3%B5%ED%95%AD.html">boj 10775 공항</a> 과 비슷한 문제이다.</p>
 
                         </div>
                     </article>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 11376 열혈강호 2</title>
+        <title>boj 11049 행렬 곱셈 순서</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11376 열혈강호 2</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11049 행렬 곱셈 순서</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-01-25</td>
+                                            <td class="">2023-10-14</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -116,9 +116,7 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
-                            <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/11376">https://www.acmicpc.net/problem/11376</a></p>
-<h3 id="풀이">풀이</h3>
+                            <h3 id="코드">코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -130,54 +128,31 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
-#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n, m;
-vector&lt;vector&lt;int&gt;&gt; graph(1001, vector&lt;int&gt;());
-int b_match[1001] = {0,};
-int visited[1001] = {0,};
-bool bi_match(int node, int max_match){
-    int count = max_match;
-    visited[node] = 1;
-    for(int next: graph[node]){
-        if(visited[b_match[next]]==1)
-            continue;
-        if(b_match[next]==0 || bi_match(b_match[next], 1)){
-            count -= 1;
-            b_match[next] = node;
-            if(count == 0)
-                return true;
-            memset(visited, 0, sizeof(visited));
-        }
-    }
-    if(count != max_match)
-        return true;
-
-    return false;
-}
-
+int n;
+struct matrix {
+    int r, c;
+};
+int dp[501][501] = {0,}; 
 void solve(){
-    cin &gt;&gt; n &gt;&gt; m;
-    int k, v;
-    for(int i = 1; i&lt;=n; i++){
-        cin &gt;&gt; k;
-        while(k--){
-            cin &gt;&gt; v;
-            graph[i].push_back(v);        
+    cin &gt;&gt; n;
+    vector&lt;matrix&gt; mats;
+    int r, c;
+    for(int i = 0; i&lt;n; i++){
+        cin &gt;&gt; r &gt;&gt; c;
+        mats.push_back({r,c});
+    }
+    for(int d = 1; d&lt;n; d++){
+        for(int i = 0; i&lt;n-d; i++){
+            // i ~ i+d
+            dp[i][i+d] = INT_MAX;
+            for(int j = i; j&lt;i+d; j++){
+                dp[i][i+d] = min(dp[i][i+d], dp[i][j] + dp[j+1][i+d] + mats[i].r * mats[j].c * mats[i+d].c);
+            }
         }
     }
-    int ans = 0;
-    for(int i = 1; i&lt;=n; i++){
-        memset(visited, 0, sizeof(visited));
-        bi_match(i, 2);
-    }
-    for(int i = 1; i&lt;=m; i++){
-        // printf(&quot;%d: %d\n&quot;, i, b_match[i]);
-        if(b_match[i]!=0)
-            ans += 1;
-    }
-    cout &lt;&lt; ans;
+    cout &lt;&lt; dp[0][n-1];
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -185,18 +160,23 @@ int main(){
     solve(); 
     return 0;
 }
+
 </code></pre>
-<p><a href="/ps/11/boj%2011375%20%EC%97%B4%ED%98%88%EA%B0%95%ED%98%B8.html">boj 11375 열혈강호</a> 에서는 한 사람이 최대 한 개의 일만 할 수 있었지만, 여기서는 최대 두 개까지 일을 할 수 있다.</p>
-<p><code>bi_match</code> 함수에 <code>max_match</code> 값을 받도록 하여, 현재 node에서 몇개의 match까지 찾아주어야 하는지를 전달해줄 수 있도록 했다.</p>
-<p>처음에는 <code>max_match</code> 값이 2로 전달된다. 최대 두 개의 일까지 할 수 있기 때문이다. 특정 node에서 가능한 일을 탐색하는 과정에서 이미 매칭이 되어 있는 일 이라면, <code>bi_match</code>의 <code>max_match</code> 값을 1로 해서 재귀적으로 호출한다. 현재 탐색 중인 일에 대하여 하나만 매칭을 시키면 되기 때문이다.</p>
-<p>이후 그 다음 일을 매칭하기 위해서는, 이번 매칭은 이전 매칭과 별개이기 때문에 visited 배열을 초기화한다.</p>
-<p>나는 위와 같은 방식으로 풀었지만, 검색해보니 다음과 같은 두가지 방식으로 풀이가 가능하다.</p>
-<ol>
-<li>한 사람당 <code>bi_match</code>를 두 번씩 호출해주는 방법</li>
-<li>직원의 수를 두 배로 늘려서(복제된 직원은, 원본 직원과 같은 일을 수행할 수 있도록 한다.) 계산하는 방법</li>
-</ol>
+<h3 id="풀이">풀이</h3>
+<ul>
+<li>dp로 푸는 문제이다. 점화식을 세워서 풀이하면 된다.</li>
+<li>dp 값을 계산하는 순서는 행렬 사이의 거리가 작은거 부터 큰 순으로 계산하면 된다.
+<ul>
+<li>이를 계산할 때 거리를 늘려가면서 순회를 해야 하는데, 이 부분에서 조금 헷갈린다. <a href="/">거리별 순회</a> 이 코드를 이용하면 된다.</li>
+</ul>
+</li>
+<li><a href="/ps/20/boj%2011066%20%ED%8C%8C%EC%9D%BC%20%ED%95%A9%EC%B9%98%EA%B8%B0.html">boj 11066 파일 합치기</a> 과 동일한 문제이다.</li>
+</ul>
 <h3 id="느낀점">느낀점</h3>
-<p>약간 복잡하게 푼 느낌이 있다. 핵심을 이해하는 것이 중요하다.</p>
+<ul>
+<li><a href="/ps/20/boj%2011066%20%ED%8C%8C%EC%9D%BC%20%ED%95%A9%EC%B9%98%EA%B8%B0.html">boj 11066 파일 합치기</a> 을 풀고 푸니, 그렇게 어렵게 느껴지지 않았다.</li>
+<li>또한 알고리즘 시간에 이미 접해보았던 것 같다.</li>
+</ul>
 
                         </div>
                     </article>

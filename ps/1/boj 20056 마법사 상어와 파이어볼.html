@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 2166 다각형의 면적</title>
+        <title>boj 20056 마법사 상어와 파이어볼</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2166 다각형의 면적</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 20056 마법사 상어와 파이어볼</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2023-12-18</td>
+                                            <td class="">2024-03-04</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,10 +117,9 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2166">https://www.acmicpc.net/problem/2166</a></p>
-<h3 id="코드">코드</h3>
-<pre><code class="language-c++">#include &lt;cmath&gt;
-#include &lt;iostream&gt;
+<p><a href="https://www.acmicpc.net/problem/20056">https://www.acmicpc.net/problem/20056</a></p>
+<h3 id="풀이">풀이</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
 #include &lt;vector&gt;
@@ -131,33 +130,110 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
+#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n;
-struct coord {
-    double x, y;
-};
-/*
- * u = (p2.x-p1.x, p2.y-p1.y, 0)
- * v = (p3.x-p1.x, p3.y-p1.y, 0)
- * u x v = (0, 0, )
- */
-double ccw(coord p1, coord p2, coord p3){
-    return (p2.x-p1.x)*(p3.y-p1.y) - (p2.y-p1.y)*(p3.x-p1.x);
-}
-void solve(){
-    cin &gt;&gt; n; 
-    coord c;
-    cin &gt;&gt; c.x &gt;&gt; c.y;
-    coord a, b;
-    cin &gt;&gt; a.x &gt;&gt; a.y;
-    double ans = 0;
-    for(int i = 0; i&lt;n-2; i++){
-        cin &gt;&gt; b.x &gt;&gt; b.y;
-        ans += ccw(c, a, b)/2; 
-        swap(a, b);
+int n, m, k;
+int dx[8] = {-1, -1, 0, 1, 1, 1, 0, -1};
+int dy[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+struct pos{
+    int x, y;
+    pos adj(int i){
+        pos next = {x+dx[i], y+dy[i]};
+        if(next.x &lt; 0)
+            next.x = n-1;
+        else if(next.x &gt;= n)
+            next.x = 0;
+        
+        if(next.y &lt; 0)
+            next.y = n-1;
+        else if(next.y &gt;= n)
+            next.y = 0;
+
+        return next;        
     }
-    printf(&quot;%.1lf&quot;, abs(round(ans*10)/10));
+    void print(){
+        printf(&quot;[%d, %d]&quot;, x, y);
+    }
+};
+struct box{
+    pos p;
+    int m, s, d;
+    void print(){
+        p.print();
+        printf(&quot; -&gt; m: %d, s: %d, d: %d\n&quot;, m, s, d);
+    }
+};
+vector&lt;box&gt; board[50][50];
+void solve(){
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    int r, c, mass, s, d;
+    for(int i = 0; i&lt;m; i++){
+        cin &gt;&gt; r &gt;&gt; c &gt;&gt; mass &gt;&gt; s &gt;&gt; d;
+        box target = {{r-1,c-1}, mass, s, d};
+        board[target.p.x][target.p.y].push_back(target);
+    }
+    while(k--){
+        // cout &lt;&lt; k &lt;&lt; endl;
+        vector&lt;box&gt; pending;
+        for(int i = 0; i&lt;n; i++){
+            for(int j = 0; j&lt;n; j++){
+                while(!board[i][j].empty()){
+                    box cur = board[i][j].back();
+                    board[i][j].pop_back();
+                    // cur.print();
+                    pos next = cur.p;
+                    for(int i = 0; i&lt;cur.s; i++){
+                        next = next.adj(cur.d);
+                    }
+                    pending.push_back({next, cur.m, cur.s, cur.d});
+                }
+            }
+        }
+        for(auto&amp; t:pending){
+            board[t.p.x][t.p.y].push_back(t);
+        }
+        // cout &lt;&lt; &quot;after movement&quot; &lt;&lt; endl;
+        for(int i = 0; i&lt;n; i++){
+            for(int j = 0; j&lt;n; j++){
+                if(board[i][j].size() &gt; 1){
+                    int merged_size = board[i][j].size();
+                    int mass_acc = 0; 
+                    int velo_acc = 0;
+                    bool dir_all_same = true;
+                    int dir_target = board[i][j][0].d % 2; // 0: even, 1: odd 
+                    
+                    while(!board[i][j].empty()){
+                        box cur = board[i][j].back(); 
+                        // cur.print();
+                        board[i][j].pop_back();
+                        mass_acc += cur.m; 
+                        velo_acc += cur.s;
+                        if(dir_all_same &amp;&amp; !(dir_target == cur.d % 2)){
+                            dir_all_same = false;
+                        }
+                    }
+                    int d = (dir_all_same) ? 0 : 1;
+                    for(int z = 0; z&lt;4; z++, d+=2){
+                        if(mass_acc / 5 == 0)
+                            continue;
+                        board[i][j].push_back({{i, j}, mass_acc / 5, velo_acc / merged_size, d});
+                    } 
+                }
+            }
+        }
+    }
+    int ans = 0;
+    for(int i = 0; i&lt;n; i++){
+        for(int j = 0; j&lt;n; j++){
+            if(board[i][j].size() != 0){
+                for(const auto&amp; t: board[i][j]){
+                    ans += t.m;
+                }
+            }
+        }
+    }
+    cout &lt;&lt; ans;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -165,17 +241,11 @@ int main(){
     solve(); 
     return 0;
 }
-
 </code></pre>
-<h3 id="풀이">풀이</h3>
-<p><a href="/ps/15/boj%2011758%20CCW.html">boj 11758 CCW</a> 에서 벡터의 외적을 사용한 것 처럼, 이 문제에서도 벡터의 외적을 사용하면 된다.</p>
-<p>평면의 두 벡터를 외적한 결과물은, 이 벡터들이 이루는 평행사변형의 넓이와 같다. 이 넓이를 2로 나누면, 벡터의 시작점과 끝점들이 이루는 삼각형의 넓이를 구할 수 있다.</p>
-<p><a href="https://ip99202.github.io/posts/%EB%B0%B1%EC%A4%80-2166-%EB%8B%A4%EA%B0%81%ED%98%95%EC%9D%98-%EB%A9%B4%EC%A0%81/">https://ip99202.github.io/posts/%EB%B0%B1%EC%A4%80-2166-%EB%8B%A4%EA%B0%81%ED%98%95%EC%9D%98-%EB%A9%B4%EC%A0%81/</a>
-이 링크에 있는 볼록다각형과 오목다각형을 각각 A, B라 하겠다.</p>
-<p>그림 A와 B모두, a -&gt; b -&gt; c -&gt; d -&gt; e -&gt; f 순서대로 점이 주어진다. 그렇기 때문에, (a, b, c), (a, c, d), (a, d, e), (a, e, f) 순서대로 외적을 하면 삼각형의 넓이를 얻을 수 있다.</p>
-<p>그림 A의 경우 위의 순서대로 외적을 하면, 결과 값이 모두 음수가 나온다.(시계방향이므로) 하지만 그림 B의 경우 위의 순서대로 외적을 하면, (a, b, c)는 양수, (a, c, d)는 음수가 나온다. 필요한 것은 삼각형(a, c, d)에서 삼각형(a, b, c)를 뺀 넓이 이므로, 순서대로 모두 외적한 결과 값을 더하고 마지막 최종 결과값에 절댓값을 만들어주어야 한다.</p>
+<p>문제 그대로 모든 경우의 수에 대해서 움직여주면 된다.</p>
+<p>구현 문제이다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>이전에 풀어본 문제이다. 마지막에 절댓값을 만들어주어야 한다는 것을 생각하지 못하였다.</p>
+<p>이 풀이는 다른 정답에 비해 실행시간이 느리게 나왔다. 파이어볼의 다음 위치를 계산하는 부분에서 모듈러 연산을 사용해서 실행시간을 단축시킬 수 있다. 실행시간을 줄일 수 있도록 다음에 다시 풀어보자.</p>
 
                         </div>
                     </article>
