@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 11047 동전 0</title>
+        <title>boj 25342 최대 최소공배수</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11047 동전 0</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 25342 최대 최소공배수</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -91,19 +91,23 @@
                                             <th scope="row" class="pr-4">
                                                 author
                                             </th>
-                                            <td class="">undefined</td>
+                                            <td class="">Taehyeon Kim</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">undefined</td>
+                                            <td class="">2024-03-08</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 tags
                                             </th>
                                             <td class="">
+                                                
+                                                <p class="inline">#boj </p>
+                                                
+                                                <p class="inline">#ps </p>
                                                 
                                             </td>
                                         </tr>
@@ -112,7 +116,95 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
-                            
+                            <h3 id="문제">문제</h3>
+<p><a href="https://www.acmicpc.net/problem/25342">https://www.acmicpc.net/problem/25342</a></p>
+<h3 id="풀이">풀이</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+using namespace std;
+using ll = long long;
+int t;
+void solve(){
+    cin &gt;&gt; t;
+    ll n;
+    while(t--){
+        cin &gt;&gt; n;
+        if(n%2!=0){
+            cout &lt;&lt; n*(n-1)*(n-2) &lt;&lt; '\n';
+        }
+        else {
+            ll maxv = -1;       
+            maxv = max(maxv, n*(n-1)*(n-2)/2);
+            if(n-3&gt;=1){
+                if((n-3)%3==0){
+                    maxv = max(maxv, n*(n-1)*(n-3)/3);
+                }
+                else {
+                    maxv = max(maxv, n*(n-1)*(n-3));
+                }
+                
+                maxv = max(maxv, (n-1)*(n-2)*(n-3));
+            }
+            cout &lt;&lt; maxv &lt;&lt; '\n';
+        }
+        
+    }
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+</code></pre>
+<p>n이 10일 때, 고를 수 있는 수는 다음과 같다.</p>
+<pre><code>1 2 3 4 5 6 7 8 9 10
+</code></pre>
+<p>여기서 두 개의 수를 골라서 가장 큰 최소공배수를 찾는다면, 바로 <code>(n-1)*n</code>이 될 것이다.</p>
+<p>고른 두 개의 수의 최대공약수가 k가 되기 위해서는 두 개의 수의 차이가 k이상일 때만 가능하다. 왜냐하면 두 개의 수가 다르기 때문에 <code>k*A</code>, <code>k*B</code>, <code>A&gt;B</code>로 나타낼 수 있고 A와 B는 정수이기 때문에 1이상 차이가 나므로, <code>k*A = k*(B + A - B) = k*B + k*(A-B)</code>가 되기 때문이다.</p>
+<p>그렇기 때문에 <code>n-1</code>과 <code>n</code>을 고른다면 최대공약수는 1이 되는 동시에, 가장 큰 두 수 이므로 가장 큰 최소공배수를 가진다고 할 수 있다.</p>
+<p>여기서 한 개의 수를 더 고른다고 해보자. 이는 n이 홀수일 때와 짝수일 때로 나뉜다.</p>
+<p>만약 n이 홀수인 경우, 세개의 수는 <code>n-2</code>, <code>n-1</code>, <code>n</code>이 된다.  세개의 수의 최대공약수를 각각 확인해보면, <code>n-2</code>와 <code>n-1</code>은 1, <code>n-1</code>과 <code>n</code>도 1 이므로 신경 쓸 필요가 없고, <code>n-2</code>와 <code>n</code>을 생각해보아야 한다. <code>n-2</code>와 <code>n</code>의 차이는 2이므로 최대공약수의 후보는 1과 2이고, n이 홀수 이므로 2는 최대공약수가 될 수 없다.</p>
+<p>따라서 고른 세개의 수 중에 최대공약수는 존재하지 않으므로, 최소공배수는 <code>(n-2)*(n-1)*n</code>이 된다.</p>
+<p>만약 n이 짝수인 경우 세가지의 경우의 수를 비교해볼 수 있다.</p>
+<ul>
+<li><code>n-2</code>, <code>n-1</code>, <code>n</code>을 고른 경우
+<ul>
+<li><code>n-2</code>과 <code>n-1</code>의 최대공약수는 1, <code>n-1</code>과 <code>n</code>의 최대공약수는 1 이므로 신경쓰지 않아도 된다. <code>n-2</code>와 <code>n</code>의 차이는 2로 가능한 최대공약수는 1과 2인데, n이 짝수이므로 최대공약수는 2가 된다.</li>
+<li>따라서 최소공배수는 <code>(n-2)*(n-1)*n/2</code>가 된다.</li>
+</ul>
+</li>
+<li><code>n-3</code>, <code>n-1</code>, <code>n</code>을 고른 경우
+<ul>
+<li><code>n-1</code>과 <code>n</code>의 최대공약수는 1이므로 신경쓰지 않아도 된다. <code>n-1</code>과 <code>n-3</code>의 차이는 2이고 <code>n-1</code>이 홀수이므로 최대공약수는 1이 되어 신경쓰지 않아도 된다.</li>
+<li><code>n-3</code>과 <code>n</code>의 차이는 3으로, 가능한 최대공약수는 1과 3인데, n이 3으로 나누어 떨어진다면 최대공약수는 3이 되어, 최소공배수는 <code>(n-3)*(n-1)*n/3</code>이 된다. 3으로 나누어 떨어지지 않는다면 최대공약수는 1이 되어, 최소공배수는 <code>(n-3)*(n-1)*n</code>이 된다.</li>
+</ul>
+</li>
+<li><code>n-3</code>, <code>n-2</code>, <code>n</code>을 고른 경우
+<ul>
+<li>이 경우는 <code>n-3</code>, <code>n-1</code>, <code>n</code>을 고른 경우 보다 더 작은 최소공배수가 나올 수 밖에 없으므로, 고려할 필요가 없다.</li>
+</ul>
+</li>
+<li><code>n-3</code>, <code>n-2</code>, <code>n-1</code>을 고른 경우
+<ul>
+<li><code>n-1</code>이 홀수이므로, 최소공배수는 <code>(n-3)*(n-2)*(n-1)</code>이 된다.
+이 이외의 경우의 수는 존재하지 않는데, 왜냐하면 <code>n-3</code>, <code>n-2</code>, <code>n-1</code>을 고른 경우의 수에서 이미 최대의 최소공배수를 찾았기 때문이다. 따라서 위의 경우의 수들 중 최댓값이 문제에서 구하려는 최소공배수가 된다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="느낀점">느낀점</h3>
+<p>신기한 문제였다.</p>
+
                         </div>
                     </article>
 

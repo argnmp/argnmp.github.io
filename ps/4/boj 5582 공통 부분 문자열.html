@@ -91,23 +91,19 @@
                                             <th scope="row" class="pr-4">
                                                 author
                                             </th>
-                                            <td class="">Taehyeon Kim</td>
+                                            <td class="">undefined</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-23</td>
+                                            <td class="">undefined</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 tags
                                             </th>
                                             <td class="">
-                                                
-                                                <p class="inline">#boj </p>
-                                                
-                                                <p class="inline">#ps </p>
                                                 
                                             </td>
                                         </tr>
@@ -116,50 +112,7 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
-                            <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/5582">https://www.acmicpc.net/problem/5582</a></p>
-<h3 id="풀이">풀이</h3>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;climits&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;map&gt;
-#include &lt;unordered_map&gt;
-#include &lt;set&gt;
-#include &lt;unordered_set&gt;
-#include &lt;bitset&gt;
-#include &lt;cstring&gt;
-#include &lt;cmath&gt;
-using namespace std;
-using ll = long long;
-string x, y;
-int dp[4001][4001] = {0,};
-int ans = -1;
-void solve(){
-    cin &gt;&gt; x &gt;&gt; y;
-    for(int i = 1; i&lt;=x.size(); i++){
-        for(int j = 1; j&lt;=y.size(); j++){
-            if(x[i-1]==y[j-1]){
-                dp[i][j] = dp[i-1][j-1]+1;
-            }
-            ans = max(ans, dp[i][j]);
-        }
-    }
-    cout &lt;&lt; ans;
-}
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    solve(); 
-    return 0;
-}
-</code></pre>
-<p><code>dp[i][j]</code>를 공통 부분 문자열의 길이로 설정한다.</p>
-<p>두 문자열을 <code>s1, s2</code>라 할 때, <code>s1[i]==s2[j]</code>인 경우 <code>dp[i][j] = dp[i-1][j-1]+1</code>이 된다.</p>
-<h3 id="느낀점">느낀점</h3>
-<p>단순하게 생각하자. <a href="/ps/8/boj%209251%20LCS.html">boj 9251 LCS</a>와 비슷하지만 조금 다르다.</p>
-
+                            
                         </div>
                     </article>
 

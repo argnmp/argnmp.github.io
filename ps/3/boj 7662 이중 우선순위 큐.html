@@ -91,23 +91,19 @@
                                             <th scope="row" class="pr-4">
                                                 author
                                             </th>
-                                            <td class="">Taehyeon Kim</td>
+                                            <td class="">undefined</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-27</td>
+                                            <td class="">undefined</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 tags
                                             </th>
                                             <td class="">
-                                                
-                                                <p class="inline">#boj </p>
-                                                
-                                                <p class="inline">#ps </p>
                                                 
                                             </td>
                                         </tr>
@@ -116,99 +112,7 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
-                            <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/7662">https://www.acmicpc.net/problem/7662</a></p>
-<h3 id="풀이">풀이</h3>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;climits&gt;
-#include &lt;iterator&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;map&gt;
-#include &lt;unordered_map&gt;
-#include &lt;set&gt;
-#include &lt;unordered_set&gt;
-#include &lt;bitset&gt;
-#include &lt;cstring&gt;
-#include &lt;cmath&gt;
-using namespace std;
-using ll = long long;
-int k;
-void solve(){
-    cin &gt;&gt; k;
-    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq;
-    multiset&lt;int&gt; minq_deleted;
-    priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxq;
-    multiset&lt;int&gt; maxq_deleted;
-    char com;
-    int num;
-    for(int i = 0; i&lt;k; i++){
-        cin &gt;&gt; com;
-        cin &gt;&gt; num;  
-        if(com=='I'){
-            minq.push(num);
-            maxq.push(num);
-        }
-        else {
-            if(num==-1){
-                // printf(&quot;minq size: %d\n&quot;, minq.size());
-                multiset&lt;int&gt;::iterator iter;
-                while(!minq.empty() &amp;&amp; (iter = minq_deleted.find(minq.top())) != minq_deleted.end()) {
-                    minq.pop();
-                    minq_deleted.erase(iter);
-                } 
-                if(minq.empty())
-                    continue;
-                maxq_deleted.insert(minq.top());
-                minq.pop();
-            } 
-            else {
-                // printf(&quot;maxq size: %d\n&quot;, maxq.size());
-                multiset&lt;int&gt;::iterator iter;
-                while(!maxq.empty() &amp;&amp; (iter = maxq_deleted.find(maxq.top())) != maxq_deleted.end()) {
-                    maxq.pop();
-                    maxq_deleted.erase(iter);
-                } 
-                if(maxq.empty())
-                    continue;
-                minq_deleted.insert(maxq.top());
-                maxq.pop();
-            }
-        }
-    }
-    multiset&lt;int&gt;::iterator iter;
-    while(!minq.empty() &amp;&amp; (iter = minq_deleted.find(minq.top())) != minq_deleted.end()) {
-        minq.pop();
-        minq_deleted.erase(iter);
-    } 
-    while(!maxq.empty() &amp;&amp; (iter = maxq_deleted.find(maxq.top())) != maxq_deleted.end()) {
-        maxq.pop();
-        maxq_deleted.erase(iter);
-    } 
-    if(minq.empty() || maxq.empty()){
-        cout &lt;&lt; &quot;EMPTY&quot; &lt;&lt; '\n';
-    }
-    else {
-        cout &lt;&lt; maxq.top() &lt;&lt; ' ' &lt;&lt; minq.top() &lt;&lt; '\n';
-    }
-}
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    int t;
-    cin &gt;&gt; t;
-    while(t--)
-        solve(); 
-    return 0;
-}
-</code></pre>
-<p>문제의 제목 그대로 두개의 priority queue <code>maxq</code>와 <code>minq</code>를 각각 최댓값 최솟값이 위로 올라오게 하여, 숫자가 주어질 때마다 두 개 모두에 넣는다.</p>
-<p>여기에 추가로 deleted 된 수들을 나타내는 priority_queue <code>maxq_deleted</code>와 <code>minq_delete</code>를 두어서 해당 queue에서 deleted된 수들을 가지고 있도록 한다.</p>
-<p>deleted 명령이 발생할 때마다, <code>maxq</code>와 <code>minq</code>각각 <code>maxq_deleted</code>와 <code>minq_deleted</code>의 top이 일치한다면 먼저 pop을 해준 뒤, 처리해주면 된다.</p>
-<h3 id="느낀점">느낀점</h3>
-<p>deleted된 값들을 저장하기 위해서 priority queue를 사용한 경우 644ms, unordered_multiset을 사용한 경우 928ms, multiset을 사용한 경우 1428ms가 소요되었다.</p>
-
+                            
                         </div>
                     </article>
 

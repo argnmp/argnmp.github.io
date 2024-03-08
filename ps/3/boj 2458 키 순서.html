@@ -117,9 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2458">https://www.acmicpc.net/problem/2458</a></p>
+<p><a href="https://www.acmicpc.net/problem/1759">https://www.acmicpc.net/problem/1759</a></p>
 <h3 id="풀이">풀이</h3>
-<h4 id="첫번째 풀이">첫번째 풀이</h4>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -134,77 +133,29 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n, m;
-vector&lt;vector&lt;int&gt;&gt; graph(501, vector&lt;int&gt;());
-vector&lt;vector&lt;int&gt;&gt; graph_rev(501, vector&lt;int&gt;());
-int in[501] = {0};
-int in_rev[501] = {0};
-
+int l, c;
+char seq[15];
+void calc(int sel, int idx, int vowel, int consonant, string acc){
+    if(sel == l &amp;&amp; vowel &gt;= 1 &amp;&amp; consonant &gt;= 2){
+        cout &lt;&lt; acc &lt;&lt; '\n';
+        return;
+    }
+    for(int i = idx; i&lt;c; i++){
+        if(seq[i]=='a'||seq[i]=='e'||seq[i]=='i'||seq[i]=='o'||seq[i]=='u'){
+            calc(sel+1, i+1, vowel+1, consonant, acc + seq[i]);
+        } 
+        else {
+            calc(sel+1, i+1, vowel, consonant+1, acc + seq[i]);
+        }
+    } 
+}
 void solve(){
-    cin &gt;&gt; n &gt;&gt; m;
-    int u, v;
-    for(int i = 0; i&lt;m; i++){
-        cin &gt;&gt; u &gt;&gt; v; 
-        graph[u].push_back(v);
-        in[v] += 1;
-        graph_rev[v].push_back(u);
-        in_rev[u] += 1;
+    cin &gt;&gt; l &gt;&gt; c;
+    for(int i = 0; i&lt;c; i++){
+        cin &gt;&gt; seq[i];
     }
-
-    int cur_count[501][501] = {0,};
-    queue&lt;int&gt; q;
-    for(int i = 1; i&lt;=n; i++){
-        if(in[i]==0){
-            q.push(i);
-        }
-    }
-    while(!q.empty()){
-        int cur = q.front();
-        q.pop();
-        for(int next: graph[cur]){
-            for(int i = 1; i&lt;=500; i++){
-                if(cur_count[cur][i]==1)
-                    cur_count[next][i] = 1;
-            }
-            cur_count[next][cur] = 1;
-            in[next] -= 1; 
-            if(in[next]==0)
-                q.push(next);
-        }
-    }
-    int cur_count_rev[501][501] = {0,};
-    for(int i = 1; i&lt;=n; i++){
-        if(in_rev[i]==0){
-            q.push(i);
-        }
-    }
-    while(!q.empty()){
-        int cur = q.front();
-        q.pop();
-        for(int next: graph_rev[cur]){
-            for(int i = 1; i&lt;=500; i++){
-                if(cur_count_rev[cur][i]==1)
-                    cur_count_rev[next][i] = 1;
-            }
-            cur_count_rev[next][cur] = 1;
-            in_rev[next] -= 1; 
-            if(in_rev[next]==0)
-                q.push(next);
-            
-        }
-    }
-
-    int ans = 0;
-    for(int i = 1; i&lt;=n; i++){
-        int acc = 0;
-        for(int j = 1; j&lt;=n; j++){
-            if(cur_count[i][j]==1 || cur_count_rev[i][j]==1) 
-                acc += 1;
-        }
-        if(acc==n-1)
-            ans += 1;
-    }
-    cout &lt;&lt; ans;
+    sort(seq, seq+c);
+    calc(0, 0, 0, 0, &quot;&quot;);
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -213,68 +164,10 @@ int main(){
     return 0;
 }
 </code></pre>
-<p>문제에서 주어진 것처럼, <code>키 작은 사람 -&gt; 키 큰 사람</code> 으로 그래프를 만들어 준다.</p>
-<p>먼저 그래프의 정방향으로 topological sort를 하여, 각 노드에서 보다 키가 작은 노드의 개수를 구해준다. 그리고 그래프의 역방향으로(화살표 방향을 반대로 한다) topological sort를 하여, 각 노드에서 보다 키가 큰 노드의 개수를 구해준다.</p>
-<p>노드의 개수를 찾기 위해, 각 탐색마다 다음 노드에 현재 노드 이전의 노드들을 표시해 놓은 값들을 그대로 복사해준다.</p>
-<p>이 두 값을 더해주었을 때 <code>n-1</code>이라는 것은 해당 노드보다 키가 작은 노드의 개수와 키가 큰 노드의 개수를 정확히 알 수 있다는 뜻이 된다.</p>
-<h4 id="두번째 풀이: dfs">두번째 풀이: dfs</h4>
-<p>정방향과 역방향으로 현재 탐색중인 노드에서 도달가능한 노드의 개수를 센다. 이 둘을 더했을 때 합이 <code>n-1</code>이면 정확한 순서를 알 수 있는 경우의 수가 된다.</p>
-<h4 id="세번째 풀이: floyd-warshall">세번째 풀이: floyd-warshall</h4>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;climits&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;map&gt;
-#include &lt;unordered_map&gt;
-#include &lt;set&gt;
-#include &lt;unordered_set&gt;
-#include &lt;bitset&gt;
-#include &lt;cstring&gt;
-#include &lt;cmath&gt;
-using namespace std;
-using ll = long long;
-int n, m;
-int fdw[501][501] = {0,};
-void solve(){
-    fill(&amp;fdw[0][0], &amp;fdw[500][501], INT_MAX);
-    cin &gt;&gt; n &gt;&gt; m;
-    int u, v;
-    for(int i = 0; i&lt;m; i++){
-        cin &gt;&gt; u &gt;&gt; v;
-        fdw[u][v] = 1;
-    }
-    for(int k = 1; k &lt;= n; k++)
-        for(int i = 1; i&lt;=n; i++)
-            for(int j = 1; j&lt;=n; j++)
-                if(fdw[i][k]!=INT_MAX &amp;&amp; fdw[k][j]!=INT_MAX &amp;&amp; fdw[i][k] + fdw[k][j] &lt; fdw[i][j])
-                    fdw[i][j] = fdw[i][k] + fdw[k][j];
-
-
-    int ans = 0;
-    for(int target = 1; target &lt;= n; target += 1){
-        int acc = 0;
-        for(int t = 1; t&lt;=n; t++){
-            if(fdw[target][t]!=INT_MAX || fdw[t][target]!=INT_MAX)
-                acc += 1;
-        }
-        if(acc==n-1)
-            ans += 1;
-    }
-    cout &lt;&lt; ans;
-}
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    solve(); 
-    return 0;
-}
-</code></pre>
-<p><code>키 작은 사람 -&gt; 키 큰 사람</code> 으로 간선을 표시해주고, floyd-warshall 알고리즘을 돌린다.</p>
-<p>이후 첫번째 사람부터 n번째 사람까지 순회하면서, 현재 사람보다 키 작은 사람과 키 큰 사람의 수를 더했을 때 <code>n-1</code>이면 키를 정확하게 알 수 있는 경우이다.</p>
-<p>현재 <code>i</code>번째 사람을 탐색하고 있을 때, 키 작은 사람은 <code>fdw[1~n][i] != INT_MAX</code>인 값의 개수이고, 키 큰 사람은 <code>fdw[i][1~n] != INT_MAX</code>인 값의 개수이다. 도달 불가능한 경우라면 값이 <code>INT_MAX</code>일 것이기 때문이다.</p>
+<p>주어진 알파벳들을 먼저 정렬한다.</p>
+<p>그리고 <code>l</code>개의 조합을 구한 뒤(정렬을 먼저했으므로 정렬된 순서로 탐색된다) 자음과 모음수가 일치하면, 출력한다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>dfs나 floyd-warshall을 생각하지 못하고 조금 복잡하게 처리하였다. 주의하자.</p>
+<p>자음 모음 조건을 먼저 맞춰보려 했는데, 먼저 탐색을 한 뒤 조건을 맞춰보는 편이 간단하다.</p>
 
                         </div>
                     </article>

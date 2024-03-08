@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 14719 빗물</title>
+        <title>boj 1890 점프</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 14719 빗물</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1890 점프</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -91,23 +91,19 @@
                                             <th scope="row" class="pr-4">
                                                 author
                                             </th>
-                                            <td class="">Taehyeon Kim</td>
+                                            <td class="">undefined</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-28</td>
+                                            <td class="">undefined</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 tags
                                             </th>
                                             <td class="">
-                                                
-                                                <p class="inline">#boj </p>
-                                                
-                                                <p class="inline">#ps </p>
                                                 
                                             </td>
                                         </tr>
@@ -116,61 +112,7 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
-                            <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/14719">https://www.acmicpc.net/problem/14719</a></p>
-<h3 id="풀이">풀이</h3>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;climits&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;map&gt;
-#include &lt;unordered_map&gt;
-#include &lt;set&gt;
-#include &lt;unordered_set&gt;
-#include &lt;bitset&gt;
-#include &lt;cstring&gt;
-#include &lt;cmath&gt;
-using namespace std;
-using ll = long long;
-int h, w;
-int seq[500];
-int calc_max(int l, int r){
-    if(l&gt;r)
-        return 0;
-    int v = 0;
-    for(int i  = l; i&lt;=r; i++)
-        v = max(v, seq[i]); 
-    return v;
-}
-void solve(){
-    cin &gt;&gt; h &gt;&gt; w;
-    for(int i = 0; i&lt;w; i++)
-        cin &gt;&gt; seq[i];
-
-    int ans = 0;
-    for(int i = 0; i&lt;w; i++){
-        int l = calc_max(0, i-1);
-        int r = calc_max(i+1, w-1);
-        int t = min(l, r);
-        // cout &lt;&lt; i &lt;&lt; &quot;: &quot; &lt;&lt; t &lt;&lt; &quot; - &quot; &lt;&lt; seq[i] &lt;&lt; endl;
-        if(t - seq[i] &gt; 0) 
-            ans += t-seq[i];
-    }
-    cout &lt;&lt; ans;
-}
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    solve(); 
-    return 0;
-}
-</code></pre>
-<p>각 열마다 왼쪽에 있는 벽 중 최대 높이와 오른쪽에 있는 벽 중 최대 높이를 구한다.</p>
-<p>여기서 구한 두개의 높이 중 낮은 높이에서 현재 열의 높이를 뺀 값이 해당 열에서의 빗물의 양이 된다.</p>
-<h3 id="느낀점">느낀점</h3>
-<p>어제 유튜브로 풀이를 봤었는데, 이 방식을 사용하지 않고 앞에서 부터 스택으로 풀어보려다가 디버깅 하는데 오랜 시간을 들이고 풀지 못했다. 조건이 너무 복잡해졌다. 이렇게 굉장히 복잡해진다면 다른 풀이를 생각해보자.</p>
-
+                            
                         </div>
                     </article>
 

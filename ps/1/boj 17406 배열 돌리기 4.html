@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 11047 동전 0</title>
+        <title>boj 17406 배열 돌리기 4</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11047 동전 0</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 17406 배열 돌리기 4</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -91,19 +91,23 @@
                                             <th scope="row" class="pr-4">
                                                 author
                                             </th>
-                                            <td class="">undefined</td>
+                                            <td class="">Taehyeon Kim</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">undefined</td>
+                                            <td class="">2024-03-08</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
                                                 tags
                                             </th>
                                             <td class="">
+                                                
+                                                <p class="inline">#boj </p>
+                                                
+                                                <p class="inline">#ps </p>
                                                 
                                             </td>
                                         </tr>
@@ -112,7 +116,138 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
-                            
+                            <h3 id="문제">문제</h3>
+<p><a href="https://www.acmicpc.net/problem/17406">https://www.acmicpc.net/problem/17406</a></p>
+<h3 id="풀이">풀이</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+using namespace std;
+using ll = long long;
+int n, m, k;
+vector&lt;vector&lt;int&gt;&gt; board(50, vector&lt;int&gt;(50));
+struct pos {
+    int x, y;
+    bool operator!=(const pos&amp; t) const {
+        return x!=t.x||y!=t.y;
+    }
+    void print(){
+        printf(&quot;[%d, %d]\n&quot;, x, y);
+    }
+};
+struct box{
+    pos p;
+    int s;
+};
+vector&lt;box&gt; rot;
+int visited[6] = {0,};
+void print(vector&lt;vector&lt;int&gt;&gt; mat){
+    for(int i = 0; i&lt;n; i++){
+        for(int j = 0; j&lt;m; j++){
+            cout &lt;&lt; mat[i][j] &lt;&lt; ' ';
+        }
+        cout &lt;&lt; endl;
+    }
+    cout &lt;&lt; &quot;---------&quot; &lt;&lt; endl;
+}
+void rotate(box&amp; target, vector&lt;vector&lt;int&gt;&gt;&amp; board, vector&lt;vector&lt;int&gt;&gt;&amp; next_board){
+    for(int i = 1; i&lt;=target.s; i++){
+        pos a = {target.p.x-i, target.p.y-i};
+        pos b = {target.p.x-i, target.p.y+i};
+        pos c = {target.p.x+i, target.p.y+i};
+        pos d = {target.p.x+i, target.p.y-i};
+        pos t;
+
+        t = a;
+        while(t!=b){
+            next_board[t.x][t.y+1] = board[t.x][t.y];
+            t.y += 1;
+        }
+        
+        t = b;
+        while(t!=c){
+            next_board[t.x+1][t.y] = board[t.x][t.y];
+            t.x += 1;
+        }
+
+        t = c;
+        while(t!=d){
+            next_board[t.x][t.y-1] = board[t.x][t.y];
+            t.y -= 1;
+        }
+
+        t = d;
+        while(t!=a){
+            next_board[t.x-1][t.y] = board[t.x][t.y];
+            t.x -= 1;
+        }
+    }
+}
+int ans = INT_MAX;
+void calc(vector&lt;vector&lt;int&gt;&gt; board, int sel){
+    // cout &lt;&lt; sel &lt;&lt; endl;
+    // print(board);
+    if(sel == k){
+        int minv = INT_MAX; 
+        for(int i = 0; i&lt;n; i++){
+            int acc = 0;
+            for(int j = 0; j&lt;m; j++){
+                acc += board[i][j];
+            }
+            minv = min(minv, acc);
+        }
+        ans = min(ans, minv);
+        return;
+    }
+    for(int i = 0; i&lt;k; i++){
+        if(visited[i]==0){
+            visited[i] = 1;
+            vector&lt;vector&lt;int&gt;&gt; next_board = board;
+            rotate(rot[i], board, next_board);
+            calc(next_board, sel+1);
+            visited[i] = 0;
+        }
+    }
+}
+
+void solve(){
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    for(int i = 0; i&lt;n; i++){
+        for(int j = 0; j&lt;m; j++){
+            cin &gt;&gt; board[i][j];
+        }
+    }
+    for(int i = 0; i&lt;k; i++){
+        box t; 
+        cin &gt;&gt; t.p.x &gt;&gt; t.p.y &gt;&gt; t.s;
+        t.p.x -= 1;
+        t.p.y -= 1;
+        rot.push_back(t);
+    }
+    calc(board, 0);
+    cout &lt;&lt; ans;
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+</code></pre>
+<p>모든 경우의 수를 탐색해주면 된다.</p>
+<p>배열을 돌리는 방법은, 대각선 좌표들을 기준으로 특정 방향으로 옮겨주면 된다.</p>
+<h3 id="느낀점">느낀점</h3>
+<p>구현 문제이다.</p>
+
                         </div>
                     </article>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 2234 성곽</title>
+        <title>boj 1965 상자넣기</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2234 성곽</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1965 상자넣기</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-28</td>
+                                            <td class="">2024-03-08</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2234">https://www.acmicpc.net/problem/2234</a></p>
+<p><a href="https://www.acmicpc.net/problem/1965">https://www.acmicpc.net/problem/1965</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,87 +133,24 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n, m;
-int board[50][50] = {0,};
-// 0: up, 1: right, 2: down, 3: left
-int dx[4] = {-1, 0, 1, 0};
-int dy[4] = {0, 1, 0, -1};
-struct pos{
-    int x, y;
-    pos adj(int i){ return {x+dx[i%4], y+dy[i%4]}; }   
-    bool safe(){ return 0&lt;=x&amp;&amp;x&lt;n&amp;&amp;0&lt;=y&amp;&amp;y&lt;m; }
-};
-
-int rid = 1;
-int room[50][50] = {0,};
-int rid_size[2501] = {0,};
-
-bool check_avail(pos t, int dir){
-    int map[4] = {8, 1, 2, 4};
-    return (board[t.x][t.y] &amp; map[dir%4]) == 0;
-}
-
-void calc(pos t){
-    int visited[50][50] = {0,};
-    queue&lt;pos&gt; q;
-    q.push(t);
-    room[t.x][t.y] = rid;
-    rid_size[rid] += 1;
-    while(!q.empty()){
-        pos cur = q.front();
-        q.pop();
-        for(int i = 0; i&lt;4; i++){
-            pos next = cur.adj(i);
-            if(next.safe() &amp;&amp; check_avail(next, i) &amp;&amp; room[next.x][next.y] == 0){
-                room[next.x][next.y] = rid; 
-                rid_size[rid] += 1;
-                q.push(next); 
-            }
-        }
-    }
-    rid += 1;
-}
-
+int n;
+int seq[1000] = {0,};
 void solve(){
-    cin &gt;&gt; m &gt;&gt; n;
+    cin &gt;&gt; n;
     for(int i = 0; i&lt;n; i++){
-        for(int j = 0; j&lt;m; j++){
-            cin &gt;&gt; board[i][j];
+        cin &gt;&gt; seq[i];
+    }
+    vector&lt;int&gt; stk;
+    stk.push_back(seq[0]);
+    for(int i = 1; i&lt;n; i++){
+        if(stk.back() &lt; seq[i])
+            stk.push_back(seq[i]);
+        else{
+            int idx = lower_bound(stk.begin(), stk.end(), seq[i]) - stk.begin();
+            stk[idx] = seq[i];
         }
     }
-    for(int i = 0; i&lt;n; i++){
-        for(int j = 0; j&lt;m; j++){
-            if(room[i][j]==0){
-                calc({i, j}); 
-            }
-        }
-    } 
-    /* for(int i = 0; i&lt;n; i++){
-        for(int j = 0; j&lt;m; j++){
-            cout &lt;&lt; room[i][j] &lt;&lt; ' ';
-        }
-        cout &lt;&lt; endl;
-    }  */
-    cout &lt;&lt; rid-1 &lt;&lt; '\n'; 
-    int maxv = -1;
-    for(int i = 1; i&lt;=rid-1; i++){
-        maxv = max(maxv, rid_size[i]);
-    }
-    cout &lt;&lt; maxv &lt;&lt; '\n';
-
-    int largest = -1;
-    for(int i = 0; i&lt;n; i++){
-        for(int j = 0; j&lt;m; j++){
-            pos cur = {i, j};
-            for(int i = 0; i&lt;4; i++){
-                pos next = cur.adj(i);
-                if(next.safe() &amp;&amp; room[cur.x][cur.y] != room [next.x][next.y]){
-                    largest = max(largest, rid_size[room[cur.x][cur.y]] + rid_size[room[next.x][next.y]]);
-                }
-            }
-        }
-    }
-    cout &lt;&lt; largest &lt;&lt; '\n';
+    cout &lt;&lt; stk.size();
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -222,10 +159,10 @@ int main(){
     return 0;
 }
 </code></pre>
-<p>같은 방을 같은 숫자로 표시를 해주는 과정에서, 벽을 확인하여 주변 좌표로 갈 수 있는지 확인한다.</p>
-<p>모든 좌표에서 주변 좌표(동, 서, 남, 북)를 확인해서, 만약 다른 방에 속해있다면 두개를 더해서 최댓값을 찾아준다.</p>
+<p>가장 긴 증가하는 부분수열 문제와 같은 문제이다.
+<a href="/ps/11/boj%2014003%20%EA%B0%80%EC%9E%A5%20%EA%B8%B4%20%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94%20%EB%B6%80%EB%B6%84%20%EC%88%98%EC%97%B4%205.html">boj 14003 가장 긴 증가하는 부분 수열 5</a></p>
 <h3 id="느낀점">느낀점</h3>
-<p>구현 문제이다.</p>
+<p>dp문제인 것을 알고 풀었다.</p>
 
                         </div>
                     </article>

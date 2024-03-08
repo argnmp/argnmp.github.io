@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 5557 1학년</title>
+        <title>boj 2239 스도쿠</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 5557 1학년</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2239 스도쿠</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-29</td>
+                                            <td class="">2024-03-08</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/5557">https://www.acmicpc.net/problem/5557</a></p>
+<p><a href="https://www.acmicpc.net/problem/2239">https://www.acmicpc.net/problem/2239</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,39 +133,59 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n;
-ll seq[101] = {0,};
-ll dp[21][101] = {0,};
-ll ans = 0;
-bool check(int t){
-    return 0&lt;=t&amp;&amp;t&lt;=20;
+int board[9][9] = {0,};
+int rows[9] = {0,};
+int cols[9] = {0,};
+int squares[9] = {0,};
+struct pos{
+    int x, y;
+};
+vector&lt;pos&gt; p;
+bool calc(int idx){
+    if(idx==p.size())
+        return true;
+    int i = p[idx].x;
+    int j = p[idx].y;
+    for(int k = 1; k&lt;=9; k++){
+        if((rows[i]&amp;(1&lt;&lt;k))==0 &amp;&amp; (cols[j]&amp;(1&lt;&lt;k))==0 &amp;&amp; (squares[(i/3)*3 + (j/3)]&amp;(1&lt;&lt;k))==0){
+            rows[i]|=(1&lt;&lt;k);
+            cols[j]|=(1&lt;&lt;k);
+            squares[(i/3)*3 + (j/3)]|=(1&lt;&lt;k);
+            board[i][j] = k;
+            if(calc(idx+1))
+                return true;
+            rows[i]&amp;=(~(1&lt;&lt;k));
+            cols[j]&amp;=(~(1&lt;&lt;k));
+            squares[(i/3)*3 + (j/3)]&amp;=(~(1&lt;&lt;k));
+            board[i][j] = 0;
+        } 
+    }
+    return false;
 }
 void solve(){
-    cin &gt;&gt; n;
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; seq[i];
-    }
-
-    if(check(seq[0])){
-        dp[seq[0]][0] = 1;
-    }
-    if(check(-seq[0])){
-        dp[-seq[0]][0] = 1;
-    }
-    for(int i = 1; i&lt;n-1; i++){
-        for(int j = 0; j&lt;=20; j++){
-            int target = j + seq[i];
-            if(check(target)){
-                dp[target][i] += dp[j][i-1];
+    for(int i = 0; i&lt;9; i++){
+        for(int j = 0; j&lt;9; j++){
+            char ch = cin.get();
+            while(ch=='\n'||ch=='\r'||ch==' ')
+                ch = cin.get();
+            board[i][j] = ch - '0';
+            if(board[i][j]!=0){
+                rows[i] |= (1&lt;&lt;board[i][j]); 
+                cols[j] |= (1&lt;&lt;board[i][j]);
+                squares[(i/3)*3 + (j/3)] |= (1&lt;&lt;board[i][j]);
             }
-            target = j - seq[i];
-            if(check(target)){
-                dp[target][i] += dp[j][i-1];
+            else {
+                p.push_back({i, j});
             }
         }
     }
-    cout &lt;&lt; dp[seq[n-1]][n-2];
-    
+    calc(0);
+    for(int i = 0; i&lt;9; i++){
+        for(int j = 0; j&lt;9; j++){
+            cout &lt;&lt; board[i][j];
+        }
+        cout &lt;&lt; endl;
+    }
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -174,10 +194,11 @@ int main(){
     return 0;
 }
 </code></pre>
-<p><code>dp[k][i]</code>를 i번째 수까지 사용해서 k를 만들 수 있는 경우의 수로 정의해주었다.</p>
-<p><a href="/ps/9/boj%201562%20%EA%B3%84%EB%8B%A8%20%EC%88%98.html">boj 1562 계단 수</a> 와 비슷한 문제같다.</p>
+<p>모든 경우의 수를 다 확인해주면 된다. 나는 비트마스킹을 통해서 해당 자리에 숫자가 들어갈 수 있는지를 확인하였다.</p>
+<p>그리고 사전순으로 빠른 것을 출력하라고 했으니, 좌상단에서 우하단으로 1에서 9순서대로 확인해주면 된다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>생각해내는데 시간이 약간 소요되었다. 모든 경우를 찾는 과정에서 시간 초과가 발생할 것 같으면 dp문제라고 생각을 하자.</p>
+<p>이전에 풀어봤던 문제인데 더 깔끔하게 풀었다.
+또한 bit flip은 <code>~</code>를 사용한다는 것을 기억하자.</p>
 
                         </div>
                     </article>

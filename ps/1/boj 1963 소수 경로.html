@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 9465 스티커</title>
+        <title>boj 1963 소수 경로</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 9465 스티커</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1963 소수 경로</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-03-03</td>
+                                            <td class="">2024-03-05</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/9465">https://www.acmicpc.net/problem/9465</a></p>
+<p><a href="https://www.acmicpc.net/problem/1963">https://www.acmicpc.net/problem/1963</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,56 +133,70 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n;
-int seq[2][100000] = {0,};
-int dp[2][100000] = {0,};
+
+int seq[10000] = {0,};
+struct box{
+    string prime; 
+    int count;   
+};
 void solve(){
-    memset(dp, 0, sizeof(dp));
-    cin &gt;&gt; n;
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; seq[0][i];
-    }
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; seq[1][i];
-    }
-    dp[0][0] = seq[0][0]; 
-    dp[1][0] = seq[1][0]; 
-    dp[0][1] = dp[1][0] + seq[0][1];
-    dp[1][1] = dp[0][0] + seq[1][1];
-    for(int i = 2; i&lt;n; i++){
-        dp[0][i] = max(max(dp[0][i-2], dp[1][i-2]), dp[1][i-1]) + seq[0][i];
-        dp[1][i] = max(max(dp[0][i-2], dp[1][i-2]), dp[0][i-1]) + seq[1][i];
-    } 
-    cout &lt;&lt; max(dp[0][n-1], dp[1][n-1]) &lt;&lt; '\n';
-    /* for(int i = 0; i&lt;2; i++){
-        for(int j = 0; j&lt;n; j++){
-            cout &lt;&lt; dp[i][j] &lt;&lt; ' ';
+    unordered_set&lt;string&gt; primes;
+    for(int i = 2; i&lt;10000; i++){
+        if(seq[i]==1)
+            continue;
+        if(i &gt;= 1000)
+            primes.insert(to_string(i));
+        for(int k = 2; k*i&lt;10000; k++){
+            seq[k*i] = 1;
         }
-        cout &lt;&lt; '\n';
-    } */
+    }
+    int test;
+    cin &gt;&gt; test;
+    string p1, p2;
+    while(test--){
+        cin &gt;&gt; p1 &gt;&gt; p2; 
+        unordered_set&lt;string&gt; visited; 
+        queue&lt;box&gt; q;
+        q.push({p1, 0});
+        visited.insert(p1);
+        bool is_done = false;
+        while(!q.empty()){
+            box cur = q.front();
+            q.pop();
+            if(cur.prime == p2){
+                cout &lt;&lt; cur.count &lt;&lt; '\n';
+                is_done = true;
+                break;
+            }
+            for(int i = 0; i&lt;4; i++){
+                for(char j = '0'; j&lt;='9'; j++){
+                    string next = cur.prime; 
+                    next[i] = j;
+                    if(primes.find(next)!=primes.end() &amp;&amp; visited.find(next)==visited.end()){
+                        visited.insert(next); 
+                        q.push({next, cur.count + 1});
+                    }
+                }
+            }
+        } 
+        if(!is_done)
+            cout &lt;&lt; &quot;Impossible&quot; &lt;&lt; '\n';
+            
+    }
 }
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-    int t;
-    cin &gt;&gt; t;
-    while(t--)
-        solve(); 
+    solve(); 
     return 0;
 }
 </code></pre>
-<p><code>dp[k][i]</code>를 <code>[k,i]</code>좌표의 스티커를 뗐을 때 최대값으로 설정해주었다.</p>
-<p>나는 세가지 값을 비교해주었다. 현재 탐색하는 스티커가 <code>[k,i]</code>에 있는 스티커라고 해보자.</p>
-<p>먼저 바로 직전의 <code>i-1</code>에 있는 스티커는 대각선에 있는 것만 고려해야 한다. 바로 옆에 있는 것은 그 스티커가 떼어졌을 때 현재의 스티커 <code>[k,i]</code>를 뗄 수 없기 때문이다.(미리 떼어졌기 때문)</p>
-<p>그리고 <code>i-2</code>에 있는 위 아래의 스티커 모두 고려해주면 된다. 현재 탐색하는 스티커를 떼고싶다면 영향을 미치지 않기 때문이다.</p>
-<p>이 세가지 값 중 최댓값을 저장해주면 된다.</p>
-<p>그리고 마지막 <code>n-1</code>에 있는 위 아래 스티커 중 최댓값이 답이 된다.</p>
-<p><code>n-2</code>에 있는 위 아래 스티커를 답으로 고려하지 않아도 되는 이유는, dp계산에 의하여 <code>dp[0][n-2]</code>의 값은 <code>dp[1][n-1]</code>보다 무조건 작게 되고, <code>dp[1][n-2]</code>는 <code>dp[0][n-2]</code>보다 무조건 작게 되기 때문이다.</p>
-<h4 id="추가 풀이">추가 풀이</h4>
-<p>위의 풀이에서 <code>i-2</code>에 있는 위 아래의 스티커를 모두 고려해주었는데, 다른 풀이를 찾아보니 이 두 가지를 모두 고려하지 않고 같은 행이 아닌 다른 행에 있는 스티커만 고려했다.</p>
-<p>현재 계산해야 하는 값이 <code>dp[0][i]</code>라고 할 때, <code>dp[0][i-2]</code>와  <code>dp[0][i-1]</code> 중 최댓값만 고려해주면 되는데, 왜냐하면 <code>dp[1][i-2]</code>는 dp 계산에 의하여 <code>dp[0][i-1]</code>보다 무조건 작게 되기 때문이다. (<code>dp[0][i-1]</code>을 계산할 때 <code>dp[1][i-2]</code>를 무조건 고려하기 때문이다. )</p>
+<p>먼저 에라토스테네스의 체를 이용해서 소수들을 모두 찾아준다.</p>
+<p>그리고 bfs를 돌면서 바꿀 수 있는 모든 수에 대해서, 소수이고 방문하지 않는 경우 queue에 넣는다. 이 과정에서 찾는다면 변환 횟수를 출력하고 아니면 <code>Impossible</code>을 출력한다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>dp 문제인 것을 알고 풀었다.</p>
+<p>bfs로 모든 경우에 대해 탐색하면 되는 문제이다.</p>
+<p>나는 위에서 <code>unordered_set</code>을 사용했는데, 대신 <code>int primes[10000]</code>과 <code>int visited[10000]</code>을 사용하면 실행 시간이 더 줄어들 것이다.</p>
+<p>또한 이런 문제 같은 경우 string을 사용하는 것이 좋다.</p>
 
                         </div>
                     </article>

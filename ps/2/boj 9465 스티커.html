@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 1759 암호 만들기</title>
+        <title>boj 9465 스티커</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1759 암호 만들기</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 9465 스티커</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-27</td>
+                                            <td class="">2024-03-03</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1759">https://www.acmicpc.net/problem/1759</a></p>
+<p><a href="https://www.acmicpc.net/problem/1890">https://www.acmicpc.net/problem/1890</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,29 +133,30 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int l, c;
-char seq[15];
-void calc(int sel, int idx, int vowel, int consonant, string acc){
-    if(sel == l &amp;&amp; vowel &gt;= 1 &amp;&amp; consonant &gt;= 2){
-        cout &lt;&lt; acc &lt;&lt; '\n';
-        return;
-    }
-    for(int i = idx; i&lt;c; i++){
-        if(seq[i]=='a'||seq[i]=='e'||seq[i]=='i'||seq[i]=='o'||seq[i]=='u'){
-            calc(sel+1, i+1, vowel+1, consonant, acc + seq[i]);
-        } 
-        else {
-            calc(sel+1, i+1, vowel, consonant+1, acc + seq[i]);
-        }
-    } 
-}
+int n;
+int board[100][100] = {0,};
+ll dp[100][100] = {0,};
 void solve(){
-    cin &gt;&gt; l &gt;&gt; c;
-    for(int i = 0; i&lt;c; i++){
-        cin &gt;&gt; seq[i];
+    cin &gt;&gt; n;
+    dp[0][0] = 1;
+    for(int i = 0; i&lt;n; i++){
+        for(int j = 0; j&lt;n; j++){
+            if(i==n-1&amp;&amp;j==n-1){
+                cout &lt;&lt; dp[i][j];
+                return;
+            }
+            cin &gt;&gt; board[i][j];
+            int nx = i+board[i][j]; 
+            if(0&lt;=nx&lt;n){
+                dp[nx][j] += dp[i][j];
+            }
+            int ny = j+board[i][j];
+            if(0&lt;=ny&lt;n){
+                dp[i][ny] += dp[i][j];
+            }
+        }
     }
-    sort(seq, seq+c);
-    calc(0, 0, 0, 0, &quot;&quot;);
+    
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -164,10 +165,10 @@ int main(){
     return 0;
 }
 </code></pre>
-<p>주어진 알파벳들을 먼저 정렬한다.</p>
-<p>그리고 <code>l</code>개의 조합을 구한 뒤(정렬을 먼저했으므로 정렬된 순서로 탐색된다) 자음과 모음수가 일치하면, 출력한다.</p>
+<p><code>dp[i][j]</code>를 <code>[i,j]</code>에서의 경로의 수로 정의한다.</p>
+<p>dp배열의 왼쪽 위에서 오른쪽 아래로 순차적으로 탐색하면서, 해당 좌표에서 이동할 수 있는 valid한 좌표에 현재 dp값을 더해주면 된다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>자음 모음 조건을 먼저 맞춰보려 했는데, 먼저 탐색을 한 뒤 조건을 맞춰보는 편이 간단하다.</p>
+<p>dp문제인 것을 알고 풀었다.</p>
 
                         </div>
                     </article>

@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-15</td>
+                                            <td class="">2024-02-16</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/8980">https://www.acmicpc.net/problem/8980</a></p>
+<p><a href="https://www.acmicpc.net/problem/11047">https://www.acmicpc.net/problem/11047</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,44 +133,27 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n, c, m;
-int acc[2001] = {0,};
-struct box {
-    int s, e, count;
-    bool operator&lt;(const box&amp; t) const {
-        if(e == t.e){
-            return s &gt; t.s;
-        }
-        return e &lt; t.e;
-    }   
-};
-box task[10000] = {0,};
+int n, k;
+int coins[10] = {0,};
 void solve(){
-    cin &gt;&gt; n &gt;&gt; c;
-    cin &gt;&gt; m;
-    for(int i = 0; i&lt;m; i++){
-        cin &gt;&gt; task[i].s &gt;&gt; task[i].e &gt;&gt; task[i].count;
+    cin &gt;&gt; n &gt;&gt; k;
+    for(int i = 0; i&lt;n; i++){
+        cin &gt;&gt; coins[i];
     }
-    sort(task, task + m);
-    int ans = 0;
-    for(int i = 0; i&lt;m; i++){
-        int sum = 0; 
-        int peak = -1;
-        for(int k = 0; k&lt;task[i].e; k++){
-            sum += acc[k]; 
-            if(k&gt;=task[i].s){
-                peak = max(peak, sum); 
-            } 
+    sort(coins, coins + n, greater&lt;int&gt;());
+    int count = 0;
+    int coin_idx = 0;
+    while(k &gt; 0){
+        // cout &lt;&lt; k &lt;&lt; ' ' &lt;&lt; coins[coin_idx] &lt;&lt; endl;
+        if(coins[coin_idx] &gt; k){
+            coin_idx += 1;
+            continue;
         }
-        int avail = min(task[i].count, c - peak);
-        // printf(&quot;s: %d, e: %d, count: %d, avail: %d\n&quot;, task[i].s, task[i].e, task[i].count, avail);
-        if(avail &gt; 0){
-            ans += avail;
-            acc[task[i].s] += avail;
-            acc[task[i].e] -= avail;
-        }
+        count += k / coins[coin_idx];
+        k %= coins[coin_idx];
+        coin_idx += 1;
     }
-    cout &lt;&lt; ans;
+    cout &lt;&lt; count &lt;&lt; endl;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -179,31 +162,9 @@ int main(){
     return 0;
 }
 </code></pre>
-<p>받는 마을 번호가 작은 순서대로(오름차순) 옮길 수 있는 최대 박스를 차에 채워주면 된다. 왜냐하면 빠르게 차에 실려있는 박스를 내리는 것이 유리하기 때문이다.</p>
-<p>시작 지점과 실을 수 있는 박스의 양은 고려하지 않아도 되는데, 그 이유는 전체 박스를 모두 실어야 하는 것이 아니라 그중 일부만도 실을 수 있기 때문이다. 즉, 정렬 순서에 의하여 특정 경로에서 차의 최대 용량까지 박스를 채우지 못하더라도 후순위로 나오는 경로에서 박스의 일부만으로 추가로 채울 수 있기 때문이다.</p>
-<p>나는 <code>acc</code>를 특정 위치에서 차에 실린 박스의 개수를 저장하기 위해서 사용했고, <a href="/ps/9/boj%2019951%20%ED%83%9C%EC%83%81%EC%9D%B4%EC%9D%98%20%ED%9B%88%EB%A0%A8%EC%86%8C%20%EC%83%9D%ED%99%9C.html">boj 19951 태상이의 훈련소 생활</a> 문제의 방식을 이용해서 현재 차에 실린 박스의 개수를 표현했다.</p>
-<p>예를 들어 차의 용량이 40이고, 1번 마을에서 4번 마을까지 20개의 박스를 보낼 수 있다고 할 때 다음과 같이 저장한다.</p>
-<pre><code>index: 1   2   3   4   5
-       20  0   0   -20 0
-</code></pre>
-<p>그 다음으로 2번 마을에서 5번 마을까지 30개의 박스를 보낼 수 있다고 할 때, 먼저 <code>index 2~4</code>까지 차에 최대 몇개의 박스가 실리는지 확인한다. (<code>index 5</code>에서는 박스를 내리기 때문에 고려할 필요가 없다.)</p>
-<p>누적합과 같은 방식이기 때문에 index 1부터 더해준다. <code>index 2</code>에서는 20, <code>index 3</code>에서는 20, <code>index 4</code>에서는 -20 이 되어서 최대 20개가 차에 실리게 된다. 따라서 30개의 박스 중 20개만 채울 수 있다. 다음과 같이 더해준다.</p>
-<pre><code>index: 1   2   3   4   5
-       20  20  0   -20 -20
-</code></pre>
-<p>이러한 방식으로 답을 구할 수 있다.</p>
+<p>값이 1인 동전이 무조건 주어지므로, 언제나 큰 값의 동전부터 사용하면 최소 개수의 동전을 구할 수 있다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>처음에 배달의 구간의 길이가 짧은 순서대로 먼저 박스를 채워주었다. 하지만 다음의 케이스에서는 오답이 나왔다.</p>
-<pre><code>7 10
-3
-1 4 10
-3 5 5
-4 7 10
-answer: 20
-output: 10
-</code></pre>
-<p>이는 최적의 방식이 아니었던 것이다. 도착지가 빠른 순서대로 먼저 박스를 채워주는 것이 최적의 방식임을 검색을 통해 알게되었다.</p>
-<p>그리디 문제에서는 구간이 나오면 정렬을 사용하되, 여러 가지 최적의 방식을 고민해보자.</p>
+<p>그리디 문제이다.</p>
 
                         </div>
                     </article>
