@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 18436 수열과 쿼리 37</title>
+        <title>boj 9251 LCS</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 18436 수열과 쿼리 37</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 9251 LCS</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-17</td>
+                                            <td class="">2024-02-09</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/18436">https://www.acmicpc.net/problem/18436</a></p>
+<p><a href="https://www.acmicpc.net/problem/9251">https://www.acmicpc.net/problem/9251</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,81 +133,23 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-struct box{
-    int odd, even;
-    box operator+(const box&amp; t){
-        return {odd+t.odd, even+t.even};
-    }
-};
-int n, m;
-int seq[100000] = {0,};
-box segt[(2&lt;&lt;18)] = {0,};
-void segt_init(int l, int r, int node){
-    if(l==r){
-        if(seq[l]%2==0)
-            segt[node].even = 1;
-        else
-            segt[node].odd = 1;
-        return;
-    }
-    int mid = (l+r)/2;
-    segt_init(l, mid, node*2);
-    segt_init(mid+1, r, node*2+1);
-    segt[node] = segt[node*2] + segt[node*2+1];
-}
-void segt_update(int l, int r, int node, int idx, int v){
-    if(l==idx &amp;&amp; r==idx){
-        segt[node] = {0,0};
-        seq[idx] = v;
-        if(v%2==0)
-            segt[node].even = 1;
-        else
-            segt[node].odd = 1;
-        return;
-    }
-    int mid = (l+r)/2;
-    if(idx&lt;=mid)
-        segt_update(l, mid, node*2, idx, v);
-    else
-        segt_update(mid+1, r, node*2+1, idx, v);
-    segt[node] = segt[node*2] + segt[node*2+1];
-}
-int segt_calc(int l, int r, int node, int s, int e, bool is_odd){
-    if(l==s &amp;&amp; r==e)
-        return is_odd ? segt[node].odd : segt[node].even;
-
-    int mid = (l+r)/2;
-    if(e&lt;=mid){
-        return segt_calc(l, mid, node*2, s, e, is_odd);
-    }
-    else if(s &gt;= mid+1){
-        return segt_calc(mid+1, r, node*2+1, s, e, is_odd);
-    }
-    else {
-        return segt_calc(l, mid, node*2, s, mid, is_odd) + segt_calc(mid+1, r, node*2+1, mid+1, e, is_odd);
-    }
-}
+int dp[1001][1001] = {0,};
 void solve(){
-    cin &gt;&gt; n;
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; seq[i];
-    }
-    segt_init(0, n-1, 1);
-    cin &gt;&gt; m;
-    int com;
-    int a, b;
-    for(int i = 0; i&lt;m; i++){
-        cin &gt;&gt; com &gt;&gt; a &gt;&gt; b;
-        if(com==1){
-            a -= 1;
-            segt_update(0, n-1, 1, a, b);
-        }
-        else {
-            a -= 1;
-            b -= 1;
-            cout &lt;&lt; segt_calc(0, n-1, 1, a, b, com==3) &lt;&lt; '\n';
+    string s1, s2;
+    cin &gt;&gt; s1 &gt;&gt; s2;
+    int n = s1.size(), m = s2.size();
+    for(int i = 1; i&lt;=n; i++){
+        for(int j = 1; j&lt;=m; j++){
+            if(s1[i-1]==s2[j-1]){
+                dp[i][j] = dp[i-1][j-1]+1;
+            }
+            else {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+            
         }
     }
+    cout &lt;&lt; dp[n][m];
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -216,11 +158,11 @@ int main(){
     return 0;
 }
 </code></pre>
-<p>prefix sum을 이용해서 특정 구간의 홀수와 짝수의 개수를 구할 수 있다.</p>
-<p>하지만 이 문제에서는 update가 필요한데, prefix sum으로 update를 구현하려면 시간초과가 발생한다. 따라서 segment tree를 이용해야 한다.</p>
-<p>segment tree의 각 노드에 구간의 홀수와 짝수의 개수를 저장해두면 된다.</p>
+<p>LCS문제이다.</p>
+<p><a href="/ps/19/boj%209252%20LCS%202.html">boj 9252 LCS 2</a> 와 같은 풀이이다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p><a href="/ps/13/boj%202042%20%EA%B5%AC%EA%B0%84%20%ED%95%A9%20%EA%B5%AC%ED%95%98%EA%B8%B0.html">boj 2042 구간 합 구하기</a> 에서 사용된 segment tree를 이 문제에도 적용할 수 있었다.</p>
+<p><a href="/ps/19/boj%209252%20LCS%202.html">boj 9252 LCS 2</a> 를 풀어본적이 있어서 풀 수 있었다.</p>
+<p>string의 index를 제대로 설정 안해주어서 디버깅을 하였다. 주의하자.</p>
 
                         </div>
                     </article>

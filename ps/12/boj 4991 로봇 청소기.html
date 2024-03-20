@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 2565 전깃줄</title>
+        <title>boj 4991 로봇 청소기</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2565 전깃줄</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 4991 로봇 청소기</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-06</td>
+                                            <td class="">2024-01-28</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2565">https://www.acmicpc.net/problem/2565</a></p>
+<p>[<a href="https://www.acmicpc.net/problem/4991">https://www.acmicpc.net/problem/4991</a>]</p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,54 +133,132 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n;
-struct box{
-    int a, b;
-    bool operator&lt;(const box&amp; t) const {
-        return a &lt; t.a;
-    }
-    bool operator&gt;(const box&amp; t) const {
-        return a &gt; t.a &amp;&amp; b &gt; t.b;
-    }
+int w, h;
+char board[20][20];
+int dx[4] = {0, 1, -1, 0};
+int dy[4] = {1, 0, 0, -1};
+struct pos{
+    int x, y;
+    pos adj(int i){ return {x+dx[i%4], y+dy[i%4]}; }
+    bool safe(){ return 0&lt;=x&amp;&amp;x&lt;h&amp;&amp;0&lt;=y&amp;&amp;y&lt;w; }
 };
-box line[101] = {0,};
-int dp[101] = {0,};
-void solve(){
-    cin &gt;&gt; n;
-    for(int i = 1; i&lt;=n; i++){
-        cin &gt;&gt; line[i].a &gt;&gt; line[i].b;
-    }
-    sort(line+1, line+n+1);
-    dp[0] = 0;
-    for(int i = 1; i&lt;=n; i++){
-        // printf(&quot;line: %d, %d\n&quot;, line[i].a, line[i].b);
-        int max_count = INT_MIN;
-        for(int j = i; j&gt;=0; j--){
-            if(line[i] &gt; line[j]){
-                max_count = max(dp[j], max_count);
+vector&lt;pos&gt; points(1);
+int done[20][20] = {0,};
+void bfs(int target){
+    memset(done, -1, sizeof(done));
+    pos p = points[target];
+    queue&lt;pos&gt; q;
+    q.push(p);
+    done[p.x][p.y] = 0;
+    while(!q.empty()){
+        pos cur = q.front();
+        q.pop();
+        for(int i = 0; i&lt;4; i++){
+            pos next = cur.adj(i);
+            if(next.safe() &amp;&amp; board[next.x][next.y]!='x' &amp;&amp; done[next.x][next.y]==-1){
+                done[next.x][next.y] = done[cur.x][cur.y] + 1;
+                q.push(next);
             }
         }
-        dp[i] = max_count+1;
-        // printf(&quot;i: %d, count: %d\n&quot;, i, dp[i]);
     }
-    int max_value = INT_MIN;
-    for(int i = 1; i&lt;=n; i++){
-        max_value = max(max_value, dp[i]);
+}
+
+struct edge{
+    int v, dist;
+};
+
+int graph[11][11] = {0,};
+int dp[11][2048] = {0,};
+int node_size = 0;
+int tsp(int node, int route, int start_node){
+    route |= 1&lt;&lt;node;
+    if(route == (1&lt;&lt;node_size)-1){
+        /* dp[node][start_node] = graph[node][start_node]==0 ? INT_MAX : graph[node][start_node];
+        return dp[node][start_node]; */
+        return 0;
     }
-    cout &lt;&lt; n-max_value;
+    if(dp[node][route] != 0)
+        return dp[node][route];
+    
+    int min_cost = INT_MAX;
+    for(int i = 0; i&lt;node_size; i++){
+        if((route &amp; (1&lt;&lt;i))==0 &amp;&amp; graph[node][i]!=0){
+            int res = tsp(i, route, start_node); 
+            if(res!=INT_MAX)
+                min_cost = min(min_cost, graph[node][i] + res); 
+        }
+    }
+    dp[node][route] = min_cost;
+    return min_cost;
+}
+void solve(){
+    memset(graph, 0, sizeof(graph));
+    memset(dp, 0, sizeof(dp));
+    points = vector&lt;pos&gt;(1);
+    for(int i = 0; i&lt;h; i++){
+        for(int j = 0; j&lt;w; j++){
+            char ch = cin.get();
+            while(ch=='\n'||ch=='\r'||ch==' ')
+                ch = cin.get();
+            board[i][j] = ch;
+            if(ch=='o')
+                points[0] = {i, j}; 
+            else if(ch=='*')
+                points.push_back({i, j});
+        }
+    }
+    
+    for(int i = 0; i&lt;points.size(); i++){
+        bfs(i);
+        /* for(int i = 0; i&lt;h; i++){
+            for(int j = 0; j&lt;w; j++){
+                printf(&quot;%2d&quot;, done[i][j]);
+            }
+            cout &lt;&lt; endl;
+        }
+        cout &lt;&lt; endl;
+*/
+        for(int j = 0; j&lt;points.size(); j++){
+            if(i==j)
+                continue;
+            pos p = points[j]; 
+            if(done[p.x][p.y]==-1){
+                cout &lt;&lt; -1 &lt;&lt; '\n';
+                return;
+            }
+            graph[i][j] = done[p.x][p.y];
+        }
+    }
+    node_size = points.size();
+    cout &lt;&lt; tsp(0, 0, 0) &lt;&lt; '\n';
+
+    /* for(auto t: graph){
+        for(auto k: t){
+            printf(&quot;[%d: %d] &quot;, k.v, k.dist);
+        }       
+        cout &lt;&lt; endl;
+    } */
+    
+    
 }
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-    solve(); 
+    while(1){
+        cin &gt;&gt; w &gt;&gt; h;
+        if(w==0&amp;&amp;h==0)
+            break;
+        solve(); 
+    }
     return 0;
 }
 </code></pre>
-<p>먼저 왼쪽 숫자를 기준으로 전깃줄들을 정렬한다.</p>
-<p>이후 <code>dp[k]</code>를 <code>k번째 전깃줄을 추가했을 때 연결 가능한 전깃줄의 최대 갯수</code>로 정의한다. <code>dp[k]</code>를 구하기 위해서는 index <code>0~k-1</code> 사이의, 전깃줄의 오른쪽 숫자가 더 적은 <code>dp</code>값들 중 최댓값을 구하고 거기에 +1을 해주면 된다.</p>
-<p>나중에 검색해보고 <a href="/ps/19/boj%2014002%20%EA%B0%80%EC%9E%A5%20%EA%B8%B4%20%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94%20%EB%B6%80%EB%B6%84%20%EC%88%98%EC%97%B4%204.html">boj 14002 가장 긴 증가하는 부분 수열 4</a> 과 같은 문제임을 알게되었다.</p>
+<p>일단 로봇 청소기는 더러운 지점을 모두 방문해야 한다. 그리고 한 곳에 방문하면 다른 더러운 지점으로 이동해야 한다. 여기서 변수가 될 수 있는 것은, 더러운 지점의 방문 순서이다. 그렇기 때문에 이 문제에서는 <a href="/ps/12/boj%202098%20%EC%99%B8%ED%8C%90%EC%9B%90%20%EC%88%9C%ED%9A%8C.html">boj 2098 외판원 순회</a> 를 이용할 수 있다.</p>
+<p>먼저 로봇 청소기의 위치와 더러운 지점들의 상호 간의 최단 거리를 구해서, 그것들을 정점으로 하고 최단 거리가 간선 비용이 되는 새로운 그래프를 만든다. (더러운 지점 끼리도 최단 거리를 구해야 한다. 왜냐하면 로봇 청소기가 더러운 지점으로 이동 후 다음 더러운 지점으로 이동해야 하기 때문이다.)</p>
+<p>그리고 난 뒤, 이 그래프에 외판원 순회에서 사용한 알고리즘을 적용한다. 단 로봇 청소기의 위치가 나타내는 노드를 시작 노드로 하고, 마지막 방문 노드에서 시작 노드로 향하는 비용은 더해주지 않는다.</p>
+<p>사실, 노드가 최대 10개이기 때문에, 외판원 순회에서 사용한 dp 방식을 사용하지 않고 모든 순열을 순회하며 계산을 해도 시간초과가 발생하지 않는다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>기존에 풀었던 문제를 떠올려보는 것도 좋을 듯하다.</p>
+<p>모든 경로를 순회하면 시간초과가 발생할 것이라고 생각했지만 실제로는 그렇지 않았다. 조금 더 정확하게 살펴보아야겠다.</p>
 
                         </div>
                     </article>

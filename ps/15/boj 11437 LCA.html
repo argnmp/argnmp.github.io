@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 11401 이항 계수 3</title>
+        <title>boj 11437 LCA</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11401 이항 계수 3</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11437 LCA</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-01-25</td>
+                                            <td class="">2024-01-08</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/11401">https://www.acmicpc.net/problem/11401</a></p>
-<h3 id="풀이">풀이</h3>
+<p><a href="https://www.acmicpc.net/problem/11437">https://www.acmicpc.net/problem/11437</a></p>
+<h3 id="코드">코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -133,27 +133,64 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n, k;
-ll mod = 1000000007;
+int n, m;
+vector&lt;vector&lt;int&gt;&gt; graph(50001, vector&lt;int&gt;());
+int dep[50001] = {0,};
+int par[50001][20] = {0,}; // until 2^19
+int done[50001] = {0,};
+void pre_lca(int node, int depth){
+    dep[node] = depth; 
+    done[node] = 1;
+    for(int next: graph[node]){
+        if(done[next]==1)
+            continue;
+        par[next][0] = node; 
+        pre_lca(next, depth + 1);
+    }
+}
+void fill_lca(){
+    for(int i = 1; i&lt;=19; i++){
+        for(int j = 1; j&lt;=n; j++){
+            par[j][i] = par[par[j][i-1]][i-1];
+        }
+    }
+}
+int lca(int a, int b){
+    if(dep[a] &gt; dep[b]){
+        swap(a, b);
+    }
+    for(int i = 19; i&gt;=0; i--){
+        if(dep[b]-dep[a] &gt;= (1&lt;&lt;i)){
+            b = par[b][i];
+        }
+    }
+    if(a==b){
+        return a;
+    }
+    for(int i = 19; i&gt;=0; i--){
+        if(par[a][i]!=par[b][i]){
+            a = par[a][i];
+            b = par[b][i];
+        }
+    }
+    return par[a][0];
+}
 void solve(){
-    cin &gt;&gt; n &gt;&gt; k;
-    ll a =  1;
-    for(int i = n; i&gt;=n-k+1; i--){
-        a = (a*i)%mod;
+    cin &gt;&gt; n;
+    int u, v;
+    for(int i = 0; i&lt;n-1; i++){
+        cin &gt;&gt; u &gt;&gt; v;
+        graph[u].push_back(v); 
+        graph[v].push_back(u); 
     }
-    ll b = 1;
-    for(int i = k; i&gt;=1; i--){
-        b = (b*i)%mod;
+    pre_lca(1, 0);
+    fill_lca();
+    cin &gt;&gt; m; 
+    int a, b;
+    for(int i = 0; i&lt;m; i++){
+        cin &gt;&gt; a &gt;&gt; b;
+        cout &lt;&lt; lca(a,b) &lt;&lt; '\n';
     }
-    ll remainder = 1;
-    ll t = mod-2;
-    while(t&gt;0){
-        if(t%2==1) 
-            remainder = (remainder * b) % mod;
-        b = (b*b) % mod;
-        t/=2;
-    }
-    cout &lt;&lt; (a * remainder) % mod;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -161,27 +198,13 @@ int main(){
     solve(); 
     return 0;
 }
+
 </code></pre>
-<p>먼저 이항계수의 성질을 사용하는 방법을 생각해볼 수 있다. <code>nCk = n-1Ck-1 + n-1Ck</code> 이다. 이를 이용해서, 재귀적으로 연산하며 <code>nCk</code>를 저장한 뒤 재사용하는 방법이 있다. 하지만 n가 k가 최대 4000000 으로, 이 방법은 사용하기 어렵다.</p>
-<p>이 문제에서는 페르마의 소정리를 이용해야 한다.</p>
-<p>일단 이항계수는 다음과 같이 계산한다.</p>
-<pre><code>nCk =  n! / k! * (n-k)! = (n-k+1)! / k! = (n-k+1)! * (k!)^-1
-</code></pre>
-<p>n가 k에 값을 넣어서 위의 식을 먼저 계산하는 것이 불가능하다. 왜냐하면 최대 4000000 으로, 자료형의 범위를 벗어날 수 있기 때문이다. 따라서 곱셈을 해주는 과정에서 나머지 연산을 계속해주어야 하는데, 분수는 나머지 연산을 해주기 어렵기 때문에 여기서 페르마의 소정리를 사용한다.</p>
-<p>페르마의 소정리는 다음과 같다.</p>
-<pre><code>a^(p-1) ≡ 1 (mod p)
-a*a^(p-2) ≡ 1 (mod p)
-a^(p-2) ≡ a^-1 (mod p)
-</code></pre>
-<p>이를 위 식에 적용하면 (p는 문제에서 주어진 값, 1000000007이다.) 아래와 같다.</p>
-<pre><code>((n-k+1)! * (k!)^-1) % p
-= (((n-k+1)! % p) * ((k!)^-1 % p)) % p
-= (((n-k+1)! % p) * (((k!)^(p-2) % p) % p)) % p
-</code></pre>
-<p>이제 곱셈만 남았으므로, 매 곱셈마다 p로 나머지 연산을 해주면 된다.</p>
-<p>주의할 점은 <code>(k!)^(p-2)</code>에서 그냥 곱셈만 한다면 굉장히 시간이 오래 걸린다. 따라서 <a href="/ps/12/boj%2012850%20%EB%B3%B8%EB%8C%80%20%EC%82%B0%EC%B1%852.html">boj 12850 본대 산책2</a> 에서 사용했던 O(lgN) 의 거듭제곱 방식을 사용해야 한다.</p>
+<h3 id="풀이">풀이</h3>
+<p>lca 알고리즘을 이용한 풀이이다.</p>
+<p><a href="/ps/15/boj%2011438%20LCA%202.html">boj 11438 LCA 2</a></p>
 <h3 id="느낀점">느낀점</h3>
-<p>페르마의 소정리를 알게 되었다.</p>
+<p>LCA 2 문제를 먼저 풀어서 풀 수 있었다.</p>
 
                         </div>
                     </article>

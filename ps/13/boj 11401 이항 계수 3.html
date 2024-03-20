@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 11505 구간 곱 구하기</title>
+        <title>boj 11401 이항 계수 3</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11505 구간 곱 구하기</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 11401 이항 계수 3</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-01-18</td>
+                                            <td class="">2024-01-25</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/11505">https://www.acmicpc.net/problem/11505</a></p>
+<p><a href="https://www.acmicpc.net/problem/11401">https://www.acmicpc.net/problem/11401</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -133,82 +133,27 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n, m, k;
-int mod = 1000000007;
-int value[1000000] = {0,};
-ll segt[2097152] = {0,}; //2^21
-ll segt_0[2097152] = {0,};
-void segt_init(int l, int r, int node){
-    if(l==r){
-        if(value[l]==0){
-            segt_0[node] = 1;
-            segt[node] = 1;
-        }
-        else {
-            segt[node] = value[l];
-        }
-        return;    
-    }
-    int mid = (l+r)/2;
-    segt_init(l, mid, node*2);
-    segt_init(mid+1, r, node*2+1);
-    segt_0[node] = segt_0[node*2] + segt_0[node*2+1];
-    segt[node] = (segt[node*2] * segt[node*2+1]) % mod;
-}
-void segt_update(int l, int r, int node, int t, int v){
-    if(l==r){
-        value[t] = v;
-        if(value[t]==0){
-            segt_0[node] = 1;
-            segt[node] = 1;
-        }
-        else {
-            segt_0[node] = 0;
-            segt[node] = value[t];
-        }
-        return;
-    }
-    
-    int mid = (l+r)/2;
-    if(t &lt;= mid){
-        segt_update(l, mid, node*2, t, v);
-    } 
-    else {
-        segt_update(mid+1, r, node*2+1, t, v);
-    }
-    segt_0[node] = segt_0[node*2] + segt_0[node*2+1];
-    segt[node] = (segt[node*2] * segt[node*2+1]) % mod;
-}
-ll calc(int l, int r, int node, int lt, int rt){
-    if(l==lt&amp;&amp;r==rt){
-        if(segt_0[node]&gt;=1)
-            return 0;
-        else
-            return segt[node];
-    }
-    int mid = (l+r)/2;
-    if(rt &lt;= mid)
-        return calc(l, mid, node*2, lt, rt);       
-    else if(mid+1 &lt;= lt)
-        return calc(mid+1, r, node*2+1, lt, rt);
-    else
-        return calc(l, mid, node*2, lt, mid) * calc(mid+1, r, node*2+1, mid+1, rt) % mod;
-}
+int n, k;
+ll mod = 1000000007;
 void solve(){
-    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
-    for(int i = 0; i&lt;n; i++)
-        cin &gt;&gt; value[i];
-    segt_init(0, n-1, 1);
-    int a, b, c;
-    for(int i = 0; i&lt;m+k; i++){
-        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c; 
-        if(a==1){
-            segt_update(0, n-1, 1, b-1, c);    
-        }
-        else if(a==2){
-            cout &lt;&lt; calc(0, n-1, 1, b-1, c-1) &lt;&lt; '\n'; 
-        }
+    cin &gt;&gt; n &gt;&gt; k;
+    ll a =  1;
+    for(int i = n; i&gt;=n-k+1; i--){
+        a = (a*i)%mod;
     }
+    ll b = 1;
+    for(int i = k; i&gt;=1; i--){
+        b = (b*i)%mod;
+    }
+    ll remainder = 1;
+    ll t = mod-2;
+    while(t&gt;0){
+        if(t%2==1) 
+            remainder = (remainder * b) % mod;
+        b = (b*b) % mod;
+        t/=2;
+    }
+    cout &lt;&lt; (a * remainder) % mod;
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -217,13 +162,26 @@ int main(){
     return 0;
 }
 </code></pre>
-<p><a href="/ps/13/boj%202042%20%EA%B5%AC%EA%B0%84%20%ED%95%A9%20%EA%B5%AC%ED%95%98%EA%B8%B0.html">boj 2042 구간 합 구하기</a> 에서 처럼, segment tree를 활용한다. 다만 <strong>합</strong> 대신 <strong>곱</strong>을 한 뒤 문제에서 주어진 값으로 나눈 나머지 값을 저장한다.</p>
-<p>그렇기 때문에 위 문제의 풀이 코드의 <strong>갱신</strong> 부분을 그대로 사용할 수 없다. <a href="/ps/13/boj%202042%20%EA%B5%AC%EA%B0%84%20%ED%95%A9%20%EA%B5%AC%ED%95%98%EA%B8%B0.html">boj 2042 구간 합 구하기</a> 에서는, 루트 노드에서 부터 리프 노드까지 내려가며, 갱신되는 인덱스가 포함된 구간에 해당하는 모든 노드에서, 원래 값을 빼주고 새로운 값을 더해주는 방식을 사용하였다.</p>
-<p>하지만 구간의 곱을 구하는 segment tree의 노드는 나머지 연산을 한 결과 값을 가지고 있기 때문에, 원래 값으로 나누어주고 새로운 값을 곱해주는 방식을 사용할 수 없다. 더군다나 0으로 나누는 경우 divide by zero exception이 발생할 것이다.</p>
-<p>따라서 여기서는 거꾸로 리프 노드 부터 올라간다. 리프 노트 부터 올라가면서, <code>segt_init</code> 에서 했던 것 처럼 구간 곱 정보를 담고 있는 segment tree 노드들의 값을 다시 계산해준다.</p>
-<p>위의 코드에서는 다른 방식을 시도해보느라 segment tree의 노드에 해당하는 구간에 들어 있는 0의 개수를 저장하는 등 불필요한 부분이 존재한다. 앞서 설명한 방식만 사용하여도 문제가 풀릴 것으로 예상한다.</p>
+<p>먼저 이항계수의 성질을 사용하는 방법을 생각해볼 수 있다. <code>nCk = n-1Ck-1 + n-1Ck</code> 이다. 이를 이용해서, 재귀적으로 연산하며 <code>nCk</code>를 저장한 뒤 재사용하는 방법이 있다. 하지만 n가 k가 최대 4000000 으로, 이 방법은 사용하기 어렵다.</p>
+<p>이 문제에서는 페르마의 소정리를 이용해야 한다.</p>
+<p>일단 이항계수는 다음과 같이 계산한다.</p>
+<pre><code>nCk =  n! / k! * (n-k)! = (n-k+1)! / k! = (n-k+1)! * (k!)^-1
+</code></pre>
+<p>n가 k에 값을 넣어서 위의 식을 먼저 계산하는 것이 불가능하다. 왜냐하면 최대 4000000 으로, 자료형의 범위를 벗어날 수 있기 때문이다. 따라서 곱셈을 해주는 과정에서 나머지 연산을 계속해주어야 하는데, 분수는 나머지 연산을 해주기 어렵기 때문에 여기서 페르마의 소정리를 사용한다.</p>
+<p>페르마의 소정리는 다음과 같다.</p>
+<pre><code>a^(p-1) ≡ 1 (mod p)
+a*a^(p-2) ≡ 1 (mod p)
+a^(p-2) ≡ a^-1 (mod p)
+</code></pre>
+<p>이를 위 식에 적용하면 (p는 문제에서 주어진 값, 1000000007이다.) 아래와 같다.</p>
+<pre><code>((n-k+1)! * (k!)^-1) % p
+= (((n-k+1)! % p) * ((k!)^-1 % p)) % p
+= (((n-k+1)! % p) * (((k!)^(p-2) % p) % p)) % p
+</code></pre>
+<p>이제 곱셈만 남았으므로, 매 곱셈마다 p로 나머지 연산을 해주면 된다.</p>
+<p>주의할 점은 <code>(k!)^(p-2)</code>에서 그냥 곱셈만 한다면 굉장히 시간이 오래 걸린다. 따라서 <a href="/ps/13/boj%2012850%20%EB%B3%B8%EB%8C%80%20%EC%82%B0%EC%B1%852.html">boj 12850 본대 산책2</a> 에서 사용했던 O(lgN) 의 거듭제곱 방식을 사용해야 한다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p><a href="/ps/13/boj%202042%20%EA%B5%AC%EA%B0%84%20%ED%95%A9%20%EA%B5%AC%ED%95%98%EA%B8%B0.html">boj 2042 구간 합 구하기</a> 를 풀어본 뒤, 푼 문제여서 해결이 가능했다.</p>
+<p>페르마의 소정리를 알게 되었다.</p>
 
                         </div>
                     </article>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 1701 Cubeditor</title>
+        <title>boj 2024 선분 덮기</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1701 Cubeditor</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2024 선분 덮기</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-01-05</td>
+                                            <td class="">2024-02-07</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1701">https://www.acmicpc.net/problem/1701</a></p>
-<h3 id="코드">코드</h3>
+<p><a href="https://www.acmicpc.net/problem/2024">https://www.acmicpc.net/problem/2024</a></p>
+<h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -133,33 +133,81 @@
 #include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-
-vector&lt;int&gt; kmp_pi(string p){
-    int m = p.size(), j=0;
-    vector&lt;int&gt; pi(m, 0);
-    for(int i = 1; i&lt;m; i++){
-        while(j&gt;0 &amp;&amp; p[i]!=p[j]){
-            j = pi[j-1];
+int m;
+struct box{
+    int l, r;
+    bool operator&lt;(const box&amp; t) const {
+        if(l==t.l){
+            return r &gt; t.r; 
         }
-        if(p[i]==p[j]){
-            pi[i] = ++j; 
-        }
+        return l &lt; t.l;
     }
-    
-    return pi;
-}
+};
+vector&lt;box&gt; lines;
 void solve(){
-    string s;
-    getline(cin, s);
-    int ans = 0;
-    for(int i = 0; i&lt;s.size(); i++){
-        string p = s.substr(i, s.size());
-        vector&lt;int&gt; pi = kmp_pi(p);
-        for(int len: pi){
-            ans = max(ans, len);
-        } 
+    cin &gt;&gt; m;
+    int l, r;
+    while(1){
+        cin &gt;&gt; l &gt;&gt; r; 
+        if(l==0 &amp;&amp; r==0)
+            break;
+        if(l&lt;0)
+            l = 0;
+        if(l&gt;m)
+            l = m;
+        if(r&lt;0)
+            r = 0;
+        if(r&gt;m)
+            r = m;
+        lines.push_back({l, r});
     }
-    cout &lt;&lt; ans;
+    sort(lines.begin(), lines.end());
+    int start_idx = 0;
+    while(start_idx &lt; lines.size() &amp;&amp; lines[start_idx].l == lines[start_idx].r){
+        start_idx += 1;
+    }
+    if(start_idx == lines.size()){
+        cout &lt;&lt; '0';
+        return;
+    }
+    box cur_line = lines[start_idx];
+    int buffer = -1;
+    int ans = 1;
+    for(int i = start_idx+1; i&lt;lines.size(); i++){
+        box line = lines[i];
+        // cout &lt;&lt; line.l &lt;&lt; ' ' &lt;&lt; line.r &lt;&lt;endl;
+        if(line.l==line.r)
+            continue;
+        if(lines[i].l &lt;= cur_line.r){
+            if(lines[i].r &gt; cur_line.r){
+                if(buffer==-1){
+                    buffer = cur_line.r;
+                    ans += 1; 
+                }
+                else {
+                    if(lines[i].l &gt; buffer){
+                        buffer = cur_line.r;
+                        ans += 1;
+                    }
+                }
+                cur_line.r = lines[i].r;
+            }
+        }
+        else {
+            if(lines[i].l &lt;= m){
+                cout &lt;&lt; '0';
+                return;
+            } 
+        }
+    }
+    // cout &lt;&lt; cur_line.l &lt;&lt; ' '  &lt;&lt; cur_line.r &lt;&lt; endl;
+    if(cur_line.l==0 &amp;&amp; cur_line.r ==m){
+        cout &lt;&lt; ans;
+        
+    }
+    else {
+        cout &lt;&lt; '0';
+    }
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -167,22 +215,33 @@ int main(){
     solve(); 
     return 0;
 }
-
 </code></pre>
-<h3 id="풀이">풀이</h3>
-<p>kmp 알고리즘에서 사용하는 pi 배열만을 가지고 풀 수 있다. <a href="/ps/15/boj%201786%20%EC%B0%BE%EA%B8%B0.html">boj 1786 찾기</a> <a href="/">kmp</a></p>
-<p>pi 배열은 접두사와 접미사가 일치하는 최대 길이를 저장하는 배열이다. 접두사와 접미사가 일치한다는 것은 여기에 해당하는 부분 문자열이 최소 2개 이상이라는 뜻이다. 이는 문제에서 구해야 하는 값과 일치한다.</p>
-<p>그렇다면 아래의 경우를 생각해보자</p>
-<pre><code class="language-shell">0 1 2 3 4 5 6 7
-z a b c a b c k
+<p>라인 스위핑 문제이다.</p>
+<p><code>[0, m]</code> 구간에서 주어진 선으로 덮을 수 있는지를 구해야 한다. 따라서 일단 선을 입력받을 때, 이 구간의 양 끝을 넘어가는 경우 양 끝으로 범위를 바꿔준다. 예를 들어서 <code>-10 20</code> 이었다면 <code>0 20</code>으로 변경한다.</p>
+<p>그 다음 이 선들을 왼쪽 좌표가 적은 것 부터 오름차순으로 정렬한다. 만약 왼쪽 좌표가 같다면 오른쪽 좌표가 큰 것이 앞에 오도록 한다.</p>
+<p>그리고 순서대로 선들을 순회하면서 구간을 모두 덮기 위한 선의 최소 개수를 구해나간다. 다음의 경우를 보자.</p>
+<p>일단 불가능한 경우이다</p>
+<pre><code>0 5
+6 10
 </code></pre>
-<p>여기서 <code>abc</code>가 2개 이상 존재하는 최대 길이의 부분 문자열이다. 이 값은 인덱스가 1~6 인 부분 문자열에 대한 pi 배열을 가지고 찾아낼 수 있다.</p>
-<p>결론적으로 주어진 문자열의 부분 문자열을 순회하며 이 배열을 계산한뒤, 최대 길이를 찾아주면 된다.</p>
-<p>주의할 사항이 하나더 있다. 모든 부분 문자열을 순회하면 중복되어 계산되는 값들이 있어서 시간 초과가 발생한다. pi 배열의 <code>pi[i]</code>값은 <strong>0번째 부터 i번째 문자까지의 부분 문자열에서 접두사와 접미사가 일치하는 최대 길이</strong>를 의미한다. 따라서 <code>index 1~7</code>의 부분문자열에 대해 pi 배열로 최대 길이를 구했으면, <code>index 1~1</code>, <code>index 1~2</code>, <code>index 1~3</code> ... 인 부분 문자열에 대해서는 순회할 필요가 없다.</p>
-<p>따라서 순회의 대상이 되는 부분 문자열은, 주어진 문자열의 마지막 <code>index</code>를 끝으로 하는 문자열이 된다.</p>
-<p>위의 경우에서는 <code>0~7</code>, <code>1~7</code>, <code>2~7</code>, <code>3~7</code>, <code>4~7</code>, <code>5~7</code>, <code>6~7</code>, <code>7~7</code> 인 부분문자열에 대해서만 순회하면 된다.</p>
+<p>구간이 <code>[0, 10]</code>이라면 <code>0 5</code>를 탐색한 다음, <code>6 10</code>을 탐색하는데 현재까지의 선의 오른쪽 좌표보다 왼쪽 좌표가 크기 때문에 덮을 수 없는 경우가 된다.</p>
+<p>그 다음 경우를 보자.</p>
+<pre><code>0 5
+0 3
+2 5
+</code></pre>
+<p><code>0 5</code>다음에는 <code>0 3</code>을 순회하게 되는데 이는 최소 개수의 선에 들어가지 않아야 하고. 이후에 <code>2 5</code> 또한 최소 개수의 선에 들어가지 않아야 한다.</p>
+<p>따라서 현재까지의 선의 오른쪽 좌표보다 작다면 최소 개수의 선에 들어가지 않도록 한다.</p>
+<p>그리고 다음의 경우를 보자</p>
+<pre><code>0 5
+2 8
+4 10
+</code></pre>
+<p><code>0 5</code> 다음에는 <code>2 8</code>을 순회한다. 이때에는 왼쪽 좌표가 현재까지의 선의 오른쪽 좌표보다 작고, 오른쪽 좌표가 현재까지의 선의 오른쪽 좌표보다 크기 때문에 최소 개수의 선에 들어간다.</p>
+<p>그 다음에는 <code>4 10</code>을 순회한다. 앞선 규칙대로라면 이 탐색에서도 최소 개수의 선에 들어가게 된다. 하지만 <code>2 8</code>로 덮는 대신 <code>4 10</code>으로 덮으면 되므로, 최소 개수의 선에 <code>2 8</code>이 들어가지 않아야 한다. 이를 다르게 말하면, 최소 개수를 카운팅 하는 변수가 있을 때, <code>2 8</code>을 탐색할 때는 1을 올려주되, <code>4 10</code>을 탐색할 때에는 올려주지 않아야 한다는 것이다. 만약 그다음에 <code>6 100</code>를 탐색하더라도 마찬가지로 올려주지 않아야 한다.</p>
+<p>이를 해결하기 위해서 나는 코드에서 <code>buffer</code>를 사용했다. 최소 개수를 카운팅 했다면, 오른쪽 좌표를 buffer에 넣어 두어서, 그다음 탐색하는 선들의 왼쪽 좌표가 buffer보다 작다면 카운팅 하지 않는 것이다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>문제를 풀지 못했다. kmp를 이용하였지만, 시간초과가 걸렸다. kmp 알고리즘을 모든 부분문자열에 대해 사용하는 것이 아닌, pi 배열만을 이용해서 특정 부분문자열에 대해서만 연산을 하는 것이 핵심이었다.</p>
+<p>이 문제를 먼저 봤었는데, 풀이를 모르겠어서 <a href="/ps/9/boj%202170%20%EC%84%A0%20%EA%B8%8B%EA%B8%B0.html">boj 2170 선 긋기</a> 를 풀며 라인 스위핑 알고리즘에 대해서 공부하고 다시 풀었다.</p>
 
                         </div>
                     </article>

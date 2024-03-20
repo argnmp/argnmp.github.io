@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 2162 선분 그룹</title>
+        <title>boj 12850 본대 산책2</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2162 선분 그룹</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 12850 본대 산책2</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2023-12-18</td>
+                                            <td class="">2024-01-24</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2162">https://www.acmicpc.net/problem/2162</a></p>
-<h3 id="코드">코드</h3>
+<p><a href="https://www.acmicpc.net/problem/12850">https://www.acmicpc.net/problem/12850</a></p>
+<h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -130,83 +130,71 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
+#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-struct coord {
-    double x, y;
-};
-int n;
-double ccw(coord p1, coord p2, coord p3){
-    return (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x);
-}
-struct line {
-    coord p1, p2;
-};
-line ln[3000] = {0,};
-
-int uf[3000] = {0,};
-int uf_size[3000] = {0,};
-int _find(int n){
-    if(uf[n]==n)
-        return n;
-    return uf[n] = _find(uf[n]);
-}
-void _union(int a, int b){
-    int r_a = _find(a);
-    int r_b = _find(b);
-    if(r_a != r_b){
-        uf[r_b] = r_a;
-        uf_size[r_a] += uf_size[r_b];
+int mod = 1000000007;
+int d;
+struct matrix{
+    int r, c;
+    vector&lt;vector&lt;ll&gt;&gt; data;
+    matrix(int r, int c): r(r), c(c){
+        data = vector(r, vector(c, (ll)0)); 
     }
-}
-
-bool rect_check(line l, coord p){
-    double max_x = max(l.p1.x, l.p2.x);
-    double min_x = min(l.p1.x, l.p2.x);
-    double max_y = max(l.p1.y, l.p2.y);
-    double min_y = min(l.p1.y, l.p2.y);
-    return min_x &lt;= p.x &amp;&amp; p.x &lt;= max_x &amp;&amp; min_y &lt;= p.y &amp;&amp; p.y &lt;= max_y;
-}
-bool cross_check(line l1, line l2){
-    if((ccw(l1.p1, l1.p2, l2.p1)==0 &amp;&amp; rect_check(l1, l2.p1)) || (ccw(l1.p1, l1.p2, l2.p2)==0 &amp;&amp; rect_check(l1, l2.p2)) || (ccw(l2.p1, l2.p2, l1.p1)==0 &amp;&amp; rect_check(l2, l1.p1)) || (ccw(l2.p1, l2.p2, l1.p2)==0 &amp;&amp; rect_check(l2, l1.p2))){
-        return true;
-    } else if(ccw(l1.p1, l1.p2, l2.p1)*ccw(l1.p1, l1.p2, l2.p2) &lt; 0 &amp;&amp; ccw(l2.p1, l2.p2, l1.p1)*ccw(l2.p1, l2.p2, l1.p2) &lt; 0){
-        return true;
-    } else {
-        return false;
-    }
-}
-
-void solve(){
-    for(int i = 0; i&lt;3000; i++){
-        uf[i] = i;
-        uf_size[i] = 1;
-    }
-    cin &gt;&gt; n;
-    for(int i = 0; i&lt;n ;i++){
-        cin &gt;&gt; ln[i].p1.x &gt;&gt; ln[i].p1.y &gt;&gt; ln[i].p2.x &gt;&gt; ln[i].p2.y;
-    }
-
-    set&lt;int&gt; groups;
-    for(int i = 0; i&lt;n; i++){
-        for(int j = i+1; j&lt;n; j++){
-            if(cross_check(ln[i], ln[j])){
-                _union(i, j);
-            } 
+    matrix(int r, int c, ll vec[][8]): r(r), c(c){
+        data = vector(r, vector(c, (ll)0)); 
+        for(int i = 0; i&lt;r; i++){
+            for(int j = 0; j&lt;c; j++){
+                data[i][j] =  vec[i][j];  
+            }
         }
     }
+    matrix operator*(matrix&amp; t){
+        matrix mat(r, t.c);
+        for(int i = 0; i&lt;mat.r; i++){
+            for(int j = 0; j&lt;mat.c; j++){
+                ll acc = 0;
+                for(int k = 0; k&lt;c; k++){
+                    acc = (acc + (data[i][k] * t.data[k][j])%mod)%mod;
+                }
+                mat.data[i][j] = acc;
+            }
+        }
+        return mat;
+    }
+};
+void solve(){
+    cin &gt;&gt; d;
+    ll base[8][8] = {
+        {0, 1, 1, 0, 0, 0, 0, 0},
+        {1, 0, 1, 1, 0, 0, 0, 0},
+        {1, 1, 0, 1, 1, 0, 0, 0},
+        {0, 1, 1, 0, 1, 1, 0, 0},
+        {0, 0, 1, 1, 0, 1, 1, 0},
+        {0, 0, 0, 1, 1, 0, 0, 1},
+        {0, 0, 0, 0, 1, 0, 0, 1},
+        {0, 0, 0, 0, 0, 1, 1, 0},
+    };
+    ll ident[8][8] = {
+        {1, 0, 0, 0, 0, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0, 0, 0},
+        {0, 0, 1, 0, 0, 0, 0, 0},
+        {0, 0, 0, 1, 0, 0, 0, 0},
+        {0, 0, 0, 0, 1, 0, 0, 0},
+        {0, 0, 0, 0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 0, 0, 1, 0},
+        {0, 0, 0, 0, 0, 0, 0, 1},
+    };
+    matrix m(8, 8, base);
+    matrix remainder(8, 8, ident);
 
-    for(int i = 0; i&lt;n; i++){
-        groups.insert(_find(i));
+    while(d&gt;0){
+        if(d%2==1)
+            remainder = m * remainder;
+        m = m*m;
+        d/=2;
     }
-    cout &lt;&lt; groups.size() &lt;&lt; '\n';
-    
-    int max_size = -1;
-    for(int r: groups){
-        max_size = max(max_size, uf_size[r]);
-    }
-    cout &lt;&lt; max_size &lt;&lt; '\n';
-    
+    cout &lt;&lt; remainder.data[0][0];
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -214,18 +202,31 @@ int main(){
     solve(); 
     return 0;
 }
-
 </code></pre>
-<h3 id="풀이">풀이</h3>
-<p><a href="/ps/15/boj%2017387%20%EC%84%A0%EB%B6%84%20%EA%B5%90%EC%B0%A8%202.html">boj 17387 선분 교차 2</a> 에서 이어지는 문제이다.</p>
-<p>이 문제에서는, 교차하는 선분들을 같은 집합으로 넣어주어야 한다.</p>
-<p>먼저 교차하는 선분을 판단하기 위해 벡터의 외적을 이용해야 하는데, 위의 링크에서 사용한 조건을 사용하면 된다. 이를 통해서 <code>O(1)</code> 의 시간에 교차 여부를 판단할 수 있다.</p>
-<p>그리고 모든 선분의 조합을 확인하면서, 만약 교차하는 경우 같은 집합에 넣어주어야 한다. 이는 union-find를 이용하였다.</p>
-<p>선분의 최대 개수는 3000개 이다. 모든 선분의 조합을 확인하는 데 에는 <code>O(n^2)</code>의 시간이 필요하기 때문에 대략 9000000 번의 연산이 필요하고 이는, 문제에서 제시된 2초 안에 해결이 가능하다. 따라서 모든 선분의 조합에 대해서 교차여부를 판단해주고, 교차한다면 union 연산을 해주면 된다.</p>
-<p>union 시에는 집합에 속한 선분의 개수를 함께 기록해준다.</p>
+<p><a href="/ps/13/boj%2012849%20%EB%B3%B8%EB%8C%80%20%EC%82%B0%EC%B1%85.html">boj 12849 본대 산책</a>과 같은 문제이지만, D가 최대 10억까지로 늘어났다. 따라서 원래는 DP를 이용해서, <code>1~D</code>의 총 D번의 연산을 했었는데, 최대 10억이 되므로 제한시간을 초과한다. 따라서 기존 방식을 사용할 수 없고, 행렬을 이용해야 한다.</p>
+<p>주어진 그래프의 각 노드를 우상단에서 좌하단 순서대로 <code>K0 ~ k7</code>라고 설정하면(시작노드는 K0) 아래와 같은 점화식을 세울 수 있다.</p>
+<pre><code>{             {                             {
+{K0(i)}       {0, 1, 1, 0, 0, 0, 0, 0}      {K0(i-1)}
+{K1(i)}       {1, 0, 1, 1, 0, 0, 0, 0}      {K1(i-1)}
+{K2(i)}       {1, 1, 0, 1, 1, 0, 0, 0}      {K2(i-1)}
+{K3(i)}       {0, 1, 1, 0, 1, 1, 0, 0}      {K3(i-1)}
+{K4(i)}   =   {0, 0, 1, 1, 0, 1, 1, 0}   *  {K4(i-1)}
+{K5(i)}       {0, 0, 0, 1, 1, 0, 0, 1}      {K5(i-1)}
+{K6(i)}       {0, 0, 0, 0, 1, 0, 0, 1}      {K6(i-1)}
+{K7(i)}       {0, 0, 0, 0, 0, 1, 1, 0}      {K7(i-1)}
+      }                              }              }
+</code></pre>
+<p>따라서 위 점화식의 <code>8x8</code>행렬의 거듭제곱으로 D를 계산할 수 있다. 단순히 행렬을 계속 곱하기만 한다면, 이 풀이는 <a href="/ps/13/boj%2012849%20%EB%B3%B8%EB%8C%80%20%EC%82%B0%EC%B1%85.html">boj 12849 본대 산책</a> 이 문제의 풀이와 다를 바 없다. 거듭제곱은 O(lgN)의 연산으로 계산이 가능하기 때문에 이를 이용해야 한다.</p>
+<pre><code class="language-c++">    while(d&gt;0){
+        if(d%2==1)
+            remainder = m * remainder;
+        m = m*m;
+        d/=2;
+    }
+</code></pre>
+<p>7을 이진수로 나타내면 <code>111</code> 이고, 이를 다시 십진수로 바꿀 때 <code>2^2*1 + 2^1*1 + 2^0*1</code> 로 계산한다는 것을 위 코드에서 이용한다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p><a href="/ps/15/boj%2017387%20%EC%84%A0%EB%B6%84%20%EA%B5%90%EC%B0%A8%202.html">boj 17387 선분 교차 2</a> 를 풀고 이 문제를 푼 것이어서, 어렵지 않게 해결할 수 있었다.</p>
-<p>처음에는 union-find 대신 그냥 set을 이용할까 고민했지만, 집합이 합쳐지는 경우의 수 등의 고려할 사항이 매우 많아져서, union-find를 사용하였다. 대부분의 경우에는 union-find를 사용하는 것이 좋아보인다.</p>
+<p>이전에 풀어봤던 문제이다. 다만 행렬의 곱을 계산하는 부분을 잘못 적어서 디버깅하는 과정에서 시간이 걸렸다.</p>
 
                         </div>
                     </article>

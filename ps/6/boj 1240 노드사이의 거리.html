@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 1976 여행 가자</title>
+        <title>boj 1240 노드사이의 거리</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1976 여행 가자</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1240 노드사이의 거리</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2023-12-09</td>
+                                            <td class="">2024-02-20</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1976">https://www.acmicpc.net/problem/1976</a></p>
-<h3 id="코드">코드</h3>
+<p><a href="https://www.acmicpc.net/problem/1240">https://www.acmicpc.net/problem/1240</a></p>
+<h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -130,46 +130,80 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
+#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
 int n, m;
-int uf[201] = {0,};
-int uffind(int v){
-    if(uf[v]==v)
-        return v;
-    uf[v] = uffind(uf[v]);
-    return uf[v];
+struct edge { int v, dist; };
+vector&lt;vector&lt;edge&gt;&gt; graph(1001, vector&lt;edge&gt;());
+
+int dep[1001] = {0,}; 
+ll par[1001][11] = {0,};
+ll par_dist[1001][11] = {0,};
+
+int visited[1001] = {0,};
+void init_lca(int node, int depth){
+    visited[node] = 1; 
+    dep[node] = depth;
+    for(edge next: graph[node]){
+        if(visited[next.v]==0){
+            par[next.v][0] = node;
+            par_dist[next.v][0] = next.dist;
+            init_lca(next.v, depth+1);
+        }
+    }
 }
-void ufunion(int a, int b){
-    int pa = uffind(a); 
-    int pb = uffind(b);
-    uf[pb] = pa;
+void fill_lca(){
+    for(int i = 1; i&lt;11; i++){
+        for(int j = 1; j&lt;=n; j++){
+            par[j][i] = par[par[j][i-1]][i-1];
+            par_dist[j][i] = par_dist[j][i-1] + par_dist[par[j][i-1]][i-1];
+        }
+    }
 }
+
+ll lca(int a, int b){
+    if(dep[a] &gt; dep[b])
+        swap(a, b);
+    ll acc = 0;
+    for(int i = 10; i&gt;=0; i--){
+        if(dep[b] - dep[a] &gt;= (1&lt;&lt;i)){
+            acc += par_dist[b][i];
+            b = par[b][i];
+        }
+    }
+    if(a==b)
+        return acc;
+    
+    for(int i = 10; i&gt;=0; i--){
+        if(par[a][i] != par[b][i]){
+            acc += par_dist[a][i]; 
+            acc += par_dist[b][i]; 
+            a = par[a][i];
+            b = par[b][i];
+        }
+    }
+    acc += par_dist[a][0];
+    acc += par_dist[b][0];
+    return acc;
+}
+
 void solve(){
     cin &gt;&gt; n &gt;&gt; m;
-    for(int i = 1; i&lt;=n; i++){
-        uf[i] = i;
+    int u, v, w;
+    for(int i = 0; i&lt;n-1; i++){
+        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w; 
+        graph[u].push_back({v, w});
+        graph[v].push_back({u, w});
+    } 
+    init_lca(1, 0);
+    fill_lca();
+    
+    for(int i = 0; i&lt;m; i++){
+        cin &gt;&gt; u &gt;&gt; v;
+        cout &lt;&lt; lca(u, v) &lt;&lt; '\n';
     }
-    int is_connected;
-    for(int i = 1; i&lt;=n; i++){
-        for(int j = 1; j&lt;=n; j++){
-            cin &gt;&gt; is_connected;
-            if(is_connected==1){
-                ufunion(i, j);
-            }
-        }
-    }
-    int u, v;
-    cin &gt;&gt; u;
-    for(int i = 0; i&lt;m-1; i++){
-        cin &gt;&gt; v; 
-        if(uffind(u)!=uffind(v)){
-            cout &lt;&lt; &quot;NO&quot;;
-            return;
-        }
-    }
-    cout &lt;&lt; &quot;YES&quot;;
-    return;
+    
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -177,14 +211,11 @@ int main(){
     solve(); 
     return 0;
 }
-
 </code></pre>
-<h3 id="풀이">풀이</h3>
-<p>도시 간에 양방향으로 이동할 수 있고 도시들이 연결되어 있는지 여부만 확인하면 되기 때문에, union-find를 사용해서 도시들이 같은 집합에 속해있는지를 확인해주면 된다
-<a href="/ps/17/boj%201717%20%EC%A7%91%ED%95%A9%EC%9D%98%20%ED%91%9C%ED%98%84.html">boj 1717 집합의 표현</a></p>
+<p>두 노드의 공통 조상을 구해서, 그 조상까지의 거리를 구하면 된다.</p>
+<p><a href="/ps/15/boj%2011438%20LCA%202.html">boj 11438 LCA 2</a> 의 코드로 풀이를 작성하였다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>union-find를 알고 있어서 풀 수 있었다.
-처음에 <code>uf</code>배열을 초기화하는데, n을 먼저 입력받지 않고 초기화를 했다. 이렇게 하지 않도록 주의를 해야겠다.</p>
+<p>이전에 풀어보았던 문제와 같은 문제이다.</p>
 
                         </div>
                     </article>

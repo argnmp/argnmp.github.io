@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 2565 전깃줄</title>
+        <title>boj 2162 선분 그룹</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2565 전깃줄</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 2162 선분 그룹</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-06</td>
+                                            <td class="">2023-12-18</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,8 +117,8 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/2565">https://www.acmicpc.net/problem/2565</a></p>
-<h3 id="풀이">풀이</h3>
+<p><a href="https://www.acmicpc.net/problem/2162">https://www.acmicpc.net/problem/2162</a></p>
+<h3 id="코드">코드</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -130,44 +130,83 @@
 #include &lt;unordered_set&gt;
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
-#include &lt;cmath&gt;
 using namespace std;
 using ll = long long;
-int n;
-struct box{
-    int a, b;
-    bool operator&lt;(const box&amp; t) const {
-        return a &lt; t.a;
-    }
-    bool operator&gt;(const box&amp; t) const {
-        return a &gt; t.a &amp;&amp; b &gt; t.b;
-    }
+struct coord {
+    double x, y;
 };
-box line[101] = {0,};
-int dp[101] = {0,};
+int n;
+double ccw(coord p1, coord p2, coord p3){
+    return (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x);
+}
+struct line {
+    coord p1, p2;
+};
+line ln[3000] = {0,};
+
+int uf[3000] = {0,};
+int uf_size[3000] = {0,};
+int _find(int n){
+    if(uf[n]==n)
+        return n;
+    return uf[n] = _find(uf[n]);
+}
+void _union(int a, int b){
+    int r_a = _find(a);
+    int r_b = _find(b);
+    if(r_a != r_b){
+        uf[r_b] = r_a;
+        uf_size[r_a] += uf_size[r_b];
+    }
+}
+
+bool rect_check(line l, coord p){
+    double max_x = max(l.p1.x, l.p2.x);
+    double min_x = min(l.p1.x, l.p2.x);
+    double max_y = max(l.p1.y, l.p2.y);
+    double min_y = min(l.p1.y, l.p2.y);
+    return min_x &lt;= p.x &amp;&amp; p.x &lt;= max_x &amp;&amp; min_y &lt;= p.y &amp;&amp; p.y &lt;= max_y;
+}
+bool cross_check(line l1, line l2){
+    if((ccw(l1.p1, l1.p2, l2.p1)==0 &amp;&amp; rect_check(l1, l2.p1)) || (ccw(l1.p1, l1.p2, l2.p2)==0 &amp;&amp; rect_check(l1, l2.p2)) || (ccw(l2.p1, l2.p2, l1.p1)==0 &amp;&amp; rect_check(l2, l1.p1)) || (ccw(l2.p1, l2.p2, l1.p2)==0 &amp;&amp; rect_check(l2, l1.p2))){
+        return true;
+    } else if(ccw(l1.p1, l1.p2, l2.p1)*ccw(l1.p1, l1.p2, l2.p2) &lt; 0 &amp;&amp; ccw(l2.p1, l2.p2, l1.p1)*ccw(l2.p1, l2.p2, l1.p2) &lt; 0){
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void solve(){
+    for(int i = 0; i&lt;3000; i++){
+        uf[i] = i;
+        uf_size[i] = 1;
+    }
     cin &gt;&gt; n;
-    for(int i = 1; i&lt;=n; i++){
-        cin &gt;&gt; line[i].a &gt;&gt; line[i].b;
+    for(int i = 0; i&lt;n ;i++){
+        cin &gt;&gt; ln[i].p1.x &gt;&gt; ln[i].p1.y &gt;&gt; ln[i].p2.x &gt;&gt; ln[i].p2.y;
     }
-    sort(line+1, line+n+1);
-    dp[0] = 0;
-    for(int i = 1; i&lt;=n; i++){
-        // printf(&quot;line: %d, %d\n&quot;, line[i].a, line[i].b);
-        int max_count = INT_MIN;
-        for(int j = i; j&gt;=0; j--){
-            if(line[i] &gt; line[j]){
-                max_count = max(dp[j], max_count);
-            }
+
+    set&lt;int&gt; groups;
+    for(int i = 0; i&lt;n; i++){
+        for(int j = i+1; j&lt;n; j++){
+            if(cross_check(ln[i], ln[j])){
+                _union(i, j);
+            } 
         }
-        dp[i] = max_count+1;
-        // printf(&quot;i: %d, count: %d\n&quot;, i, dp[i]);
     }
-    int max_value = INT_MIN;
-    for(int i = 1; i&lt;=n; i++){
-        max_value = max(max_value, dp[i]);
+
+    for(int i = 0; i&lt;n; i++){
+        groups.insert(_find(i));
     }
-    cout &lt;&lt; n-max_value;
+    cout &lt;&lt; groups.size() &lt;&lt; '\n';
+    
+    int max_size = -1;
+    for(int r: groups){
+        max_size = max(max_size, uf_size[r]);
+    }
+    cout &lt;&lt; max_size &lt;&lt; '\n';
+    
 }
 int main(){
     ios::sync_with_stdio(0);
@@ -175,12 +214,18 @@ int main(){
     solve(); 
     return 0;
 }
+
 </code></pre>
-<p>먼저 왼쪽 숫자를 기준으로 전깃줄들을 정렬한다.</p>
-<p>이후 <code>dp[k]</code>를 <code>k번째 전깃줄을 추가했을 때 연결 가능한 전깃줄의 최대 갯수</code>로 정의한다. <code>dp[k]</code>를 구하기 위해서는 index <code>0~k-1</code> 사이의, 전깃줄의 오른쪽 숫자가 더 적은 <code>dp</code>값들 중 최댓값을 구하고 거기에 +1을 해주면 된다.</p>
-<p>나중에 검색해보고 <a href="/ps/19/boj%2014002%20%EA%B0%80%EC%9E%A5%20%EA%B8%B4%20%EC%A6%9D%EA%B0%80%ED%95%98%EB%8A%94%20%EB%B6%80%EB%B6%84%20%EC%88%98%EC%97%B4%204.html">boj 14002 가장 긴 증가하는 부분 수열 4</a> 과 같은 문제임을 알게되었다.</p>
+<h3 id="풀이">풀이</h3>
+<p><a href="/ps/16/boj%2017387%20%EC%84%A0%EB%B6%84%20%EA%B5%90%EC%B0%A8%202.html">boj 17387 선분 교차 2</a> 에서 이어지는 문제이다.</p>
+<p>이 문제에서는, 교차하는 선분들을 같은 집합으로 넣어주어야 한다.</p>
+<p>먼저 교차하는 선분을 판단하기 위해 벡터의 외적을 이용해야 하는데, 위의 링크에서 사용한 조건을 사용하면 된다. 이를 통해서 <code>O(1)</code> 의 시간에 교차 여부를 판단할 수 있다.</p>
+<p>그리고 모든 선분의 조합을 확인하면서, 만약 교차하는 경우 같은 집합에 넣어주어야 한다. 이는 union-find를 이용하였다.</p>
+<p>선분의 최대 개수는 3000개 이다. 모든 선분의 조합을 확인하는 데 에는 <code>O(n^2)</code>의 시간이 필요하기 때문에 대략 9000000 번의 연산이 필요하고 이는, 문제에서 제시된 2초 안에 해결이 가능하다. 따라서 모든 선분의 조합에 대해서 교차여부를 판단해주고, 교차한다면 union 연산을 해주면 된다.</p>
+<p>union 시에는 집합에 속한 선분의 개수를 함께 기록해준다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>기존에 풀었던 문제를 떠올려보는 것도 좋을 듯하다.</p>
+<p><a href="/ps/16/boj%2017387%20%EC%84%A0%EB%B6%84%20%EA%B5%90%EC%B0%A8%202.html">boj 17387 선분 교차 2</a> 를 풀고 이 문제를 푼 것이어서, 어렵지 않게 해결할 수 있었다.</p>
+<p>처음에는 union-find 대신 그냥 set을 이용할까 고민했지만, 집합이 합쳐지는 경우의 수 등의 고려할 사항이 매우 많아져서, union-find를 사용하였다. 대부분의 경우에는 union-find를 사용하는 것이 좋아보인다.</p>
 
                         </div>
                     </article>

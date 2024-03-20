@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>boj 1960 행렬만들기</title>
+        <title>boj 12869 뮤탈리스크</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/static/main.css" rel="stylesheet">
@@ -76,7 +76,7 @@
                     <article>
                         <section class="w-full">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 1960 행렬만들기</p>
+                                <p class="text-4xl md:text-5xl break-keep font-bold text-gray-700 dark:text-gray-200 py-1">boj 12869 뮤탈리스크</p>
                             </div>
                             <div class="mb-4 md:pl-5">
                                 <table class="text-left text-sm text-gray-700 dark:text-gray-200">
@@ -97,7 +97,7 @@
                                             <th scope="row" class="pr-4">
                                                 created at
                                             </th>
-                                            <td class="">2024-02-22</td>
+                                            <td class="">2024-03-20</td>
                                         </tr>
                                         <tr class="">
                                             <th scope="row" class="pr-4">
@@ -117,7 +117,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-7 font-post">
                             <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1960">https://www.acmicpc.net/problem/1960</a></p>
+<p><a href="https://www.acmicpc.net/problem/12869">https://www.acmicpc.net/problem/12869</a></p>
 <h3 id="풀이">풀이</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
@@ -131,54 +131,75 @@
 #include &lt;bitset&gt;
 #include &lt;cstring&gt;
 #include &lt;cmath&gt;
+#define dbgn(x) printf(&quot;[DBG] %s: %lld\n&quot;, #x, (ll)x);
 using namespace std;
 using ll = long long;
+
 int n;
-struct box{
-    int idx;
-    int size;
-    bool operator()(box&amp; a, box&amp; b){
-        return a.size &lt; b.size;
+struct carrier{
+    int v[3] = {0,};
+    bool check(int n){
+        for(int i = 0; i&lt;n; i++)
+            if(v[i]&gt;0)
+                return false;
+        return true;
+    }
+    void sortv(){
+        sort(v, v+3, greater&lt;int&gt;());
+    }
+    void norm(){
+        for(int i = 0; i&lt;3; i++)
+            if(v[i]&lt;0)
+                v[i]=0;
     }
 };
-int board[500][500];
-void solve(){
-    cin &gt;&gt; n;
-    priority_queue&lt;box, vector&lt;box&gt;, box&gt; pq;
-    int t;
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; t;
-        if(t!=0)
-            pq.push({i, t});
-    }
-    for(int i = 0; i&lt;n; i++){
-        cin &gt;&gt; t;
-        vector&lt;box&gt; target; 
-        while(t--) {
-            if(pq.empty()){
-                cout &lt;&lt; -1;
-                return;
-            }
-            target.push_back(pq.top());
-            pq.pop();
+struct box {
+    carrier c;
+    int count;
+};
+queue&lt;box&gt; q;
+
+int attack[3] = {9, 3, 1};
+int visited[3] = {0,};
+int dp[60][60][60] = {0,};
+void perm(int sel, carrier c, int count){
+    if(sel==n){
+        c.sortv();
+        c.norm();
+        if(dp[c.v[0]][c.v[1]][c.v[2]]==0){
+            dp[c.v[0]][c.v[1]][c.v[2]] = 1;
+            q.push({c, count + 1});
         }
-        for(box&amp; k: target){
-            board[k.idx][i] = 1;
-            if(k.size - 1 &gt; 0){
-                pq.push({k.idx, k.size-1});
-            }
-        }
-    }
-    if(!pq.empty()){
-        cout &lt;&lt; -1;
         return;
     }
-    cout &lt;&lt; 1 &lt;&lt; '\n';
     for(int i = 0; i&lt;n; i++){
-        for(int j = 0; j&lt;n; j++){
-            cout &lt;&lt; board[i][j];
+        if(visited[i]==0){
+            carrier next = c;
+            visited[i] = 1;
+            next.v[i] -= attack[sel];
+            perm(sel+1, next, count);
+            visited[i] = 0;
         }
-        cout &lt;&lt; '\n';
+    }
+}
+
+void solve(){
+    cin &gt;&gt; n;
+    carrier t;
+    for(int i=0; i&lt;n; i++){
+        cin &gt;&gt; t.v[i];
+    }
+    t.sortv();
+    t.norm();
+    q.push({t, 0});
+    while(!q.empty()){
+        box cur = q.front();
+        q.pop();
+        if(cur.c.check(n)){
+            cout &lt;&lt; cur.count;
+            return;
+        }
+        perm(0, cur.c, cur.count);
     }
 }
 int main(){
@@ -188,13 +209,9 @@ int main(){
     return 0;
 }
 </code></pre>
-<p>먼저 행을 입력받으며 priority queue에 행의 index와 1의 개수를 넣는데, 1의 개수가 큰 index가 top으로 오도록한다. 1의 개수가 0이면 priority queue에 넣지 않는다.</p>
-<p>이후 열을 입력받으면서, 해당 열에 있어야 하는 1의 개수만큼 priority queue에서 pop을 한다. pop된 행과 현재 열이 1이 들어가야 하는 자리이다. 이후 pop된 행의 1의 개수를 1개 줄인 뒤, 0이 아니라면 다시 priority queue에 넣는다.</p>
-<p>위 과정에서 열의 1의 개수를 입력받고, 이 값이 1개 이상이지만 priority queue가 비어 있다면 현재 열에서 1을 더이상 추가할 수 없다는 의미이므로 불가능한 경우이다.</p>
-<p>마지막으로 priority queue에 행이 남아 있으면 해당 행에 필요한 1의 개수가 충족되지 않았다는 의미이므로 이 또한 불가능한 경우이다.</p>
-<p>열을 입력받으면서 각 행에 1을 채워넣을 때, 1을 더 많이 수용할 수 있는 행에 넣는 것이 무조건 유리하다. 한 예시로, 1을 1개만 수용할 수 있는 행과 1을 10개 수용할 수 있는 행이 있을 때, 전자에 먼저 1을 채워 넣으면 나중에 전자 행을 사용할 수 없지만, 후자에 먼저 1을 채워 넣으면 전자와 후자 행 모두 사용 가능하기 때문이다.</p>
+<p>나는 bfs로 모든 경우의 수를 탐색하였다. 그 과정에서 중복방문이 생기는 것을 고려하여, 남아있는 SCV들의 체력이 큰 순서대로 정렬하여 dp배열에서 방문하였는지를 확인해주었다.</p>
 <h3 id="느낀점">느낀점</h3>
-<p>그리디 문제임을 알고 풀었다. 예전에 풀었던 <a href="/ps/12/boj%201867%20%EB%8F%8C%EB%A9%A9%EC%9D%B4%20%EC%A0%9C%EA%B1%B0.html">boj 1867 돌멩이 제거</a> 문제와 비슷하게 이분 매칭을 이용할 수 있을 것 같다. 이 방식으로도 고민해보자.</p>
+<p>꽤 복잡하게 푼 것 같다. 처음에는 남은 체력이 많은 SCV의 체력을 더 깎는 방식을 사용했었는데 아니었다. 모든 경우의 수를 탐색해주어야 했다.</p>
 
                         </div>
                     </article>
