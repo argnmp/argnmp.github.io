@@ -8,11 +8,11 @@
         <link href="/static/main.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
-        <script src="/static/index.js"></script>
-        <script src="/static/app.js" type="module"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
     </head>
     <body class="dark:bg-gray-800">
-        <div class="p-5 md:container md:mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+        <div class="p-5 sm:px-10 md:px-16 lg:container mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
             <div class="flex text-customlight-700 dark:text-customdark-400 pb-2 mb-4 border-b-4 border-customlight-700 dark:border-customdark-400">
                 <div class="grow">
                     <a class="inline-block" href="/">
@@ -46,7 +46,7 @@
                         <div class="w-full md:object-center basis-1/4">
                           <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
                         </div>
-                        <div class="grow pl-4 md:p-0 md:text-center my-auto">
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
                           <p class="text-2xl md:mt-3 mb-2 font-bold">argnmp</p>
                           
                           <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
@@ -64,10 +64,10 @@
                     </div>
                 </div>
                 <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
-                    <div id="searchModule" class="md:pl-5" hidden>
-                        <div class="py-2">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
                             <form class="flex">
-                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
                                 <input type="submit" name="submit" id="submit" class="inline bg-customlight-700 hover:bg-white hover:text-customlight-700 border border-customlight-700 dark:border-customdark-400 text-gray-200 dark:bg-customdark-400 dark:text-gray-900 hover:dark:bg-gray-800 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer" onclick="window.search()" value="search">
                             </form>
                         </div>
@@ -79,15 +79,18 @@
                         </div> 
                     </div>
                     
-                    <div class="md:pl-5">
+                    <div class="md:pl-3">
                         
                         <a class="anc" href="/ps/19/boj 1766 문제집.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 boj 1766 문제집
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -101,16 +104,21 @@
                                 문제 https:&#x2F;&#x2F;www.acmicpc.net&#x2F;problem&#x2F;1766 코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; #include &lt;cmath&gt; using namespace std; using ll = long long; 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/ps/19/boj 3584 가장 가까운 공통 조상.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 boj 3584 가장 가까운 공통 조상
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -124,19 +132,24 @@
                                 문제 https:&#x2F;&#x2F;www.acmicpc.net&#x2F;problem&#x2F;3584 코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; #include &lt;cmath&gt; using namespace std; using ll = long long; 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/ps/19/boj 1005 ACM Craft.html">
-                            
-                            <div class="h-40 bg-center bg-cover bg-gray-100 dark:bg-gray-700" style="background-image: url(https://www.acmicpc.net/upload/201003/star.JPG)">
-                            </div>
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+                                <div class="h-40 bg-center bg-cover rounded-t-md" style="background-image: url(https://www.acmicpc.net/upload/201003/star.JPG)">
+                                </div>
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 boj 1005 ACM Craft
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -150,16 +163,21 @@
                                 문제 https:&#x2F;&#x2F;www.acmicpc.net&#x2F;problem&#x2F;1005 코드 첫번째 풀이 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; #include &lt;cmath&gt; using namespace std; 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/ps/19/boj 3665 최종 순위.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 boj 3665 최종 순위
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -173,16 +191,21 @@
                                 문제 https:&#x2F;&#x2F;www.acmicpc.net&#x2F;problem&#x2F;3665 코드 첫번째 풀이 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; #include &lt;cmath&gt; using namespace std; 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/ps/19/boj 14725 개미굴.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 boj 14725 개미굴
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -196,16 +219,21 @@
                                 문제 https:&#x2F;&#x2F;www.acmicpc.net&#x2F;problem&#x2F;14725 코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; #include &lt;cmath&gt; using namespace std; using ll = long long; 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/ps/19/boj 1701 Cubeditor.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 boj 1701 Cubeditor
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -219,16 +247,21 @@
                                 문제 https:&#x2F;&#x2F;www.acmicpc.net&#x2F;problem&#x2F;1701 코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; #include &lt;cmath&gt; using namespace std; using ll = long long; 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/ps/19/boj 2252 줄 세우기.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 boj 2252 줄 세우기
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -242,16 +275,21 @@
                                 문제 https:&#x2F;&#x2F;www.acmicpc.net&#x2F;problem&#x2F;2252 코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; #include &lt;cmath&gt; using namespace std; using ll = long long; 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/ps/19/boj 1786 찾기.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 boj 1786 찾기
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -265,19 +303,24 @@
                                 문제 https:&#x2F;&#x2F;www.acmicpc.net&#x2F;problem&#x2F;1786 코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; #include &lt;cmath&gt; using namespace std; using ll = long long; 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/ps/19/boj 12781 PIZZA ALVOLOC.html">
-                            
-                            <div class="h-40 bg-center bg-cover bg-gray-100 dark:bg-gray-700" style="background-image: url(https://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/problem/12781/1.png)">
-                            </div>
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+                                <div class="h-40 bg-center bg-cover rounded-t-md" style="background-image: url(https://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/problem/12781/1.png)">
+                                </div>
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 boj 12781 PIZZA ALVOLOC
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -291,16 +334,21 @@
                                 문제 https:&#x2F;&#x2F;www.acmicpc.net&#x2F;problem&#x2F;12781 코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; struct coord{ 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/ps/19/boj 17386 선분 교차 1.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 boj 17386 선분 교차 1
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -314,6 +362,8 @@
                                 문제 https:&#x2F;&#x2F;www.acmicpc.net&#x2F;problem&#x2F;17386 코드 #include &lt;iostream&gt; #include &lt;algorithm&gt; #include &lt;climits&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; #include &lt;unordered_map&gt; #include &lt;set&gt; #include &lt;unordered_set&gt; #include &lt;bitset&gt; #include &lt;cstring&gt; using namespace std; using ll = long long; struct coord{ 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
@@ -384,7 +434,7 @@
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
-              © 2023. Taehyeon Kim All rights reserved. 
+                © 2023. Taehyeon Kim All rights reserved. 
             </footer>
         </div>
     </body>

@@ -8,11 +8,11 @@
         <link href="/static/main.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
-        <script src="/static/index.js"></script>
-        <script src="/static/app.js" type="module"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
     </head>
     <body class="dark:bg-gray-800">
-        <div class="p-5 md:container md:mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+        <div class="p-5 sm:px-10 md:px-16 lg:container mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
             <div class="flex text-customlight-700 dark:text-customdark-400 pb-2 mb-4 border-b-4 border-customlight-700 dark:border-customdark-400">
                 <div class="grow">
                     <a class="inline-block" href="/">
@@ -46,7 +46,7 @@
                         <div class="w-full md:object-center basis-1/4">
                           <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
                         </div>
-                        <div class="grow pl-4 md:p-0 md:text-center my-auto">
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
                           <p class="text-2xl md:mt-3 mb-2 font-bold">argnmp</p>
                           
                           <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
@@ -64,10 +64,10 @@
                     </div>
                 </div>
                 <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
-                    <div id="searchModule" class="md:pl-5" hidden>
-                        <div class="py-2">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
                             <form class="flex">
-                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
                                 <input type="submit" name="submit" id="submit" class="inline bg-customlight-700 hover:bg-white hover:text-customlight-700 border border-customlight-700 dark:border-customdark-400 text-gray-200 dark:bg-customdark-400 dark:text-gray-900 hover:dark:bg-gray-800 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer" onclick="window.search()" value="search">
                             </form>
                         </div>
@@ -79,18 +79,21 @@
                         </div> 
                     </div>
                     
-                    <div class="md:pl-5">
+                    <div class="md:pl-3">
                         
                         <a class="anc" href="/project/StyleReserve/StyleReserve.html">
-                            
-                            <div class="h-40 bg-center bg-cover bg-gray-100 dark:bg-gray-700" style="background-image: url(/project/StyleReserve/img2.png)">
-                            </div>
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+                                <div class="h-40 bg-center bg-cover rounded-t-md" style="background-image: url(/project/StyleReserve/img2.png)">
+                                </div>
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 StyleReserve
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -104,6 +107,8 @@
                                 프로젝트 개요 ![[img1.png]] 2022-2학기 소프트웨어공학 과목에서 진행한 소프트웨어 개발 프로젝트입니다. LG styler을 프로젝트의 주제로 선정하여, 소프트웨어적으로 이 가전제품의 사용성을 개선하는 프로젝트를 진행하였습니다. 사무실이나 가정에서 여러명이 공유할 때의 비효율성을, 예약 시스템을 통해 극복하는 것을 목표로 하였습니다. 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
@@ -120,7 +125,7 @@
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
-              © 2023. Taehyeon Kim All rights reserved. 
+                © 2023. Taehyeon Kim All rights reserved. 
             </footer>
         </div>
     </body>

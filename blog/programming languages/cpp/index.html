@@ -8,11 +8,11 @@
         <link href="/static/main.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
-        <script src="/static/index.js"></script>
-        <script src="/static/app.js" type="module"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
     </head>
     <body class="dark:bg-gray-800">
-        <div class="p-5 md:container md:mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+        <div class="p-5 sm:px-10 md:px-16 lg:container mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
             <div class="flex text-customlight-700 dark:text-customdark-400 pb-2 mb-4 border-b-4 border-customlight-700 dark:border-customdark-400">
                 <div class="grow">
                     <a class="inline-block" href="/">
@@ -46,7 +46,7 @@
                         <div class="w-full md:object-center basis-1/4">
                           <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
                         </div>
-                        <div class="grow pl-4 md:p-0 md:text-center my-auto">
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
                           <p class="text-2xl md:mt-3 mb-2 font-bold">argnmp</p>
                           
                           <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
@@ -64,10 +64,10 @@
                     </div>
                 </div>
                 <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
-                    <div id="searchModule" class="md:pl-5" hidden>
-                        <div class="py-2">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
                             <form class="flex">
-                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
                                 <input type="submit" name="submit" id="submit" class="inline bg-customlight-700 hover:bg-white hover:text-customlight-700 border border-customlight-700 dark:border-customdark-400 text-gray-200 dark:bg-customdark-400 dark:text-gray-900 hover:dark:bg-gray-800 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer" onclick="window.search()" value="search">
                             </form>
                         </div>
@@ -79,15 +79,18 @@
                         </div> 
                     </div>
                     
-                    <div class="md:pl-5">
+                    <div class="md:pl-3">
                         
                         <a class="anc" href="/blog/programming languages/cpp/stringstream.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 stringstream
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -101,16 +104,21 @@
                                 istringstream string을 공백단위로 끊어서 입력받고 싶다면 istringstream 을 사용할 수 있다. int main(){ vector&lt;string&gt; s = { &quot;apple 1 2 3 45&quot;, &quot;banana\n223\n56\n90\n34\n23&quot;, &quot;cat\r98\r3\r12\r2\r34\r45\r6\r34\r2&quot;, };  map&lt;string, vector&lt;int&gt;&gt; m; for(string&amp; s: s){ 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/blog/programming languages/cpp/범위기반 for.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 범위기반 for
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -124,16 +132,21 @@
                                 reference https:&#x2F;&#x2F;en.cppreference.com&#x2F;w&#x2F;cpp&#x2F;language&#x2F;range-for   https:&#x2F;&#x2F;learn.microsoft.com&#x2F;ko-kr&#x2F;cpp&#x2F;cpp&#x2F;range-based-for-statement-cpp?view=msvc-170 &#x2F;&#x2F; range-based-for.cpp &#x2F;&#x2F; compile by using: cl &#x2F;EHsc &#x2F;nologo &#x2F;W4 #include &lt;iostream&gt; #include &lt;vector&gt; using namespace std;  int main() { &#x2F;&#x2F; Basic 10-element integer array. 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/blog/programming languages/cpp/배열 초기화.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 배열 초기화
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -147,16 +160,21 @@
                                 0으로 배열을 초기화 하는 방법은 간단하다. 아래와 같이 배열을 생성할때 0으로 초기화해주면 된다. #include &lt;iostream&gt; #include &lt;algorithm&gt; using namespace std; int main(){ int arr_1d[10] = {0,}; int arr_2d[10][10] = {0,}; &#x2F;&#x2F;{{0,}} 도 가능하다. return 0; } 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/blog/programming languages/cpp/priority queue.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 priority queue
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -170,16 +188,21 @@
                                 max priority queue priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxq; priority_queue&lt;int&gt; maxq; 두 개 모두 같은 의미이다. less&lt;int&gt; 를 priority_queue에 push 할 때 push 하는 수가 더 작으면 swap을 한다고 이해하면 된다. min priority queue priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq; 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
                         <a class="anc" href="/blog/programming languages/cpp/struct를 함수 인자로 사용 시 스택 사용량.html">
-                            
-                            <div class="relative group mb-2 py-3 px-5 border-customlight-700 dark:border-customdark-400 bg-gray-100 dark:bg-gray-700 md:hover:bg-customlight-700 md:dark:hover:bg-customdark-400 text-gray-700 md:hover:text-gray-200 dark:text-gray-200 md:dark:hover:text-gray-900">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
-                                <p class="text-xl font-semibold">
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
                                 struct를 함수 인자로 사용 시 스택 사용량
                                 </p>
+                                <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
@@ -193,6 +216,8 @@
                                 struct를 함수 인자로 넘기는 경우 struct box{ int x, y, z; }; void print(box t, int k){ if(t.x==0 || t.y==0 || t.z==0 ){ return; } print({t.x-1, t.y-1, t.z-1}, 1); print({t.x-1, t.y-1, t.z-1}, 1); print({t.x-1, t.y-1, t.z-1}, 1); } int main(){ print({1, 2, 3}, 1); return 0; 
                                 </p>
                                 
+                                </div>
+                                </div>
                             </div>
                         </a>
                         
@@ -209,7 +234,7 @@
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
-              © 2023. Taehyeon Kim All rights reserved. 
+                © 2023. Taehyeon Kim All rights reserved. 
             </footer>
         </div>
     </body>
