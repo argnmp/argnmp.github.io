@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>blog.argnmp</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="data:,">
+        <link href="/static/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <div class="p-5 sm:px-10 md:px-16 lg:container mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <div class="flex text-customlight-700 dark:text-customdark-400 pb-2 mb-4 border-b-4 border-customlight-700 dark:border-customdark-400">
+                <div class="grow">
+                    <a class="inline-block" href="/">
+                        <p
+                            class="text-3xl font-bold hover:bg-customlight-700 hover:text-white dark:hover:bg-customdark-400 dark:hover:text-gray-800">
+                        blog.argnmp</p>
+                    </a>
+                </div>
+                <button id="searchToggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-gray-600 dark:stroke-gray-400"
+                        viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </button>
+                <button id="toggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="dark:hidden w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-600" d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-400" d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                        <path class="fill-gray-400" d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4">
+                          <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
+                          <p class="text-2xl md:mt-3 mb-2 font-bold">argnmp</p>
+                          
+                          <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                          
+                          <p class="text-xs">argnmp@gmail.com</p>
+                          
+                          
+                          
+                          <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                          
+                        </div>
+                    </div>
+                    <div id="toc" class="sticky top-5 mt-5 border-l-2">
+                        <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
+                    </div>
+                </div>
+                <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-customlight-700 hover:bg-white hover:text-customlight-700 border border-customlight-700 dark:border-customdark-400 text-gray-200 dark:bg-customdark-400 dark:text-gray-900 hover:dark:bg-gray-800 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                    
+                    <article>
+                        <section class="w-full mb-12">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">파일 분할</p>
+                                
+                            </div>
+                            <div class="flex flex-row mb-4 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2022-06-23</p></div>
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <h2 id="rust 프로젝트의 파일 분할 방법">rust 프로젝트의 파일 분할 방법</h2>
+<p>저번에 파일 분할 방법에 대한 포스팅을 한 적이 있었다. 이번에는 더 체계적으로 정리해보고자 한다.</p>
+<p>두가지 방식으로 나누어 볼 수 있다.</p>
+<ol>
+<li>lib.rs을 통한 파일 분할</li>
+<li>lib.rs 없이 파일 분할</li>
+</ol>
+<h2 id="lib.rs을 통한 파일 분할">lib.rs을 통한 파일 분할</h2>
+<p><code>src</code> 디렉터리 하위에 다음과 같은 구조로 디렉터리와 파일을 생성한다.</p>
+<pre><code class="language-shell">.
+├── Cargo.lock
+├── Cargo.toml
+└── src
+    ├── color
+    │   └── default.rs
+    ├── color.rs
+    ├── lib.rs
+    └── main.rs
+</code></pre>
+<p><code>src/color/default.rs</code></p>
+<pre><code class="language-rust">pub enum RGB{
+    Red,
+    Green,
+    Blue
+}
+</code></pre>
+<p><code>src/color.rs</code></p>
+<pre><code class="language-rust">pub mod default;
+</code></pre>
+<p>color.rs 파일 에서는 <code>pub mod default;</code>을 통해서 <strong>파일명과 같은 이름의 디렉터리(color) 하위의 default 라는 이름을 가진 파일을 모듈로 정의한다.</strong></p>
+<p><code>src/lib.rs</code></p>
+<pre><code class="language-rust">pub mod weather{
+    pub enum PrimaryWeather{
+        Sunny,
+        Cloudy,
+        Rainy,
+        Windy,
+    } 
+}
+
+pub mod color;
+</code></pre>
+<p>모듈의 최상위 파일은 <em>lib.rs</em> 파일이다. 이 파일로 부터 모듈이 정의되는 것이다.</p>
+<p>lib.rs 파일에서는 <code>pub mod color;</code>을 통해서 <strong>현재 디렉터리 하위의  color라는 이름을 가진 파일을 모듈로 정의한다.</strong></p>
+<p>또한 <code>pub mod weather{...}</code>을 통해 직접 weather 모듈을 정의하고 있다.</p>
+<p><code>src/main.rs</code></p>
+<pre><code class="language-rust">use playground::weather::PrimaryWeather;
+use playground::color::default::RGB;
+
+fn main() {
+    let today_weather = PrimaryWeather::Rainy;
+    let prefer_color = RGB::Blue;
+}
+</code></pre>
+<p><em>lib.rs</em> 을 통해 정의한 모듈은 use 키워드와 함께 위의 방식으로 사용할 수 있다.</p>
+<p><code>Cargo.toml</code></p>
+<pre><code class="language-toml">[package]
+name = &quot;playground&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2021&quot;
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+</code></pre>
+<p><em>Cargo.toml</em> 파일을 열어보면 위와 같이 패키지의 설정이 기록되어 있다. 그중 <em>[package]</em> 하위의 name 을 통해 lib.rs 의 모듈을 불러올 수 있다.</p>
+<p>현재 사용중인 패키지의 이름은 <strong>playground</strong> 이다. 따라서 <code>use playground::color::default::RGB</code> 를 통해 모듈로 정의된 <em>RGB enum</em> 을 불러올 수 있다.</p>
+<h2 id="lib.rs 없이 파일 분할">lib.rs 없이 파일 분할</h2>
+<p>위의 디렉터리와 파일을 그대로 사용하겠다.</p>
+<pre><code class="language-shell">.
+├── Cargo.lock
+├── Cargo.toml
+└── src
+    ├── color
+    │   └── default.rs
+    ├── color.rs
+    ├── lib.rs
+    └── main.rs
+</code></pre>
+<p>현재 프로젝트의 구조는 위와 같다.</p>
+<p>이 중에서 lib.rs가 없다고 가정했을때 <em>default.rs</em> 에 있는 <em>RGB enum</em> 을 불러오기 위해서는 <strong>crate</strong>를 이용해야 한다.</p>
+<p><code>main.rs</code></p>
+<pre><code class="language-rust">use crate::color::default::RGB;
+
+pub mod color;
+
+fn main() {
+    let prefer_color = RGB::Blue;
+}
+</code></pre>
+<p>앞선 예제에서, <em>color.rs</em> 파일에서는 <em>default.rs</em>파일을 모듈로 정의한다고 했고, <em>default.rs</em> 에서는 <em>RGB enum</em>을 정의하고 있다고 하였다.</p>
+<p>그렇기에 모듈의 구조는 <strong>color-&gt;default-&gt;RGB</strong> 라고 할 수 있다.</p>
+<p><em>lib.rs</em>을 사용할 때에는 package name을 통해서 접근했지만, lib.rs 없이 접근할 때에는 <strong>crate</strong>를 이용한다. 따라서 <em>RGB enum</em>을 불러오기 위해서는 위의 모듈의 구조대로 <code>use crate::color::default::RGB;</code> 라는 코드를 작성하여야 한다.</p>
+<p>하지만 이 코드만 작성하고 RGB enum을 사용하였을 때는 오류가 발생한다.</p>
+<p><em>lib.rs</em> 에서도 마지막으로 <code>pub mod color;</code> 을 통해 color 모듈을 정의했었다. 따라서  <em>main.rs</em> 에서도 똑같이 color 모듈을 정의해주어야 한다.</p>
+<p><em>main.rs</em> 에 <code>pub mod color;</code> 을 작성하면 정상적으로 컴파일이 된다.</p>
+
+                        </div>
+                    </article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved. 
+            </footer>
+        </div>
+    </body>
+</html>
