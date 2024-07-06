@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>blog.argnmp</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="data:,">
+        <link href="/static/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <div class="p-5 sm:px-10 md:px-16 lg:container mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <div class="flex text-customlight-700 dark:text-customdark-400 pb-2 mb-4 border-b-4 border-customlight-700 dark:border-customdark-400">
+                <div class="grow">
+                    <a class="inline-block" href="/">
+                        <p
+                            class="text-3xl font-bold hover:bg-customlight-700 hover:text-white dark:hover:bg-customdark-400 dark:hover:text-gray-800">
+                        blog.argnmp</p>
+                    </a>
+                </div>
+                <button id="searchToggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-gray-600 dark:stroke-gray-400"
+                        viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </button>
+                <button id="toggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="dark:hidden w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-600" d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-400" d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                        <path class="fill-gray-400" d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4">
+                          <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
+                          <p class="text-2xl md:mt-3 mb-2 font-bold">argnmp</p>
+                          
+                          <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                          
+                          <p class="text-xs">argnmp@gmail.com</p>
+                          
+                          
+                          
+                          <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                          
+                        </div>
+                    </div>
+                    <div id="toc" class="sticky top-5 mt-5 border-l-2">
+                        <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
+                    </div>
+                </div>
+                <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-customlight-700 hover:bg-white hover:text-customlight-700 border border-customlight-700 dark:border-customdark-400 text-gray-200 dark:bg-customdark-400 dark:text-gray-900 hover:dark:bg-gray-800 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                    
+                    <article>
+                        <section class="w-full mb-12">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">boj 6087 레이저 통신</p>
+                                
+                            </div>
+                            <div class="flex flex-row mb-4 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2023-10-14</p></div>
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                    
+                                    
+                                    
+
+                                    <div class="px-1 mr-1 bg-customlight-500 dark:bg-customdark-500 align-middle text-xs text-white rounded-md">
+                                        boj
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+
+                                    <div class="px-1 mr-1 bg-customlight-600 dark:bg-customdark-600 align-middle text-xs text-white rounded-md">
+                                        ps
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <h3 id="코드">코드</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+using namespace std;
+using ll = long long;
+int w, h;
+char board[101][101];
+int dx[4] = {-1, 0, 1, 0};
+int dy[4] = {0, 1, 0, -1};
+struct pos {
+    int x, y, m, dir;
+    pos next(int t){
+        return {x+dx[t%4], y+dy[t%4]};
+    }
+    bool safe(){
+        return 0&lt;=x&amp;&amp;x&lt;h&amp;&amp;0&lt;=y&amp;&amp;y&lt;w;
+    }
+    void print(){
+        printf(&quot;[%d, %d]: %d, %d\n&quot;, x,y,m,dir);
+    }
+};
+struct compare {
+    bool operator()(pos&amp; a, pos&amp; b){
+        return a.m &gt; b.m;
+    }
+};
+void solve(){
+    cin &gt;&gt; w &gt;&gt; h; 
+    vector&lt;pos&gt; c;
+    for(int i = 0; i&lt;h; i++){
+        for(int j = 0; j&lt;w; j++){
+            char ch = cin.get();
+            while(ch=='\n' || ch==' ' || ch=='\r'){
+                ch = cin.get();
+            }
+            board[i][j] = ch;
+            if(ch=='C')
+                c.push_back({i, j, 0, -1});
+        }
+    }
+    pos from = c[0];
+    pos to = c[1];
+    int visited[101][101][4] = {0,};
+    fill(&amp;visited[0][0][0], &amp;visited[100][100][4], INT_MAX);
+    priority_queue&lt;pos, vector&lt;pos&gt;, compare&gt; q;
+    q.push(from);
+    while(!q.empty()){
+        pos cur = q.top();
+        q.pop();
+        if(cur.x == to.x &amp;&amp; cur.y == to.y) {
+            cout &lt;&lt; cur.m;
+            return;
+        }
+        for(int i = 0; i&lt;4; i++){
+            int new_m = (cur.dir == -1 || cur.dir == i) ? cur.m : cur.m + 1;
+            pos n = cur.next(i);
+            if(n.safe() &amp;&amp; board[n.x][n.y]!='*' &amp;&amp; new_m &lt; visited[n.x][n.y][i]){
+                visited[n.x][n.y][i] = new_m;
+                n.m = new_m;
+                n.dir = i;
+                q.push(n);
+            }
+        } 
+    }
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+
+</code></pre>
+<h3 id="풀이">풀이</h3>
+<p>bfs로 풀려고 하다가, queue를 priority queue로 바꾸어서 풀었다.</p>
+<p>pos 에는 좌표와 함께 어느 방향에서 왔는지(dir) 그리고 현재까지의 거울 개수(m)를 저장한다. 상,우,하,좌 를 탐색하는데 각각 0, 1, 2, 3 을 매핑 한다. 그리고 탐색을 계속해나가면서 어느 방향에서 해당 좌표에 왔는지를 기록하고. 만약 그다음 탐색 방향이 pos의 m 값과 같다면 거울 개수를 유지하고, 다르다면 거울 개수를 한개 늘린다.</p>
+<p>bfs에서 visited 배열은 처음에는 4가지 방향을 추가해서, 좌표마다 각 방향마다 한번씩만 방문하도록 했다. 하지만 다음과 같은 반례가 있다</p>
+<pre><code class="language-shell">4 5
+C..*
+...*
+...*
+*.**
+...C
+</code></pre>
+<p>priority queue로 하기 때문에 같은 방향의 좌표를 한번 더 방문해야 한다.</p>
+<p>따라서 해당 좌표에서의 거울 개수를 visited에 저장하도록 해서, 같은 방향일 경우 거울 개수가 더 적은 경우에만 한번 더 확인하도록 했다.</p>
+<p>priority queue는 거울 개수가 적은 순서대로 정렬을 하도록 해서, 목적지에 도달하면 이 값을 print하고 리턴하면 된다.</p>
+<h3 id="느낀점">느낀점</h3>
+<p>처음에 50퍼센트에서 틀렸다고 나와서 반례를 보고 맞췄다. 예전에 못풀었어서 답을 봤었는데 그 영향도 있는 듯 하다.
+여기서는 priority queue로 풀었지만, bfs로 같은 방향에 있는 모든 좌표를 먼저 방문하는 방식으로 해결할 수 있을 것 같다. 레이저 쏘는 것처럼 끝까지 가면서 queue에 모두 추가하는 것이다.</p>
+
+                        </div>
+                    </article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved. 
+            </footer>
+        </div>
+    </body>
+</html>

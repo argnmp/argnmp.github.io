@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>blog.argnmp</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="data:,">
+        <link href="/static/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <div class="p-5 sm:px-10 md:px-16 lg:container mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <div class="flex text-customlight-700 dark:text-customdark-400 pb-2 mb-4 border-b-4 border-customlight-700 dark:border-customdark-400">
+                <div class="grow">
+                    <a class="inline-block" href="/">
+                        <p
+                            class="text-3xl font-bold hover:bg-customlight-700 hover:text-white dark:hover:bg-customdark-400 dark:hover:text-gray-800">
+                        blog.argnmp</p>
+                    </a>
+                </div>
+                <button id="searchToggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-gray-600 dark:stroke-gray-400"
+                        viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </button>
+                <button id="toggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="dark:hidden w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-600" d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-400" d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                        <path class="fill-gray-400" d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4">
+                          <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
+                          <p class="text-2xl md:mt-3 mb-2 font-bold">argnmp</p>
+                          
+                          <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                          
+                          <p class="text-xs">argnmp@gmail.com</p>
+                          
+                          
+                          
+                          <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                          
+                        </div>
+                    </div>
+                    <div id="toc" class="sticky top-5 mt-5 border-l-2">
+                        <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
+                    </div>
+                </div>
+                <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-customlight-700 hover:bg-white hover:text-customlight-700 border border-customlight-700 dark:border-customdark-400 text-gray-200 dark:bg-customdark-400 dark:text-gray-900 hover:dark:bg-gray-800 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                    
+                    <article>
+                        <section class="w-full mb-12">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">boj 9240 로버트 후드</p>
+                                
+                            </div>
+                            <div class="flex flex-row mb-4 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-01-20</p></div>
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                    
+                                    
+                                    
+
+                                    <div class="px-1 mr-1 bg-customlight-500 dark:bg-customdark-500 align-middle text-xs text-white rounded-md">
+                                        boj
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+
+                                    <div class="px-1 mr-1 bg-customlight-600 dark:bg-customdark-600 align-middle text-xs text-white rounded-md">
+                                        ps
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <h3 id="문제">문제</h3>
+<p><a href="https://www.acmicpc.net/problem/9240">https://www.acmicpc.net/problem/9240</a></p>
+<h3 id="풀이">풀이</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+using namespace std;
+using ll = long long;
+int c;
+struct coord{
+    double x, y;
+    bool operator&lt;(const coord&amp; t) const{
+        if(y!=t.y)
+            return y &lt; t.y;
+        else
+            return x &lt; t.x;
+    }
+    coord operator-(const coord&amp; t) const{
+        return {x-t.x, y-t.y};
+    }
+    coord operator+(const coord&amp; t) const{
+        return {x+t.x, y+t.y};
+    }
+    void print(){
+        printf(&quot;[%lf, %lf]\n&quot;, x, y);
+    }
+};
+coord points[100000] = {0,};
+/*
+ * u = (p2.x-p1.x, p2.y-p1.y, 0);
+ * v = (p3.x-p1.x, p3.y-p1.y, 0);
+ * u x v = (0, 0, (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x));
+ */
+double ccw(coord p1, coord p2, coord p3){
+    return (p2.x-p1.x)*(p3.y-p1.y)-(p2.y-p1.y)*(p3.x-p1.x);
+}
+struct angle_sort{
+    coord cri;
+    bool operator()(coord&amp; a, coord&amp; b){
+        double cp = ccw(cri, a, b);
+        if(cp!=0)
+            return cp &gt; 0;
+        else
+            return abs(a.x-cri.x)+abs(a.y-cri.y) &lt; abs(b.x-cri.x)+abs(b.y-cri.y);
+    }
+};
+double dist(coord a, coord b){
+    return sqrt(pow(a.x-b.x, 2)+pow(a.y-b.y, 2));
+}
+void solve(){
+    cin &gt;&gt; c;
+    for(int i = 0; i&lt;c; i++){
+        cin &gt;&gt; points[i].x &gt;&gt; points[i].y;
+    }
+        
+    sort(points, points+c); 
+    angle_sort as = {points[0]};
+    sort(points+1, points+c, as);
+    vector&lt;coord&gt; stk = {points[0], points[1]};
+    for(int i = 2; i&lt;c; i++){
+        while(1){
+            coord p1 = stk[stk.size()-2]; 
+            coord p2 = stk[stk.size()-1];
+            coord p3 = points[i];
+            double cp = ccw(p1, p2, p3);
+            if(cp&gt;0){
+                stk.push_back(p3);
+                break;
+            }
+            else if(cp&lt;0){
+                stk.pop_back(); 
+            }
+            else {
+                stk.pop_back();
+                stk.push_back(p3);
+                break;
+            }
+        }
+    }
+    int size = stk.size();
+    int l_idx = 0;
+    int r_idx = 1;
+    double ans = -1;
+    while(1){
+        ans = max(ans, dist(stk[l_idx], stk[r_idx]));
+        coord p3 = stk[(r_idx+1)%size] + (stk[l_idx] - stk[r_idx]);
+        double cp = ccw(stk[l_idx], stk[(l_idx+1)%size], p3); 
+        if(cp &lt;= 0){
+            // cross product value 0 case should be included in this if clause
+            // to break when only two points exists
+            l_idx = (l_idx+1)%size;
+            if(l_idx==0)
+                break;
+        }
+        else {
+            r_idx = (r_idx+1)%size;
+        }
+    }
+    printf(&quot;%lf&quot;, ans);
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+
+</code></pre>
+<p>가장 먼 화살 사이의 거리를 구해야 한다.</p>
+<p>convex hull은 다른 모든 점들을 포함한다. 따라서, convex hull에 속하는 임의의 두 점이 가장 먼 거리가 될 것이기 때문에, 일단은 convex hull을 먼저 구해야 한다.</p>
+<p><a href="/post/boj%201708%20%EB%B3%BC%EB%A1%9D%20%EA%BB%8D%EC%A7%88.html">boj 1708 볼록 껍질</a> 이 문제에서 convex hull을 구하는 graham scan 알고리즘을 확인할 수 있다.</p>
+<p>convex hull에 속하는 점의 집합을 구했다면, 여기서 가장 먼 두 점 사이의 거리를 구해야 한다. 두 개의 점의 조합을 구해서 직접 계산을 해볼 수 있지만, convex hull에 포함될 수 있는 점이 최대 100000개 이므로 총 4999950000 번의 연산이 필요하여 시간 내 해결이 불가능 할 것으로 보인다. 하지만 문제의 다른 조건에서 화살의 좌표가 정수이고 절댓값은 1000을 넘지 않는다고 되어있다. 따라서 convex hull에 100000개의 점이 모두 포함 될 수가 없기 때문에, 모든 조합을 계산해도 시간 내 해결할 수 있는 가능성이 존재한다.</p>
+<p>그렇지만 모든 조합을 계산하지 않고 빠르게 가장 먼 거리를 찾을 수 있는 rotating calipers라는 알고리즘이 존재한다.</p>
+<p>rotating calipers 알고리즘에서는 다각형에서 시계 반대 방향을 보고 있는 두개의 vector를 시계 반대방향으로 이동하며 가장 먼 거리를 찾아낸다. 두개의 vector에 대해 외적을 해서 시계 반대 방향에 있다면 그 다음 점이 거 먼 거리가 될 가능성이 있는 것이고 시계 방향에 있다면 그 다음 점이 더 먼 거리가 될 가능성이 없는 것임을 이용하는 것이다.</p>
+<p><a href="https://stonejjun.tistory.com/42">https://stonejjun.tistory.com/42</a> 이 글을 보고 알고리즘을 이해할 수 있었다.</p>
+<h3 id="느낀점">느낀점</h3>
+<p>rotating calipers 문제는, convex hull 문제만이 아닌 다각형과 관련된 다른 문제에서도(다각형 내 두 점의 가장 먼 거리를 찾는 등) 쓰일 수 있을 것 같다.</p>
+
+                        </div>
+                    </article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved. 
+            </footer>
+        </div>
+    </body>
+</html>

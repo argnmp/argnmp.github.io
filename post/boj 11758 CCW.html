@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>blog.argnmp</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="data:,">
+        <link href="/static/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <div class="p-5 sm:px-10 md:px-16 lg:container mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <div class="flex text-customlight-700 dark:text-customdark-400 pb-2 mb-4 border-b-4 border-customlight-700 dark:border-customdark-400">
+                <div class="grow">
+                    <a class="inline-block" href="/">
+                        <p
+                            class="text-3xl font-bold hover:bg-customlight-700 hover:text-white dark:hover:bg-customdark-400 dark:hover:text-gray-800">
+                        blog.argnmp</p>
+                    </a>
+                </div>
+                <button id="searchToggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-gray-600 dark:stroke-gray-400"
+                        viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </button>
+                <button id="toggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="dark:hidden w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-600" d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-400" d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                        <path class="fill-gray-400" d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4">
+                          <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
+                          <p class="text-2xl md:mt-3 mb-2 font-bold">argnmp</p>
+                          
+                          <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                          
+                          <p class="text-xs">argnmp@gmail.com</p>
+                          
+                          
+                          
+                          <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                          
+                        </div>
+                    </div>
+                    <div id="toc" class="sticky top-5 mt-5 border-l-2">
+                        <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
+                    </div>
+                </div>
+                <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-customlight-700 hover:bg-white hover:text-customlight-700 border border-customlight-700 dark:border-customdark-400 text-gray-200 dark:bg-customdark-400 dark:text-gray-900 hover:dark:bg-gray-800 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                    
+                    <article>
+                        <section class="w-full mb-12">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">boj 11758 CCW</p>
+                                
+                            </div>
+                            <div class="flex flex-row mb-4 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2023-12-17</p></div>
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                    
+                                    
+                                    
+
+                                    <div class="px-1 mr-1 bg-customlight-500 dark:bg-customdark-500 align-middle text-xs text-white rounded-md">
+                                        boj
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+
+                                    <div class="px-1 mr-1 bg-customlight-600 dark:bg-customdark-600 align-middle text-xs text-white rounded-md">
+                                        ps
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <h3 id="문제">문제</h3>
+<p><a href="https://www.acmicpc.net/problem/11758">https://www.acmicpc.net/problem/11758</a></p>
+<h3 id="코드">코드</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+using namespace std;
+using ll = long long;
+struct coord{
+    int x, y;
+};
+/*
+ * u = p1-&gt;p2 = (p2.x - p1.x, p2.y - p1.y, 0)
+ * v = p1-&gt;p3 = (p3.x - p1.x, p3.y - p1.y, 0)
+ * u x v = (p2.x - p1.x)*(p3.y - p1.y) - (p2.y - p1.y)*(p3.x - p1.x)
+ */
+int ccw(coord p1, coord p2, coord p3){
+    return (p2.x - p1.x)*(p3.y - p1.y) - (p2.y - p1.y)*(p3.x - p1.x);
+}
+void solve(){
+    coord p1, p2, p3; 
+    cin &gt;&gt; p1.x &gt;&gt; p1.y;
+    cin &gt;&gt; p2.x &gt;&gt; p2.y;
+    cin &gt;&gt; p3.x &gt;&gt; p3.y;
+    int ans = ccw(p1, p2, p3);
+    if(ans &lt; 0)
+        cout &lt;&lt; -1;
+    else if(ans &gt; 0)
+        cout &lt;&lt; 1;
+    else
+        cout &lt;&lt; 0;
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+
+</code></pre>
+<h3 id="풀이">풀이</h3>
+<p>백터의 외적을 이용해서 풀어야 하는 문제이다.</p>
+<p>p1, p2, p3 순서대로 연결했을 때, 반시계 방향인지 시계방향인지 평행한지를 알아내야 한다.
+<img src="https://gaussian37.github.io/assets/img/math/algorithm/ccw/0.png" alt="https://gaussian37.github.io/assets/img/math/algorithm/ccw/0.png" />
+출처: <a href="https://gaussian37.github.io/math-algorithm-ccw/">https://gaussian37.github.io/math-algorithm-ccw/</a> Jinsol Kim 님의 블로그에 있는 다이어그램입니다.</p>
+<p>위의 첫번째 사진 처럼 p1, p2, p3가 배열되어 있을 때, 이 순서대로 선분을 그으면(사진의 화살표와 다름) 시계방향이 된다.
+이를 판단하기 위해서 p1을 기준으로 p2, p3를 향하는 벡터 v1, v2(사진의 화살표)를 그려본다.
+v1과 v2를 외적하면 (v1 x v2), 간단히 오른손 법칙으로 생각해 볼 때 벡터는 음의 방향을 향하게 된다. 외적의 계산 값이 음수일 때에는 시계 방향이라고 판단할 수 있다.</p>
+<p>위의 세번째 사진처럼 p1, p2, p3가 배열되어 있을 때, 이 순서대로 선분을 그으면(사진의 화살표와 다름) 반시계방향이 된다.
+마찬가지로 이를 판단하기 위해서 p1을 기준으로 p2, p3를 향하는 벡터 v1, v2(사진의 화살표)를 그려본다.
+v1과 v2를 외적하면 (v1 x v2), 간단히 오른손 법칙으로 생각해 볼 때 백터는 양의 방향을 향하게 된다. 외적의 계산 값이 양수일 때에는 반시계 방향이라고 판단할 수 있다.</p>
+<p>위의 두번째 사진처럼 p1, p2, p3가 배열되어 있는 경우, 두 벡터가 그리는 면적이 0이므로 외적의 계산 값이 0이 된다. 따라서 0일 때에는 일직선으로 판단할 수 있다.</p>
+<p>이를 토대로 계산을 해보면 다음과 같다.</p>
+<pre><code class="language-c++">struct coord{
+    int x, y;
+};
+</code></pre>
+<p>풀이에서와 같이 p1, p2, p3가 위의 구조체로 정의되어 있다고 가정한다. (z 값은 0으로 생각한다.)</p>
+<p>각 벡터는 다음과 같이 표현된다.</p>
+<ul>
+<li>v1은 p1 에서 p2를 향하는 벡터이다. 따라서 <code>v1 = (p2.x - p1.x, p2.y - p1.y, 0)</code> 이다.</li>
+<li>v2는 p1에서 p3를 향하는 벡터이다. 따라서 <code>v2 = (p3.x - p1.x, p3.y - p1.y, 0)</code> 이다.</li>
+</ul>
+<p>v1 와 v2의 외적은 다음과 같이 표현된다.</p>
+<ul>
+<li>
+<ol>
+<li>외적은 <code>v1 x v2 = (v1.y*v2.z - v1.z*v2.y, v1.x*v2.z - v1.z*v2.x, v1.x*v2.y - v1.y*v2.x)</code> 으로 3차원 좌표로 계산한다.</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>p1, p2, p3는 모두 평면상의 좌표이므로, v1과 v2의 z 값이 0 이었다.</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>따라서 <code>v1 x v2 = (0, 0, v1.x*v2.y - v1.y*v2.x) = (0, 0, (p2.x - p1.x)*(p3.y - p1.y) - (p2.y - p1.y)*(p3.x - p1.x)</code> 이다.</li>
+</ol>
+</li>
+</ul>
+<p>p1, p2, p3가 모두 평면 상에 있기 때문에, 결과로 나오는 벡터는 수직방향이 되어서 x값과 y값은 0이 된다. z값은 오른손 법칙의 엄지와 같은 의미를 가지고, 이 값에 따라 시계, 반시계, 일직선이 정해진다.</p>
+<h3 id="느낀점">느낀점</h3>
+<p>예전에 풀었던 문제이지만, 기억이 나지 않아서 찾아보았다.</p>
+
+                        </div>
+                    </article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved. 
+            </footer>
+        </div>
+    </body>
+</html>

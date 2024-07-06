@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>blog.argnmp</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="data:,">
+        <link href="/static/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <div class="p-5 sm:px-10 md:px-16 lg:container mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <div class="flex text-customlight-700 dark:text-customdark-400 pb-2 mb-4 border-b-4 border-customlight-700 dark:border-customdark-400">
+                <div class="grow">
+                    <a class="inline-block" href="/">
+                        <p
+                            class="text-3xl font-bold hover:bg-customlight-700 hover:text-white dark:hover:bg-customdark-400 dark:hover:text-gray-800">
+                        blog.argnmp</p>
+                    </a>
+                </div>
+                <button id="searchToggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-gray-600 dark:stroke-gray-400"
+                        viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </button>
+                <button id="toggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="dark:hidden w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-600" d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-400" d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                        <path class="fill-gray-400" d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4">
+                          <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
+                          <p class="text-2xl md:mt-3 mb-2 font-bold">argnmp</p>
+                          
+                          <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                          
+                          <p class="text-xs">argnmp@gmail.com</p>
+                          
+                          
+                          
+                          <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                          
+                        </div>
+                    </div>
+                    <div id="toc" class="sticky top-5 mt-5 border-l-2">
+                        <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
+                    </div>
+                </div>
+                <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-customlight-700 hover:bg-white hover:text-customlight-700 border border-customlight-700 dark:border-customdark-400 text-gray-200 dark:bg-customdark-400 dark:text-gray-900 hover:dark:bg-gray-800 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                    
+                    <article>
+                        <section class="w-full mb-12">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">collect() 의 동작 원리</p>
+                                
+                            </div>
+                            <div class="flex flex-row mb-4 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2023-07-27</p></div>
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <h2 id="코드를 살펴보자">코드를 살펴보자</h2>
+<pre><code class="language-rust">fn main() {
+    let num_vec = vec![2, 4, 6];
+    let new_vec = num_vec.iter().map(|x| x * 100).collect::&lt;Vec&lt;i32&gt;&gt;();
+    println!(&quot;{new_vec:?}&quot;);
+}
+</code></pre>
+<pre><code class="language-shell">[200, 400, 600]
+</code></pre>
+<p><code>iter()</code>과 같은 함수로 iterator을 생성하면 <code>map</code>메서드를 호출이 가능하고, 이후 <code>collect</code>메서드를 사용해서 다시 vector로 산출해 낼 수 있다. 이 과정에서는 <code>map</code>메서드를 호출하는 순간 100을 곱하는 연산이 수행되는 것이 아닌, <code>collect</code> 메서드를 호출해야 연산이 수행되고 값이 산출된다. 어떤 방식으로 구현이 되는지 궁금해서 소스코드를 살펴보게 되었다.</p>
+<h2 id="iter()">iter()</h2>
+<p><code>iter</code>메서드를 호출하기 위해서는 <code>Vec</code>이 <code>iter</code>메서드를 가지고 있어야 한다. 하지만 Vec의 정의에 따르면 직접 <code>iter</code>을 구현해 놓지 않았고, Vec이 implement 한 Deref 를 통해서 <code>iter</code> 메서드를 사용할 수 있다.</p>
+<p><a href="https://kimtahen.com/post/Deref-trait#hidauto-deref">https://kimtahen.com/post/Deref-trait#hidauto-deref</a></p>
+<p>이 글에서 auto deref 를 통해서 호출이 가능한 이유를 알 수 있다.</p>
+<p><code>Vec</code> 은 <code>Deref</code>를 다음과 같이 implement 한다.</p>
+<pre><code class="language-rust">#[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
+impl&lt;T, A: Allocator&gt; ops::Deref for Vec&lt;T, A&gt; {
+    type Target = [T];
+
+    fn deref(&amp;self) -&gt; &amp;[T] {
+        unsafe { slice::from_raw_parts(self.as_ptr(), self.len) }
+    }
+}
+</code></pre>
+<p>위의 코드에서 <code>num_vec.iter()</code>는 <code>(*num_vec).iter()</code>로 변환이 되고 다시 <code>(*(&amp;[i32])).iter()</code>로 변환이 되어 실행된다.(Vec이 i32인 요소들로 구성되어 있기 때문에) 그러면 결국 <code>[i32].iter()</code>의 호출과 같고 여기서 <code>[i32]</code>는 slice이다. 따라서 slice가 <code>iter</code> 메서드를 가지고 있는 지 확인해야 한다.</p>
+<p><code>slice</code>는 primitive type이고, 예상한대로 <code>iter</code> 메서드를 가지고 있다. 다음과 같이 구현되어 있다.</p>
+<pre><code class="language-rust">#[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
+#[inline]
+pub fn iter(&amp;self) -&gt; Iter&lt;'_, T&gt; {
+    Iter::new(self)
+}
+</code></pre>
+<p>현재 self 는 <code>[i32]</code>이고, <code>Iter::new(self)</code>(<code>Iter::new(&amp;[i32])</code>) 를 반환한다.</p>
+<p>그럼 이제 rust std에 <code>Iter</code> 을 찾아보자 그러면 다음과 같이 <code>Iter</code> struct 가 한 개가 아니라 수없이 많다.</p>
+<p><img src="/blog/programming%20languages/rust/Pasted%20image%2020231111232235.png" alt="Pasted image 20231111232235.png" /></p>
+<p>이 중에 과연 뭘까? <code>slice</code>의  <code>iter</code> 메서드를 구현해 놓은 라이브러리를 보면 된다.</p>
+<p><a href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#732">https://doc.rust-lang.org/src/core/slice/mod.rs.html#732</a></p>
+<p>위 링크의 732번째 줄에 구현이 되어있는 것을 확인할 수 있다.</p>
+<p>같은 파일의 34번째 줄과 43번째 줄을 보면</p>
+<p><a href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#34">https://doc.rust-lang.org/src/core/slice/mod.rs.html#34</a>
+<a href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#43">https://doc.rust-lang.org/src/core/slice/mod.rs.html#43</a></p>
+<pre><code class="language-rust">mod iter;
+
+...
+
+pub use iter::{Iter, IterMut};
+</code></pre>
+<p>이러한 코드가 작성되있는 것을 확인할 수 있다. <code>mod iter</code> 은 같은 디렉터리에 위치하는 <strong>iter</strong> 이라는 파일을 모듈로 정의한다는 의미이고, <code>pub use iter::{Iter, IterMut};</code> 은 그렇게 정의한 <code>iter</code> 파일로 부터 <code>Iter</code>과 <code>IterMut</code> struct를 사용한다는 의미이다.</p>
+<p><img src="/blog/programming%20languages/rust/Pasted%20image%2020231111232300.png" alt="Pasted image 20231111232300.png" />
+이러한 구조로 되어있다. slice 의 <code>iter</code> 메서드는 <code>mod.rs</code>파일에 정의되어 있고, 따라서 사용한 <code>Iter</code> struct는 같은 디렉터리의 <code>iter.rs</code>에 정의되어 있음을 알 수 있다. 그렇기 때문에 slice의 <code>iter</code>메서드에서 사용한 <code>Iter</code> struct는 <code>slice::iter</code> 이라고 할 수 있다.</p>
+<p>따라서 rust std의 <code>std::slice::Iter</code>을 확인하면 된다.
+<a href="https://doc.rust-lang.org/std/slice/struct.Iter.html">https://doc.rust-lang.org/std/slice/struct.Iter.html</a></p>
+<h2 id="map()">map()</h2>
+<p><code>Iter</code> struct는 <code>Iterator</code>을 implement 하고 있고 이 덕분에 <code>map</code>메서드를 사용할 수 있다. 이는 다음과 같이 구현된다.</p>
+<pre><code class="language-rust">iterator! {struct Iter -&gt; *const T, &amp;'a T, const, {/* no mut */}, {
+    fn is_sorted_by&lt;F&gt;(self, mut compare: F) -&gt; bool
+    where
+        Self: Sized,
+        F: FnMut(&amp;Self::Item, &amp;Self::Item) -&gt; Option&lt;Ordering&gt;,
+    {
+        self.as_slice().windows(2).all(|w| {
+            compare(&amp;&amp;w[0], &amp;&amp;w[1]).map(|o| o != Ordering::Greater).unwrap_or(false)
+        })
+    }
+}}
+</code></pre>
+<p>macro를 사용해서 <code>Iterator</code>을 implement 하는 것 같은데, 아직 내 실력이 부족해서 이해를 하지 못하겠다.</p>
+<p><code>Iterator</code> trait 에서 <code>map</code> 메서드는 다음과 같이 구현되어 있다.</p>
+<pre><code class="language-rust">#[inline]
+#[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
+fn map&lt;B, F&gt;(self, f: F) -&gt; Map&lt;Self, F&gt;
+where
+    Self: Sized,
+    F: FnMut(Self::Item) -&gt; B,
+{
+    Map::new(self, f)
+}
+</code></pre>
+<p>클로저를 인수로 받아서, <code>Map</code> struct 를 반환한다. 그리고 <code>Map::new</code> 는 다음과 같이 구현되어 있다.</p>
+<p><a href="https://doc.rust-lang.org/std/iter/struct.Map.html">https://doc.rust-lang.org/std/iter/struct.Map.html</a></p>
+<p>위 링크는 rust std의 Map 에 대한 정보인데, <code>new</code> 메서드가 나와있지 않다. 그리고 다음과 같이 설명되어 있다.</p>
+<blockquote>
+<p>An iterator that maps the values of iter with f. This struct is created by the map method on Iterator. See its documentation for more.</p>
+</blockquote>
+<p>Iterator의 map 메서드로만 생성되는 struct라고 되어있다. 일부러 호출할 일이 없기 때문에 아마도 <code>new</code>의 설명이 생략되어 있는게 아닌가 싶다.</p>
+<p>source를 눌러 구현부를 살펴보면 <code>new</code>메서드는 다음과 같이 구현되어 있다.</p>
+<pre><code class="language-rust">#[must_use = &quot;iterators are lazy and do nothing unless consumed&quot;]
+#[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
+#[derive(Clone)]
+pub struct Map&lt;I, F&gt; {
+    // Used for `SplitWhitespace` and `SplitAsciiWhitespace` `as_str` methods
+    pub(crate) iter: I,
+    f: F,
+}
+
+impl&lt;I, F&gt; Map&lt;I, F&gt; {
+    pub(in crate::iter) fn new(iter: I, f: F) -&gt; Map&lt;I, F&gt; {
+        Map { iter, f }
+    }
+}
+</code></pre>
+<p>가장 윗부분에는 우리가 잘 알고 있는 사실이 쓰여져 있다. &quot;iterator은 게으르고 사용되기 전까지 아무것도 하지 않는다&quot;</p>
+<p><code>new</code>메서드에서는 인수로 받은 <code>Iter</code> struct와(위의 코드에서 self를 넘겨주는데, 함수는 <code>Iterator</code> trait에 의해 정의된 것이고 원래는 <code>Iter</code> struct 였다.) 클로저를 <code>Map</code> struct에 넣어서 반환한다.</p>
+<p>이를 통해 <code>num_vec.iter().map(|x| x * 100)</code> 까지 실행해도 map 으로 넘긴 클로저가 실제 값으로 실행되지 않았음을 확인할 수 있다.</p>
+<h2 id="collect()">collect()</h2>
+<p><code>Map</code> struct 는 <code>Iterator</code> trait 을 implement 하고 있고,  이 때문에 <code>collect</code> 메서드를 사용할 수 있다.</p>
+<pre><code class="language-rust">#[inline]
+#[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
+#[must_use = &quot;if you really need to exhaust the iterator, consider `.for_each(drop)` instead&quot;]
+fn collect&lt;B: FromIterator&lt;Self::Item&gt;&gt;(self) -&gt; B
+where
+    Self: Sized,
+{
+    FromIterator::from_iter(self)
+}
+</code></pre>
+<p><code>collect</code> 메서드는 <strong>turbo fish</strong> syntax 를 이용해서 <code>.collect::&lt;Vec&lt;i32&gt;&gt;()</code> 이렇게 호출한다. <code>collect</code>의 정의의 <code>B</code> 의 타입에 <code>Vec&lt;i32&gt;</code> 를 정의하는 것이다. <code>collect</code>의 정의에서 <code>B</code> type은 <code>FromIterator</code> trait을 implement 해야한다는 것을 알 수 있다.</p>
+<p>그렇다면 여기서 모든 것의 대상이되는 <code>Self</code>는 어떻게 알 수 있을까? 바로 <code>FromIterator::from_iter(self)</code> 를 보아야 한다. 아래는 <code>FromIterator</code>의 구현부이다.</p>
+<pre><code class="language-rust">#[rustc_diagnostic_item = &quot;FromIterator&quot;]
+pub trait FromIterator&lt;A&gt;: Sized {
+    #[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
+    fn from_iter&lt;T: IntoIterator&lt;Item = A&gt;&gt;(iter: T) -&gt; Self;
+}
+</code></pre>
+<p><code>FromIterator</code> trait의 <code>from_iter</code> 메서드는 <code>Self</code>를 반환한다. <code>collect</code> 구현 코드를 보면 <code>from_iter(self)</code>의 반환값이 바로 반환이 되고 이를 <code>B</code>라고 정의한다. 따라서 <code>B</code>는 <code>FromIterator::from_iter</code> 측면에서 <code>Self</code>가 되고, 지금 살펴보는 코드에서는 <code>Vec&lt;i32&gt;</code> 가 된다.</p>
+<p>그렇기 때문에 <code>collect</code> 매서드에서의 <code>FromIterator::from_iter</code> 은 <code>Vec</code> 에서 implement 한 <code>FromIterator</code>을 의미하게 된다.</p>
+<p>결론적으로 <code>collect</code> 메서드는 <code>Vec</code>의 <code>from_iter</code>메서드를 호출하며 <code>Vec&lt;i32&gt;</code>를 반환하는 것을 알 수 있다. <code>Map</code> 객체를 어떻게 <code>Vec</code>으로 만드는 지는 다음에 더 살펴보아야 할 것 같다.</p>
+
+                        </div>
+                    </article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved. 
+            </footer>
+        </div>
+    </body>
+</html>

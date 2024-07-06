@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>blog.argnmp</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="data:,">
+        <link href="/static/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <div class="p-5 sm:px-10 md:px-16 lg:container mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <div class="flex text-customlight-700 dark:text-customdark-400 pb-2 mb-4 border-b-4 border-customlight-700 dark:border-customdark-400">
+                <div class="grow">
+                    <a class="inline-block" href="/">
+                        <p
+                            class="text-3xl font-bold hover:bg-customlight-700 hover:text-white dark:hover:bg-customdark-400 dark:hover:text-gray-800">
+                        blog.argnmp</p>
+                    </a>
+                </div>
+                <button id="searchToggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-gray-600 dark:stroke-gray-400"
+                        viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </button>
+                <button id="toggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="dark:hidden w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-600" d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-400" d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                        <path class="fill-gray-400" d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4">
+                          <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
+                          <p class="text-2xl md:mt-3 mb-2 font-bold">argnmp</p>
+                          
+                          <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                          
+                          <p class="text-xs">argnmp@gmail.com</p>
+                          
+                          
+                          
+                          <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                          
+                        </div>
+                    </div>
+                    <div id="toc" class="sticky top-5 mt-5 border-l-2">
+                        <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
+                    </div>
+                </div>
+                <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-customlight-700 hover:bg-white hover:text-customlight-700 border border-customlight-700 dark:border-customdark-400 text-gray-200 dark:bg-customdark-400 dark:text-gray-900 hover:dark:bg-gray-800 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                    <div class="md:pl-3">
+                        
+                        <a class="anc" href="/post/mac os shared memory.html">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                mac os shared memory
+                                </p>
+                                <div class="pt-1">
+                                
+                                <div class="pb-1 italic">
+                                <p class="text-xs inline-block underline decoration-solid">
+                                2023-12-06
+                                </p>
+                                <p class="text-xs inline-block underline decoration-solid">
+                                Taehyeon Kim
+                                </p>
+                                </div>
+                                <p class="text-xs break-words">
+                                문제 m2 macbook에서 shared memory를 사용하는데, ftruncate가 제대로 작동하지 않는 문제가 있었다. 계속 Invalid argument 라는 에러가 발생했다. 구글링해도 문제가 안나오길래 혼자 열심히 테스트해보다가, 결국 원인을 찾아냈다. 해결 shm_open 후 제대로 shm_unlink를 하지 않아서 발생하는 문제였다. 제대로 shm_unlink가 되지 않은 shared memory file name을 다시 사용하니 문제가 발생했다. 
+                                </p>
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a class="anc" href="/post/mac os socket.html">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                mac os socket
+                                </p>
+                                <div class="pt-1">
+                                
+                                <div class="pb-1 italic">
+                                <p class="text-xs inline-block underline decoration-solid">
+                                2023-12-06
+                                </p>
+                                <p class="text-xs inline-block underline decoration-solid">
+                                Taehyeon Kim
+                                </p>
+                                </div>
+                                <p class="text-xs break-words">
+                                문제 shutdown()으로 socket을 닫았을 때 다른 thread의 socket이 닫혔다는 신호가 가지 않는 문제가 있다. 해결 linux에서는 발생하지 않던 문제이다. 키보드 입력을 받는 thread에서, 다른 스레드가 client의 connection을 accept하기 위해 사용중인 socket을 shutdown()으로 닫으면 accept의 결과로  0보다 작거나 같은 값이 반환되는 것이 linux에서는 잘 수행되었으나, macOS에서는 반환되지 않았다. 
+                                </p>
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a class="anc" href="/post/linux 에서 cpu 정책 관리하기.html">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
+                                
+                                <div class="h-40 bg-center bg-cover rounded-t-md" style="background-image: url(/blog/linux/Pasted\ image\ 20231111233523.png)">
+                                </div>
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                linux 에서 cpu 정책 관리하기
+                                </p>
+                                <div class="pt-1">
+                                
+                                <div class="pb-1 italic">
+                                <p class="text-xs inline-block underline decoration-solid">
+                                2023-07-24
+                                </p>
+                                <p class="text-xs inline-block underline decoration-solid">
+                                Taehyeon Kim
+                                </p>
+                                </div>
+                                <p class="text-xs break-words">
+                                cpupower cpupower 이라는 프로그램을 통해서 cpu의 max frequency, min frequency 나 governor을 편리하게 조정할 수 있다. yay -S cpupower 현재 내 cpu의 정보 확인하는 법 cat &#x2F;proc&#x2F;cpuinfo ![[Pasted image 20231111233354.png]] 현재 내가 사용중인 노트북의 cpu는 i5-6200u 이다. 이 cpu는 2개의 코어와 4개의 스레드를 가지고 있다. 그래서 cpuinfo를 확인해보면 스레드의 수만큼의 정보를 확인할 수 있다. 
+                                </p>
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a class="anc" href="/post/yay 명령어 모음.html">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                yay 명령어 모음
+                                </p>
+                                <div class="pt-1">
+                                
+                                <div class="pb-1 italic">
+                                <p class="text-xs inline-block underline decoration-solid">
+                                2023-07-23
+                                </p>
+                                <p class="text-xs inline-block underline decoration-solid">
+                                Taehyeon Kim
+                                </p>
+                                </div>
+                                <p class="text-xs break-words">
+                                package 설치 yay -S [package name] package 삭제 yay -R [package name] dependencies도 함께 삭제하려면 다음의 명령어를 이용하면 된다. yay -Rns [package name] package 검색 yay -Ss [keyword] 설치된 package 검색 설치된 package를 나열하는 방법은 다음과 같다. yay -Q 설치된 package 중에서 검색하는 방법은 다음과 같다. 
+                                </p>
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a class="anc" href="/post/linux audio.html">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                linux audio
+                                </p>
+                                <div class="pt-1">
+                                
+                                <div class="pb-1 italic">
+                                <p class="text-xs inline-block underline decoration-solid">
+                                2023-07-22
+                                </p>
+                                <p class="text-xs inline-block underline decoration-solid">
+                                Taehyeon Kim
+                                </p>
+                                </div>
+                                <p class="text-xs break-words">
+                                개요 arch linux에서 사운드가 출력되고 입력되는 방식을 설명한다. Advanced Linux Sound Architecture (ALSA) ALSA는 kernel에서 실행되는 sound mixer로, 사운드 카드를 직접 조작한다. arch wiki에서는 alsa를 다음과 같이 설명한다.  https:&#x2F;&#x2F;wiki.archlinux.org&#x2F;title&#x2F;Advanced_Linux_Sound_Architecture 
+                                </p>
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a class="anc" href="/post/linux에서 bluetooth 연결 문제 해결법.html">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                linux에서 bluetooth 연결 문제 해결법
+                                </p>
+                                <div class="pt-1">
+                                
+                                <div class="pb-1 italic">
+                                <p class="text-xs inline-block underline decoration-solid">
+                                2023-05-13
+                                </p>
+                                <p class="text-xs inline-block underline decoration-solid">
+                                Taehyeon Kim
+                                </p>
+                                </div>
+                                <p class="text-xs break-words">
+                                서론 arch linux를 잘 사용하던 중 갑자기 블루투스가 되질 않았다. arch linux에 desktop manager로 gnome을 사용중이어서 보통 gnome 설정의  bluetooth 항목에서 블루투스 키보드를 연결을 한다. 잘 안되길래 컴퓨터를 재부팅 해봤는데도 먹통이었다. 이럴 경우 다음과 같은 방법으로 해결이 가능하다. 
+                                </p>
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a class="anc" href="/post/vim, nvim 에서 텍스트 복사가 되지 않을 때.html">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
+                                
+                                <div class="h-40 bg-center bg-cover rounded-t-md" style="background-image: url(/blog/linux/Pasted\ image\ 20231111232949.png)">
+                                </div>
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                vim, nvim 에서 텍스트 복사가 되지 않을 때
+                                </p>
+                                <div class="pt-1">
+                                
+                                <div class="pb-1 italic">
+                                <p class="text-xs inline-block underline decoration-solid">
+                                2022-05-06
+                                </p>
+                                <p class="text-xs inline-block underline decoration-solid">
+                                Taehyeon Kim
+                                </p>
+                                </div>
+                                <p class="text-xs break-words">
+                                서론 arch linux를 새로 설치하고 gnome desktop을 사용중인데 neovim에서 &quot;+y 로 사용하던 텍스트 복사가 작동하지 않았다. 그래서 구글링하여 찾아보던 중 해결책을 찾게 되었다. 해결 방법 vim 이나 neovim 에서 아래의 명령어를 입력한다. :checkhealth provider 
+                                </p>
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a class="anc" href="/post/mac os sonoma.html">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                mac os sonoma
+                                </p>
+                                <div class="pt-1">
+                                
+                                <div class="pb-1 italic">
+                                <p class="text-xs inline-block underline decoration-solid">
+                                undefined
+                                </p>
+                                <p class="text-xs inline-block underline decoration-solid">
+                                undefined
+                                </p>
+                                </div>
+                                <p class="text-xs break-words">
+                                kernel panic c++ 로 4000000*4000000*4 bytes의 전역 메모리를 할당했을 때, kernel panic이 발생한다. 아래는 debugging 정보이다. panic(cpu 4 caller 0xfffffe00227392a4): Failed to reserve GPU Carveout region in user map 0xfffffe14d2e091c0 3 @vm_map.c:13939 Debugger message: panic Memory ID: 0xff 
+                                </p>
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a class="anc" href="/post/user에게 sudo 권한 부여하기.html">
+                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
+                                
+                                <div class="h-40 bg-center bg-cover rounded-t-md" style="background-image: url(/blog/linux/Pasted\ image\ 20240217172912.png)">
+                                </div>
+                                
+
+                                <div class="relative py-5 px-5">
+                                
+                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                user에게 sudo 권한 부여하기
+                                </p>
+                                <div class="pt-1">
+                                
+                                <div class="pb-1 italic">
+                                <p class="text-xs inline-block underline decoration-solid">
+                                undefined
+                                </p>
+                                <p class="text-xs inline-block underline decoration-solid">
+                                undefined
+                                </p>
+                                </div>
+                                <p class="text-xs break-words">
+                                sudoers sudoers는 linux에서 sudo 정책을 담당하는 플러그인이다. man sudoers 를 통해 명령어를 입력해보면 다음과 같은 설명이 나온다. NAME sudoers - default sudo security policy plugin  DESCRIPTION The sudoers policy plugin determines a user&#x27;s sudo privileges.  It is the default sudo policy plugin.  The policy is driven by the &#x2F;private&#x2F;etc&#x2F;sudoers file or, optionally, in LDAP.  The 
+                                </p>
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <div class="my-3">
+                            <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 text-sm">
+                                
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved. 
+            </footer>
+        </div>
+    </body>
+</html>

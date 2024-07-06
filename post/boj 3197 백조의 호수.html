@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>blog.argnmp</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="data:,">
+        <link href="/static/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
+    </head>
+    <body class="dark:bg-gray-800">
+        <div class="p-5 sm:px-10 md:px-16 lg:container mx-auto lg:px-20 py-5 xl:px-48 box-border h-screen w-screen">
+            <div class="flex text-customlight-700 dark:text-customdark-400 pb-2 mb-4 border-b-4 border-customlight-700 dark:border-customdark-400">
+                <div class="grow">
+                    <a class="inline-block" href="/">
+                        <p
+                            class="text-3xl font-bold hover:bg-customlight-700 hover:text-white dark:hover:bg-customdark-400 dark:hover:text-gray-800">
+                        blog.argnmp</p>
+                    </a>
+                </div>
+                <button id="searchToggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-gray-600 dark:stroke-gray-400"
+                        viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </button>
+                <button id="toggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="dark:hidden w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-600" d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-400" d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                        <path class="fill-gray-400" d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4">
+                          <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
+                          <p class="text-2xl md:mt-3 mb-2 font-bold">argnmp</p>
+                          
+                          <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                          
+                          <p class="text-xs">argnmp@gmail.com</p>
+                          
+                          
+                          
+                          <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                          
+                        </div>
+                    </div>
+                    <div id="toc" class="sticky top-5 mt-5 border-l-2">
+                        <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
+                    </div>
+                </div>
+                <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 mr-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="submit" name="submit" id="submit" class="inline bg-customlight-700 hover:bg-white hover:text-customlight-700 border border-customlight-700 dark:border-customdark-400 text-gray-200 dark:bg-customdark-400 dark:text-gray-900 hover:dark:bg-gray-800 hover:dark:text-gray-200 rounded-md px-2 text-sm cursor-pointer" onclick="window.search()" value="search">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                    
+                    <article>
+                        <section class="w-full mb-12">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">boj 3197 백조의 호수</p>
+                                
+                            </div>
+                            <div class="flex flex-row mb-4 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-01-22</p></div>
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                    
+                                    
+                                    
+
+                                    <div class="px-1 mr-1 bg-customlight-500 dark:bg-customdark-500 align-middle text-xs text-white rounded-md">
+                                        boj
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+
+                                    <div class="px-1 mr-1 bg-customlight-600 dark:bg-customdark-600 align-middle text-xs text-white rounded-md">
+                                        ps
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <h3 id="문제">문제</h3>
+<p><a href="https://www.acmicpc.net/problem/3197">https://www.acmicpc.net/problem/3197</a></p>
+<h3 id="풀이">풀이</h3>
+<h4 id="첫번째 풀이">첫번째 풀이</h4>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+using namespace std;
+using ll = long long;
+int r, c;
+char board[1500][1500];
+int dx[4] = {0,-1,1,0};
+int dy[4] = {-1,0,0,1};
+struct pos{
+    int x, y;
+    pos adj(int i){ return {x+dx[i%4], y+dy[i%4]};}
+    bool safe(){ return 0&lt;=x&amp;&amp;x&lt;r&amp;&amp;0&lt;=y&amp;&amp;y&lt;c; }
+    void print(){printf(&quot;[%d, %d]\n&quot;, x, y);}
+    bool operator==(pos t){
+        return x==t.x &amp;&amp; y==t.y;
+    }
+};
+vector&lt;pos&gt; target;
+
+int cost[1500][1500] = {0,};
+int visited[1500][1500] = {0,};
+
+struct box{
+    pos p; 
+    int dist;
+    bool operator()(box&amp; a, box&amp; b){
+        return a.dist &gt; b.dist;
+    }   
+    bool operator&lt;(const box&amp; t) const {
+        return dist &lt; t.dist;
+    }
+};
+
+void print(){
+    for(int i = 0; i&lt;r; i++){
+        for(int j = 0; j&lt;c; j++){
+            printf(&quot;%2d&quot;, cost[i][j]);
+        }
+        cout &lt;&lt; '\n';
+    }
+    cout &lt;&lt; endl;
+}
+
+void calc_cost(){
+    queue&lt;box&gt; q;
+    for(int i = 0; i&lt;r; i++){
+        for(int j = 0; j&lt;c; j++){
+            if((board[i][j]=='.'||board[i][j]=='L')){
+                cost[i][j] = 0;       
+                q.push({{i, j}, 0});
+            }
+        }
+    }
+    while(!q.empty()){
+        box cur = q.front(); 
+        q.pop(); 
+        for(int i = 0; i&lt;4; i++){
+            pos next = cur.p.adj(i);
+            if(next.safe()){
+                if(board[next.x][next.y]=='.'||board[next.x][next.y]=='L')    
+                    continue;
+                else if(cur.dist + 1 &lt; cost[next.x][next.y]){
+                    cost[next.x][next.y] = cur.dist + 1;
+                    q.push({next, cur.dist+1});
+                }
+            }
+        } 
+    }
+}
+
+queue&lt;pos&gt; next_q; 
+bool check_reachable(int current_cost){
+    pos to = target[1];
+
+    queue&lt;pos&gt; q;
+    while(!next_q.empty()){
+        q.push(next_q.front());
+        next_q.pop();
+    }
+
+    while(!q.empty()){
+        pos cur = q.front();
+        q.pop();
+        if(cur==to)
+            return true;
+        for(int i = 0; i&lt;4; i++){
+            pos next = cur.adj(i);
+            if(next.safe() &amp;&amp; visited[next.x][next.y]==0){
+                if(cost[next.x][next.y]==0){
+                    visited[next.x][next.y] = 1;
+                    q.push(next);
+                }
+                else if(cost[next.x][next.y]==current_cost+1){
+                    visited[next.x][next.y] = 1;
+                    next_q.push(next); 
+                }
+            }
+        }
+    }
+    return false;
+}
+
+int calc_dist(){
+    vector&lt;box&gt; v;
+    for(int i = 0; i&lt;r; i++)
+        for(int j = 0; j&lt;c; j++)
+            v.push_back({{i, j}, cost[i][j]});
+    sort(v.begin(), v.end());
+    
+    box cur = v[0];
+    int days = 0;  
+    pos from = target[0];
+    next_q.push(from);
+    visited[from.x][from.y] = 1;
+    for(int i = 0; i&lt;v.size();){
+        while(v[i].dist == cur.dist &amp;&amp; i&lt;v.size()){
+            cur = v[i];
+            cost[cur.p.x][cur.p.y] = 0;
+            i+=1;
+        } 
+        if(check_reachable(cur.dist))
+            return days;
+        cur = v[i];
+        days += 1;
+    }
+}
+
+void solve(){
+    memset(cost, -1, sizeof(cost));
+    cin &gt;&gt; r &gt;&gt; c;
+    for(int i = 0; i&lt;r; i++){
+        for(int j = 0; j&lt;c; j++){
+            char c = cin.get();
+            while(c=='\n'||c=='\r'||c==' ')
+                c = cin.get();
+            board[i][j] = c;
+            if(board[i][j]=='L')
+                target.push_back({i, j});
+            cost[i][j] = INT_MAX;
+        }
+    }
+    calc_cost();
+    cout &lt;&lt; calc_dist();
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+
+</code></pre>
+<p>먼저 각 얼음이 녹는데 걸리는 시간을 기록한다.
+<code>calc_cost</code> 에서 이 작업을 수행해서 <code>cost</code>배열에 기록한다.</p>
+<p>bfs를 사용해서 계산을 하는데, 모든 물 좌표를 먼저 queue에 넣어두고 걸리는 시간이 더 적은 경우만 같은 좌표에 재방문하도록 하여 계산한다.</p>
+<p>아래는 문제에서 주어진 예시에 대해 걸리는 시간을 계산한 것이다.</p>
+<pre><code>..XXX...X..
+.X.XXX...L.
+....XXX..X.
+X.L..XXX...
+
+00121000100
+01012100000
+00001210010
+10000121000
+</code></pre>
+<p><code>cost</code>배열에서 걸리는 시간이 같은 좌표의 값들을 모두 바꿔주며, 순서대로 순회를 한다. 예를 들면 <code>cost</code>배열의 값이 1인 모든 좌표들을 0으로 바꾸어주고, 2인 좌표들에 대해 0으로 바꾸어 주고, 3인 좌표들에 대해 0으로 바꾸어주며 <code>cost</code>배열이 모두 0이 될 때까지 반복하는 것이다.</p>
+<p><code>calc_dist</code>에서 이 작업을 수행한다.</p>
+<p>각 순회마다, L에서 L로 도달이 가능한지 확인한다. 하지만 단순히 도달가능한지 확인하기 위해 bfs를 매 순회마다 돌리게 되면 시간초과가 발생한다.</p>
+<p>매 순회에서 더이상 이동할 수 없는 경우 이는 얼음이 아직 녹지 않은 경우이다.(cost배열 값이 0이 아님) 이때 녹지 않은 좌표는 다음 번에 녹게되는(cost배열이 0 이 되는) 경우이므로, 다른 L을 찾지 못했다면 다음 순회에서는 여기서부터 다시 bfs 탐색을 재개하면 된다.</p>
+<p><code>check_reachable</code>에서 이 작업을 한다. bfs를 탐색하는데, cost배열의 값을 확인해서 다음에 녹게 되는 얼음인 경우 <code>next_q</code>에 값을 넣어 놓는다. <code>check_reachable</code> 에서는 <code>next_q</code>의 값들을 pop하여 bfs 탐색에 사용될 queue에 집어넣는다.</p>
+<p>이 풀이에서는 얼음이 녹는 시간을 먼저 계산해두었지만, 먼저 계산하지 않고도 여러개의 queue를 사용해서 바로 계산이 가능하게 코드를 짤 수 있을 것 같다.</p>
+<h3 id="느낀점">느낀점</h3>
+<p>cost를 계산하는 것 까지는 빠르게 작성을 할 수 있었으나, 이후 L에서 L까지 필요한 시간을 구하는 것에서 어려움을 겪었다. 처음에 priority_queue로 작성을 했지만 메모리 초과가 발생했고, 이를 해결하기 위해서 복잡하게 고민을 했다. 하지만 얼음을 녹이며(cost를 0으로 만들며) bfs로 확인한다고 생각하니, 풀이를 떠올릴 수 있었다. 너무 복잡하게 생각하지 말고, 단순화 해서 명료하게 생각하려고 노력해야겠다.</p>
+
+                        </div>
+                    </article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved. 
+            </footer>
+        </div>
+    </body>
+</html>
