@@ -80,130 +80,58 @@
                         </div> 
                     </div>
                     
-                    <div class="md:pl-3">
-                        
-                        <a class="anc" href="/post/os 정리.html">
-                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
-                                
-
-                                <div class="relative py-5 px-5">
-                                
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
-                                os 정리
-                                </p>
-                                <div class="pt-1">
-                                
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-10-20
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
-                                multiprogramming 개념에서 timesharing(multithreading) 개념으로 진화했다. timesharing은 job의 전환을 매우 빠르게 해서 동시에 동작하는 것처럼 보이도록 하는 기술 os는 interrupt driven이다. interrupt는 hardware에 의해 발생되는 것이고, exception or trap은 software에 의해 발생한다. 
-                                </p>
-                                
-                                </div>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <a class="anc" href="/post/io 처리 방식.html">
-                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
-                                
-
-                                <div class="relative py-5 px-5">
-                                
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
-                                io 처리 방식
-                                </p>
-                                <div class="pt-1">
-                                
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-10-17
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
-                                IO의 방식을 구분하기 위한 두가지 관점이 존재한다. sync vs async blocking vs non-blocking IBM developers 에서는 위의 관점의 조합에 따라, 해당하는 io 방식을 설명한다. https:&#x2F;&#x2F;blog.naver.com&#x2F;n_cloudplatform&#x2F;222189669084 에서는 한국어로 위의 내용을 다시 설명해주고 있다. 
-                                </p>
-                                
-                                </div>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <a class="anc" href="/post/os overview.html">
-                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
-                                
-
-                                <div class="relative py-5 px-5">
-                                
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
-                                os overview
-                                </p>
-                                <div class="pt-1">
-                                
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-02-29
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
-                                multiprogramming 하나의 프로그램만 실행하는 것으로는 cpu와 i&#x2F;o device를 항상 바쁘게 하지 못한다. 효율성이 떨어지는 것을 의미 현재 실행 중인 프로그램 이외에 다른 프로그램으로 전환할 수 있도록 해서 효율성을 극대화 한다. 프로그램 실행을 중단하고 기다려야 할 때(i&#x2F;o wait) 다른 프로그램으로 전환해서 실행 
-                                </p>
-                                
-                                </div>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <a class="anc" href="/post/process와 thread.html">
-                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
-                                
-
-                                <div class="relative py-5 px-5">
-                                
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
-                                process와 thread
-                                </p>
-                                <div class="pt-1">
-                                
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-02-29
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
-                                process program 실행에 필요한 모든 것을 저장하는 자료구조 program in execution process는 4개의 영역을 포함한다 text: program code data: static and global variables, 프로그램 어느 부분 실행하는 지에 관계없이 접근가능 stack: function call, context switch에 사용됨 
-                                </p>
-                                
-                                </div>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <div class="my-3">
-                            <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 text-sm">
-                                
-                                
-                                
-                            </div>
-                        </div>
-                    </div>
-
                     
+                    <article>
+                        <section class="w-full mb-12">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">io 처리 방식</p>
+                                
+                            </div>
+                            <div class="flex flex-row mb-4 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-10-17</p></div>
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                    
+                                    
+                                    
+
+                                    <div class="px-1 mr-1 bg-customlight-500 dark:bg-customdark-500 align-middle text-xs text-white rounded-md">
+                                        blog
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <p>IO의 방식을 구분하기 위한 두가지 관점이 존재한다.</p>
+<ul>
+<li>sync vs async</li>
+<li>blocking vs non-blocking</li>
+</ul>
+<p>IBM developers 에서는 위의 관점의 조합에 따라, 해당하는 io 방식을 설명한다.</p>
+<p><a href="https://blog.naver.com/n_cloudplatform/222189669084">https://blog.naver.com/n_cloudplatform/222189669084</a>에서는 한국어로 위의 내용을 다시 설명해주고 있다.</p>
+<p>이 글에서는, 네 가지 조합의 io 방식에 대해 조금 더 쉽게 설명하고자 한다.</p>
+<p>첫번째 관점에서는 요청의 순서가 지켜지는지가 중요하다. sync 방식은 요청 순서와 응답 순서가 지켜지고, async는 그러한 순서가 지켜지지 않는다.</p>
+<p>두번째 관점에서는 요청자가 다른 작업을 할 수 있는지가 중요하다. blocking 방식은 요청자가 응답을 받을 때까지 기다려야 하고, non-blocking 방식은 요청자가 응답을 기다리지 않고 다른 작업을 수행할 수 있다.</p>
+<h3 id="sync - blocking">sync - blocking</h3>
+<p>Read/Write system call 이 여기에 해당한다. 가장 익숙한 방식으로, application에서 kernel에 io를 요청하면, application은 block이 되고 io가 완료되면 응답을 받는다.</p>
+<h3 id="sync - non-blocking">sync - non-blocking</h3>
+<p>Read/Write system call 시, O_NONBLOCK 옵션을 주는 방식이 여기에 해당한다. application에서 io를 요청하면, 바로 응답을 받는다. 만약 io가 완료되지 않았다면, 그것을 나타내는 응답을 받는다. application은 system call을 통해 계속 io 완료 여부를 확인하고, 완료될 때까지 이를 반복한다.</p>
+<p>그렇다면 A 요청을 보낸 뒤 B요청을 보내고, B요청 부터 확인하면 순서가 지켜지지 않으니, async가 아닌가? 하는 의문이 생긴다.</p>
+<p>여기서의 &quot;순서가 지켜진다&quot;의 의미는, 특정 io에 대한 요청이나 질의를 보내면 그것에 대한 응답이 돌아온다는 의미이다. A라는 io에 대해서 A에 대한 응답이 왔으니, 순서대로 이루어 진 것이다. 음, &quot;특정 결과 값만을 기대를 하고 그 결과를 받는가?&quot; 라는 의미를 가진다고 할 수 있을 것 같다. 완료 확인 요청을 한 순간에는, 특정 io에 대한 결과를 기대한다.</p>
+<p>이러한 관점에서 아래의 async-blocking과 비교해보면 더 명확히 할 수 있다.</p>
+<h3 id="async - blocking">async - blocking</h3>
+<p>I/O multiplexing이 여기에 해당한다. I/O multiplexing을 위한 select 함수는, 특정 시간동안 block되어서, 인자로 제공한 file descriptor들에 변화가 있는지를 검사한다. 일단 block 된다는 측면에서, blocking이다. 그리고 완료된 io의 file descriptor에 대한 결과를 알려주는 방식으로, &quot;특정 결과 값만을 기대한 것&quot;이 아니다. 따라서 async라고 할 수 있다. 즉, &quot;A 확인 요청 -&gt; A 에 대한 결과 반환&quot; 가 아닌, &quot;확인 요청 -&gt; A, B, C, D 중 완료된 결과 반환&quot;이다.</p>
+<h3 id="async - non-blocking">async - non-blocking</h3>
+<p>AIO가 여기에 해당한다. callback을 이용해서, application에게 io 작업이 완료되었다는 결과를 전달하게 된다. application은 block되지 않기 때문에 non-blocking이라고 할 수 있다. 그리고 application은 특정 결과 값만을 기대한 것이 아니므로, async라고 할 수 있다.</p>
+
+                        </div>
+                    </article>
+
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">

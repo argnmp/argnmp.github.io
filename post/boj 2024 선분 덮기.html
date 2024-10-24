@@ -117,7 +117,7 @@
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
                             <h3 id="문제">문제</h3>
 <p><a href="https://www.acmicpc.net/problem/2024">https://www.acmicpc.net/problem/2024</a></p>
-<h3 id="풀이">풀이</h3>
+<h3 id="풀이 1">풀이 1</h3>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;climits&gt;
@@ -239,6 +239,79 @@ int main(){
 <p><code>0 5</code> 다음에는 <code>2 8</code>을 순회한다. 이때에는 왼쪽 좌표가 현재까지의 선의 오른쪽 좌표보다 작고, 오른쪽 좌표가 현재까지의 선의 오른쪽 좌표보다 크기 때문에 최소 개수의 선에 들어간다.</p>
 <p>그 다음에는 <code>4 10</code>을 순회한다. 앞선 규칙대로라면 이 탐색에서도 최소 개수의 선에 들어가게 된다. 하지만 <code>2 8</code>로 덮는 대신 <code>4 10</code>으로 덮으면 되므로, 최소 개수의 선에 <code>2 8</code>이 들어가지 않아야 한다. 이를 다르게 말하면, 최소 개수를 카운팅 하는 변수가 있을 때, <code>2 8</code>을 탐색할 때는 1을 올려주되, <code>4 10</code>을 탐색할 때에는 올려주지 않아야 한다는 것이다. 만약 그다음에 <code>6 100</code>를 탐색하더라도 마찬가지로 올려주지 않아야 한다.</p>
 <p>이를 해결하기 위해서 나는 코드에서 <code>buffer</code>를 사용했다. 최소 개수를 카운팅 했다면, 오른쪽 좌표를 buffer에 넣어 두어서, 그다음 탐색하는 선들의 왼쪽 좌표가 buffer보다 작다면 카운팅 하지 않는 것이다.</p>
+<h3 id="풀이 2">풀이 2</h3>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;climits&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;map&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
+#include &lt;unordered_set&gt;
+#include &lt;bitset&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+#define dbgn(x) printf(&quot;[DBG] %s: %lld\n&quot;, #x, (ll)x);
+#define dbgarr(r, c, x) printf(&quot;[DBG] %s\n&quot;, #x);for(int i=0; i&lt;r; i++){for(int j=0; j&lt;c; j++){printf(&quot;%2lld &quot;, (ll)x[i][j]);}printf(&quot;\n&quot;);}
+using namespace std;
+using ll = long long;
+int m;
+struct line{
+    int u, v;
+    bool operator&lt;(const line&amp; t) const {
+        return u &lt; t.u;
+    }
+    void print(){
+        printf(&quot;[%d, %d]\n&quot;, u, v);
+    }
+};
+
+void solve(){
+    cin &gt;&gt; m;
+    int u, v;
+    vector&lt;line&gt; cand;
+    while(1){
+        cin &gt;&gt; u &gt;&gt; v;
+        if(u==0&amp;&amp;v==0)
+            break;
+        if(u&lt;0)
+            u=0;
+        if(v&lt;0)
+            v=0;
+        cand.push_back({u, v});
+    }
+    sort(cand.begin(), cand.end());
+    /* for(line&amp; t: cand){
+        t.print();
+    } */
+    line cur = {0,0};
+    int end = 0;
+    int cnt = 0;
+    for(int i = 0; i&lt;cand.size(); i++){
+        if(cand[i].u &lt;= end){
+            cur.v = max(cur.v, cand[i].v);
+        }   
+        else if(cand[i].u &lt;= cur.v) {
+            end = cur.v;
+            cur.v = max(cur.v, cand[i].v);
+            cnt += 1;
+        }
+        if(cur.v &gt;= m){
+            cout &lt;&lt; cnt + 1;
+            return;
+        }
+    } 
+    cout &lt;&lt; 0;
+}
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    solve(); 
+    return 0;
+}
+</code></pre>
+<p>다시 풀었을 때 시간이 오래걸렸다. 더욱 명확한 풀이이다.</p>
 <h3 id="느낀점">느낀점</h3>
 <p>이 문제를 먼저 봤었는데, 풀이를 모르겠어서 <a href="/post/boj%202170%20%EC%84%A0%20%EA%B8%8B%EA%B8%B0.html">boj 2170 선 긋기</a> 를 풀며 라인 스위핑 알고리즘에 대해서 공부하고 다시 풀었다.</p>
 

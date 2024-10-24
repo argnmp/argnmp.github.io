@@ -84,7 +84,7 @@
                     <article>
                         <section class="w-full mb-12">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">CPU Scheduling</p>
+                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">os overview</p>
                                 
                             </div>
                             <div class="flex flex-row mb-4 md:pl-5 text-gray-500 dark:text-gray-400">
@@ -103,33 +103,148 @@
                                     </div>
                                     
                                     
+                                    
+                                    
+
+                                    <div class="px-1 mr-1 bg-customlight-600 dark:bg-customdark-600 align-middle text-xs text-white rounded-md">
+                                        os
+                                    </div>
+                                    
+                                    
                                 </div>
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
-                            <h2 id="cpu burst">cpu burst</h2>
-<p>모든 program은 cpu burst와 io burst가 반복해서 동작한다.</p>
+                            <h2 id="multiprogramming">multiprogramming</h2>
+<p>하나의 프로그램만 실행하는 것으로는 cpu와 i/o device를 항상 바쁘게 하지 못한다.</p>
 <ul>
-<li>alternating sequence</li>
+<li>효율성이 떨어지는 것을 의미</li>
 </ul>
-<p>io-bound job은 many short cpu burst, cpu-bound job은 few long cpu burst</p>
-<p>이러한 job들은 hyperexponential distribution을 따른다.</p>
+<p>현재 실행 중인 프로그램 이외에 다른 프로그램으로 전환할 수 있도록 해서 효율성을 극대화 한다.</p>
 <ul>
-<li>즉, io-bound와 cpu-bound의 중간인 job은 많이 없다는 의미.</li>
+<li>프로그램 실행을 중단하고 기다려야 할 때(i/o wait) 다른 프로그램으로 전환해서 실행</li>
 </ul>
-<p>구분하는 이유는 io-bound job에 cpu를 우선적으로 주기 위해서.</p>
+<p>이를 위해서는 mem(ram)에 여러개의 프로그램이 올라오도록 해야 한다. 하지만 메모리는 공간적 제약이 존재한다.</p>
 <ul>
-<li>e.g. 문서 프로그램은 io-bound job으로 키보드로 입력을 하면 처리해서 화면에 떠야 한다. interaction이 중요하기 때문에 io 끝나면 cpu 줘서 바로 처리해야 한다. cpu 사용시간이 긴 것도 아니므로 바로 줘도 된다.</li>
+<li>이를 해결하기 위한 virtual memory 기술이 존재한다.</li>
 </ul>
-<h2 id="process scheduling queue">process scheduling queue</h2>
-<p>blocked queue: io가 발생하여 event를 기다리는 queue</p>
-<p>blocked suspend queue: blocked queue의 상태에서 user가 suspend 시킨 경우</p>
+<p>어떤 프로그램을 실행해야하는가?</p>
 <ul>
-<li>user가 suspend 풀 때까지 ready가 되면 안되므로
-ready suspend queue: blocked suspend queue의 상태에서 io event를 받은 경우</li>
-<li>user가 suspend 풀 때까지 ready가 되면 안되므로</li>
+<li>job scheduling을 통해 결정한다</li>
 </ul>
-<p>blocked suspend queue와 ready suspend queue는 mid-term scheduler가</p>
+<h2 id="multitasking (time sharing)">multitasking (time sharing)</h2>
+<p>cpu time을 나누어서 모든 프로그램이 진도가 나가도록 한다.</p>
+<p>multiprogramming과의 차이점</p>
+<ul>
+<li>i/o wait 발생 시에만 다른 프로그램으로 전환하는 것이 아닌, cpu time을 나누어서 실행 중인 모든 프로그램들을 계속 switching 한다.</li>
+<li>interactive(상호작용성)을 보장한다.</li>
+</ul>
+<p>실행 중인 프로그램을 process라고 한다.</p>
+<p>cpu scheduling을 통해 다음으로 실행할 process를 선택한다.</p>
+<p>mem의 공간적 제약으로 모든 process를 올릴 수 없다.</p>
+<ul>
+<li>swapping을 통해서 mem의 process를 disk로 내린다</li>
+<li>virtual memory를 통해서 process의 실행 중인 일부만 mem에 올린다.</li>
+</ul>
+<h2 id="interrupt driven">interrupt driven</h2>
+<p>os가 polling하며 hardware를 기다리는 대신, hardware가 interrupt를 보내는 방식.</p>
+<p>interrupt 발생시 interrupt handler를 통해 작업을 처리한다.</p>
+<p>software의 경우, 실행 과정에서 긴급하게 처리해야 하는 작업에 대해 exception(trap)을 발생시킨다.</p>
+<ul>
+<li>e.g. divide by zero</li>
+</ul>
+<p>exception 발생시 마찬가지로 interrupt와 같은 방식으로 처리된다.</p>
+<h2 id="dual-mode">dual-mode</h2>
+<p>os와 system을 보호하기 위해서, user mode와 kernel mode로 나누어 권한을 다르게 부여한다.</p>
+<ul>
+<li>즉, 하드웨어 접근과 같은 동작은 kernel mode에서만 동작할 수 있도록 제한하는 것이다.</li>
+<li>그리고 이러한 동작은 os에서 system call을 통해 kernel mode로 전환한 뒤, 작성된 os code에 따라 실행되도록 한다.</li>
+</ul>
+<p>예를 들어 application 실행 시 hardware access와 같은 작업을 수행해야하는 경우, 이는 kernel mode에서만 가능하도록 설정되어 있기 때문에 os의 system call을 호출 해야 한다. system call을 호출하게 되면 kernel mode로 전환이 되어 os의 code를 실행한다.</p>
+<p>cpu의 입장에서는 현재 실행하고 있는 code(명령어)가 user mode의 것인지 kernel mode의 것인지 구분이 되지 않는다. 따라서 user mode와 kernel mode간에 전환이 이루어질 때 register의 mode bit을 표시하여, 특정 명령어의 경우 mode bit이 설정된 경우에만 실행할 수 있도록 한다.</p>
+<p>이를 통해서 application이 user mode에서 hardware access를 위한 특정 명령어를 실행했을 때(os를 거치지 않는 경우) mode bit이 설정되어 있지 않기 때문에, 명령어가 거부된다.</p>
+<ul>
+<li>system call을 거치는 경우 mode bit을 설정하고 os code의 hardware access를 위한 명령어를 실행하므로 거부되지 않는다.</li>
+</ul>
+<h2 id="process management">process management</h2>
+<p>실행중인 program을 process라고 한다.</p>
+<p>program 실행에 필요한 자원들을 자료구조로 묶어서 관리를 하고, 이 자료구조를 process라 한다.</p>
+<ul>
+<li>program 실행 시 이 자료구조가 메모리에 올라간다.</li>
+</ul>
+<p>process에는 현재 program의 어느 부분을 실행하는 지를 나타내는 pc(program counter)가 있다.</p>
+<ul>
+<li>multi thread라면 pc가 여러개 존재한다.</li>
+</ul>
+<h2 id="memory management">memory management</h2>
+<p>process의 실행을 위해서는, 관련 data들이 mem에 올라가야 한다.</p>
+<ul>
+<li>e.g. cpu가 명령어 실행하기 위해서는, 명령어가 mem에 올라와 있어야 한다</li>
+</ul>
+<p>os는 mem의 어느 부분이 사용중인지, 어느 부분이 비어 있는지 등을 관리한다.</p>
+<h2 id="storage management">storage management</h2>
+<p>os는 hdd에 대한 abstraction을 제공하여 매우 간단한 방식으로 사용할 수 있도록 한다.</p>
+<ul>
+<li>e.g. hdd의 주소를 고려하지 않고 file에 쓰면 된다.</li>
+<li>file과 directory에 대한 자료구조를 제공한다.</li>
+</ul>
+<h2 id="mass-storage management">mass-storage management</h2>
+<p>실제 hdd에 저장하기 위해서, hdd를 os가 관리한다.</p>
+<p>hdd는 매우 느리기 때문에 disk scheduling을 통해서 head의 움직임을 최소화하는 것이 여기에 표함된다.</p>
+<h2 id="coherency">coherency</h2>
+<pre><code>hdd -&gt; mem -&gt; cache -&gt; register
+</code></pre>
+<p>이렇게 data가 이동한다.</p>
+<p>multitasking 환경에서는 어느부분에 data가 저장되어 수정이 이루어졌더라도 항상 최신의 data를 들고올 수 있어야 한다.</p>
+<p>multiprocessor 환경에서는 cpu core마다 cache가 존재하기 때문에, 어떤 core에서 같은 process가 scheduling 되어도 최신의 값을 가져올 수 있어야 한다.</p>
+<ul>
+<li>cache coherency를 제공해야 한다.</li>
+</ul>
+<h2 id="i/o subsystem">i/o subsystem</h2>
+<p>io 장치는 매우 많기 때문에 os에서는 abstraction을 제공해서 사용자가 모두 구분하지 않아도 되도록 한다. 특정 몇개로만 간단하게 구분할 수 있도록 한다.</p>
+<ul>
+<li>e.g. block device, character device</li>
+</ul>
+<p>io는 매우 느리기 때문에 세가지 기능을 제공한다.</p>
+<ul>
+<li>buffering을 통해 mem에 저장해놓고 io가 끝났다고 한다. 나중에 io에 data를 쓴다.</li>
+<li>caching을 통해 자주 접근하는 data를 mem에 올려놓는다.</li>
+<li>spooling을 통해 io device로 data를 바로 전송하지 않고, spool 영역에 저장해놓고 나중에 io device가 읽어간다.</li>
+</ul>
+<h2 id="protection and security">protection and security</h2>
+<p>protection은 권한 밖의 자원 접근 막는 mechanism</p>
+<ul>
+<li>시스템 자원에 대한 모든 접근이 controlled 되는 것</li>
+<li>e.g. 다른 process의 자원에 접근하지 못하도록 한다
+security는 외부 공격으로 부터의 시스템 방어</li>
+<li>e.g. dos, worms, viruses</li>
+</ul>
+<p>user ID로 사용자마다 권한을 부여
+group ID로 사용자를 묶어서 권한 부여</p>
+<p>privilege escalation을 통해 잠시 권한을 상승시켜서 필요한 작업을 수행한다</p>
+<h2 id="system call">system call</h2>
+<p>os가 제공하는 서비스에 대한 programming interface
+system call을 직접적으로 사용하기 보다는 API(application program interface)를 이용한다. 이식성이 좋고 사용하기 편리하다.</p>
+<ul>
+<li>POSIX API, Win32 API, Java API</li>
+<li>system call을 조합하여 특정한 기능을 수행하는 함수가 작성되어 있다.</li>
+<li>POSIX API는 UNIX 계열 운영체제 모두에서 사용이 가능하다.</li>
+</ul>
+<p>C에서 <code>printf()</code> 함수는 위에서 언급한 API가 아니라, programming language가 제공하는 API이다. 따라서 OS 관계없이 모두 사용가능.</p>
+<h2 id="system call implementation">system call implementation</h2>
+<p>system call마다 번호 붙어 있고, 이 번호를 index로 하여 table에 접근하면 구현부의 os 코드 주소를 얻을 수 있다. 이 주소로 jump하여 실행한다.</p>
+<h2 id="virtual machine">virtual machine</h2>
+<p>물리적인 hardware 처럼 보이는 가상의 hardware를 제공한다.</p>
+<p>virtual machine 기술은 cloud service에서 효과적이다.</p>
+<p>jvm(java virtual machine)</p>
+<ul>
+<li>
+<p>미리 컴파일 하지 않고, 사용자 os에 맞게 virtual machine 에서 load해서 사용하자. 즉 사용자 os에서 java 코드를 컴파일 해서 사용한다.</p>
+</li>
+<li>
+<p>각 os에 맞게 jvm을 설치하고 class 파일만 보내면, 그 기계에 맞게 실시간 번역해서 실행이 가능하다.</p>
+</li>
+</ul>
 
                         </div>
                     </article>

@@ -84,12 +84,12 @@
                     <article>
                         <section class="w-full mb-12">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">Processes and Threads</p>
+                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">ACID</p>
                                 
                             </div>
                             <div class="flex flex-row mb-4 md:pl-5 text-gray-500 dark:text-gray-400">
                                 <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
-                                <div class="mr-2"><p class="text-xs italic">2024-02-29</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-10-16</p></div>
                                 <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
                                 <div class="mr-2 flex flex-row">
                                     
@@ -107,185 +107,30 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
-                            <h2 id="process">process</h2>
-<p>program 실행에 필요한 모든 것을 저장하는 자료구조
-program in execution</p>
-<p>process는 4개의 영역을 포함한다</p>
-<ul>
-<li>text: program code</li>
-<li>data: static and global variables, 프로그램 어느 부분 실행하는 지에 관계없이 접근가능</li>
-<li>stack: function call, context switch에 사용됨</li>
-<li>heap: dynamic allocation</li>
-</ul>
-<p>address space: mem 상의 process 영역</p>
-<ul>
-<li>0~MAX(32bit or 64bit에서 최대 주소 범위)로 logical하게 연속적이다.</li>
-</ul>
-<p>stack은 높은 주소에서 낮은 주소로, heap은 낮은 주소에서 높은 주소로 증가한다.</p>
-<ul>
-<li>text, data는 fixed size</li>
-<li>stack, heap은 variable size</li>
-</ul>
-<h2 id="process state">process state</h2>
-<p>크게 5개의 상태로 나뉜다.</p>
-<ul>
-<li>new: process 생성되어 mem에 올라간 상태. 바로 cpu scheduling 대상은 아니다.
-<ul>
-<li>보통은 바로 ready가 되지만 rtos같은 경우에는 작업 deadline 보장 위해 시작 못할 수도 있다</li>
-</ul>
-</li>
-<li>running: cpu에서 실행중인 상태, core 여러개면 running 상태인 것도 여러개</li>
-<li>waiting: process가 event 발생 기다린다. 보통 io event</li>
-<li>ready: cpu scheduling 대상인 상태. 하지만 cpu 할당 받지 못했다</li>
-<li>terminated: process 실행 완료. os가 자원 회수하는 것을 기다리고 있는 상태</li>
-</ul>
-<p>state 변화 사유</p>
-<ul>
-<li>new -&gt; ready: admission control</li>
-<li>ready -&gt; running: scheduler dispatch</li>
-<li>running -&gt; ready: interrupt (cpu time slice 소진)</li>
-<li>running -&gt; exit: instruction 모두 실행 완료</li>
-<li>running -&gt; waiting: io or event wait (io나 event 발생시 waiting가서 기다린다)</li>
-<li>waiting -&gt; ready: io or event completion</li>
-</ul>
-<h2 id="process control block">process control block</h2>
-<p>process의 kernel 내 자료구조</p>
-<ul>
-<li>state, pc, cpu regs, cpu sched info, mm info, accounting info, io status info</li>
-</ul>
-<p>context switching 시, pcb를 통해 현재 process의 상태를 저장하고 다른 process의 상태를 불러온다</p>
-<h2 id="process scheduling queues">process scheduling queues</h2>
-<p>여러개의 queue들이 존재한다.</p>
-<ul>
-<li>job queue: 모든 process를 관리하는 queue</li>
-<li>ready queue: cpu 할당 기다리는 process를 관리하는 queue</li>
-<li>device queue: io device interrupt를 기다리는 process를 관리하는 queue</li>
-</ul>
-<p>linked list로 pcb들을 연결한다</p>
-<h2 id="schedulers">schedulers</h2>
-<p>long-term scheduler</p>
-<ul>
-<li>new -&gt; ready 대상 결정</li>
-<li>control degree of multiprogramming
-<ul>
-<li>ready queue에 넣으면 현재 동작 중인 process의 수가 한개 증가.</li>
-<li>process의 종료에 관여하지는 않는다.</li>
-</ul>
-</li>
-<li>infrequent (seconds, minutes)</li>
-</ul>
-<p>short-term scheduler</p>
-<ul>
-<li>ready -&gt; running 결정</li>
-<li>frequent (milliseconds), 따라서 scheduler의 동작이 매우 빨라야 한다</li>
-</ul>
-<p>mid-term scheduler</p>
-<ul>
-<li>process의 swap-out, swap-in 을 결정 (메모리 한정적이므로)</li>
-</ul>
-<p>process의 특징</p>
-<ul>
-<li>io-bound
-<ul>
-<li>many short cpu burst</li>
-<li>io 기다리는데 많은 시간이 든다. e.g. 문서나 메신저 프로그램</li>
-</ul>
-</li>
-<li>cpu-bound
-<ul>
-<li>few very long cpu burst</li>
-</ul>
-</li>
-</ul>
-<h2 id="context switch">context switch</h2>
-<p>현재 실행중인 process의 상태를 pcb에 저장하고 다른 process의 상태를 pcb에서 불러온다.</p>
-<ul>
-<li>process의 상태가 pcb에 나타나 있다.</li>
-</ul>
-<p>중요한 overhead</p>
-<ul>
-<li>그 자체로 발생하는 overhead + 부가적으로 success cache misses overhead</li>
-<li>context switch는 매우 빈번하므로, 매우 빠르게 동작해야 한다
-<ul>
-<li>hardware support</li>
-</ul>
-</li>
-</ul>
-<h2 id="process creation">process creation</h2>
-<p>pid로 process를 구별한다</p>
-<p>proces가 child process를 만드는 방식으로 생성하기 때문에, tree의 형태를 이룬다.</p>
-<p>child는 parent의 address space를 복제한다. 이후 program을 load할 수 있다.</p>
-<ul>
-<li>fork()</li>
-<li>exec()</li>
-</ul>
-<p>fork() 이후 child와 parent는 같은 pc로 fork()의 return값을 받을 차례이고, os가 return값을 다르게 준다.</p>
-<ul>
-<li>child에게는 0</li>
-<li>parent에게는 child의 pid</li>
-</ul>
-<h2 id="process termination">process termination</h2>
-<p>마지막 code 실행하고, os에게 종료 요청. exit()</p>
-<ul>
-<li>return data는 parent에 전달된다. (parent에서 wait()을 한다)
-parent가 child process의 실행을 종료할 수도 있다. abort()</li>
-<li>cascading termination</li>
-</ul>
-<h2 id="interprocess communication (ipc)">interprocess communication (ipc)</h2>
-<p>두개의 모델이 있다.</p>
-<ul>
-<li>shared memory: producer-consumer model (unbounded-buffer / bounded-buffer)</li>
-<li>message passing: physical(shared memory, hardware bus), logical(logical properties)
-<ul>
-<li>synchronous: blocking send, blocking receive</li>
-<li>asynchronous: non-blocking send, non-blocking receive</li>
-</ul>
-</li>
-</ul>
-<h2 id="thread">thread</h2>
-<p>일을 하는 기본 단위로, process내에서 공유하는 부분이 많기 때문에 lightweight process라고 한다.
-하나의 process 내에서 각각의 코드를 실행한다.</p>
-<p>pc, register set, stack가 thread마다 다르다.
-code, data, files(open files)를 공유한다.</p>
-<p>blocking system call 또는 io wait시, 기다리지 않고 다른 일을 할 수 있다.
-process 여러개 만들지 않아서 자원 효율성이 좋다.
-overhead가 적다.
-process 하나일 때에 비해, 여러개의 thread로 여러 core에서 동시에 동작할 수 있다.</p>
-<h2 id="user thread">user thread</h2>
-<p>user-level thread는 os는 thread의 존재에 대해서 모르고 user-level에서 thread라는 개체를 이룬다.</p>
-<ul>
-<li>kernel에서는 process 단위의 scheduling, kernel의 support가 없다.</li>
-<li>kernel 도움 없이 thread 생성, 소멸 operation이 가능해서 가볍고 빠르다. kernel-thread는 항상 os에 요청을 해야한다.</li>
-<li>kernel 자체가 single thread라면, user-level thread가 blocking system call 호출 시 전체 process가 blocking이 된다. (os는 thread의 존재를 모르기 때문)</li>
-</ul>
-<p>e.g. POSIX Pthreads</p>
-<h2 id="kernel thread">kernel thread</h2>
-<p>kernel-thread는 os가 thread를 지원해서, thread를 만들어주고 thread 단위로 동작하는 것을 의미한다.</p>
-<ul>
-<li>kernel에서 thread 단위 scheduling</li>
-<li>blocking thread는 전체 process를 blocking하지 않는다. 즉 다른 thread가 동작할 수 있다.</li>
-<li>thread를 서로 다른 processor에서 scheduling이 가능하다.</li>
-</ul>
-<p>user-thread와 kernel thread의 hybird approach가 존재한다.</p>
-<h2 id="threading issues">threading issues</h2>
-<p>fork()와 exec()시 thread가 복제되어야 하는가?
-thread의 종료 방식</p>
-<ul>
-<li>
-<p>asynchronous: 즉시 종료한다. 자원 해제 문제, shared data integrity 문제</p>
-</li>
-<li>
-<p>deferred: 주기적으로 종료해도 되는지 확인후, 순차적으로 종료한다.
-signal handling</p>
-</li>
-<li>
-<p>signal은 process에게 특정 이벤트가 발생했다는 것을 알려준다.</p>
-</li>
-<li>
-<p>그렇다면 이 signal을 어떤 thread에 전달해야 하는가?
-thread pool</p>
-</li>
-</ul>
+                            <p>ACID 원칙은 트랜잭션이 갖추어야 할 특성을 나타낸다.</p>
+<h3 id="Atomicity">Atomicity</h3>
+<p>ACID에서 A를 담당한다. Atomicity는 All or Nothing 을 의미한다. 트랜잭션이 모두 실행되거나, 모두 실행되지 않아야 한다는 의미이다.</p>
+<h3 id="Consistency">Consistency</h3>
+<p>ACID에서 C를 담당한다. Consistency는 일관성이 유지되어야 함을 의미한다. DB가 일관성이 있는 상태에서 트랜잭션도 일관성이 있다면, 트랜잭션을 실행한 후에도 일관성이 유지되어야 함을 의미한다.</p>
+<p>DB의 integrity constraint가 이와 관련이 깊다.</p>
+<h3 id="Isolation">Isolation</h3>
+<p>ACID에서 I를 담당한다. 여러 트랜잭션이 서로 영향을 주지 않고 독립적으로 수행되어야 함을 의미한다. Isolation level을 통해서 트랜잭션 간에 영향을 주는 정도를 설정한다.</p>
+<h3 id="Durability">Durability</h3>
+<p>ACID에서 D를 담당한다. 트랜잭션이 한번 commit 되었다면, 변경 사항이 persist 되어야 한다.</p>
+<h3 id="Atomicity + Durability">Atomicity + Durability</h3>
+<p>DBMS는 성능 향상을 위해 DB Page buffer를 사용한다. buffer를 통해 atomicity와 durability를 달성하기 위하여, FORCE policy와 NO STEAL policy를 고려해야 한다.</p>
+<p>두가지 정책 모두 DB에 crash가 발생한 상황을 대비한다.</p>
+<p><strong>FORCE</strong> policy는 commit 이후를 생각한다. commit 이후 crash가 발생하는 상황을 가정한다. commit 이후에는 변경 사항이 확정되어야만 한다. buffer에만 변경사항이 존재하고 실제 DB에는 반영이 되지 않은 상태에서 crash가 commit 이후에 발생한다면 durability가 지켜지지 않는다. (DBMS를 재부팅 했을 때, 변경사항을 복구할 수 없다) 따라서 FORCE policy는 commit 직전에 모든 변경사항을 DB에 반영한다. 즉, file system을 통해 변경사항을 업데이트 한다.</p>
+<p><strong>NO STEAL</strong> policy는 commit 이전을 생각한다. commit 이전 crash가 발생하는 상황을 가정한다. commit 이전에는 변경사항이 확정되지 않은 상태이다. page replacement policy에 의해서 page가 교체되는 경우, 변경사항을 DB에 반영한 뒤 교체하게 된다. 이 상태에서 crash가 commit 이전에 발생한다면 atomicity가 지켜지지 않는다. (DBMS를 재부팅 했을 때, 변경사항이 되어버린 것이다.) 따라서 NO STEAL policy는 commit 되지 않는 page buffer를 교체하지 못하도록 한다.</p>
+<p>위의 두 가지 방식은 함께 사용되며, durability와 atomicity를 보장하는 역할을 한다. 하지만 성능이 매우 떨어진다. 그래서 NO FORCE 방식과 STEAL 방식을 사용하되(위에서 언급한 문제를 허용하는 것이다), REDO log와 UNDO log를 사용한다.</p>
+<p><strong>NO FORCE</strong> policy는 commit 이후 crash가 발생했을 때, 변경사항이 DB에 반영되지 않은 상황이 존재할 수 있다. (commit을 했음에도 불구하고) 이때, REDO log를 보고 commit 이후의 변경사항들을 다시 반영하는 방식을 사용한다.</p>
+<p><strong>STEAL</strong> policy는 commit 이전 crash가 발생했을 때, 변경사항이 DB에 반영되어버리는 상황이 존재할 수 있다. (commit을 하지 않았지만) 이때, UNDO log를 보고 commit 이전에 DB에 반영된 사항들을 되돌리는 방식을 사용한다.</p>
+<p>WAL protocol에서는 다음과 같은 방식으로 log record를 기록한다.</p>
+<ol>
+<li>Page buffer가 DB에 반영되기 전에, 변경사항에 대한 log record를 기록한다.</li>
+<li>Commit 직전에, 모든 log record를 기록한다.</li>
+</ol>
+<p>1번은 UNDO log를 위한 것으로, commit 이전에 DB에 변경사항이 반영되고 crash가 발생해도 UNDO log를 이용해서 변경사항을 되돌릴 수 있도록 한다. 2번은 REDO log를 위한 것으로, commit 이후 crash가 발생했을 때 변경사항이 사라져도 REDO log를 이용해서 변경사항을 복구할 수 있도록 한다.</p>
 
                         </div>
                     </article>

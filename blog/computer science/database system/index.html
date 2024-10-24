@@ -82,111 +82,27 @@
                     
                     <div class="md:pl-3">
                         
-                        <a class="anc" href="/post/os 정리.html">
+                        <a class="anc" href="/post/ACID.html">
                             <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
 
                                 <div class="relative py-5 px-5">
                                 
                                 <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
-                                os 정리
+                                ACID
                                 </p>
                                 <div class="pt-1">
                                 
                                 <div class="pb-1 italic">
                                 <p class="text-xs inline-block underline decoration-solid">
-                                2024-10-20
+                                2024-10-16
                                 </p>
                                 <p class="text-xs inline-block underline decoration-solid">
                                 Taehyeon Kim
                                 </p>
                                 </div>
                                 <p class="text-xs break-words">
-                                multiprogramming 개념에서 timesharing(multithreading) 개념으로 진화했다. timesharing은 job의 전환을 매우 빠르게 해서 동시에 동작하는 것처럼 보이도록 하는 기술 os는 interrupt driven이다. interrupt는 hardware에 의해 발생되는 것이고, exception or trap은 software에 의해 발생한다. 
-                                </p>
-                                
-                                </div>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <a class="anc" href="/post/io 처리 방식.html">
-                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
-                                
-
-                                <div class="relative py-5 px-5">
-                                
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
-                                io 처리 방식
-                                </p>
-                                <div class="pt-1">
-                                
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-10-17
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
-                                IO의 방식을 구분하기 위한 두가지 관점이 존재한다. sync vs async blocking vs non-blocking IBM developers 에서는 위의 관점의 조합에 따라, 해당하는 io 방식을 설명한다. https:&#x2F;&#x2F;blog.naver.com&#x2F;n_cloudplatform&#x2F;222189669084 에서는 한국어로 위의 내용을 다시 설명해주고 있다. 
-                                </p>
-                                
-                                </div>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <a class="anc" href="/post/os overview.html">
-                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
-                                
-
-                                <div class="relative py-5 px-5">
-                                
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
-                                os overview
-                                </p>
-                                <div class="pt-1">
-                                
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-02-29
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
-                                multiprogramming 하나의 프로그램만 실행하는 것으로는 cpu와 i&#x2F;o device를 항상 바쁘게 하지 못한다. 효율성이 떨어지는 것을 의미 현재 실행 중인 프로그램 이외에 다른 프로그램으로 전환할 수 있도록 해서 효율성을 극대화 한다. 프로그램 실행을 중단하고 기다려야 할 때(i&#x2F;o wait) 다른 프로그램으로 전환해서 실행 
-                                </p>
-                                
-                                </div>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <a class="anc" href="/post/process와 thread.html">
-                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
-                                
-
-                                <div class="relative py-5 px-5">
-                                
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
-                                process와 thread
-                                </p>
-                                <div class="pt-1">
-                                
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-02-29
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
-                                process program 실행에 필요한 모든 것을 저장하는 자료구조 program in execution process는 4개의 영역을 포함한다 text: program code data: static and global variables, 프로그램 어느 부분 실행하는 지에 관계없이 접근가능 stack: function call, context switch에 사용됨 
+                                ACID 원칙은 트랜잭션이 갖추어야 할 특성을 나타낸다. Atomicity ACID에서 A를 담당한다. Atomicity는 All or Nothing 을 의미한다. 트랜잭션이 모두 실행되거나, 모두 실행되지 않아야 한다는 의미이다. Consistency ACID에서 C를 담당한다. Consistency는 일관성이 유지되어야 함을 의미한다. DB가 일관성이 있는 상태에서 트랜잭션도 일관성이 있다면, 트랜잭션을 실행한 후에도 일관성이 유지되어야 함을 의미한다. 
                                 </p>
                                 
                                 </div>
