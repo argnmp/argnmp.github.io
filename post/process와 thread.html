@@ -271,20 +271,12 @@ process 하나일 때에 비해, 여러개의 thread로 여러 core에서 동시
 <p>fork()와 exec()시 thread가 복제되어야 하는가?
 thread의 종료 방식</p>
 <ul>
-<li>
-<p>asynchronous: 즉시 종료한다. 자원 해제 문제, shared data integrity 문제</p>
-</li>
-<li>
-<p>deferred: 주기적으로 종료해도 되는지 확인후, 순차적으로 종료한다.
-signal handling</p>
-</li>
-<li>
-<p>signal은 process에게 특정 이벤트가 발생했다는 것을 알려준다.</p>
-</li>
-<li>
-<p>그렇다면 이 signal을 어떤 thread에 전달해야 하는가?
-thread pool</p>
-</li>
+<li>asynchronous: 즉시 종료한다. 자원 해제 문제, shared data integrity 문제</li>
+<li>deferred: 주기적으로 종료해도 되는지 확인후, 순차적으로 종료한다.
+signal handling</li>
+<li>signal은 process에게 특정 이벤트가 발생했다는 것을 알려준다.</li>
+<li>그렇다면 이 signal을 어떤 thread에 전달해야 하는가?
+thread pool</li>
 </ul>
 
                         </div>

@@ -98,7 +98,7 @@
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
                             <h2 id="jwt 인증 흐름">jwt 인증 흐름</h2>
-<p>출처: <a href="https://fusebit.io/blog/oauth-refresh-token-best-practices/?utm_source=www.google.com&amp;utm_medium=referral&amp;utm_campaign=none">https://fusebit.io/blog/oauth-refresh-token-best-practices/?utm_source=www.google.com&amp;utm_medium=referral&amp;utm_campaign=none</a></p>
+<p>출처: https://fusebit.io/blog/oauth-refresh-token-best-practices/?utm_source=www.google.com&amp;utm_medium=referral&amp;utm_campaign=none</p>
 <ol>
 <li>client에서 server(authorization server)에 인증을 요청한다.(로그인)</li>
 <li>sever(authorization server)에서 access token과 refresh token을 client에 전송한다.</li>
@@ -111,7 +111,7 @@
 </ol>
 <h2 id="access token과 refresh token의 저장">access token과 refresh token의 저장</h2>
 <p>client는 server로 부터 발급받은 access token과 refresh token을 저장해 두어서 인증에 사용해야 한다.</p>
-<p>이전에 jwt token의 저장 위치에 대해 포스팅 했었는데(<a href="https://kimtahen.com/post/jwt-token%EC%9D%98-%EC%A0%80%EC%9E%A5-%EC%9C%84%EC%B9%98">https://kimtahen.com/post/jwt-token%EC%9D%98-%EC%A0%80%EC%9E%A5-%EC%9C%84%EC%B9%98</a>), 이 글에 따르면 cookie에 저장하되 <strong>HTTP Only</strong> 옵션과 <strong>Secure</strong> 옵션을 지정해주어야 한다고 했다.</p>
+<p>이전에 jwt token의 저장 위치에 대해 포스팅 했었는데(https://kimtahen.com/post/jwt-token%EC%9D%98-%EC%A0%80%EC%9E%A5-%EC%9C%84%EC%B9%98), 이 글에 따르면 cookie에 저장하되 <strong>HTTP Only</strong> 옵션과 <strong>Secure</strong> 옵션을 지정해주어야 한다고 했다.</p>
 <p>access token 은 이러한 방식으로 저장하는데 그렇다면 refresh token은 어디에 저장해야 할까?? access token과 같은 방식으로 저장하면 refresh token의 존재 이유가 퇴색되는 것은 아닐까??</p>
 <p>refresh token을 access token과 같은 방식으로 저장하되, refresh token을 저장하는 cookie에 <strong>path</strong> 옵션을 주어서 access token을 다시 발급 받는 url(/refresh)로 설정해주어서, refresh token이 특정 url로만 전송되도록 한다.</p>
 <p>이런 방식으로 구성하면, access token은 server의 resource에 접근하는데만 전송되고, refresh token은 access token을 재발급 받을때만 server로 전송이 된다.</p>

@@ -109,7 +109,7 @@
 <p><code>iter()</code>과 같은 함수로 iterator을 생성하면 <code>map</code>메서드를 호출이 가능하고, 이후 <code>collect</code>메서드를 사용해서 다시 vector로 산출해 낼 수 있다. 이 과정에서는 <code>map</code>메서드를 호출하는 순간 100을 곱하는 연산이 수행되는 것이 아닌, <code>collect</code> 메서드를 호출해야 연산이 수행되고 값이 산출된다. 어떤 방식으로 구현이 되는지 궁금해서 소스코드를 살펴보게 되었다.</p>
 <h2 id="iter()">iter()</h2>
 <p><code>iter</code>메서드를 호출하기 위해서는 <code>Vec</code>이 <code>iter</code>메서드를 가지고 있어야 한다. 하지만 Vec의 정의에 따르면 직접 <code>iter</code>을 구현해 놓지 않았고, Vec이 implement 한 Deref 를 통해서 <code>iter</code> 메서드를 사용할 수 있다.</p>
-<p><a href="https://kimtahen.com/post/Deref-trait#hidauto-deref">https://kimtahen.com/post/Deref-trait#hidauto-deref</a></p>
+<p>https://kimtahen.com/post/Deref-trait#hidauto-deref</p>
 <p>이 글에서 auto deref 를 통해서 호출이 가능한 이유를 알 수 있다.</p>
 <p><code>Vec</code> 은 <code>Deref</code>를 다음과 같이 implement 한다.</p>
 <pre><code class="language-rust">#[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
@@ -133,11 +133,11 @@ pub fn iter(&amp;self) -&gt; Iter&lt;'_, T&gt; {
 <p>그럼 이제 rust std에 <code>Iter</code> 을 찾아보자 그러면 다음과 같이 <code>Iter</code> struct 가 한 개가 아니라 수없이 많다.</p>
 <p><img src="/blog/programming%20languages/rust/Pasted%20image%2020231111232235.png" alt="Pasted image 20231111232235.png" /></p>
 <p>이 중에 과연 뭘까? <code>slice</code>의  <code>iter</code> 메서드를 구현해 놓은 라이브러리를 보면 된다.</p>
-<p><a href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#732">https://doc.rust-lang.org/src/core/slice/mod.rs.html#732</a></p>
+<p>https://doc.rust-lang.org/src/core/slice/mod.rs.html#732</p>
 <p>위 링크의 732번째 줄에 구현이 되어있는 것을 확인할 수 있다.</p>
 <p>같은 파일의 34번째 줄과 43번째 줄을 보면</p>
-<p><a href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#34">https://doc.rust-lang.org/src/core/slice/mod.rs.html#34</a>
-<a href="https://doc.rust-lang.org/src/core/slice/mod.rs.html#43">https://doc.rust-lang.org/src/core/slice/mod.rs.html#43</a></p>
+<p>https://doc.rust-lang.org/src/core/slice/mod.rs.html#34
+https://doc.rust-lang.org/src/core/slice/mod.rs.html#43</p>
 <pre><code class="language-rust">mod iter;
 
 ...
@@ -148,7 +148,7 @@ pub use iter::{Iter, IterMut};
 <p><img src="/blog/programming%20languages/rust/Pasted%20image%2020231111232300.png" alt="Pasted image 20231111232300.png" />
 이러한 구조로 되어있다. slice 의 <code>iter</code> 메서드는 <code>mod.rs</code>파일에 정의되어 있고, 따라서 사용한 <code>Iter</code> struct는 같은 디렉터리의 <code>iter.rs</code>에 정의되어 있음을 알 수 있다. 그렇기 때문에 slice의 <code>iter</code>메서드에서 사용한 <code>Iter</code> struct는 <code>slice::iter</code> 이라고 할 수 있다.</p>
 <p>따라서 rust std의 <code>std::slice::Iter</code>을 확인하면 된다.
-<a href="https://doc.rust-lang.org/std/slice/struct.Iter.html">https://doc.rust-lang.org/std/slice/struct.Iter.html</a></p>
+https://doc.rust-lang.org/std/slice/struct.Iter.html</p>
 <h2 id="map()">map()</h2>
 <p><code>Iter</code> struct는 <code>Iterator</code>을 implement 하고 있고 이 덕분에 <code>map</code>메서드를 사용할 수 있다. 이는 다음과 같이 구현된다.</p>
 <pre><code class="language-rust">iterator! {struct Iter -&gt; *const T, &amp;'a T, const, {/* no mut */}, {
@@ -176,7 +176,7 @@ where
 }
 </code></pre>
 <p>클로저를 인수로 받아서, <code>Map</code> struct 를 반환한다. 그리고 <code>Map::new</code> 는 다음과 같이 구현되어 있다.</p>
-<p><a href="https://doc.rust-lang.org/std/iter/struct.Map.html">https://doc.rust-lang.org/std/iter/struct.Map.html</a></p>
+<p>https://doc.rust-lang.org/std/iter/struct.Map.html</p>
 <p>위 링크는 rust std의 Map 에 대한 정보인데, <code>new</code> 메서드가 나와있지 않다. 그리고 다음과 같이 설명되어 있다.</p>
 <blockquote>
 <p>An iterator that maps the values of iter with f. This struct is created by the map method on Iterator. See its documentation for more.</p>

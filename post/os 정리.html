@@ -125,14 +125,25 @@
 <li>shared memory: producer-consumer model</li>
 <li>message passing: communication link와 send(), receive() call (blocking, non-blocking 방식이 가능하다)</li>
 </ul>
-<p>IPC</p>
+<p>cpu scheduler - dispatcher : shorterm scheduler에 의해 선택이 된 process에 cpu control을 부여</p>
 <ul>
-<li>
-<p>shared memory: producer-consumer model</p>
-</li>
-<li>
-<p>message passing: communication link와 send(), receive() call (blocking, non-blocking 방식이 가능하다)</p>
-</li>
+<li>dispatcher latency == context switch overhead</li>
+</ul>
+<p>process에서 code, data, files(files + signal) 은 thread간에 공유된다. register, stack, pc 는 각 thread가 자신만의 것을 가지고 있다.</p>
+<p>thread에는 kernel thread와 user thread가 존재</p>
+<p>scheduling criteria</p>
+<ul>
+<li>cpu utilization</li>
+<li>throughput</li>
+<li>trunaround time</li>
+<li>waiting time</li>
+<li>respond time</li>
+</ul>
+<p>scheduling algorithms</p>
+<ul>
+<li>FCFS: nonpreemptive, convoy effect</li>
+<li>SJF: nonpreemptive</li>
+<li>SRTF: preemptive (SJF에)</li>
 </ul>
 
                         </div>

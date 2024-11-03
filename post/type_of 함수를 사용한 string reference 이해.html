@@ -136,10 +136,10 @@ type of s2_slice : &amp;str
 <p>There are two types of strings in Rust: String and &amp;str.</p>
 </blockquote>
 <blockquote>
-<p>A String is stored as a vector of bytes (Vec&lt;u8&gt;), but guaranteed to always be a valid UTF-8 sequence. String is heap allocated, growable and not null terminated.</p>
+<p>A String is stored as a vector of bytes (Vec<!-- raw HTML omitted -->), but guaranteed to always be a valid UTF-8 sequence. String is heap allocated, growable and not null terminated.</p>
 </blockquote>
 <blockquote>
-<p>&amp;str is a slice (&amp;[u8]) that always points to a valid UTF-8 sequence, and can be used to view into a String, just like &amp;[T] is a view into Vec&lt;T&gt;.</p>
+<p>&amp;str is a slice (&amp;[u8]) that always points to a valid UTF-8 sequence, and can be used to view into a String, just like &amp;[T] is a view into Vec<!-- raw HTML omitted -->.</p>
 </blockquote>
 <p>위의 코드에서 <strong>s1</strong>은 &amp;str 이고, <strong>s2</strong>는 String 이다. 그리고 <strong>s2_ref</strong>는 s2의 reference 이고 <strong>s2_slice</strong>는 s2의 slice이다.</p>
 <p>s1의 타입은 &amp;str 이다. 내가 생각하기에 그 자체로 str type은 존재하지 않고 이 str을 가리키는 reference 가 type으로 존재할 수 있다.</p>

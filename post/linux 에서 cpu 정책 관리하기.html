@@ -128,7 +128,7 @@ driver는 intel_pstate, 가능한 cpu governor은 performance와 powersave, boos
 <p>현재 governor 상태를 확인해보면 다음과 같이 변경된 것을 확인할 수 있다.</p>
 <p><img src="/blog/linux/Pasted%20image%2020231111233523.png" alt="Pasted image 20231111233523.png" /></p>
 <h2 id="부팅시 자동으로 governor을 설정하는 방법">부팅시 자동으로 governor을 설정하는 방법</h2>
-<p><a href="https://sleeplessbeastie.eu/2015/11/09/how-to-set-cpu-governor-at-boot/">https://sleeplessbeastie.eu/2015/11/09/how-to-set-cpu-governor-at-boot/</a></p>
+<p>https://sleeplessbeastie.eu/2015/11/09/how-to-set-cpu-governor-at-boot/</p>
 <p><code>/etc/systemd/system/cpupower.service</code> 파일을 생성후 아래의 내용을 입력하고 저장한다. 루트권한이 필요하다.</p>
 <pre><code class="language-shell">[Unit]
 Description=Apply CPU performance

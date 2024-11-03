@@ -196,84 +196,20 @@ int main(){
 <p>문제에서 주어진 2-CNF 식은 조건 명제를 통해서 표현할 수 있다.</p>
 <p>조건 명제 <a href="http://www.ktword.co.kr/test/view/view.php?m_temp1=6266">http://www.ktword.co.kr/test/view/view.php?m_temp1=6266</a>는 여기에서 설명되어 있다.</p>
 <p>조건 명제의 진리표는 다음과 같다.</p>
-<table>
-<thead>
-<tr>
-<th>p</th>
-<th>q</th>
-<th>p → q</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-</tr>
-<tr>
-<td>T</td>
-<td>F</td>
-<td>F</td>
-</tr>
-<tr>
-<td>F</td>
-<td>T</td>
-<td>T</td>
-</tr>
-<tr>
-<td>F</td>
-<td>F</td>
-<td>T</td>
-</tr>
-<tr>
-<td>이 진리표를 사용해서 <code>a OR b</code> 를 조건 명제로 표현할 수 있다.</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>a</th>
-<th>b</th>
-<th>a ∨ b</th>
-<th>¬a → b</th>
-<th>¬b → a</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-</tr>
-<tr>
-<td>T</td>
-<td>F</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-</tr>
-<tr>
-<td>F</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-<td>T</td>
-</tr>
-<tr>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-<td>F</td>
-</tr>
-</tbody>
-</table>
-<p><code>¬a → b</code> 와 <code>¬b → a</code> 를 사용해서 implication graph를 그릴 수 있다.</p>
+<p>| p | q | p → q |
+|---|---|-------|
+| T | T | T     |
+| T | F | F     |
+| F | T | T     |
+| F | F | T     |
+이 진리표를 사용해서 <code>a OR b</code> 를 조건 명제로 표현할 수 있다.</p>
+<p>| a | b | a ∨ b | ¬a → b | ¬b → a |
+|---|---|-------|--------|--------|
+| T | T | T     | T      | T      |
+| T | F | T     | T      | T      |
+| F | T | T     | T      | T      |
+| F | F | F     | F      | F      |
+<code>¬a → b</code> 와 <code>¬b → a</code> 를 사용해서 implication graph를 그릴 수 있다.</p>
 <p>implication graph에서는 모든 노드를 <code>a</code>와 <code>¬a</code> 두가지로 나눈다. 그리고 위 조건 명제 두가지를 directed edge로 표현한다.</p>
 <p>graph에서 scc를 이용해서 사이클을 찾은 뒤, <code>a</code>와 <code>¬a</code>가 동시에 들어 있는지 확인한다. 만약 들어있다면, 이는 모순이므로 해를 구할 수 없다.</p>
 <h3 id="느낀점">느낀점</h3>

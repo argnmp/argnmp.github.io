@@ -222,22 +222,9 @@ void calc(box target, int next_cube){
     return;
 }
 </code></pre>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>메모리</th>
-<th>시간</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>boj</td>
-<td>111460 KB</td>
-<td>356 ms</td>
-</tr>
-</tbody>
-</table>
+<p>|  | 메모리 | 시간 |
+| ---- | ---- | ---- |
+| boj | 111460 KB | 356 ms |</p>
 <h5 id="2. calc에 struct 대신 직접 값을 넘겨주는 경우">2. calc에 struct 대신 직접 값을 넘겨주는 경우</h5>
 <pre><code class="language-c++">int ans = 0;
 bool is_fail = false;
@@ -261,22 +248,9 @@ void calc(int x, int y, int z, int next_cube){
     return;
 }
 </code></pre>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>메모리</th>
-<th>시간</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>boj</td>
-<td>48960 KB</td>
-<td>212 ms</td>
-</tr>
-</tbody>
-</table>
+<p>|  | 메모리 | 시간 |
+| ---- | ---- | ---- |
+| boj | 48960 KB | 212 ms |</p>
 <h5 id="3. calc에 struct 대신 직접 값을 넘겨주고 다시 struct로 변환하는 경우">3. calc에 struct 대신 직접 값을 넘겨주고 다시 struct로 변환하는 경우</h5>
 <pre><code class="language-c++">int ans = 0;
 bool is_fail = false;
@@ -301,22 +275,9 @@ void calc(int x, int y, int z, int next_cube){
     return;
 }
 </code></pre>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>메모리</th>
-<th>시간</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>boj</td>
-<td>64588 KB</td>
-<td>132 ms</td>
-</tr>
-</tbody>
-</table>
+<p>|  | 메모리 | 시간 |
+| ---- | ---- | ---- |
+| boj | 64588 KB | 132 ms |</p>
 <p>이상한 것은 1번과 3번의 경우, struct를 함수의 인자로 사용하는 것과 함수의 본문에서 사용하는 것에서 차이가 발생하는데 메모리 사용량이 큰 폭이서 차이가난다.</p>
 <p>또한 2번과 3번의 경우, 3번에서는 struct로 한번 변환을 한 뒤에 사용을 하는데, 변환하지 않는 것보다 더 적은 시간이 소요된다.</p>
 <h3 id="느낀점">느낀점</h3>
