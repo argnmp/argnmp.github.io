@@ -2102,6 +2102,14 @@ video {
   flex-direction: row;
 }
 
+.flex-col{
+  flex-direction: column;
+}
+
+.items-start{
+  align-items: flex-start;
+}
+
 .items-center{
   align-items: center;
 }
@@ -2120,6 +2128,10 @@ video {
 
 .break-keep{
   word-break: keep-all;
+}
+
+.rounded{
+  border-radius: 0.25rem;
 }
 
 .rounded-lg{
@@ -2306,11 +2318,6 @@ video {
   font-family: -apple-system, BlinkMacSystemFont, Apple SD Gothic Neo, Pretendard Variable, Pretendard, Roboto, Noto Sans KR, Segoe UI, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif;
 }
 
-.text-2xl{
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
-
 .text-4xl{
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -2478,11 +2485,6 @@ html, body {
   color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 
-.hover\:text-white:hover{
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
 .hover\:underline:hover{
   text-decoration-line: underline;
 }
@@ -2603,6 +2605,11 @@ html, body {
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
+.dark\:text-gray-800:is(.dark *){
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
 .dark\:text-gray-900:is(.dark *){
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
@@ -2626,11 +2633,6 @@ html, body {
 .dark\:hover\:text-customdark-400:hover:is(.dark *){
   --tw-text-opacity: 1;
   color: rgb(255 231 13 / var(--tw-text-opacity));
-}
-
-.dark\:hover\:text-gray-800:hover:is(.dark *){
-  --tw-text-opacity: 1;
-  color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
 .dark\:hover\:text-gray-900:hover:is(.dark *){
@@ -2701,9 +2703,8 @@ html, body {
     text-align: left;
   }
 
-  .md\:text-4xl{
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+  .md\:text-\[40px\]{
+    font-size: 40px;
   }
 
   .group:hover .md\:group-hover\:text-customlight-700{
