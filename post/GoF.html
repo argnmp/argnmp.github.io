@@ -83,12 +83,12 @@
                     <article>
                         <section class="w-full mb-12">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">boj 1700 멀티탭 스케줄링</p>
+                                <p class="text-4xl md:text-4xl break-keep font-semibold text-gray-700 dark:text-gray-200 py-1">GoF</p>
                                 
                             </div>
                             <div class="flex flex-row mb-4 md:pl-5 text-gray-500 dark:text-gray-400">
                                 <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
-                                <div class="mr-2"><p class="text-xs italic">2024-02-14</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-11-04</p></div>
                                 <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
                                 <div class="mr-2 flex flex-row">
                                     
@@ -98,15 +98,7 @@
                                     
 
                                     <div class="px-1 mr-1 bg-customlight-500 dark:bg-customdark-500 align-middle text-xs text-white rounded-md">
-                                        boj
-                                    </div>
-                                    
-                                    
-                                    
-                                    
-
-                                    <div class="px-1 mr-1 bg-customlight-600 dark:bg-customdark-600 align-middle text-xs text-white rounded-md">
-                                        ps
+                                        blog
                                     </div>
                                     
                                     
@@ -114,98 +106,7 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
-                            <h3 id="문제">문제</h3>
-<p><a href="https://www.acmicpc.net/problem/1700">https://www.acmicpc.net/problem/1700</a></p>
-<h3 id="풀이">풀이</h3>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-#include &lt;climits&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;map&gt;
-#include &lt;unordered_map&gt;
-#include &lt;set&gt;
-#include &lt;unordered_set&gt;
-#include &lt;bitset&gt;
-#include &lt;cstring&gt;
-#include &lt;cmath&gt;
-using namespace std;
-using ll = long long;
-int n, k;
-int board[101] = {0,};
-queue&lt;int&gt; next_idx[101];
-vector&lt;int&gt; usage;
-void print(){
-    for(int i = 0; i&lt;usage.size(); i++){
-        cout &lt;&lt; usage[i] &lt;&lt; ' ';
-    }
-    cout &lt;&lt; endl;
-}
-void solve(){
-    cin &gt;&gt; n &gt;&gt; k;
-    for(int i = 0; i&lt;k; i++){
-        cin &gt;&gt; board[i];
-        next_idx[board[i]].push(i);
-    }
-    int ans = 0;
-    for(int i = 0; i&lt;k; i++){
-        bool flag = false;
-        // printf(&quot;i: %d, usage: &quot;, i);
-        // print();
-        for(int j = 0; j&lt;usage.size(); j++){
-            if(usage[j] == board[i]){
-                // cout &lt;&lt; &quot;found&quot; &lt;&lt; endl;
-                next_idx[board[i]].pop();
-                flag = true;
-                break;
-            }
-            
-        }
-        if(flag){
-            continue;
-        }
-
-        if(n&gt;0){
-            usage.push_back(board[i]);
-            next_idx[board[i]].pop();
-            n-=1;
-            continue;
-        }
-        int max_idx = INT_MIN;
-        int change_idx;
-        for(int j = 0; j&lt;usage.size(); j++){
-            if(next_idx[usage[j]].empty()){
-                max_idx = INT_MAX;
-                change_idx = j;
-                break;
-            } else {
-                // cout &lt;&lt; next_idx[usage[j]].front() &lt;&lt; endl;
-                if(next_idx[usage[j]].front() &gt; max_idx){
-                    max_idx = next_idx[usage[j]].front();
-                    change_idx = j;
-                }   
-            }
-        }
-        ans += 1;
-        next_idx[board[i]].pop();
-        usage[change_idx] = board[i];
-    }
-    cout &lt;&lt; ans;
-}
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    solve(); 
-    return 0;
-}
-</code></pre>
-<p>전자기기가 꽂혀있는 경우와, 빈칸이 있는 경우는 기존의 전자기기를 뺄 필요가 없다.</p>
-<p>만약 이외의 경우에는, 꽂혀있는 전자기기들 중에서 가장 나중에 사용할 전자기기를 빼어야 한다.</p>
-<p>나는 위의 코드에서 각 전자기기의 사용 시점을 queue에 넣어두었다. 꽂혀있는 전자기기들의 front의 값을 본 뒤, 가장 index가 뒤인 것을 골라서 빼는 방식을 사용하였다.</p>
-<p>각 단계에서 전자기기를 꽂았다면 queue에서 pop을 해준다.</p>
-<p>이 문제의 특징은, 전자기기를 사용하는 시점에 멀티탭에 무조건 꽂아야 하기 때문에 뒤에서 총 몇 번 사용되는 지는 고려할 필요가 없다는 것이다. 단순히 가장 나중에 사용하는 전자기기를 빼면 된다.</p>
-<h3 id="느낀점">느낀점</h3>
-<p>반례를 찾아보며 디버깅하는데 시간이 조금 걸렸다. 명확하게 경우의 수를 나누어 코드를 작성하자.</p>
+                            <p>https://www.digitalocean.com/community/tutorials/gangs-of-four-gof-design-patterns</p>
 
                         </div>
                     </article>

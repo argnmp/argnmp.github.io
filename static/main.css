@@ -2143,8 +2143,8 @@ video {
   border-width: 0px;
 }
 
-.border-b-4{
-  border-bottom-width: 4px;
+.border-b{
+  border-bottom-width: 1px;
 }
 
 .border-l-2{
@@ -2311,11 +2311,6 @@ video {
   line-height: 2rem;
 }
 
-.text-3xl{
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
 .text-4xl{
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -2467,11 +2462,6 @@ html, body {
 .hover\:bg-customlight-700:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(187 40 26 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-white:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .hover\:font-bold:hover{
@@ -2633,11 +2623,6 @@ html, body {
   background-color: rgb(255 231 13 / var(--tw-bg-opacity));
 }
 
-.hover\:dark\:bg-gray-800:is(.dark *):hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
-}
-
 .dark\:hover\:text-customdark-400:hover:is(.dark *){
   --tw-text-opacity: 1;
   color: rgb(255 231 13 / var(--tw-text-opacity));
@@ -2651,11 +2636,6 @@ html, body {
 .dark\:hover\:text-gray-900:hover:is(.dark *){
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
-}
-
-.hover\:dark\:text-gray-200:is(.dark *):hover{
-  --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 
 .dark\:focus\:ring-customdark-300:focus:is(.dark *){
