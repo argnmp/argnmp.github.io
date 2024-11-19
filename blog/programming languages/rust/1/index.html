@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>blog.argnmp</title>
+        <title class="ground">blog.argnmp</title>
         
-        <meta charset="UTF-8">
+        <meta class="ground" name="title" content="blog.argnmp">
+        <meta class="ground" name="description" content="">
+        <meta name="robots" content="index,nofollow">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta class="ground" property="og:type" content="website" />
+        <meta class="ground" property="og:title" content="blog.argnmp" />
+        <meta class="ground" property="og:description" content="" />
+        <meta class="ground" property="og:image" content="" />
+
         <link rel="icon" href="data:,">
         <link href="/static/main.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -64,11 +73,11 @@
                         <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
                     </div>
                 </div>
-                <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
+                <div id="main" class="ground grid-flow-row md:col-span-9 rounded-lg">
                     <div id="searchModule" class="md:pl-3" hidden>
                         <div class="pb-2">
                             <form class="flex">
-                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 text-gray-900 ring-1 ring-inset ring-gray-100 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
                             </form>
                         </div>
                         <div class="" id="search_result">
@@ -87,22 +96,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 cargo permission denied
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-05-20
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 cargo build , cargo run 을 이용해서 프로젝트를 빌드하는데, 매번 registry를 업데이트 하고 crate를 다운로드하는 문제가 발생했다. export CARGO_LOG=info 이렇게 환경변수를 설정하고 cargo build 를 실행하면 이제 다음과 같은 로그를 확인할 수 있다. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2024-05-20
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -118,22 +130,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 collect() 의 동작 원리
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2023-07-27
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 코드를 살펴보자 fn main() { let num_vec = vec![2, 4, 6]; let new_vec = num_vec.iter().map(|x| x * 100).collect::&lt;Vec&lt;i32&gt;&gt;(); println!(&quot;{new_vec:?}&quot;); } [200, 400, 600] iter() 과 같은 함수로 iterator을 생성하면 map 메서드를 호출이 가능하고, 이후 collect 메서드를 사용해서 다시 vector로 산출해 낼 수 있다. 이 과정에서는 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2023-07-27
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -146,22 +161,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 Option enum 의 역할
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2023-06-07
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 enum Option Option&lt;T&gt; enum 은 standard library에 다음과 같이 정의 되어 있다. enum Option&lt;T&gt;{ None, Some(T), } rust는 null type이 없다. 대신 Option enum의 variant 인 None 을 통해 표현한다. 그렇다면 null 대신 Option::None 을 사용하는 것의 장점은 무엇일까? 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2023-06-07
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -174,22 +192,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 tokio runtime의 task
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2023-01-31
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 task::spawn tokio runtime은 green thread library로, task가 green thread의 단위가 된다. 여러개의 task들은 rust의 OS thread에 multiplex 되어 실행된다. 다음의 코드를 보자. use std::{sync::{Arc, Mutex}, thread::sleep, time::Duration};  use tokio::task;  #[tokio::main(worker_threads=2)] 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2023-01-31
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -202,22 +223,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 ownership
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2023-01-24
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 소유권 이동 fn main(){ let mut my_string: String =  &quot;hello world&quot;.to_owned(); { my_string.push(&#x27;k&#x27;); } dbg!(my_string); } 이렇게 메서드를 호출하는 경우에는 다른 블럭으로 소유권 이동이 발생하지 않는다. 하지만 다음과 같이 변수 자체만 사용했을 경우에는 소유권 이동이 발생한다. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2023-01-24
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -230,22 +254,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 정적 디스패치와 동적 디스패치
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2023-01-18
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 rust에서 정적 디스패치와 동적 디스패치는 추상화와 관련이 있고, rust의 추상화는 trait으로 구현이 된다. 다음의 코드를 보자. use std::fmt::Debug;  trait Jar: Debug{}  #[derive(Debug)] struct Plastic (); impl Jar for Plastic {}  #[derive(Debug)] struct Glass (); impl Jar for Glass {} 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2023-01-18
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -258,22 +285,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 raw pointer 다루기
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2022-08-20
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 개요 https:&#x2F;&#x2F;cfsamson.gitbook.io&#x2F;green-threads-explained-in-200-lines-of-rust&#x2F;an-example-we-can-build-upon 여기에 나온 example code의 raw pointer 사용 예시를 정리해보려 한다. 예시 코드 use core::arch::asm;  const SSIZE: isize = 48;  #[derive(Debug, Default)] #[repr(C)] struct ThreadContext { 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2022-08-20
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -286,22 +316,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 조건부 trait bound
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2022-07-26
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 개요 A라는 trait이 있다고 하자. A trait을 implement 해야 B trait도 implement가 가능하도록 만들고 싶은 경우에 대해 살펴본다. 첫번째 경우 trait A {} trait B : A{} 개요의 상황이다. 위의 코드와 같이 작성하면 된다. 두번째 경우 Debug , Display trait을 implement 할 때 Prints trait을 implement 할 수 있도록 코드를 작성하려면 아래와 같이 하면 된다. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2022-07-26
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -314,22 +347,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 Deref trait
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2022-06-28
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 개요 Deref trait 은 주로 dereference operator인 *를 overload 하기 위한 목적으로 사용되고 deref coercion을 위해서도 사용된다. dereference operator overload Deref trait 의 기능 중 하나로, dereference operator을 overload 할 수 있다. 먼저 dereference operator에 대해 알아보자. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2022-06-28
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -342,22 +378,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 파일 분할
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2022-06-23
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 rust 프로젝트의 파일 분할 방법 저번에 파일 분할 방법에 대한 포스팅을 한 적이 있었다. 이번에는 더 체계적으로 정리해보고자 한다. 두가지 방식으로 나누어 볼 수 있다. lib.rs을 통한 파일 분할 lib.rs 없이 파일 분할 lib.rs을 통한 파일 분할 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2022-06-23
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -365,9 +404,9 @@
                         </a>
                         
                         <div class="my-3">
-                            <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 text-sm">
+                            <div class="flex mx-auto w-min text-sm">
                                 
-                                <a class="anc inline w-8 h-8 hover:bg-customlight-700 dark:hover:bg-customdark-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/blog/programming languages/rust/1/index.html">
+                                <a class="anc inline w-8 h-8 rounded-l-md bg-gray-100 dark:bg-gray-700 hover:bg-customlight-700 dark:hover:bg-customdark-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/blog/programming languages/rust/1/index.html">
                                     <div class="w-8 h-8 p-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l6 6" /><path d="M5 12l6 -6" /></svg>
                                     </div>
@@ -381,13 +420,13 @@
                                     
                                 
                                     
-                                    <a class="anc inline w-8 h-8 hover:bg-customlight-700 dark:hover:bg-customdark-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/blog/programming languages/rust/2/index.html">
+                                    <a class="anc inline w-8 h-8 bg-gray-100 dark:bg-gray-700 hover:bg-customlight-700 dark:hover:bg-customdark-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/blog/programming languages/rust/2/index.html">
                                         <p class="leading-8 text-center cursor-pointer">2</p>
                                     </a>
                                     
                                 
                                 
-                                <a class="anc inline w-8 h-8 hover:bg-customlight-700 dark:hover:bg-customdark-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/blog/programming languages/rust/2/index.html">
+                                <a class="anc inline w-8 h-8 rounded-r-md bg-gray-100 dark:bg-gray-700 hover:bg-customlight-700 dark:hover:bg-customdark-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/blog/programming languages/rust/2/index.html">
                                     <div class="w-8 h-8 p-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>
                                     </div>

@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>blog.argnmp</title>
+        <title class="ground">blog.argnmp</title>
         
-        <meta charset="UTF-8">
+        <meta class="ground" name="title" content="blog.argnmp">
+        <meta class="ground" name="description" content="">
+        <meta name="robots" content="index,nofollow">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta class="ground" property="og:type" content="website" />
+        <meta class="ground" property="og:title" content="blog.argnmp" />
+        <meta class="ground" property="og:description" content="" />
+        <meta class="ground" property="og:image" content="" />
+
         <link rel="icon" href="data:,">
         <link href="/static/main.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -64,11 +73,11 @@
                         <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
                     </div>
                 </div>
-                <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
+                <div id="main" class="ground grid-flow-row md:col-span-9 rounded-lg">
                     <div id="searchModule" class="md:pl-3" hidden>
                         <div class="pb-2">
                             <form class="flex">
-                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 text-gray-900 ring-1 ring-inset ring-gray-100 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
                             </form>
                         </div>
                         <div class="" id="search_result">
@@ -87,22 +96,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 AWS EC2에 password로 ssh 접속하기
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-07-27
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 개요 AWS EC2는 기본적으로 .pem 파일을 이용해서 ssh 접속을 하는 구조이다. 주로 사용하는 개발환경이 아닌 곳에서 접속하기 위해서 key 파일을 언제나 다운로드 해서 사용할 수 없기 때문에, password를 설정해서 접속할 수 있도록 설정해보려 한다. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2024-07-27
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -115,22 +127,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 google test
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-07-20
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 [[library link]] 에서 라이브러리를 만들고 정적 및 동적으로 프로젝트에 연결하는 법에 대해 알아보았다. ops 라는 디렉터리를 생성해서 libops라는 라이브러리를 컴파일했엇다. 이번 글에서는 google test를 이용해서 라이브러리를 테스트하는 방법을 알아본다. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2024-07-20
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -143,22 +158,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 library link
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-07-14
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 library를 프로젝트에 연결하기 c나 c++로 프로그래밍을 할 때 외부의 코드를 사용해야 하는 경우가 있다. 이 때 컴파일 과정에서 별도의 링크 과정을 거쳐야 한다. 외부 코드의 집합을 library라고 한다. library의 종류에는 static library와 dynamic library가 있다. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2024-07-14
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -174,22 +192,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 google search console에 하위 도메인 등록
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-07-06
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 개요 argnmp.com 이라는 도메인을 cloudflare에서 구매하여 사용 중이다. blog.argnmp.com 하위 도메인을 github pages에 연결한 뒤, 이 도메인을 google search console에 등록하려 시도했다. 하지만 TXT 레코드를 찾을 수 없다는 오류가 발생했다. 문제 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2024-07-06
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -202,22 +223,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 jwt token의 저장 위치
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2023-08-04
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 개요 jwt을 이용한 인증 로직에서는 서버가 access token과 refresh token 을 클라이언트에게 발급하고, 인증이 필요할 때 클라이언트에서 access token 을 전송하여 서버에서 타당성을 검사하게 된다. 그리고 보통 access token은 만료 시간이 짧기 때문에 클라이언트에서 access token 이 만료되었다면 refresh token 을 이용하여 access token을 다시 발급받게 되고 이 과정에서 로그인을 다시 하지 않음으로써 사용자의 편의성을 보장한다. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2023-08-04
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -230,22 +254,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 prisma updateMany
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2022-09-02
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 update vs updateMany prisma 에서 update를 하는 구문은 다음과 같다 const update = await prisma.user.update({ where: { id: 6, }, data: { posts: { deleteMany: [{ id: 7 }], }, }, }) 하지만 update의 where 문에서 여러개의 column 을 조건으로 거는 경우에는 update를 사용할 수 없다. 문제는 multiple column 이 unique 하더라도 update를 사용할수 없다는 것이다. 따라서 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2022-09-02
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -258,22 +285,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 jwt access token & refresh token
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2022-08-04
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 jwt 인증 흐름 출처: https:&#x2F;&#x2F;fusebit.io&#x2F;blog&#x2F;oauth-refresh-token-best-practices&#x2F;?utm_source=www.google.com&amp;utm_medium=referral&amp;utm_campaign=none client에서 server(authorization server)에 인증을 요청한다.(로그인) sever(authorization server)에서 access token과 refresh token을 client에 전송한다. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2022-08-04
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -286,22 +316,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 passport-jwt로 jwt 인증 구현하기
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2022-07-25
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 개요 passport.js는 express.js에서 자주 사용되는 사용자 인증 라이브러리이다. 그 중에서 passport.js를 이용한 인증을 적용시켜 보고자 한다. passport.js를 이용한 로그인 까지는 완성이 되었다고 가정한다. 로그인 시 jwt token 발급하기 router.post(&#x27;&#x2F;signin&#x27;, wrapAsync(authController.signin)); 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2022-07-25
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -309,7 +342,7 @@
                         </a>
                         
                         <div class="my-3">
-                            <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 text-sm">
+                            <div class="flex mx-auto w-min text-sm">
                                 
                                 
                                 

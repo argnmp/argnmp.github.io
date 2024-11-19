@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>blog.argnmp</title>
+        <title class="ground">blog.argnmp</title>
         
-        <meta charset="UTF-8">
+        <meta class="ground" name="title" content="blog.argnmp">
+        <meta class="ground" name="description" content="">
+        <meta name="robots" content="index,nofollow">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta class="ground" property="og:type" content="website" />
+        <meta class="ground" property="og:title" content="blog.argnmp" />
+        <meta class="ground" property="og:description" content="" />
+        <meta class="ground" property="og:image" content="" />
+
         <link rel="icon" href="data:,">
         <link href="/static/main.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -64,11 +73,11 @@
                         <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
                     </div>
                 </div>
-                <div id="main" class="grid-flow-row md:col-span-9 rounded-lg">
+                <div id="main" class="ground grid-flow-row md:col-span-9 rounded-lg">
                     <div id="searchModule" class="md:pl-3" hidden>
                         <div class="pb-2">
                             <form class="flex">
-                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 text-gray-900 ring-1 ring-inset ring-gray-100 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
                             </form>
                         </div>
                         <div class="" id="search_result">
@@ -87,22 +96,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 const 한정자
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-08-23
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 아래는 컴파일러 개발자가 들려주는 C 이야기 책을 읽고 이해한 내용이다. c에서는 const 한정자를 이용해서 값의 변경을 방지할 수 있다. 하지만 const를 포인터와 함께 사용할 때 의아한 곳에서 컴파일 에러 또는 경고를 만날 수 있다. 아래는 그 예시이다. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2024-08-23
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -115,22 +127,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 stringstream
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-03-02
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 istringstream string을 공백단위로 끊어서 입력받고 싶다면 istringstream 을 사용할 수 있다. int main(){ vector&lt;string&gt; s = { &quot;apple 1 2 3 45&quot;, &quot;banana\n223\n56\n90\n34\n23&quot;, &quot;cat\r98\r3\r12\r2\r34\r45\r6\r34\r2&quot;, };  map&lt;string, vector&lt;int&gt;&gt; m; for(string&amp; s: s){ 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2024-03-02
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -143,22 +158,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 범위기반 for
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2024-03-02
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 reference https:&#x2F;&#x2F;en.cppreference.com&#x2F;w&#x2F;cpp&#x2F;language&#x2F;range-for   https:&#x2F;&#x2F;learn.microsoft.com&#x2F;ko-kr&#x2F;cpp&#x2F;cpp&#x2F;range-based-for-statement-cpp?view=msvc-170 &#x2F;&#x2F; range-based-for.cpp &#x2F;&#x2F; compile by using: cl &#x2F;EHsc &#x2F;nologo &#x2F;W4 #include &lt;iostream&gt; #include &lt;vector&gt; using namespace std;  int main() { &#x2F;&#x2F; Basic 10-element integer array. 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2024-03-02
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -171,22 +189,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 배열 초기화
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
-                                2022-05-26
-                                </p>
-                                <p class="text-xs inline-block underline decoration-solid">
-                                Taehyeon Kim
-                                </p>
-                                </div>
-                                <p class="text-xs break-words">
+                                <p class="text-xs line-clamp-2 break-all">
                                 0으로 배열을 초기화 하는 방법은 간단하다. 아래와 같이 배열을 생성할때 0으로 초기화해주면 된다. #include &lt;iostream&gt; #include &lt;algorithm&gt; using namespace std; int main(){ int arr_1d[10] = {0,}; int arr_2d[10][10] = {0,}; &#x2F;&#x2F;{{0,}} 도 가능하다. return 0; } 
                                 </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
+                                Taehyeon Kim
+                                </p>
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
+                                2022-05-26
+                                </p>
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -199,22 +220,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 priority queue
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
+                                <p class="text-xs line-clamp-2 break-all">
+                                max priority queue priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxq; priority_queue&lt;int&gt; maxq; 두 개 모두 같은 의미이다. less&lt;int&gt; 를 priority_queue에 push 할 때 push 하는 수가 더 작으면 swap을 한다고 이해하면 된다. min priority queue priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq; 
+                                </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
                                 undefined
                                 </p>
-                                <p class="text-xs inline-block underline decoration-solid">
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
                                 undefined
                                 </p>
                                 </div>
-                                <p class="text-xs break-words">
-                                max priority queue priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; maxq; priority_queue&lt;int&gt; maxq; 두 개 모두 같은 의미이다. less&lt;int&gt; 를 priority_queue에 push 할 때 push 하는 수가 더 작으면 swap을 한다고 이해하면 된다. min priority queue priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; minq; 
-                                </p>
                                 
                                 </div>
                                 </div>
@@ -227,22 +251,25 @@
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold md:group-hover:text-customlight-700 md:dark:group-hover:text-customdark-400">
+                                <p class="text-xl font-semibold">
                                 struct를 함수 인자로 사용 시 스택 사용량
                                 </p>
                                 <div class="pt-1">
                                 
-                                <div class="pb-1 italic">
-                                <p class="text-xs inline-block underline decoration-solid">
+                                <p class="text-xs line-clamp-2 break-all">
+                                struct를 함수 인자로 넘기는 경우 struct box{ int x, y, z; }; void print(box t, int k){ if(t.x==0 || t.y==0 || t.z==0 ){ return; } print({t.x-1, t.y-1, t.z-1}, 1); print({t.x-1, t.y-1, t.z-1}, 1); print({t.x-1, t.y-1, t.z-1}, 1); } int main(){ print({1, 2, 3}, 1); return 0; 
+                                </p>
+                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
+                                <p class="text-xs inline-block">
                                 undefined
                                 </p>
-                                <p class="text-xs inline-block underline decoration-solid">
+                                <p class="text-xs inline-block">
+                                ·
+                                </p>
+                                <p class="text-xs inline-block">
                                 undefined
                                 </p>
                                 </div>
-                                <p class="text-xs break-words">
-                                struct를 함수 인자로 넘기는 경우 struct box{ int x, y, z; }; void print(box t, int k){ if(t.x==0 || t.y==0 || t.z==0 ){ return; } print({t.x-1, t.y-1, t.z-1}, 1); print({t.x-1, t.y-1, t.z-1}, 1); print({t.x-1, t.y-1, t.z-1}, 1); } int main(){ print({1, 2, 3}, 1); return 0; 
-                                </p>
                                 
                                 </div>
                                 </div>
@@ -250,7 +277,7 @@
                         </a>
                         
                         <div class="my-3">
-                            <div class="flex mx-auto w-min bg-gray-100 dark:bg-gray-700 text-sm">
+                            <div class="flex mx-auto w-min text-sm">
                                 
                                 
                                 
