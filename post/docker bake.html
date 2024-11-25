@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title class="ground">mac os 환경에서 metallb 설정</title>
+        <title class="ground">docker bake</title>
         
-        <meta class="ground" name="title" content="mac os 환경에서 metallb 설정">
-        <meta class="ground" name="description" content="개요 https:&#x2F;&#x2F;github.com&#x2F;chipmk&#x2F;docker-mac-net-connect?tab=readme-ov-file#problem Unlike Docker on Linux, Docker-for-Mac does not expose container networks directly on the macOS host. Docker-for-Mac works by running a Linux VM under the hood (using hyperkit ) and creates containers within that VM. Docker-for-Mac supports connecting to containers over Layer 4 (port binding), but not Layer 3 (by IP address). ">
+        <meta class="ground" name="title" content="docker bake">
+        <meta class="ground" name="description" content="istio의 sample project인 bookinfo를 빌드하던 중, docker bake에서 이상한 오류가 발생했다. macOS환경의 docker version이 낮아서 생긴 문제였다. ">
         <meta name="robots" content="index,nofollow">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta class="ground" property="og:type" content="website" />
-        <meta class="ground" property="og:title" content="mac os 환경에서 metallb 설정" />
-        <meta class="ground" property="og:description" content="개요 https:&#x2F;&#x2F;github.com&#x2F;chipmk&#x2F;docker-mac-net-connect?tab=readme-ov-file#problem Unlike Docker on Linux, Docker-for-Mac does not expose container networks directly on the macOS host. Docker-for-Mac works by running a Linux VM under the hood (using hyperkit ) and creates containers within that VM. Docker-for-Mac supports connecting to containers over Layer 4 (port binding), but not Layer 3 (by IP address). " />
-        <meta class="ground" property="og:image" content="/blog/k8s/Pasted\ image\ 20241124022013.png" />
+        <meta class="ground" property="og:title" content="docker bake" />
+        <meta class="ground" property="og:description" content="istio의 sample project인 bookinfo를 빌드하던 중, docker bake에서 이상한 오류가 발생했다. macOS환경의 docker version이 낮아서 생긴 문제였다. " />
+        <meta class="ground" property="og:image" content="" />
 
         <link rel="icon" href="data:,">
         <link href="/static/main.css" rel="stylesheet">
@@ -92,13 +92,13 @@
                     <article>
                         <section class="w-full mb-8">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">mac os 환경에서 metallb 설정</p>
+                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">docker bake</p>
                                 
                             </div>
                             <div class="flex flex-row mb-2 md:pl-5 text-gray-500 dark:text-gray-400">
                                 <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
                                 <div class="mr-2"><p class="text-xs">·</p></div>
-                                <div class="mr-2"><p class="text-xs italic">2024-11-24</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-11-25</p></div>
                                 <div class="mr-2"><p class="text-xs"></p></div>
 
                                 <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
@@ -114,79 +114,8 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
-                            <h3 id="개요">개요</h3>
-<p><a href="https://github.com/chipmk/docker-mac-net-connect?tab=readme-ov-file#problem">https://github.com/chipmk/docker-mac-net-connect?tab=readme-ov-file#problem</a></p>
-<blockquote>
-<p>Unlike Docker on Linux, Docker-for-Mac does not expose container networks directly on the macOS host. Docker-for-Mac works by running a Linux VM under the hood (using <a href="https://github.com/moby/hyperkit"><code>hyperkit</code></a>) and creates containers within that VM.</p>
-<p>Docker-for-Mac supports connecting to containers over Layer 4 (port binding), but not Layer 3 (by IP address).</p>
-</blockquote>
-<p>macOS에서는, 리눅스와 달리 IP address로 직접 container에 연결이 불가능하다. 따라서, docker-mac-net-connect를 통해서 IP address로 직접 연결이 가능하도록 설정한 뒤, metallb를 설정해주어야 한다.</p>
-<p>아래 링크의 방식으로 확인할 수 있다.</p>
-<p><a href="https://github.com/chipmk/docker-mac-net-connect?tab=readme-ov-file#usage">https://github.com/chipmk/docker-mac-net-connect?tab=readme-ov-file#usage</a></p>
-<h4 id="linux 환경에서 docker">linux 환경에서 docker</h4>
-<p><img src="/blog/k8s/Pasted%20image%2020241124021535.png" alt="Pasted image 20241124021535.png" />
-linux 환경에서는 IP를 이용해서 곧바로 연결이 되는 것을 확인할 수 있다.</p>
-<h4 id="macOS 환경에서 docker">macOS 환경에서 docker</h4>
-<p><img src="/blog/k8s/Pasted%20image%2020241124022013.png" alt="Pasted image 20241124022013.png" />
-macOS 환경에서는 연결에 실패한다. docker container의 IP가 host에 노출이 되지 않기 때문이다.</p>
-<h3 id="docker-mac-net-connect">docker-mac-net-connect</h3>
-<p>먼저 아래의 링크에 따라 설치를 해준다.
-<a href="https://github.com/chipmk/docker-mac-net-connect?tab=readme-ov-file#installation">https://github.com/chipmk/docker-mac-net-connect?tab=readme-ov-file#installation</a></p>
-<pre><code class="language-shell"># Install via Homebrew
-$ brew install chipmk/tap/docker-mac-net-connect
-
-# Run the service and register it to launch at boot
-$ sudo brew services start chipmk/tap/docker-mac-net-connect
-</code></pre>
-<p>(오랜만에 brew로 설치를 하려 했더니, xcode 버전이 낮다고 해서 업데이트 중이다...)</p>
-<p>그러면 IP 주소로 docker container에 연결할 수 있게 된다.</p>
-<h3 id="metallb 설정">metallb 설정</h3>
-<p>https://metallb.universe.tf/installation/</p>
-<p>공식 홈페이지 설명에 따라 먼저 아래와 같이 설정해준다. 첫번째 단락은 strictARP 설정이 바뀌게 될 것인지를 확인하는 것이고, 두번째 단락은 실제로 바꾸는 과정이다.</p>
-<pre><code class="language-shell"># see what changes would be made, returns nonzero returncode if different
-kubectl get configmap kube-proxy -n kube-system -o yaml | \
-sed -e &quot;s/strictARP: false/strictARP: true/&quot; | \
-kubectl diff -f - -n kube-system
-
-# actually apply the changes, returns nonzero returncode on errors only
-kubectl get configmap kube-proxy -n kube-system -o yaml | \
-sed -e &quot;s/strictARP: false/strictARP: true/&quot; | \
-kubectl apply -f - -n kube-system
-</code></pre>
-<p>그리고 아래의 명령어로 현재 cluster에 metallb를 추가한다.</p>
-<pre><code class="language-shell">kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.8/config/manifests/metallb-native.yaml
-</code></pre>
-<p>아래의 명령어로 docker network에서 사용하는 CIDR를 확인한다.</p>
-<pre><code class="language-shell">docker network inspect -f '{{.IPAM.Config}}' kind
-</code></pre>
-<pre><code class="language-shell">[{172.18.0.0/16  172.18.0.1 map[]} {fc00:f853:ccd:e793::/64   map[]}]
-</code></pre>
-<p><code>172.18.0.0/16</code> 을 사용 중인 것을 확인할 수 있다.</p>
-<p>이제 이 CIDR를 이용해서, 아래의 설정을 적용해준다.</p>
-<pre><code class="language-shell">kubectl apply -f - &lt;&lt;EOF
-apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: kind-worker
-  namespace: metallb-system
-spec:
-  addresses:
-  - 172.18.0.0/16
-  autoAssign: true
-  avoidBuggyIPs: false
-EOF
-</code></pre>
-<p>addresses 에서는 위에서 확인한 CIDR를 작성해주면 된다.</p>
-<h3 id="EXTERNAL-IP 확인">EXTERNAL-IP 확인</h3>
-<p>나는 현재 kind 클러스터에, istio 환경을 구성해서 사용하는 중이다.</p>
-<p>istio에서는 istio-ingressgateway service 모든 요청을 처리하는 역할을 한다. cloud provider kubernetes 환경에서는 이 service의 external-ip가 provider의 LB로 자동으로 할당이 된다. 하지만 local 환경에서는 LB가 없기 때문에 <code>&lt;pending&gt;</code> 상태에 머물게 된다.</p>
-<p>metallb를 설정한 이후에는, 자동으로 external-ip가 할당되는 것을 확인할 수 있다. (docker container의 ip와 동일하다.)</p>
-<pre><code class="language-shell">kubectl get svc -n istio-system
-</code></pre>
-<pre><code>...
-istio-ingressgateway   LoadBalancer   10.96.229.130   172.18.0.3    15021:31963/TCP,80:32472/TCP,443:31807/TCP,31400:32027/TCP,15443:32473/TCP   29h
-...
-</code></pre>
+                            <p>istio의 sample project인 bookinfo를 빌드하던 중, docker bake에서 이상한 오류가 발생했다.</p>
+<p>macOS환경의 docker version이 낮아서 생긴 문제였다.</p>
 
                         </div>
                     </article>
