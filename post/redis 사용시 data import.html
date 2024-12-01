@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title class="ground">chapter 10</title>
+        <title class="ground">redis 사용시 data import</title>
         
-        <meta class="ground" name="title" content="chapter 10">
-        <meta class="ground" name="description" content="BS는 BTS와 BSC로 구성되어 있다. MSC DB HLR: home location register, 단말기 가입하면 등록한다. VLR: visitor location register, MSC 영역에 방문 중인 MS의 정보를 가지고 있다. HLR에 대한 bi-directional pointer를 가지고 있다. 방문중인 MS의 billing과 access permisison에 도움을 준다. ">
+        <meta class="ground" name="title" content="redis 사용시 data import">
+        <meta class="ground" name="description" content="https:&#x2F;&#x2F;redis.io&#x2F;learn&#x2F;guides&#x2F;import ">
         <meta name="robots" content="index,nofollow">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta class="ground" property="og:type" content="website" />
-        <meta class="ground" property="og:title" content="chapter 10" />
-        <meta class="ground" property="og:description" content="BS는 BTS와 BSC로 구성되어 있다. MSC DB HLR: home location register, 단말기 가입하면 등록한다. VLR: visitor location register, MSC 영역에 방문 중인 MS의 정보를 가지고 있다. HLR에 대한 bi-directional pointer를 가지고 있다. 방문중인 MS의 billing과 access permisison에 도움을 준다. " />
+        <meta class="ground" property="og:title" content="redis 사용시 data import" />
+        <meta class="ground" property="og:description" content="https:&#x2F;&#x2F;redis.io&#x2F;learn&#x2F;guides&#x2F;import " />
         <meta class="ground" property="og:image" content="" />
 
         <link rel="icon" href="data:,">
@@ -92,13 +92,13 @@
                     <article>
                         <section class="w-full mb-8">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">chapter 10</p>
+                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">redis 사용시 data import</p>
                                 
                             </div>
                             <div class="flex flex-row mb-2 md:pl-5 text-gray-500 dark:text-gray-400">
                                 <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
                                 <div class="mr-2"><p class="text-xs">·</p></div>
-                                <div class="mr-2"><p class="text-xs italic">2024-06-14</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-11-26</p></div>
                                 <div class="mr-2"><p class="text-xs"></p></div>
 
                                 <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
@@ -114,57 +114,7 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
-                            <p>BS는 BTS와 BSC로 구성되어 있다.</p>
-<p>MSC DB</p>
-<ul>
-<li>HLR: home location register, 단말기 가입하면 등록한다.</li>
-<li>VLR: visitor location register, MSC 영역에 방문 중인 MS의 정보를 가지고 있다. HLR에 대한 bi-directional pointer를 가지고 있다. 방문중인 MS의 billing과 access permisison에 도움을 준다.</li>
-<li>AUC: authentication center, authentication과 encryption parameter를 제공한다.</li>
-<li>EIR: equipment identity register, contains identity of equipments that prevents service to unauthorized MSs</li>
-</ul>
-<p>automatic location update 등록 과정</p>
-<ul>
-<li>MS가 beacon signal을 이용해서, location update request를 보낸다.</li>
-<li>visiting MSC에서는 home MSC의 HLR의 update location info를 보낸다.</li>
-<li>visiting MSC의 VLR과 home MSC의 HLR 간에 양방향 포인터가 생성된다.</li>
-</ul>
-<p>call forwarding 과정</p>
-<ul>
-<li>PSTN 망과 backbone을 거쳐서 home MSC에 call이 forwarding 된다.</li>
-<li>home MSC에서는 HLR을 확인해서 현재 MS의 위치를 알아내고, 그 위치의 visiting MSC로 forwarding한다.</li>
-<li>visiting MSC에서는 BS로 call을 보내서 전화 연결을 한다.</li>
-</ul>
-<p>registration 과정: BS와 MS간의 beacon signal 교환으로 이루어진다.</p>
-<ul>
-<li>BS는 주기적으로 beacon signal을 broadcast 한다.</li>
-<li>MS는 beacon signal을 듣고, 새로운 BS라면 active beacon kernel table에 저장한다.</li>
-<li>통화중이라면 handoff process를 시작하고, 아니라면 등록을 한다.</li>
-<li>MS는 user-level processing을 통해 가장 가까운 BS를 찾아서, 등록 요청을 보낸다.</li>
-<li>BS에서는 user-level processing을 통해 MS가 누구인지, billing을 위한 MS가 등록된 home MSC가 어디인지, 유저가 어떤 access permission을 가지고 있는지 결정한다.</li>
-<li>visiting BS(visiting MSC)에서는 home BS(home MSC)에 authentication 요청을 보낸다.</li>
-<li>home BS에서는 visiting BS에 authentication 응답을 보낸다.</li>
-<li>visiting(serving) BS에서는 user의 접근을 승인하거나 거절한다.</li>
-</ul>
-<p>handoff: 한 cell에서 인접한 cell로 radio resources(channel)을 변경하는 것.</p>
-<p>handoff의 원인: radio link, network management, service related</p>
-<ul>
-<li>radio link: MS의 이동에 의해서 handoff를 하는 것. cell 내의 MS의 수, cell을 떠난 MS의 수, cell에서 시작된 call 수, cell에서 끝난 call의 수와 duration 등을 따져서 handoff를 한다.</li>
-<li>network management: 인접한 cell 간에 traffic의 imbalance가 있고, optimal하게 balance를 맞춰주어야하는 경우 handoff가 발생한다.</li>
-<li>service related: QoS가 감소할 때 handoff가 발생한다.</li>
-</ul>
-<p>right time for handoff 결정: signal strength, signal phase, signal strength + signal phase, BER, distance</p>
-<p>need for handoff 결정: signal strength, CIR(carrier to interference ratio)</p>
-<p>handoff 종류: hard handoff, soft handoff</p>
-<ul>
-<li>hard handoff: 다음 BS의 자원을 얻기 전에 현재 BS의 자원을 끊는다. 단절 이후에 handoff를 한다. 물리자원의 한계, FDMA, TDMA</li>
-<li>soft handoff: 단절이 되기 전에 handoff를 한다. CDMA, code sequence만 다음 BS에서도 직교성을 가진다면 그대로 이용할 수 있기 때문.</li>
-</ul>
-<p>roaming support: beacon signal과 HLR-VLR의 bidirectional pointer를 통해서, 같은 service provider의 다른 MSC 영역으로 이동해도 서비스를 이용할 수 있도록 지원하는 것.</p>
-<ul>
-<li>같은 MSC 영역으로의 handoff는, 그 영역의 MSC를 통해서 routing을 한다.</li>
-<li>다른 MSC 영역으로의 handoff는, HLR과 VLR의 bidirectional pointer를 set up한 뒤 routing을 한다.</li>
-<li>다른 paging area로의 handoff는, 해당 paging area에 등록을 해주어야 한다. paging area는 MS의 현재 위치를 찾기 위한 목적으로, 여러 MSC들이 함께 구성하는 영역이다.</li>
-</ul>
+                            <p>https://redis.io/learn/guides/import</p>
 
                         </div>
                     </article>
