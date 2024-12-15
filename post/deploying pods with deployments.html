@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title class="ground">kind local cluster에 Ingress 설정</title>
+        <title class="ground">deploying pods with deployments</title>
         
-        <meta class="ground" name="title" content="kind local cluster에 Ingress 설정">
-        <meta class="ground" name="description" content="Ingress 설정이 필요한 이유 cloud kubernetes 환경에서는 provider가 Ingress Class를 지원해주기 때문에 별도로 설정할 필요가 없다. 그러나 local cluster를 구축해서 사용하는 경우 별도의 ingress controller를 설정해주어야 한다. kind 공식 문서에 따라, ingress-nginx 오픈소스를 이용해서 ingress controller를 설정해보고자 한다. ">
+        <meta class="ground" name="title" content="deploying pods with deployments">
+        <meta class="ground" name="description" content="ReplicaSet object는 Pod replicas 그룹을 대표한다. 내부에 pod template를 가지고 있어서, 원하는 개수의 replica를 만든다. pod를 replicate하고, nodes가 failed된 경우 reschedule 한다. (자동으로 재시작) 아래는 ReplicaSet의 main field selector(label selector) replicas(replica count) ">
         <meta name="robots" content="index,nofollow">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta class="ground" property="og:type" content="website" />
-        <meta class="ground" property="og:title" content="kind local cluster에 Ingress 설정" />
-        <meta class="ground" property="og:description" content="Ingress 설정이 필요한 이유 cloud kubernetes 환경에서는 provider가 Ingress Class를 지원해주기 때문에 별도로 설정할 필요가 없다. 그러나 local cluster를 구축해서 사용하는 경우 별도의 ingress controller를 설정해주어야 한다. kind 공식 문서에 따라, ingress-nginx 오픈소스를 이용해서 ingress controller를 설정해보고자 한다. " />
+        <meta class="ground" property="og:title" content="deploying pods with deployments" />
+        <meta class="ground" property="og:description" content="ReplicaSet object는 Pod replicas 그룹을 대표한다. 내부에 pod template를 가지고 있어서, 원하는 개수의 replica를 만든다. pod를 replicate하고, nodes가 failed된 경우 reschedule 한다. (자동으로 재시작) 아래는 ReplicaSet의 main field selector(label selector) replicas(replica count) " />
         <meta class="ground" property="og:image" content="" />
 
         <link rel="icon" href="data:,">
@@ -92,13 +92,13 @@
                     <article>
                         <section class="w-full mb-8">
                             <div class="mb-2 md:pl-5">
-                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">kind local cluster에 Ingress 설정</p>
+                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">deploying pods with deployments</p>
                                 
                             </div>
                             <div class="flex flex-row mb-2 md:pl-5 text-gray-500 dark:text-gray-400">
                                 <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
                                 <div class="mr-2"><p class="text-xs">·</p></div>
-                                <div class="mr-2"><p class="text-xs italic">2024-11-22</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-12-15</p></div>
                                 <div class="mr-2"><p class="text-xs"></p></div>
 
                                 <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
@@ -114,71 +114,57 @@
                             </div>
                         </section>
                         <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
-                            <h3 id="Ingress 설정이 필요한 이유">Ingress 설정이 필요한 이유</h3>
-<p>cloud kubernetes 환경에서는 provider가 Ingress Class를 지원해주기 때문에 별도로 설정할 필요가 없다. 그러나 local cluster를 구축해서 사용하는 경우 별도의 ingress controller를 설정해주어야 한다.</p>
-<p>kind 공식 문서에 따라, ingress-nginx 오픈소스를 이용해서 ingress controller를 설정해보고자 한다.</p>
-<p><a href="https://kind.sigs.k8s.io/docs/user/ingress">https://kind.sigs.k8s.io/docs/user/ingress</a>]</p>
-<h3 id="ingress-nginx 설정 이전">ingress-nginx 설정 이전</h3>
-<p>kind로 multi-node cluster를 아래와 같이 생성한다.</p>
-<pre><code class="language-yaml">kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-- role: control-plane
-- role: worker
-- role: worker
-- role: worker
-</code></pre>
-<p>그리고 Ingress를 테스트 하기 위해, <a href="https://kind.sigs.k8s.io/docs/user/ingress/#using-ingress">https://kind.sigs.k8s.io/docs/user/ingress/#using-ingress</a>의 환경을 구축한다.</p>
-<pre><code class="language-shell">kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/usage.yaml
-</code></pre>
-<p><code>kubectl get ingress</code> 명령어를 입력하면 아래와 같은 결과가 나온다.</p>
-<pre><code>NAME              CLASS    HOSTS   ADDRESS   PORTS   AGE
-example-ingress   &lt;none&gt;   *                 80      32s
-</code></pre>
-<p>ingress의 address가 할당되지 않아서 접근이 불가능하다. 이 address 는 cloud provider의 경우 자동으로 할당이 되는 사항이다.</p>
-<h3 id="ingress-nginx 설정">ingress-nginx 설정</h3>
-<p>kind로 multi-node cluster를 아래와 같이 설정한다. extraPortMapping을 추가해준다.</p>
-<pre><code class="language-yaml">kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-- role: control-plane
-  kubeadmConfigPatches:
-  - |
-    kind: InitConfiguration
-    nodeRegistration:
-      kubeletExtraArgs:
-        node-labels: &quot;ingress-ready=true&quot;
-  extraPortMappings:
-  - containerPort: 80
-    hostPort: 80
-    protocol: TCP
-  - containerPort: 443
-    hostPort: 443
-    protocol: TCP
-- role: worker
-- role: worker
-- role: worker
-</code></pre>
-<p>control-plane 이 위치하게 되는 node에 <code>ingress-ready=true</code> label을 설정해준다.</p>
-<p>이제 ingress-nginx를 설정한다. 주의할 점은, control-plane이 속한 node에 ingress-nginx-controller가 배포되어야 한다는 점이다.</p>
-<p>위의 node label을 이용하기 위해서, kind 공식 문서에서 알려주는 deploy 파일이 아닌, 아래 링크의 deploy 파일을 사용한다.</p>
-<p><code>ingress-ready=true</code> 라벨을 가진 node에 ingress-nginx-controller가 배포되도록 설정이 되어 있다.</p>
-<pre><code class="language-shell">kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/refs/heads/main/deploy/static/provider/kind/deploy.yaml
-</code></pre>
-<p>아래의 명령어로 완료될 때까지 기다린다.</p>
-<pre><code class="language-shell">kubectl wait --namespace ingress-nginx \
-  --for=condition=ready pod \
-  --selector=app.kubernetes.io/component=controller \
-  --timeout=90s
-</code></pre>
-<p>그리고 Ingress를 테스트 하기 위해, <a href="https://kind.sigs.k8s.io/docs/user/ingress/#using-ingress">https://kind.sigs.k8s.io/docs/user/ingress/#using-ingress</a>의 환경을 구축한다.</p>
-<pre><code class="language-shell">kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/usage.yaml
-</code></pre>
-<p>pod이 생성이 완료되고 ingress의 address를 조회해보면 아래와 같이 localhost가 할당된 것을 확인할 수 있다.</p>
-<pre><code class="language-shell">NAME              CLASS    HOSTS   ADDRESS     PORTS   AGE
-example-ingress   &lt;none&gt;   *       localhost   80      61s
-</code></pre>
-<p><code>curl localhost/bar</code> 명령어를 입력하면, <code>bar-app</code> 이라는 응답이 오는 것을 확인할 수 있다.</p>
+                            <p>ReplicaSet object는 Pod replicas 그룹을 대표한다.</p>
+<p>내부에 pod template를 가지고 있어서, 원하는 개수의 replica를 만든다.</p>
+<p>pod를 replicate하고, nodes가 failed된 경우 reschedule 한다. (자동으로 재시작)</p>
+<p>아래는 ReplicaSet의 main field</p>
+<ul>
+<li>selector(label selector)</li>
+<li>replicas(replica count)</li>
+<li>template(pod template)</li>
+</ul>
+<p>Deployment object를 만들면, 자동으로 생성된다.</p>
+<p>Service object는 pod를 expose, ReplicaSet object는 pod를 manage한다.</p>
+<p>label selector에 해당하는 기존 pod가 있으면, 이것도 자신의 member로 한다. 부족한 경우 더 만든다.</p>
+<p>template에 pod name이 없으면, <code>ReplicaSet name + random string</code>으로 pod name이 생성된다.</p>
+<p>ReplicaSet의 pod template을 수정하면, 현재 수행 중인 pod에는 반영되지 않는다. 수정 이후에 생성된 pod에만 반영된다.</p>
+<hr />
+<p>Deployment object는 ReplicaSet 위의 high-level resource</p>
+<p>Deployment object는 ReplicaSet을 관리하고, ReplicaSet은 Pod를 관리한다.</p>
+<p>아래는 Deployment의 main field</p>
+<ul>
+<li>replicas (desired number of replicas)</li>
+<li>selector (label selector)</li>
+<li>template (pod template)</li>
+<li>strategy (pod template을 update할 때, 어떻게 pod가 replace될 지를 정의)</li>
+</ul>
+<p>Deployment object를 생성하면, ReplicaSet과 Pod에 pod-template-hash label을 추가한다. 이 label의 hash value는 pod template의 내용으로 계산된 것으로, definition이 변경되었는지 확인할 수 있다. 변경된 경우, ReplicaSet을 지우고 새롭게 다시 생성한다.</p>
+<p>이는 ReplicaSet이 변경된 Pod definition을 반영하지 못하는 것과 차이가 있다.</p>
+<p>Deployment object를 scale하면, 작업은 ReplicaSet이 처리한다.</p>
+<hr />
+<p>pod template를 update하면 pod이 교체된다. 이때 아래의 두가지 update strategy가 존재한다.</p>
+<ul>
+<li>Recreate</li>
+<li>RollingUpdate(default)</li>
+</ul>
+<p>Recreate는 한순간에 모든 pod를 제거하고, 새로운 pod가 동시에 생성된다. 따라서 unavailable period가 존재한다. 기존 ReplicaSet의 replicas를 바로 0으로 만들고, 새로운 ReplicaSet을 만든다.</p>
+<p>RollingUpdate는 먼저 새로운 ReplicaSet을 만든다. 이후 기존 RS의 replicas를 하나 줄이고, 새로운 RS의 replicas를 하나 늘린다. 이를 반복해서 새로운 RS로 교체한다. maxUnavailable로 점진적으로 줄이고 늘리는 단위를 정해줄 수 있다.</p>
+<p><code>kubectl rollout</code> command로 deployment의 update 과정을 조정할 수 있다.</p>
+<hr />
+<p>앞선 두 개의 기본 Deployment strategy 외에, k8s의 object들을 이용해서 다른 strategy들도 구현할 수 있다.</p>
+<p>아래는 Deployment strategy의 종류</p>
+<ul>
+<li>Recreate</li>
+<li>Rolling update</li>
+<li>Canary</li>
+<li>A/B testing</li>
+<li>Blue/Green</li>
+<li>Shadowing</li>
+</ul>
+<p>Canary strategy는 적은 수의 새 버전의 pod를 생성하고, traffic의 적은 양만 새로운 pod로 보낸다. 잘 동작하면 이후 모든 pod를 교체한다. stable 버전과 canary 버전의 Deployment 두 개를 생성한다. stable 버전은 replicas를 3개, canary 버전은 replicas를 1개로 설정한다. 이후 Service에서 label을 이용해 모든 pod에 traffic을 보내면 canary 버전은 25%의 트래픽을 받게 된다.</p>
+<p>A/B testing strategy는 Canary와 같이 적은 양의 traffic만 새로운 버전으로 보낸다. 여기서 조건이 추가되서, 같은 유저는 언제나 같은 버전으로 향하도록 한다. 이를 위해서 L7 load balancer 역할을 하는 Ingress object를 이용한다. HTTP cookie를 이용해서 같은 유저를 판별할 수 있다. 여기서는 A Service와 B Service를 만들고 Deployment도 각각 만들어서 Ingress에 연결한다.</p>
+<p>Blue/Green strategy는 새로운 버전의 pod를 먼저 생성한다. 완료되면 switching한다. unavailable한 시점을 제거할 수 있지만, 자원이 두배로 필요하다. 새로운 Green Deployment object를 만들고, Service object의 select를 바꾸어준다.</p>
+<p>Shadowing strategy는 새로운 버전의 pod를 만들고 계속 유지한다. 요청을 복제해서 이전 버전과 새 버전 모두로 보내고, 이전 버전의 응답만 돌려주고 새 버전은 결과를 확인하고 버린다. Traffic mirroring 또는 Dark launch라고 한다. 여기서도 마찬기지로 A/B testing strategy와 같은 구조를 사용한다. 다만 이전 버전의 응답만 돌려준다.</p>
 
                         </div>
                     </article>

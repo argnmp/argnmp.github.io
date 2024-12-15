@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title class="ground">first steps with istio</title>
+        
+        <meta class="ground" name="title" content="first steps with istio">
+        <meta class="ground" name="description" content="istio는 아래의 component로 구성된다. controller(control-plane): istiod traffic in&#x2F;out of mesh: ingressgateway, egressgateway: supporting components jaeger: distributed tracing system to visualize request flow through the mesh kiali: web console for the mesh prometheus: collects and stores the generated metrics as time-series data ">
+        <meta name="robots" content="index,nofollow">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta class="ground" property="og:type" content="website" />
+        <meta class="ground" property="og:title" content="first steps with istio" />
+        <meta class="ground" property="og:description" content="istio는 아래의 component로 구성된다. controller(control-plane): istiod traffic in&#x2F;out of mesh: ingressgateway, egressgateway: supporting components jaeger: distributed tracing system to visualize request flow through the mesh kiali: web console for the mesh prometheus: collects and stores the generated metrics as time-series data " />
+        <meta class="ground" property="og:image" content="" />
+
+        <link rel="icon" href="data:,">
+        <link href="/static/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+        <script src="/static/entry_bundle.js"></script>
+        <script src="/static/module_bundle.js" type="module"></script>
+    </head>
+    <body class="dark:bg-gray-800 font-default">
+        <div class="container p-5 mx-auto py-5 box-border h-screen w-screen">
+            <div class="flex text-customlight-700 dark:text-customdark-400 mb-4 border-b border-customlight-700 dark:border-customdark-400">
+                <div class="grow flex flex-col justify-center items-start">
+                    <a class="inline-block" href="/">
+                        <p class="text-xl font-bold px-2 bg-customlight-700 text-white dark:bg-customdark-400 dark:text-gray-800 rounded">
+                        blog.argnmp
+                        </p>
+                    </a>
+                </div>
+                <button id="searchToggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-gray-600 dark:stroke-gray-400"
+                        viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                        <path d="M21 21l-6 -6" />
+                    </svg>
+                </button>
+                <button id="toggle" class="cursor-pointer justify-center items-center p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="dark:hidden w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-600" d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hidden dark:block w-4 h-4" viewBox="0 0 16 16">
+                        <path class="fill-gray-400" d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                        <path class="fill-gray-400" d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-15 gap-2">
+                <div class="md:col-span-3">
+                    <div class="flex md:flex-col text-gray-900 dark:text-gray-200">
+                        <div class="w-full md:object-center basis-1/4">
+                          <img class="w-full max-w-sm mx-auto rounded-md ring-customlight-600 dark:ring-customdark-500" src="/static/profile image.png" />
+                        </div>
+                        <div class="grow pl-4 md:p-0 md:text-left my-auto">
+                          <p class="text-xl md:mt-3 mb-2 font-bold">argnmp</p>
+                          
+                          <p class="text-xs">컴퓨터공학 관련 주제를 주로 다룹니다.</p>
+                          
+                          <p class="text-xs">argnmp@gmail.com</p>
+                          
+                          
+                          
+                          <p class="text-xs"><a class="text-xs" href="https://github.com/argnmp">github</a></p>
+                          
+                        </div>
+                    </div>
+                    <div id="toc" class="sticky top-5 mt-5 border-l-2">
+                        <p class="pl-4 pb-1 text-sm text-gray-900 dark:text-gray-200 cursor-pointer hover:text-custom-light-700 dark:hover:text-custom-light-400 hover:font-bold hover:underline" hidden>to load styles for dynamically created elements</ul>
+                    </div>
+                </div>
+                <div id="main" class="ground grid-flow-row md:col-span-12 rounded-lg">
+                    <div id="searchModule" class="md:pl-3" hidden>
+                        <div class="pb-2">
+                            <form class="flex">
+                                <input type="text" name="search" id="search_input" class="inline w-full rounded-md border-0 py-1 px-2 text-gray-900 ring-1 ring-inset ring-gray-100 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-customlight-600 dark:focus:ring-customdark-300 text-sm sm:leading-6 dark:bg-gray-800 dark:text-gray-200" placeholder="search for child nodes..." onkeyup="window.search()">
+                            </form>
+                        </div>
+                        <div class="" id="search_result">
+                            <a class="" href="">
+                                <div class="mb-1 px-2 py-1 border border-gray-200 dark:border-gray-600 dark:text-gray-200 hidden">
+                                </div> 
+                            </a>
+                        </div> 
+                    </div>
+                    
+                    
+                    <article>
+                        <section class="w-full mb-8">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">first steps with istio</p>
+                                
+                            </div>
+                            <div class="flex flex-row mb-2 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs">·</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-12-15</p></div>
+                                <div class="mr-2"><p class="text-xs"></p></div>
+
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                        <div class="px-1 mr-1 bg-customlight-700 text-white dark:bg-customdark-400 dark:text-gray-800 align-middle text-xs rounded-md">
+                                            blog
+                                        </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <p>istio는 아래의 component로 구성된다.</p>
+<ul>
+<li>controller(control-plane): istiod</li>
+<li>traffic in/out of mesh: ingressgateway, egressgateway:</li>
+<li>supporting components
+<ul>
+<li>jaeger: distributed tracing system to visualize request flow through the mesh</li>
+<li>kiali: web console for the mesh</li>
+<li>prometheus: collects and stores the generated metrics as time-series data</li>
+<li>grafana: visualizes metrics generated fby the proxies and collected by Prometheus</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p>istiod는 high-level istio configuration을 받아서, 각 data-plane service proxy에 대한 proxy-specific configuration으로 변환한다. (low level config로 변환, 즉 istio를 programming 한다)</p>
+<p>이 설정을 통해서, 어떤 버전으로 routing 할지, deploy를 할 때 어떻게 traffic을 shift할지, resiliency aspect(timeout, retries, circuit breaking)를 어떻게 수행할지를 명시할 수 있다.</p>
+<p>istio는 k8s custom resource를 사용한다.</p>
+<p>istio는 CRDs를 사용해서, k8s cluster의 기능을 확장한다. (VirtualService)</p>
+<p>istio는 이러한 CRs을 이해하는 controller를 추가해서 사용한다.</p>
+<hr />
+<p><code>istioctl kube-inject</code>를 이용해서, istio service proxy가 추가되도록 definition을 수정해서 적용한다.</p>
+<p>namespace에 자동으로 injection을 수행하도록 만들 수도 있다.</p>
+<hr />
+<p>istio ingress gateway는 traffic을 cluster 안으로 들어가도록 하는 역할. relay and distribute external traffic to internal</p>
+<hr />
+<p>istio observability</p>
+<p>istio observability: make available to nocie what happens inside of the application</p>
+<p>istio는 connection의 양쪽에 존재하며, application 안에서 어떤 일이 일어나는 지에 대한 많은 telemetry와 insight를 수집할 수 있다.</p>
+<p>sidecar 방식으로 deploy되어서, application process의 밖에서 수집한다. 따라서 library나 framework에 의존적이지 않다.</p>
+<p>아래는 observability의  두 개의 카테고리</p>
+<ul>
+<li>top-level metrics: requests per scond, no of failures, tail-latency</li>
+<li>distributed tracing: request flow를 수집해서, 큰 구조를 보여준다.</li>
+</ul>
+<p>top-level metrics는 prometheus &amp; grafana</p>
+<hr />
+<p>distributed tracing</p>
+<p>distributed tracing은 jaeger, sevice간 interaction이 어떤 delay와 latency로 발생하는지 보여준다.</p>
+<p>istio service proxy는 tracing id와 metadata를 service 간에 전파하고, tracing engine(zipkin, jaeger)에 tracing span information을전송한다.</p>
+<p>application 또한, tracing metadata를 전파해야 한다. tracing metatdata는 보통 HTTP header로 구성되어 있고, incoming header를 다시 outgoing request로 연관시켜주어야 추적이 가능하다.</p>
+<hr />
+<p>istio resilency</p>
+<p>distributed computing에서는, application이 network 불확실성에 대처를 해야 한다. 예전에는 application에 retries, timeouts, circuit-breaking 등의 코드가 들어갔다. istio는 이러한 networking code가 application에 들어가지 않도록 해준다.</p>
+<p>istio의 VirtualService를 통해 timeout과 retry, circuit-breaking을 수행할 수 있다.</p>
+<hr />
+<p>istio traffic routing</p>
+<p>누구에게 새로운 버전을 expose할지 control 하고 싶은 경우가 있다. e.g. A/B test</p>
+<p>두 개의 버전이 있으면, k8s는 제한된 형태의 load balancing만 수행할 수 있다. (uncontrollable LB, random selection)</p>
+<p>DestinationRule를 통해서, 버전별 subset을 정의한다. 그리고 VirtualService를 통해서 header(x-dark-launch)를 확인한 뒤, 특정 subset으로 향하도록 routing한다.</p>
+<hr />
+<p>istio kiali를 통해서, traffic flow를 눈으로 볼 수 있다.</p>
+<hr />
+<p>istio sidecar의 구성은 아래와 같다</p>
+<ul>
+<li>istio agent(pilot agent)</li>
+<li>local DNS proxy</li>
+<li>envoy proxy</li>
+</ul>
+<p>istio-init container은 Iptable rule을 설정해서, traffic이 service proxy로 redirect 될 수 있도록 한다.</p>
+<p>istio agent는 envoy proxy를 시작하고, envoy proxy의 identity를 bootstrap한다. control-plane(istiod)과 연결을 유지하며, 최신의 mesh configuration을 받는다. 또한 선택적으로 local DNS proxy server를 실행해서, 최신의 mesh 상태와 동기화한다.</p>
+<p>application container의 DNS query가 Iptable rule에 의해 local DNS proxy로 redirect 된다.</p>
+<hr />
+<p>manual / automatic sidecar injection이 가능하다.</p>
+<p>이를 통해, data-plane component가 pod 안으로 주입된다.</p>
+
+                        </div>
+                    </article>
+
+                </div>
+            </div> 
+            <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
+                © 2023. Taehyeon Kim All rights reserved. 
+            </footer>
+        </div>
+    </body>
+</html>
