@@ -90,39 +90,31 @@
                     
                     <div class="md:pl-3">
                         
-                        <a class="anc" href="/blog/k8s/ite4006/1/index.html">
+                        <a class="anc" href="/post/advanced scheduling.html">
                             <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
 
                                 <div class="relative py-5 px-5">
                                 
-                                <p class="text-xl font-semibold">
-                                ite4006
-                                </p>
-                                <div class="pt-1">
-                                
-                                <p class="text-xs">
-                                13 child nodes
-                                </p>
-                                
+                                <div class="absolute right-1 top-1 inline-block">
+                                    <svg class="" width="24px" height="24px" viewBox="0 0 24 24" stroke-width="1" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                                        <path class="stroke-customlight-700 dark:stroke-customdark-400" d="M9.5 14.5L3 21" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                        </path>
+                                        <path
+                                            class="stroke-customlight-700 dark:stroke-customdark-400"
+                                            d="M5.00007 9.48528L14.1925 18.6777L15.8895 16.9806L15.4974 13.1944L21.0065 8.5211L15.1568 2.67141L10.4834 8.18034L6.69713 7.78823L5.00007 9.48528Z"
+                                            stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
                                 </div>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <a class="anc" href="/post/Ingress object.html">
-                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
-                                
-
-                                <div class="relative py-5 px-5">
                                 
                                 <p class="text-xl font-semibold">
-                                Ingress object
+                                advanced scheduling
                                 </p>
                                 <div class="pt-1">
                                 
                                 <p class="text-xs line-clamp-2 break-all">
-                                ingress object에 host를 지정해주면, header가 host와 일치하지 않는 경우 어떤 값도 반환하지 않는다. 
+                                taints와 toleration을 이용해서, pod의 node 사용을 제한할 수 있다. 이 정도 taint가 있는 node에 pod가 scheduling되어도 된다. 라는 의미 toleration이  정의되지 않으면, taint가 없는 node에만 할당된다. taint의 구성: &lt;key&gt;=&lt;value&gt;:&lt;effect&gt; pod is scheduled to a node, if it tolerates the node&#x27;s taints 
                                 </p>
                                 <div class="pb-1 italic text-gray-500 dark:text-gray-400">
                                 <p class="text-xs inline-block">
@@ -132,7 +124,7 @@
                                 ·
                                 </p>
                                 <p class="text-xs inline-block">
-                                2024-11-25
+                                2024-12-15
                                 </p>
                                 </div>
                                 
@@ -141,22 +133,31 @@
                             </div>
                         </a>
                         
-                        <a class="anc" href="/post/macOS에서 kind에 metallb 설정.html">
+                        <a class="anc" href="/post/organizing objects using namespaces and labels.html">
                             <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
-                                
-                                <div class="h-40 bg-center bg-cover rounded-t-md" style="background-image: url(/blog/k8s/Pasted\ image\ 20241124022013.png)">
-                                </div>
                                 
 
                                 <div class="relative py-5 px-5">
                                 
+                                <div class="absolute right-1 top-1 inline-block">
+                                    <svg class="" width="24px" height="24px" viewBox="0 0 24 24" stroke-width="1" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                                        <path class="stroke-customlight-700 dark:stroke-customdark-400" d="M9.5 14.5L3 21" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                        </path>
+                                        <path
+                                            class="stroke-customlight-700 dark:stroke-customdark-400"
+                                            d="M5.00007 9.48528L14.1925 18.6777L15.8895 16.9806L15.4974 13.1944L21.0065 8.5211L15.1568 2.67141L10.4834 8.18034L6.69713 7.78823L5.00007 9.48528Z"
+                                            stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                                
                                 <p class="text-xl font-semibold">
-                                macOS에서 kind에 metallb 설정
+                                organizing objects using namespaces and labels
                                 </p>
                                 <div class="pt-1">
                                 
                                 <p class="text-xs line-clamp-2 break-all">
-                                개요 https:&#x2F;&#x2F;github.com&#x2F;chipmk&#x2F;docker-mac-net-connect?tab=readme-ov-file#problem Unlike Docker on Linux, Docker-for-Mac does not expose container networks directly on the macOS host. Docker-for-Mac works by running a Linux VM under the hood (using hyperkit ) and creates containers within that VM. Docker-for-Mac supports connecting to containers over Layer 4 (port binding), but not Layer 3 (by IP address). 
+                                namespace를 통해 physical cluster를 여러 virtual cluster로 나눌 수 있다. non-overlapping scope를 제공 object의 종류가 두가지: namespaced vs cluster-scoped cluster-scoped: Nodes, Namespaces, PersistentVolumes, StorageClasses namespaced: Pods, ConfigMaps, Secrets, Events, PersistentVolumeClaims 
                                 </p>
                                 <div class="pb-1 italic text-gray-500 dark:text-gray-400">
                                 <p class="text-xs inline-block">
@@ -166,7 +167,7 @@
                                 ·
                                 </p>
                                 <p class="text-xs inline-block">
-                                2024-11-24
+                                2024-12-15
                                 </p>
                                 </div>
                                 
@@ -175,19 +176,31 @@
                             </div>
                         </a>
                         
-                        <a class="anc" href="/post/kind cluster에 ingress-nginx 설정.html">
+                        <a class="anc" href="/post/running applications in pods.html">
                             <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
                                 
 
                                 <div class="relative py-5 px-5">
                                 
+                                <div class="absolute right-1 top-1 inline-block">
+                                    <svg class="" width="24px" height="24px" viewBox="0 0 24 24" stroke-width="1" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                                        <path class="stroke-customlight-700 dark:stroke-customdark-400" d="M9.5 14.5L3 21" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                        </path>
+                                        <path
+                                            class="stroke-customlight-700 dark:stroke-customdark-400"
+                                            d="M5.00007 9.48528L14.1925 18.6777L15.8895 16.9806L15.4974 13.1944L21.0065 8.5211L15.1568 2.67141L10.4834 8.18034L6.69713 7.78823L5.00007 9.48528Z"
+                                            stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                                
                                 <p class="text-xl font-semibold">
-                                kind cluster에 ingress-nginx 설정
+                                running applications in pods
                                 </p>
                                 <div class="pt-1">
                                 
                                 <p class="text-xs line-clamp-2 break-all">
-                                Ingress 설정이 필요한 이유 cloud kubernetes 환경에서는 provider가 Ingress Class를 지원해주기 때문에 별도로 설정할 필요가 없다. 그러나 local cluster를 구축해서 사용하는 경우 별도의 ingress controller를 설정해주어야 한다. kind 공식 문서에 따라, ingress-nginx 오픈소스를 이용해서 ingress controller를 설정해보고자 한다. 
+                                ite4006의 Running Applications in Pods
                                 </p>
                                 <div class="pb-1 italic text-gray-500 dark:text-gray-400">
                                 <p class="text-xs inline-block">
@@ -197,38 +210,7 @@
                                 ·
                                 </p>
                                 <p class="text-xs inline-block">
-                                2024-11-22
-                                </p>
-                                </div>
-                                
-                                </div>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <a class="anc" href="/post/kubectl 명령어 정리.html">
-                            <div class="relative group mb-2 rounded-md border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200">
-                                
-
-                                <div class="relative py-5 px-5">
-                                
-                                <p class="text-xl font-semibold">
-                                kubectl 명령어 정리
-                                </p>
-                                <div class="pt-1">
-                                
-                                <p class="text-xs line-clamp-2 break-all">
-                                cluster # cluster 목록 kubectl config get-contexts  # 현재 cluster 정보 kubectl cluster-info  # cluster 전환 kubectl config use-context minikube Pod object # yaml file로 pod 생성 kubectl apply -f pod.kiada.yaml  # name으로 pod 조회 kubectl get pod kiada kubectl get pod kiada -o wide  # pod 생성 이벤트 조회 
-                                </p>
-                                <div class="pb-1 italic text-gray-500 dark:text-gray-400">
-                                <p class="text-xs inline-block">
-                                Taehyeon Kim
-                                </p>
-                                <p class="text-xs inline-block">
-                                ·
-                                </p>
-                                <p class="text-xs inline-block">
-                                2024-11-20
+                                2024-12-15
                                 </p>
                                 </div>
                                 
@@ -240,7 +222,31 @@
                         <div class="my-3">
                             <div class="flex mx-auto w-min text-sm">
                                 
+                                <a class="anc inline w-8 h-8 rounded-l-md bg-gray-100 dark:bg-gray-700 hover:bg-customlight-700 dark:hover:bg-customdark-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/blog/k8s/ite4006/1/index.html">
+                                    <div class="w-8 h-8 p-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l6 6" /><path d="M5 12l6 -6" /></svg>
+                                    </div>
+                                </a>
                                 
+                                
+                                    
+                                    <a class="anc inline w-8 h-8 bg-gray-100 dark:bg-gray-700 hover:bg-customlight-700 dark:hover:bg-customdark-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/blog/k8s/ite4006/1/index.html">
+                                        <p class="leading-8 text-center cursor-pointer">1</p>
+                                    </a>
+                                    
+                                
+                                    
+                                    <a class="anc inline w-8 h-8 bg-customlight-700 dark:bg-customdark-400 text-gray-200 dark:text-gray-900" href="/blog/k8s/ite4006/2/index.html">
+                                        <p class="leading-8 text-center cursor-pointer">2</p>
+                                    </a>
+                                    
+                                
+                                
+                                <a class="anc inline w-8 h-8 rounded-r-md bg-gray-100 dark:bg-gray-700 hover:bg-customlight-700 dark:hover:bg-customdark-400 text-gray-700 hover:text-gray-200 dark:text-gray-200 dark:hover:text-gray-900" href="/blog/k8s/ite4006/2/index.html">
+                                    <div class="w-8 h-8 p-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>
+                                    </div>
+                                </a>
                                 
                             </div>
                         </div>

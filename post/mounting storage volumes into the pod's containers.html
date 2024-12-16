@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title class="ground">blog.argnmp</title>
+        <title class="ground">mounting storage volumes into the pod's containers</title>
         
-        <meta http-equiv="refresh" content="0; url=/blog/k8s/ite4006/1">
-        
-        <meta class="ground" name="title" content="blog.argnmp">
-        <meta class="ground" name="description" content="">
+        <meta class="ground" name="title" content="mounting storage volumes into the pod's containers">
+        <meta class="ground" name="description" content="container의 filesystem에 있는 file은, build time에 container image에 추가된 것들이다. 그래서 종료되고 재시작되면, file의 변경사항은 사라진다. 변경사항을 유지하기 위해 contianer의 filesystem에 volume을 mount해서 사용한다. Volume은 pod level에서 정의되고, container의 filesystem 내 원하는 위치에 mount된다. ">
         <meta name="robots" content="index,nofollow">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta class="ground" property="og:type" content="website" />
-        <meta class="ground" property="og:title" content="blog.argnmp" />
-        <meta class="ground" property="og:description" content="" />
+        <meta class="ground" property="og:title" content="mounting storage volumes into the pod's containers" />
+        <meta class="ground" property="og:description" content="container의 filesystem에 있는 file은, build time에 container image에 추가된 것들이다. 그래서 종료되고 재시작되면, file의 변경사항은 사라진다. 변경사항을 유지하기 위해 contianer의 filesystem에 volume을 mount해서 사용한다. Volume은 pod level에서 정의되고, container의 filesystem 내 원하는 위치에 mount된다. " />
         <meta class="ground" property="og:image" content="" />
 
         <link rel="icon" href="data:,">
@@ -90,18 +88,75 @@
                         </div> 
                     </div>
                     
-                    <div class="md:pl-3">
-                        
-                        <div class="my-3">
-                            <div class="flex mx-auto w-min text-sm">
-                                
-                                
+                    
+                    <article>
+                        <section class="w-full mb-8">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">mounting storage volumes into the pod's containers</p>
                                 
                             </div>
-                        </div>
-                    </div>
+                            <div class="flex flex-row mb-2 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs">·</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-12-16</p></div>
+                                <div class="mr-2"><p class="text-xs"></p></div>
 
-                    
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                        <div class="px-1 mr-1 bg-customlight-700 text-white dark:bg-customdark-400 dark:text-gray-800 align-middle text-xs rounded-md">
+                                            blog
+                                        </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <p>container의 filesystem에 있는 file은, build time에 container image에 추가된 것들이다. 그래서 종료되고 재시작되면, file의 변경사항은 사라진다.</p>
+<p>변경사항을 유지하기 위해 contianer의 filesystem에 volume을 mount해서 사용한다.</p>
+<hr />
+<p>Volume은 pod level에서 정의되고, container의 filesystem 내 원하는 위치에 mount된다.</p>
+<p>pod의 lifecycle에 묶여있다. 따라서 container가 재시작 되어도, volume이 다시 container에 mount되어서 data를 유지할 수 있다.</p>
+<p>pod에 여러개의 Volume을 만들 수 있고, 하나의 Volume을 pod의 여러 container에 mount할 수 있다. Writer/Consumer 구조가 가능하다.</p>
+<hr />
+<p>volume은 pod의 lifecycle에 묶여있어서, pod가 존재하는 동안만 유지된다. 하지만 pod volume을 pod 외부의 persistent storage에 매핑해서 사용할 수 있다.</p>
+<p>persistent storage volume에는 다음과 같은 것들이 있다.</p>
+<ul>
+<li>local directory on the worker node's file system</li>
+<li>network-attached storage volume</li>
+<li>NFS, Google Compute Engine Persistent Disk ...</li>
+</ul>
+<p>여러 pod의 volume에 매핑되어서, 하나의 persistent storage를 사용하게 할 수 있다.</p>
+<hr />
+<p>Volume type은 다음과 같다.</p>
+<ul>
+<li>emptyDir: pod 시작하기 전애 생성된 비어있는 단순한 directory</li>
+<li>hostPath: worker node's filesystem의 file을 pod로 mount하는데 사용된다.</li>
+<li>nfs: NFS를 mount하는데 사용된다.</li>
+<li>gcePersistentDisk, awsElasticBlockStore, azureFile, azureDisk: cloud provider-specific storage를 mount하기 위해 사용된다.</li>
+<li>cephfs, cinder, flexVolume, flocker, iscsi ... : network storage의 다른 타입을 mount하기 위해 사용된다.</li>
+<li>configMap, secret, downwardAPI, and the projected volume type: pod와 다른 k8s에 대한 정보를 expose하기 위해 사용된다.</li>
+<li>PersistentVolumeClaim: external storage를 pod로 통합하는데 사용된다. (PersistentVolume object와 함께 사용된다.)</li>
+<li>cis: Container Storage Interface를 통해서 storage를 추가하는 방법이다.</li>
+</ul>
+<hr />
+<p>emptyDir volume</p>
+<p>empty directory를 제공한다. pod가 존재하는 동안 유지된다. pod definition에 작성한다.</p>
+<p>node의 filesystem에 존재하는, pod의 uid 하위의 디렉터리를 사용한다. 이 데릭터리가 container의 filesystem에 mount된다. pod의 uid 하위의 디렉터리는, pod가 사라지면 함께 사라진다.</p>
+<p>여러 container가 같은 volume을 공유해서, 파일 공유가 가능하다.</p>
+<hr />
+<p>External Storage volume</p>
+<p>gcePersistentDisk와 같은 external storage를, pod definition의 volumes에 매핑할 수 있다.</p>
+<hr />
+<p>hostPath volume</p>
+<p>host node의 filesystem 내의 특정 위치를 가리킨다. 해당 node에 속한 pod이면 언제나 접근이 가능하다.</p>
+<p>하지만 주의가 필요하다. pod가 재시작되어서 다른 node에 할당될 수 있기 때문이다. 따라서 kubelet agent와 같은 system-level pod에서 사용한다.(node마다 한 개이므로) application에서 사용은 적절하지 않다.</p>
+
+                        </div>
+                    </article>
+
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">

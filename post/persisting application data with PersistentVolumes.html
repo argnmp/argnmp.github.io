@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title class="ground">blog.argnmp</title>
+        <title class="ground">persisting application data with PersistentVolumes</title>
         
-        <meta http-equiv="refresh" content="0; url=/blog/k8s/ite4006/1">
-        
-        <meta class="ground" name="title" content="blog.argnmp">
-        <meta class="ground" name="description" content="">
+        <meta class="ground" name="title" content="persisting application data with PersistentVolumes">
+        <meta class="ground" name="description" content="cluster 간의 pod definition portability를 달성하기 위해서는, pod manifest에서 직접적으로 external storage를 가리켜서는 안된다. 즉, infrastructure로 부터, pod를 decoupling 해야한다. 따라서 서로 다른 cluster 간의 pod manifest portability 달성을 위해서, 아래의 두가지 object가 사용된다. ">
         <meta name="robots" content="index,nofollow">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta class="ground" property="og:type" content="website" />
-        <meta class="ground" property="og:title" content="blog.argnmp" />
-        <meta class="ground" property="og:description" content="" />
+        <meta class="ground" property="og:title" content="persisting application data with PersistentVolumes" />
+        <meta class="ground" property="og:description" content="cluster 간의 pod definition portability를 달성하기 위해서는, pod manifest에서 직접적으로 external storage를 가리켜서는 안된다. 즉, infrastructure로 부터, pod를 decoupling 해야한다. 따라서 서로 다른 cluster 간의 pod manifest portability 달성을 위해서, 아래의 두가지 object가 사용된다. " />
         <meta class="ground" property="og:image" content="" />
 
         <link rel="icon" href="data:,">
@@ -90,18 +88,61 @@
                         </div> 
                     </div>
                     
-                    <div class="md:pl-3">
-                        
-                        <div class="my-3">
-                            <div class="flex mx-auto w-min text-sm">
-                                
-                                
+                    
+                    <article>
+                        <section class="w-full mb-8">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">persisting application data with PersistentVolumes</p>
                                 
                             </div>
-                        </div>
-                    </div>
+                            <div class="flex flex-row mb-2 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs">·</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-12-16</p></div>
+                                <div class="mr-2"><p class="text-xs"></p></div>
 
-                    
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                        <div class="px-1 mr-1 bg-customlight-700 text-white dark:bg-customdark-400 dark:text-gray-800 align-middle text-xs rounded-md">
+                                            blog
+                                        </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <p>cluster 간의 pod definition portability를 달성하기 위해서는, pod manifest에서 직접적으로 external storage를 가리켜서는 안된다. 즉, infrastructure로 부터, pod를 decoupling 해야한다.</p>
+<p>따라서 서로 다른 cluster 간의 pod manifest portability 달성을 위해서, 아래의 두가지 object가 사용된다.</p>
+<ul>
+<li>PersistentVolume object : storage volume에 대한 environment-specific 정보이다.</li>
+<li>PersistentVolumeClaim object: application의 high-level storage requirement이다.</li>
+</ul>
+<p>pod는 PVC를 가리키고, PVC는 PV를 가리킨다. PV는 사전에 admin에 의해서 생성(provision)되고, PVC는 PV에 bound 된다.</p>
+<p>이러한 구조를 통해서, infra-specific한 detail은 application과 분리된다. cluster admin은 infra-related low-level detail을 가지고 PersistentVolume을 생성한다. SW developer는 application을 Pod와 PVC으로 describe할 수 있다</p>
+<p>다른 volume과 마찬가지로, pod의 definition의 volumes 부분에 PVC를 추가한다.</p>
+<p>cluster admin은 NFS를 가리키는 PV를 만들어 둔다. user는 appilcation의 storage에 대한 요청을 나타내는 PVC를 생성한다. k8s는  PVC의 요구조건을 만족하는 PV를 찾고 bound한다. user가 PVC를 가리키는 pod를 생성하고, NFS는 pod의 container에 mount된다.</p>
+<p>이 방식을, static provisioning이라고 한다. cluster admin이 physical volume과 PV object를 사전에 provision 해둔다.</p>
+<hr />
+<p>static provisioning의 lifecycle</p>
+<hr />
+<p>dynamic provisioning 에서는 admin이 persistent volume provisioner을 배포해두어서, provisioning provess를 just-in-time으로 자동화한다.</p>
+<p>provisioner는 서비스가 실행될 수 있도록 하는 모든 조치를 해주는 component를 의미한다.</p>
+<p>cluster admin은 StorageClass object와 persistent volume provisioner를 만들어둔다. user는
+PVC를 만들어서 StorageClass를 reference 하도록 하고, pod를 만들어서 PVC를 reference하도록 한다. 그러면 provisioner는 storage를 provision하고 PV를 ㄹ생성한다. 그리고 k8s는 PVC를 PV에 binding한다. 마지막으로 pod가 실행되면, container에 volume이 mount된다.</p>
+<p>PVC가 특정 StorageClass를 reference하도록 해서 생성하면, provisioner가 volume을 provision한다.</p>
+<hr />
+<p>StorageClass는 dynamically provision될 수 있는 storage의 class를 나타낸다.</p>
+<p>각 StorageClass는 어떤 provisioner과 parameter를 사용할지 명시한다.</p>
+<p>PVC의 storageClassName field에 StorageClass를 명시한다. 없다면 default StorageClass가 사용된다.</p>
+<hr />
+<p>dynamic provisioning의 lifecycle</p>
+
+                        </div>
+                    </article>
+
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">

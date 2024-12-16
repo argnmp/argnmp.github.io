@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title class="ground">blog.argnmp</title>
+        <title class="ground">Istio's gateways, getting traffic into a cluster</title>
         
-        <meta http-equiv="refresh" content="0; url=/blog/k8s/ite4006/1">
-        
-        <meta class="ground" name="title" content="blog.argnmp">
-        <meta class="ground" name="description" content="">
+        <meta class="ground" name="title" content="Istio's gateways, getting traffic into a cluster">
+        <meta class="ground" name="description" content="kubernetes의 Ingress Ingress는 모든 요청이 들어오는 point로, 어떤 traffic이 허용되는지에 대한 rule과 policy를 적용한다. Ingress point는 reverse proxy의 역할을 하고, virtual IP가 할당 된다. client는 DNS에서 domain을 virtual IP로 변환해서 접근한다. virtual hosting을 통해서, 하나의 entry point(Ingress)에서 여러 다른 서비스를 제공할 수 있다. ">
         <meta name="robots" content="index,nofollow">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta class="ground" property="og:type" content="website" />
-        <meta class="ground" property="og:title" content="blog.argnmp" />
-        <meta class="ground" property="og:description" content="" />
+        <meta class="ground" property="og:title" content="Istio's gateways, getting traffic into a cluster" />
+        <meta class="ground" property="og:description" content="kubernetes의 Ingress Ingress는 모든 요청이 들어오는 point로, 어떤 traffic이 허용되는지에 대한 rule과 policy를 적용한다. Ingress point는 reverse proxy의 역할을 하고, virtual IP가 할당 된다. client는 DNS에서 domain을 virtual IP로 변환해서 접근한다. virtual hosting을 통해서, 하나의 entry point(Ingress)에서 여러 다른 서비스를 제공할 수 있다. " />
         <meta class="ground" property="og:image" content="" />
 
         <link rel="icon" href="data:,">
@@ -90,18 +88,65 @@
                         </div> 
                     </div>
                     
-                    <div class="md:pl-3">
-                        
-                        <div class="my-3">
-                            <div class="flex mx-auto w-min text-sm">
-                                
-                                
+                    
+                    <article>
+                        <section class="w-full mb-8">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">Istio's gateways, getting traffic into a cluster</p>
                                 
                             </div>
-                        </div>
-                    </div>
+                            <div class="flex flex-row mb-2 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs">·</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-12-16</p></div>
+                                <div class="mr-2"><p class="text-xs"></p></div>
 
-                    
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                        <div class="px-1 mr-1 bg-customlight-700 text-white dark:bg-customdark-400 dark:text-gray-800 align-middle text-xs rounded-md">
+                                            blog
+                                        </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <p>kubernetes의 Ingress</p>
+<p>Ingress는 모든 요청이 들어오는 point로, 어떤 traffic이 허용되는지에 대한 rule과 policy를 적용한다.</p>
+<p>Ingress point는 reverse proxy의 역할을 하고, virtual IP가 할당 된다. client는 DNS에서 domain을 virtual IP로 변환해서 접근한다.</p>
+<p>virtual hosting을 통해서, 하나의 entry point(Ingress)에서 여러 다른 서비스를 제공할 수 있다.</p>
+<p>즉, client는 여러 도메인에 대해서 하나의 virtual IP로 변환해서 접근하고, ingress point에서는 HTTP header의 host를 확인해서 (virtual host) 여러 host로 routing한다.</p>
+<hr />
+<p>istio ingress gateway</p>
+<p>istio의 ingress gateway는 cluster 외부의 traffic에 대해 guarding 하고 controlling access 하는 역할을 수행한다.</p>
+<p>load balancing과 virtual-host routing을 지원한다.</p>
+<p>istio는 single envoy proxy를 ingress gateway로 사용한다.</p>
+<hr />
+<p>istio의 Gateway object는 어떤 포트를 열고, 이 포트로 어떤 virtual host를 허용할지를 명시한다.</p>
+<p>istio-ingressgateway는 default로 8080포트를 이용한다. 하지만, k8s implementation에 따라 달라질 수 있다.</p>
+<hr />
+<p>istio의 VirtualService object는 Gateway object에서 들어오는 traffic을 어떻게 처리할지 결정한다. 어떤 버전의 service가 available한지 정의하고, 그리고 다른 routing properties인 retries와 request timeouts 등을 정의한다.</p>
+<p>즉, istio의 Gateway object로 들어오는 request가 VirtualService를 거쳐서 routing 된다.</p>
+<p>VirtualService의 definition에, gateway와 host를 명시하는 방식이다.</p>
+<hr />
+<p>결론적으로,</p>
+<p>istio의 Gateway resource(object)는, service-mesh cluster의 edge에서 허용하고 싶은 port, protocol, virtual host를 정의한다.</p>
+<p>istio의 VirtualService resource(object)는, service-mesh cluster의 edge에서 허용된 traffic에 대해서, 어디로 가야하는지를 정의한다.</p>
+<p>Gateway resource는 L4, L5에서 처리하고, VirtualService는 L7에서 처리하는 역할을 한다.</p>
+<hr />
+<p>k8s Ingress 대신, istio Gateway 만든 이유는 아래와 같다.</p>
+<ul>
+<li>k8s Ingress는 L7과 HTTP만 지원하는데, istio Gateway에서는 HTTP외의 다른 traffic도 처리할 수 있도록 가능성을 열어두었다.</li>
+<li>k8s Ingress의 기능 부족으로, 각 vendor마다 각자의 것을 만들었다. annotation이 많아지고 복잡해져서, 통합하기 위한 목적이 있다.</li>
+<li>VirtualService와의 연동해서 사용할 수 있도록 하기 위해서이다.</li>
+</ul>
+
+                        </div>
+                    </article>
+
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">

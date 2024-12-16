@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title class="ground">blog.argnmp</title>
+        <title class="ground">Traffic control, Fine-grained traffic routing</title>
         
-        <meta http-equiv="refresh" content="0; url=/blog/k8s/ite4006/1">
-        
-        <meta class="ground" name="title" content="blog.argnmp">
-        <meta class="ground" name="description" content="">
+        <meta class="ground" name="title" content="Traffic control, Fine-grained traffic routing">
+        <meta class="ground" name="description" content="istio sevice proxy는 service-mesh 내의 sevice 간의 communication을 가로채서, traffic을 control할 수 있도록 한다. deployment는 production에 설치되었지만 아직 live production traffic을 가져가지 않는 코드를 의미한다. release(code)는 live traffic을 새로운 deployment에 가져오는 것을 의미한다. ">
         <meta name="robots" content="index,nofollow">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta class="ground" property="og:type" content="website" />
-        <meta class="ground" property="og:title" content="blog.argnmp" />
-        <meta class="ground" property="og:description" content="" />
+        <meta class="ground" property="og:title" content="Traffic control, Fine-grained traffic routing" />
+        <meta class="ground" property="og:description" content="istio sevice proxy는 service-mesh 내의 sevice 간의 communication을 가로채서, traffic을 control할 수 있도록 한다. deployment는 production에 설치되었지만 아직 live production traffic을 가져가지 않는 코드를 의미한다. release(code)는 live traffic을 새로운 deployment에 가져오는 것을 의미한다. " />
         <meta class="ground" property="og:image" content="" />
 
         <link rel="icon" href="data:,">
@@ -90,18 +88,49 @@
                         </div> 
                     </div>
                     
-                    <div class="md:pl-3">
-                        
-                        <div class="my-3">
-                            <div class="flex mx-auto w-min text-sm">
-                                
-                                
+                    
+                    <article>
+                        <section class="w-full mb-8">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">Traffic control, Fine-grained traffic routing</p>
                                 
                             </div>
-                        </div>
-                    </div>
+                            <div class="flex flex-row mb-2 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs">·</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-12-16</p></div>
+                                <div class="mr-2"><p class="text-xs"></p></div>
 
-                    
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                        <div class="px-1 mr-1 bg-customlight-700 text-white dark:bg-customdark-400 dark:text-gray-800 align-middle text-xs rounded-md">
+                                            blog
+                                        </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <p>istio sevice proxy는 service-mesh 내의 sevice 간의 communication을 가로채서, traffic을 control할 수 있도록 한다.</p>
+<hr />
+<p>deployment는 production에 설치되었지만 아직 live production traffic을 가져가지 않는 코드를 의미한다.</p>
+<p>release(code)는 live traffic을 새로운 deployment에 가져오는 것을 의미한다.</p>
+<p>canary release는 구버전이 대부분의 live traffic을 가져가고, 신버전이 traffic의 작은 부분을 가져가는 것을 의미한다.</p>
+<hr />
+<p>DestinationRule을 이용해서, 여러 버전의 subset을 정의할 수 있다. 그리고 VirtualService에서 특정 subset으로 트래픽을 향하게 할 수 있다.</p>
+<hr />
+<p>Traffic Routing - Dark Launch는 사용자가 모르도록 release를 하는 방식을 의미한다. HTTP에 header를 추가해서, VirtualService에서 이 header를 확인하면 새로운 버전으로 보내도록 설정한다.</p>
+<hr />
+<p>Traffic Shifting은 모든 live traffic을 weight를 바탕으로 특정 버전의 service set에 분배하는 것을 의미한다. VirtualService로 설정이 가능하다. manual shift는 Flagger라는 tool을 이용해서 자동화 할 수 있다.</p>
+<hr />
+<p>Traffic Mirroing은 production traffic을 복사해서, 새로운 버전에 전달하고 응답은 무시된다. user에 영향을 주지 않고, 실제 테스트를 진행할 수 있다.</p>
+
+                        </div>
+                    </article>
+
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">

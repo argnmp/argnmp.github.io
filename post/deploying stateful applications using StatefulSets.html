@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title class="ground">blog.argnmp</title>
+        <title class="ground">deploying stateful applications using StatefulSets</title>
         
-        <meta http-equiv="refresh" content="0; url=/blog/k8s/ite4006/1">
-        
-        <meta class="ground" name="title" content="blog.argnmp">
-        <meta class="ground" name="description" content="">
+        <meta class="ground" name="title" content="deploying stateful applications using StatefulSets">
+        <meta class="ground" name="description" content="pod는 stateless하다. 따라서 crash가 발생하면 ReplicaSet에 의해서 재시작되고, 이전 state를 기록하지 않는다. 또한 여러개의 replica를 만드는 경우, 동일한 PVC를 사용해서 동일한 PV에 binding 된다. 따라서 replica pod들이 같은 state를 가지게 된다. ">
         <meta name="robots" content="index,nofollow">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta class="ground" property="og:type" content="website" />
-        <meta class="ground" property="og:title" content="blog.argnmp" />
-        <meta class="ground" property="og:description" content="" />
+        <meta class="ground" property="og:title" content="deploying stateful applications using StatefulSets" />
+        <meta class="ground" property="og:description" content="pod는 stateless하다. 따라서 crash가 발생하면 ReplicaSet에 의해서 재시작되고, 이전 state를 기록하지 않는다. 또한 여러개의 replica를 만드는 경우, 동일한 PVC를 사용해서 동일한 PV에 binding 된다. 따라서 replica pod들이 같은 state를 가지게 된다. " />
         <meta class="ground" property="og:image" content="" />
 
         <link rel="icon" href="data:,">
@@ -90,18 +88,60 @@
                         </div> 
                     </div>
                     
-                    <div class="md:pl-3">
-                        
-                        <div class="my-3">
-                            <div class="flex mx-auto w-min text-sm">
-                                
-                                
+                    
+                    <article>
+                        <section class="w-full mb-8">
+                            <div class="mb-2 md:pl-5">
+                                <p class="text-4xl md:text-[40px] break-keep font-semibold text-gray-700 dark:text-gray-200 py-1 leading-tight">deploying stateful applications using StatefulSets</p>
                                 
                             </div>
-                        </div>
-                    </div>
+                            <div class="flex flex-row mb-2 md:pl-5 text-gray-500 dark:text-gray-400">
+                                <div class="mr-2"><p class="text-xs italic">Taehyeon Kim</p></div>
+                                <div class="mr-2"><p class="text-xs">·</p></div>
+                                <div class="mr-2"><p class="text-xs italic">2024-12-16</p></div>
+                                <div class="mr-2"><p class="text-xs"></p></div>
 
-                    
+                                <div class="bg-customlight-100 bg-customlight-200 bg-customlight-300 bg-customlight-400 bg-customlight-500 bg-customlight-600 bg-customlight-700 bg-customlight-800 bg-customlight-900 dark:bg-customdark-100 dark:bg-customdark-200 dark:bg-customdark-300 dark:bg-customdark-400 dark:bg-customdark-500 dark:bg-customdark-600 dark:bg-customdark-700 dark:bg-customdark-800 dark:bg-customdark-900" hidden></div>
+                                <div class="mr-2 flex flex-row">
+                                    
+                                    
+                                        <div class="px-1 mr-1 bg-customlight-700 text-white dark:bg-customdark-400 dark:text-gray-800 align-middle text-xs rounded-md">
+                                            blog
+                                        </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </section>
+                        <div class="clear-none markdown-body mb-10 md:pl-5 leading-6 font-post">
+                            <p>pod는 stateless하다. 따라서 crash가 발생하면 ReplicaSet에 의해서 재시작되고, 이전 state를 기록하지 않는다. 또한 여러개의 replica를 만드는 경우, 동일한 PVC를 사용해서 동일한 PV에 binding 된다. 따라서 replica pod들이 같은 state를 가지게 된다.</p>
+<p>하지만 서로 다른 state를 가질 수 있게해야 하는 경우가 있다. 즉, replica들이 서로 다른 storage를 할당 받아야 한다. 이를 위해서는 아래와 같은 방식을 적용할 수 있다.</p>
+<ul>
+<li>여러개의 pod를 수동으로 생성한다.</li>
+<li>각 pod 마다 하나의 ReplicaSet을 사용한다. 또한 PVC도 다르게 할당한다.</li>
+<li>같은 volume에서 pod 마다 다른 directory를 사용한다.</li>
+</ul>
+<p>하지만 모두 적절하지 않은 방식이다.</p>
+<p>따라서 이러한 문제를 해결하기 위해서, StatefulSet이 사용된다.</p>
+<hr />
+<p>ReplicaSet의 pod replica는 새로운 replica로 언제나 교체될 수 있다.</p>
+<p>이와 달리 StatefulSet의 pod는 그들의 identity와 state를 유지할 수 있도록 한다. 각 instance가 non-fungible하기 때문이다. 그래서 StatefulSet에 의해 생성된 pod은, 서로의 정확한 replica가 되지 않는다.</p>
+<hr />
+<p>StatefulSet에 의해 생성된 pod은, random name이 아닌 ordial index를 갖는다. 이를 이용해서, hostname을 유지하고 stable storage를 attach한다. 만약  pod가 fail되고 재시작되어도, 기존의 storage가 attach되고, 원래의 hostname을 통해 이전의 state를 가진 pod에 접근이 가능하다.</p>
+<p>Stateful pod은 hostname을 통해 addressable 해야한다. 따라서 headless Service를 생성해서, 각 pod에 대한 network identity를 제공한다.</p>
+<p>Stateful pod은 서로 다르기 때문에, 특정 pod에 연결해서 사용한다. node가 fail되어도, replacement pod가 사라진 pod의 name과 hostname을 가지게 된다.</p>
+<p>StatefulSet을 scaling 할 때, 0부터 index를 늘려나간다. 그리고 scaling down할 때에는, 높은 숫자를 가진 pod 부터 제거해나간다.</p>
+<hr />
+<p>Deadicated Storage</p>
+<p>stateful pod는 각자의 storage를 필요로 한다. 따라서 StatefulSet은 volume claim template을 가지고 있어서, 각 pod 별로 PVC를 생성한다. 이때, pod의 이름에 맞추어서 PVC를 생성한다.</p>
+<p>scale down 시에는, pod만 제거하고 PVC는 그대로 둔다. 이후 다시 scale up을 하면, 이름이 동일한 기존의 PVC를 가리키게 되어서 이전 state를 유지할 수 있다.</p>
+<hr />
+<p>StatefuleSet은 regular, non-headless Service를 통해서 expose 한다.</p>
+<p>headless Service로 pod의 hostname을 제공하고, non-headless Service로 expose 한다.</p>
+
+                        </div>
+                    </article>
+
                 </div>
             </div> 
             <footer class="py-4 text-sm text-gray-700 dark:text-gray-200 text-center">
